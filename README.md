@@ -4,7 +4,7 @@
 
 Outils de diagnostic des notices du Sudoc (frontend)
 
-L'interface utilisateur de qualimarc développée en VueJS (front) fonctionne avec son API développée en Java (back) : https://github.com/abes-esr/qualimarc-back/
+L'interface utilisateur de qualimarc développée en VueJS (front) fonctionne avec son API développée en Java : https://github.com/abes-esr/qualimarc-api/
 
 # Vue 3 + Vite
 
