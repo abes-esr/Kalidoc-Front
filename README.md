@@ -2,9 +2,12 @@
 
 [![build-test-pubtodockerhub](https://github.com/abes-esr/qualimarc-front/actions/workflows/build-test-pubtodockerhub.yml/badge.svg)](https://github.com/abes-esr/qualimarc-front/actions/workflows/build-test-pubtodockerhub.yml) [![Docker Pulls](https://img.shields.io/docker/pulls/abesesr/qualimarc.svg)](https://hub.docker.com/r/abesesr/qualimarc/)
 
-Outils de diagnostic des notices du Sudoc (frontend)
+Qualimarc est l'outils de diagnostic des notices du Sudoc.
 
-L'interface utilisateur de qualimarc développée en VueJS (front) fonctionne avec son API développée en Java : https://github.com/abes-esr/qualimarc-api/
+Ce dépôt héberge le code source de l'interface utilisateur de qualimarc (développée en VueJS).  
+Cette interface utilisateur fonctionne avec son API développée en Java : https://github.com/abes-esr/qualimarc-api/
+Pour déployer qualimarc, voir https://github.com/abes-esr/qualimarc-docker
+
 
 # Vue 3 + Vite
 
