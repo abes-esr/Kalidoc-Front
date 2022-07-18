@@ -39,18 +39,8 @@
    </v-footer>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+<script>
 
-@Component
-export default class Footer extends Vue {
-   constructor() {
-      super();
-      this.frontVersion();
-   }
-
-   frontVersion(): void {
-      console.log(process.env.npm_package_version);
-   }
+export default {
 }
 </script>

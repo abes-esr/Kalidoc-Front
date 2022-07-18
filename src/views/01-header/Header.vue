@@ -11,18 +11,9 @@
             <a href="https://documentation.abes.fr/aideperiscope/" target="_blank" title="Documentation"><img alt="icone documentation" height="41px" src="@/assets/documentation.png" width="41px" style="margin-left: 1em" /></a>
          </v-col>
       </v-row>
-      <component-alerte></component-alerte>
    </v-container>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import ComponentAlerte from '@/views/components/global/Alerte.vue';
-
-@Component({
-   components: {
-      ComponentAlerte,
-   },
-})
-export default class Header extends Vue {}
+<script>
+export default {}
 </script>
