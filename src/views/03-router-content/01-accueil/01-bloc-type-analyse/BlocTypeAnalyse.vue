@@ -7,13 +7,17 @@
       <v-radio :label="'Analyse Ciblée'" :value="'P3'"></v-radio>
     </v-radio-group>
     <v-container fluid v-if="analyseSelected === 'P3'">
-      <v-checkbox v-model="choice1" label="Choix 1"></v-checkbox>
-      <v-checkbox v-model="choice2" label="Choix 2"></v-checkbox>
-      <v-checkbox v-model="choice3" label="Choix 3"></v-checkbox>
-      <v-checkbox v-model="choice4" label="Choix 4"></v-checkbox>
+      <v-checkbox v-model="choiceP3" value="Choix 1" label="Choix 1"></v-checkbox>
+      <v-checkbox v-model="choiceP3" value="Choix 2" label="Choix 2"></v-checkbox>
+      <v-checkbox v-model="choiceP3" value="Choix 3" label="Choix 3"></v-checkbox>
+      <v-checkbox v-model="choiceP3" value="Choix 4" label="Choix 4"></v-checkbox>
     </v-container>
 
-    <p>test = {{ analyseSelected }}</p>
+<!--    todo: supp test -->
+    <p>analyse choisie = {{ analyseSelected }}</p>
+    <p>choix P3 = {{ choiceP3 }}</p>
+<!--    todo: supp test -->
+
   </v-container>
 </template>
 
@@ -23,10 +27,7 @@ export default {
   data() {
     return {
       analyseSelected: null,
-      choice1: null,
-      choice2: null,
-      choice3: null,
-      choice4: null
+      choiceP3: [],
     }
   }
 };
