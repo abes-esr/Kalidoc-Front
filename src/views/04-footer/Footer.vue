@@ -3,7 +3,7 @@
       <v-row align="center" style="background-color: #0f75bc; color: white; font-size: 1em">
          <v-col cols="auto" class="mr-auto" lg="8" style='text-align: start; padding-left: 2em; padding-right: 2em' v-if="!$vuetify.breakpoint.md && !$vuetify.breakpoint.sm">
             <span>
-               Périscope permet d’explorer les données bibliographiques et d’exemplaires du Sudoc pour les publications
+               Qualimarc permet d’explorer les données bibliographiques et d’exemplaires du Sudoc pour les publications
                en série. En combinant des recherches multi critères, il est possible de définir un corpus de titres et
                d'exporter les principales informations descriptives. La visualisation par frise chronologique des états
                de collection fait aussi de Périscope un outil d’aide à la décision en matière de désherbage,
