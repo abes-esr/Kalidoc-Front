@@ -3,11 +3,11 @@
       <v-row align="center" style="background-color: #0f75bc; color: white; font-size: 1em">
          <v-col cols="auto" class="mr-auto" lg="8" style='text-align: start; padding-left: 2em; padding-right: 2em' v-if="!$vuetify.breakpoint.md && !$vuetify.breakpoint.sm">
             <span>
-               Qualimarc permet d’explorer les données bibliographiques et d’exemplaires du Sudoc pour les publications
-               en série. En combinant des recherches multi critères, il est possible de définir un corpus de titres et
-               d'exporter les principales informations descriptives. La visualisation par frise chronologique des états
-               de collection fait aussi de Périscope un outil d’aide à la décision en matière de désherbage,
-               conservation, valorisation des collections.
+               Description de à quoi sert l'application. "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
             </span>
          </v-col>
          <v-col md="auto" style='text-align: start; padding-left: 2em'>
@@ -16,13 +16,13 @@
             <div><a href="https://stp.abes.fr/node/3?origine=sudocpro" style="color: white">ABESstp</a></div>
          </v-col>
          <v-col cols="auto" style="padding-right: 2em; padding-left: 2em">
-            <span style='padding-right: 1em'><a href="https://abes.fr/"><img src="@/assets/abes.png" /></a></span>
-            <span><a href="https://www.enseignementsup-recherche.gouv.fr/fr"><img src="@/assets/MESRI_logo.svg" /></a></span>
+            <span style='padding-right: 1em'><a href="https://abes.fr/"><img src="@/assets/abes.png" alt="logo abes"/></a></span>
+            <span><a href="https://www.enseignementsup-recherche.gouv.fr/fr"><img src="@/assets/MESRI_logo.svg" alt="logo mesri"/></a></span>
          </v-col>
       </v-row>
       <v-row align='center' style="background-color: #2c2968; color: white; font-size: 1em">
          <v-col cols="auto" class="mr-auto" style='text-align: start; padding-left: 2em'>
-            <span>Periscope, comparez vos collections de périodiques — {{ new Date().getFullYear() }} </span>
+            <span>Application, servant à cela — {{ new Date().getFullYear() }} </span>
          </v-col>
          <v-col cols="auto" style='text-align: start; padding-left: 2em; padding-right: 2em'>
             <span>
