@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import BlocTypeAnalyse from "@/views/03-router-content/01-accueil/01-bloc-type-analyse/BlocTypeAnalyse";
+import BlocTypeAnalyse from "@/components/01-accueil-bloc-type-analyse/BlocTypeAnalyse";
 export default {
-  name: "acceuil",
+  name: "accueil",
   components: { BlocTypeAnalyse }
 };
 </script>
