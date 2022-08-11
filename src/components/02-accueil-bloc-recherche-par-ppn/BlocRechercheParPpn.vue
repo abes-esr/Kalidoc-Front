@@ -45,8 +45,10 @@ export default {
       if(!!this.lastValueTypedOrPasted){ //Si la valeur n'est pas nulle, ce qui se produit si l'utilisateur sort du cadre sans rien taper
         let arrayWithValidsPpn = this.lastValueTypedOrPasted.split(/[^Xx\d]/).filter(ppn_to_check => ppn_to_check.match(/^(\d{8}(\d|X|x))$/));
         let arrayWithInvalidsPpn = this.lastValueTypedOrPasted.split(/[^Xx\d]/).filter(ppn_to_check => !ppn_to_check.match(/^(\d{8}(\d|X|x))$/)).filter(str_to_clean => str_to_clean.trim() !== '');
-        this.comboboxAlert = [ "Ppn invalides détectés dans ce que vous avez inséré : " + arrayWithInvalidsPpn.toString(), "", "" ]
-        arrayWithValidsPpn.forEach(currentValidPpn => this.ppnListTyped.push(currentValidPpn));
+        let arrayWithValidsPpnWithUniqueValues = arrayWithValidsPpn.filter((v, i, a) => a.indexOf(v) === i); //Fonction anonyme de dédoublonnage
+        let arrayWithInvalidsPpnWithUniqueValues = arrayWithInvalidsPpn.filter((v, i, a) => a.indexOf(v) === i); //Fonction anonyme de dédoublonnage
+        this.comboboxAlert = [ "Ppn invalides détectés dans ce que vous avez inséré : " + arrayWithInvalidsPpnWithUniqueValues.toString(), "", "" ]
+        arrayWithValidsPpnWithUniqueValues.forEach(currentValidPpn => this.ppnListTyped.push(currentValidPpn));
       }
       this.lastValueTypedOrPasted = ''; //On vide la chaîne puisqu'on à alimenté les valeurs valeurs valides dans :value
     },
