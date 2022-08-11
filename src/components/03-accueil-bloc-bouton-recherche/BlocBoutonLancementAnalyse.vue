@@ -1,16 +1,22 @@
 <template>
   <v-container>
+    <p>{{analyseStore.getPpnList}}</p>
     <v-btn depressed color="primary" v-if="dataAreValid">Lancer l'analyse</v-btn>
-    <v-btn depressed v-if="!dataAreValid" disabled>Lancer l'analyse</v-btn>
+    <v-btn depressed color="error" v-if="!dataAreValid" disabled>Lancer l'analyse</v-btn>
   </v-container>
 </template>
 
 <script>
+import { useAnalyseStore } from "@/stores/analyse";
+
 export default {
-  name: "BlocBoutonLancementAnalyse",
-  data() {
+  setup() {
+    const analyseStore = useAnalyseStore();
+    let dataAreValid = false;
+
     return {
-      dataAreValid: false
+      dataAreValid,
+      analyseStore
     }
   }
 };
