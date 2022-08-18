@@ -16,19 +16,28 @@
 <!--    todo: supp test -->
     <p>analyse choisie = {{ analyseSelected }}</p>
     <p>choix P3 = {{ choiceP3 }}</p>
+    <p>Store = {{ analyseStore.getPpnList }}</p>
 <!--    todo: supp test -->
 
   </v-container>
 </template>
 
 <script>
+import { useAnalyseStore } from "@/stores/analyse";
+
 export default {
-  name: "blocTypeAnalyse",
-  data() {
+  setup(){
+    const analyseStore = useAnalyseStore();
+    let analyseSelected = null;
+    let choiceP3 = [];
+
+
     return {
-      analyseSelected: null,
-      choiceP3: [],
+      analyseSelected,
+      choiceP3,
+      analyseStore
     }
   }
+
 };
 </script>

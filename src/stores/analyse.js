@@ -11,6 +11,7 @@ export const useAnalyseStore = defineStore('analyse', {
   },
   actions: {
     setPpnList(ppnList) {
+      console.log('fty');
       this.ppnList = ppnList;
     }
   }
