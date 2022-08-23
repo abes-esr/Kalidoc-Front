@@ -16,22 +16,27 @@
 <!--    todo: supp test -->
     <p>analyse choisie = {{ analyseSelected }}</p>
     <p>choix P3 = {{ choiceP3 }}</p>
+    <p>Store = {{ analyseStore.getValidsPpnList }}</p>
 <!--    todo: supp test -->
 
   </v-container>
 </template>
 
 <script>
+import { useAnalyseStore } from "@/stores/analyse";
+import { ref } from 'vue';
+
 export default {
-  name: "blocTypeAnalyse",
-  data() {
+  setup(){
+    const analyseStore = useAnalyseStore();
+    let analyseSelected = ref('P1');
+    let choiceP3 = ref([]);
+
     return {
-      analyseSelected: null,
-      choiceP3: [],
+      analyseSelected,
+      choiceP3,
+      analyseStore
     }
   }
 };
 </script>
-
-<style scoped>
-</style>
