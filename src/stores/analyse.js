@@ -11,13 +11,14 @@ export const useAnalyseStore = defineStore('analyse', {
   },
   getters: {
     getValidsPpnList: (state) => state.ppnValidsList,
+    getInvalidsPpnList: (state) => state.ppnInvalidsList
   },
   actions: {
     setPpnValidsList(ppnList) {
       this.ppnValidsList = ppnList;
     },
     setPpnInvalidsList(ppnList) {
-      this.ppnInvalidsList(ppnList);
+      this.ppnInvalidsList = ppnList;
     }
   }
 })
