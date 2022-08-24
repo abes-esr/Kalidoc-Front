@@ -11,7 +11,7 @@ export const useAnalyseStore = defineStore('analyse', {
   },
   getters: {
     getValidsPpnList: (state) => state.ppnValidsList,
-    getInvalidsPpnList: (state) => state.ppnInvalidsList
+    getInvalidsPpnList: (state) => state.ppnInvalidsList,
   },
   actions: {
     setPpnValidsList(ppnList) {
