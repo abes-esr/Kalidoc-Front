@@ -1,30 +1,15 @@
 <template>
   <v-container>
-    <p>{{analyseStore.getPpnList}}</p>
-    <v-btn depressed color="primary" v-if="dataAreValid">Lancer l'analyse</v-btn>
-    <v-btn depressed color="error" v-if="!dataAreValid" disabled>Lancer l'analyse</v-btn>
-    <v-btn @click="test">TEST</v-btn>
+    <p>{{analyseStore.getValidsPpnList.length}}</p>
+    <v-btn depressed color="primary" v-if="analyseStore.getValidsPpnList.length !== 0">Lancer l'analyse</v-btn>
+    <v-btn depressed color="error" v-if="analyseStore.getValidsPpnList.length === 0" disabled>Lancer l'analyse</v-btn>
   </v-container>
 </template>
 
-<script>
+<script setup>
 import { useAnalyseStore } from "@/stores/analyse";
 
-export default {
-  setup() {
-    const analyseStore = useAnalyseStore();
-    let dataAreValid = false;
+    const analyseStore = useAnalyseStore(); //Store
 
-    function test(){
-      console.log('pad');
-      analyseStore.setPpnList(['ert','ret']);
-    }
-
-    return {
-      dataAreValid,
-      test,
-      analyseStore
-    }
-  }
-};
+    function launchRequest(){}
 </script>
