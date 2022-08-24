@@ -11,7 +11,7 @@
         </v-chip>
       </template>
     </v-combobox>
-    <v-alert v-if="analyseStore.getInvalidsPpnList.length !== 0" border="left" colored-border type="error" elevation="1">
+    <v-alert v-if="analyseStore.getInvalidsPpnList.length !== 0" border="left" colored-border type="error" elevation="0">
       Les PPN dans la liste ci-dessous que vous avez saisis ne respectent pas la syntaxe requise et ne seront donc pas pris en compte au lancement de l'analyse :<br>
       Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)<br>
       <v-expansion-panels>
