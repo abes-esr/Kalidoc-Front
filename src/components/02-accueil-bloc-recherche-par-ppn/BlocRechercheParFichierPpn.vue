@@ -5,26 +5,19 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  name: "BlocRechercheParFichierPpn",
-  data() {
-    return {
-      fichierPresent: false,
-      fichierCharge: [],
-      rules: [
-        (value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'application/vnd.ms-excel') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)',
-      ],
+<script setup>
+import { ref } from 'vue';
+
+  let name = ref("BlocRechercheParFichierPpn");
+  let fichierPresent = ref(false);
+  let fichierCharge = ref([]);
+  let rules = ref([(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'application/vnd.ms-excel') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)']);
+
+  function autorisationEnvoi() {
+    if (fichierCharge !== null) {
+      fichierPresent = (fichierCharge.type === 'text/csv') || (fichierCharge.type === 'application/vnd.ms-excel') || (fichierCharge.type === 'text/plain');
+    } else {
+      fichierPresent = false;
     }
-  },
-  methods: {
-    autorisationEnvoi() {
-      if (this.fichierCharge !== null) {
-        this.fichierPresent = (this.fichierCharge.type === 'text/csv') || (this.fichierCharge.type === 'application/vnd.ms-excel') || (this.fichierCharge.type === 'text/plain');
-      } else {
-        this.fichierPresent = false;
-      }
-    },
   }
-};
 </script>
