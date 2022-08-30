@@ -19,13 +19,15 @@ import axios from "axios";
     const analyseStore = useAnalyseStore(); //Store
     const apiUrl = 'http://diplotaxis1-dev.v212.abes.fr:11081';
     let ppn = 143519379;
+    let isAnalyseSelected = false;
+    let analyseSelected = {};
 
     function setIsAnalyseSelected(payload){
-      this.isAnalyseSelected = payload;
+      isAnalyseSelected = payload;
     };
 
     function setAnalyseSelected(payload){
-      this.analyseSelected = payload;
+      analyseSelected = payload;
     };
 
     function launchRequest(){
