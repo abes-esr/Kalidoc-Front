@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <bloc-type-analyse></bloc-type-analyse>
+    <bloc-type-analyse @isSelected="setIsAnalyseSelected" @valuesSelected="setAnalyseSelected"></bloc-type-analyse>
     <bloc-recherche-par-ppn></bloc-recherche-par-ppn>
     <bloc-recherche-par-fichier-ppn></bloc-recherche-par-fichier-ppn>
     <v-btn @click="launchRequest" depressed color="primary" v-if="analyseStore.getValidsPpnList.length !== 0">Lancer l'analyse</v-btn>
@@ -20,6 +20,14 @@ import axios from "axios";
     const apiUrl = 'http://diplotaxis1-dev.v212.abes.fr:11081';
     let ppn = 143519379;
 
+    function setIsAnalyseSelected(payload){
+      this.isAnalyseSelected = payload;
+    };
+
+    function setAnalyseSelected(payload){
+      this.analyseSelected = payload;
+    };
+
     function launchRequest(){
       axios.get(apiUrl + '/api/v1/' + ppn)
         .then(function (response) {
@@ -33,5 +41,5 @@ import axios from "axios";
         .then(function () {
           // always executed
         });
-    }
+    };
 </script>

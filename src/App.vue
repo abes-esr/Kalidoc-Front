@@ -3,7 +3,7 @@
     <v-main>
       <Header></Header>
       <router-view />
-      <div style='margin-top: 1em'></div>
+      <div style='padding-bottom: 220px'></div>
       <Footer></Footer>
     </v-main>
   </v-app>

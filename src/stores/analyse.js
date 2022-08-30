@@ -6,12 +6,18 @@ export const useAnalyseStore = defineStore('analyse', {
   state: () => {
     return {
       ppnValidsList: [],
-      ppnInvalidsList: []
+      ppnInvalidsList: [],
+      analyseSelected: '',
+      familleDocumentSet: [],
+      ruleSet: []
     }
   },
   getters: {
     getValidsPpnList: (state) => state.ppnValidsList,
     getInvalidsPpnList: (state) => state.ppnInvalidsList,
+    getAnalyseSelected: (state) => state.analyseSelected,
+    getFamilleDocumentSet: (state) => state.familleDocumentSet,
+    getRuleSet: (state) => state.ruleSet
   },
   actions: {
     setPpnValidsList(ppnList) {
@@ -19,6 +25,15 @@ export const useAnalyseStore = defineStore('analyse', {
     },
     setPpnInvalidsList(ppnList) {
       this.ppnInvalidsList = ppnList;
-    }
+    },
+    setAnalyseSelected(analyseSelected) {
+      this.analyseSelected = analyseSelected;
+    },
+    setFamilleDocumentSet(familleDocumentSet) {
+      this.familleDocumentSet = familleDocumentSet;
+    },
+    setRuleSet(ruleSet) {
+      this.ruleSet = ruleSet;
+    },
   }
 })
