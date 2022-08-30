@@ -2,7 +2,7 @@
   <v-card class="pa-3">
     <v-card-title>Sélectionner un type d'analyse</v-card-title>
     <v-divider></v-divider>
-    <v-radio-group style="width: 120px" v-model="analyseSelected" @change="emitOnEvent">
+    <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
       <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
         <template v-slot:activator="{ on, attrs }">
           <v-radio :label="analyse.label" :value="analyse.value" v-bind="attrs" v-on="on"></v-radio>
@@ -10,26 +10,14 @@
         <span>{{analyse.bulle}}</span>
       </v-tooltip>
     </v-radio-group>
-    <v-container fluid v-if="analyseSelected === 'FOCUS'" >
-      <v-card-subtitle >> Par type(s) de documents</v-card-subtitle>
-      <v-container class="d-flex flew-row">
-        <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.value" v-model="familleDocumentSetSelected" class="pa-1" @change="emitOnEvent" :value="familleDoc.value" :label="familleDoc.label"></v-checkbox>
+    <v-container v-if="analyseSelected === 'FOCUS'" >
+      <v-card-subtitle class="pa-0 ma-0">> Par type(s) de documents</v-card-subtitle>
+      <v-container class="d-flex flex-wrap pa-0 ma-0">
+        <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.value" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.value" :label="familleDoc.label"></v-checkbox>
       </v-container>
-      <v-card-subtitle >> Par jeu(x) de règles préconçu(s) </v-card-subtitle>
-      <v-checkbox v-model="ruleSet" value="Choix 1" @change="emitOnEvent" label="Choix 1"></v-checkbox>
-      <v-checkbox v-model="ruleSet" value="Choix 2" @change="emitOnEvent" label="Choix 2"></v-checkbox>
-      <v-checkbox v-model="ruleSet" value="Choix 3" @change="emitOnEvent" label="Choix 3"></v-checkbox>
-      <v-checkbox v-model="ruleSet" value="Choix 4" @change="emitOnEvent" label="Choix 4"></v-checkbox>
+      <v-card-subtitle class="pa-0 ma-0">> Par jeu(x) de règles préconçu(s) </v-card-subtitle>
+      <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.value" v-model="ruleSetSelected" :value="ruleset.value" @change="updateRuleSetInStore" :label="ruleset.label"></v-checkbox>
     </v-container>
-<!--    todo: supp test -->
-    <p>analyse choisie = {{ analyseSelected }}</p>
-    <p>Store analyse choisie = {{ analyseStore.getAnalyseSelected }}</p>
-    <p>familleDocumentSet = {{ familleDocumentSetSelected }}</p>
-    <p>Store familleDocumentSet = {{ analyseStore.getFamilleDocumentSet }}</p>
-    <p>ruleSet = {{ ruleSet }}</p>
-    <p>Store familleDocumentSet = {{ analyseStore.getRuleSet }}</p>
-    <p>Store = {{ analyseStore.getValidsPpnList }}</p>
-<!--    todo: supp test -->
   </v-card>
 </template>
 
@@ -56,7 +44,6 @@
       bulle: "Lorem ipsum lorem ipsum"
     },
   ];
-
   let familleDocumentList = [
     //Famille AUDIOVISUEL
     {
@@ -119,35 +106,61 @@
       value: "MONOGRAPHIE"
     },
   ];
+  let ruleSetList = [
+    {
+      value: "zone 210/214",
+      label: "Zones 210/214 (Publication, production, diffusion)"
+    },
+    {
+      value: "unm 2022",
+      label: "Implémentations UNM 2022"
+    },
+    {
+      value: "presence de $6/$7",
+      label: "Translitérations (présence de $6/$7)"
+    },
+    {
+      value: "zones de donnees codees",
+      label: "Zones de données codées (1XX)"
+    },
+    {
+      value: "zones d'indexation-matiere",
+      label: "Zones d'indexation-matière (6XX)"
+    },
+  ];
+
   let analyseSelected = ref('');
   let familleDocumentSetSelected = ref([]);
-  let ruleSet = ref([]);
+  let ruleSetSelected = ref([]);
 
   function updateAnalyseSelectedInStore() {
     analyseStore.setAnalyseSelected(analyseSelected.value);
+    emitOnEvent();
   }
   function updateFamilleDocumentSetInStore() {
     analyseStore.setFamilleDocumentSet(familleDocumentSetSelected.value);
+    emitOnEvent();
   }
   function updateRuleSetInStore() {
-    analyseStore.setRuleSet(ruleSet.value);
+    analyseStore.setRuleSet(ruleSetSelected.value);
+    emitOnEvent();
   }
 
   function isSelected() {
-    return (analyseSelected.value !== '' && analyseSelected.value !== 'FOCUS') || (analyseSelected.value === 'FOCUS' && (familleDocumentSetSelected.value.length !== 0 || ruleSet.value.length !== 0));
+    return (analyseSelected.value !== '' && analyseSelected.value !== 'FOCUS') || (analyseSelected.value === 'FOCUS' && (familleDocumentSetSelected.value.length !== 0 || ruleSetSelected.value.length !== 0));
   }
 
   function valuesSelected() {
     return {
       analyseType: analyseSelected.value,
       documentType: familleDocumentSetSelected.value,
-      ruleSet: ruleSet.value
+      ruleSet: ruleSetSelected.value
     }
   }
 
   function emitOnEvent(){
     emit('valuesSelected', valuesSelected());
-    emit('isSelected', isSelected())
+    emit('isSelected', isSelected());
   }
 
 </script>
