@@ -4,7 +4,7 @@
     <v-alert border="left" colored-border type="info">
       Pour des raisons de performance, nous vous recommandons d'utiliser l'import de fichier pour plus de 5000 PPN
     </v-alert>
-    <v-combobox append-icon="" @keydown="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple outlined small-chips :label="comboboxPpnLabel" class="style2">
+    <v-combobox append-icon="" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple outlined small-chips :label="comboboxPpnLabel" class="style2">
       <template v-slot:selection="{item}">
         <v-chip close @click:close="removeItem(item)">
           <span class="pr-2">{{ item }}</span>
@@ -33,7 +33,7 @@ import { useAnalyseStore } from "@/stores/analyse";
 import { ref } from 'vue';
 
     const analyseStore = useAnalyseStore(); //Store
-    let comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur une touche'); //Message indicatif de la combobox
+    let comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
     let lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
     let ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
     let ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
