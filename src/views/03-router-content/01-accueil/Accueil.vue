@@ -19,7 +19,7 @@ import { ref } from 'vue';
 
     const analyseStore = useAnalyseStore(); //Store
     const apiUrl = 'http://diplotaxis1-dev.v212.abes.fr:11081';
-    let ppn = 143519379;
+    let json = {"ppnList":["143519379"],"typeAnalyse":"QUICK","famillesDocuments":null,"rules":null};
     let isAnalyseSelected = ref(false);
     let isPpnListIsEmpty = ref(true);
 
@@ -40,7 +40,9 @@ import { ref } from 'vue';
     }
 
     function launchRequest(){
-      axios.get(apiUrl + '/api/v1/' + ppn)
+
+      /*
+      axios.post(apiUrl + '/api/v1/check' + json)
         .then(function (response) {
           // handle success
           console.log(response);
@@ -52,5 +54,16 @@ import { ref } from 'vue';
         .then(function () {
           // always executed
         });
+      */
+
+      axios({
+        method: 'post',
+        url: apiUrl + '/api/v1/check',
+        data: json
+      }).then((response) => {
+        console.log(response)
+      }).catch((error) => {
+        console.log(error);
+      });
     }
 </script>
