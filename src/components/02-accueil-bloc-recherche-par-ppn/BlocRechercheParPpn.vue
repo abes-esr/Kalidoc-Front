@@ -57,6 +57,7 @@ import { ref } from 'vue';
       if(!!ppnListCombobox.value){
         ppnListCombobox.value = [];
         analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
+        emitOnEvent();
       }
     }
 
@@ -79,21 +80,22 @@ import { ref } from 'vue';
         analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
       }
       lastValuesTypedOrPasted.value = ''; //On vide la chaîne puisqu'on à alimenté les valeurs valides dans :value="ppnListCombobox"
+      emitOnEvent();
     }
 
     /**
      * Controle si la liste de ppn dans le store est vide ou non
      * @returns {boolean} true si la liste est vide, false si elle ne l'est pas
      */
-    function checkPpnListIsEmptyInStore(){
-      return analyseStore.getValidsPpnList.size === 0;
+    function checkPpnListIsEmptyInCombobox(){
+      return ppnListCombobox.value.length === 0;
     }
 
     /**
      * Evenement envoyant au parent avec l'annotation @isPpnListEmpty un booleen
      */
     function emitOnEvent(){
-      emit('isPpnListEmpty', checkPpnListIsEmptyInStore());
+      emit('isPpnListEmpty', checkPpnListIsEmptyInCombobox());
     }
 
 </script>

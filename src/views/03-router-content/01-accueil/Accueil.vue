@@ -3,8 +3,8 @@
     <bloc-type-analyse @isSelected="setIsAnalyseSelected"></bloc-type-analyse>
     <bloc-recherche-par-ppn @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
     <bloc-recherche-par-fichier-ppn></bloc-recherche-par-fichier-ppn>
-    <v-btn @click="launchRequest" depressed color="primary" v-if="analyseStore.getValidsPpnList.length !== 0">Lancer l'analyse</v-btn>
-    <v-btn depressed color="error" v-if="analyseStore.getValidsPpnList.length === 0" disabled>Lancer l'analyse</v-btn>
+    <v-btn @click="launchRequest" depressed color="primary" v-if="!isPpnListIsEmpty && isAnalyseSelected">Lancer l'analyse</v-btn>
+    <v-btn depressed color="error" v-if="isPpnListIsEmpty || !isAnalyseSelected" disabled>Lancer l'analyse</v-btn>
   </v-container>
 </template>
 
@@ -15,19 +15,20 @@ import BlocRechercheParFichierPpn from "@/components/02-accueil-bloc-recherche-p
 
 import { useAnalyseStore } from "@/stores/analyse";
 import axios from "axios";
+import { ref } from 'vue';
 
     const analyseStore = useAnalyseStore(); //Store
     const apiUrl = 'http://diplotaxis1-dev.v212.abes.fr:11081';
     let ppn = 143519379;
-    let isAnalyseSelected = false;
-    let isPpnListIsEmpty = true;
+    let isAnalyseSelected = ref(false);
+    let isPpnListIsEmpty = ref(true);
 
     /**
      *
      * @param booleanInBlocTypeAnalyseEmited
      */
     function setIsAnalyseSelected(booleanInBlocTypeAnalyseEmited){
-      isAnalyseSelected = booleanInBlocTypeAnalyseEmited;
+      isAnalyseSelected.value = booleanInBlocTypeAnalyseEmited;
     }
 
     /**
@@ -35,7 +36,7 @@ import axios from "axios";
      * @param booleanInBlocRechercheParPpn
      */
     function setIsPpnListIsEmpty(booleanInBlocRechercheParPpn){
-      isPpnListIsEmpty = booleanInBlocRechercheParPpn;
+      isPpnListIsEmpty.value = booleanInBlocRechercheParPpn;
     }
 
     function launchRequest(){
