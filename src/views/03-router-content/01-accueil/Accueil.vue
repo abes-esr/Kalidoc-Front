@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <bloc-type-analyse @isSelected="setIsAnalyseSelected" @valuesSelected="setAnalyseSelected"></bloc-type-analyse>
-    <bloc-recherche-par-ppn></bloc-recherche-par-ppn>
+    <bloc-type-analyse @isSelected="setIsAnalyseSelected"></bloc-type-analyse>
+    <bloc-recherche-par-ppn @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
     <bloc-recherche-par-fichier-ppn></bloc-recherche-par-fichier-ppn>
     <v-btn @click="launchRequest" depressed color="primary" v-if="analyseStore.getValidsPpnList.length !== 0">Lancer l'analyse</v-btn>
     <v-btn depressed color="error" v-if="analyseStore.getValidsPpnList.length === 0" disabled>Lancer l'analyse</v-btn>
@@ -20,15 +20,23 @@ import axios from "axios";
     const apiUrl = 'http://diplotaxis1-dev.v212.abes.fr:11081';
     let ppn = 143519379;
     let isAnalyseSelected = false;
-    let analyseSelected = {};
+    let isPpnListIsEmpty = true;
 
-    function setIsAnalyseSelected(payload){
-      isAnalyseSelected = payload;
-    };
+    /**
+     *
+     * @param booleanInBlocTypeAnalyseEmited
+     */
+    function setIsAnalyseSelected(booleanInBlocTypeAnalyseEmited){
+      isAnalyseSelected = booleanInBlocTypeAnalyseEmited;
+    }
 
-    function setAnalyseSelected(payload){
-      analyseSelected = payload;
-    };
+    /**
+     *
+     * @param booleanInBlocRechercheParPpn
+     */
+    function setIsPpnListIsEmpty(booleanInBlocRechercheParPpn){
+      isPpnListIsEmpty = booleanInBlocRechercheParPpn;
+    }
 
     function launchRequest(){
       axios.get(apiUrl + '/api/v1/' + ppn)
@@ -43,5 +51,5 @@ import axios from "axios";
         .then(function () {
           // always executed
         });
-    };
+    }
 </script>

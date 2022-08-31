@@ -33,6 +33,7 @@ import { useAnalyseStore } from "@/stores/analyse";
 import { ref } from 'vue';
 
     const analyseStore = useAnalyseStore(); //Store
+    const emit = defineEmits(['isPpnListEmpty']); //Evenement envoyé au parent avec un booléen indiquant si la liste est vide ou non
     let comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
     let lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
     let ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
@@ -46,6 +47,7 @@ import { ref } from 'vue';
       const index = ppnListCombobox.value.indexOf(item);
       ppnListCombobox.value.splice(index, 1);
       analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
+      emitOnEvent();
     }
 
     /**
@@ -77,6 +79,21 @@ import { ref } from 'vue';
         analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
       }
       lastValuesTypedOrPasted.value = ''; //On vide la chaîne puisqu'on à alimenté les valeurs valides dans :value="ppnListCombobox"
+    }
+
+    /**
+     * Controle si la liste de ppn dans le store est vide ou non
+     * @returns {boolean} true si la liste est vide, false si elle ne l'est pas
+     */
+    function checkPpnListIsEmptyInStore(){
+      return analyseStore.getValidsPpnList.size === 0;
+    }
+
+    /**
+     * Evenement envoyant au parent avec l'annotation @isPpnListEmpty un booleen
+     */
+    function emitOnEvent(){
+      emit('isPpnListEmpty', checkPpnListIsEmptyInStore());
     }
 
 </script>
