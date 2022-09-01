@@ -1,34 +1,166 @@
 <template>
-  <v-container>
+  <v-card class="pa-3">
     <v-card-title>Sélectionner un type d'analyse</v-card-title>
-    <v-radio-group v-model="analyseSelected">
-      <v-radio :label="'Analyse Rapide'" :value="'P1'"></v-radio>
-      <v-radio :label="'Analyse Experte'" :value="'P2'"></v-radio>
-      <v-radio :label="'Analyse Ciblée'" :value="'P3'"></v-radio>
+    <v-divider></v-divider>
+    <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
+      <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
+        <template v-slot:activator="{ on, attrs }">
+          <v-radio :label="analyse.label" :value="analyse.value" v-bind="attrs" v-on="on"></v-radio>
+        </template>
+        <span>{{analyse.bulle}}</span>
+      </v-tooltip>
     </v-radio-group>
-    <v-container fluid v-if="analyseSelected === 'P3'">
-      <v-checkbox v-model="choiceP3" value="Choix 1" label="Choix 1"></v-checkbox>
-      <v-checkbox v-model="choiceP3" value="Choix 2" label="Choix 2"></v-checkbox>
-      <v-checkbox v-model="choiceP3" value="Choix 3" label="Choix 3"></v-checkbox>
-      <v-checkbox v-model="choiceP3" value="Choix 4" label="Choix 4"></v-checkbox>
+    <v-container v-if="analyseSelected === 'FOCUS'" >
+      <v-card-subtitle class="pa-0 ma-0">> Par type(s) de documents</v-card-subtitle>
+      <v-container class="d-flex flex-wrap pa-0 ma-0">
+        <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.value" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.value" :label="familleDoc.label"></v-checkbox>
+      </v-container>
+      <v-card-subtitle class="pa-0 ma-0">> Par jeu(x) de règles préconçu(s) </v-card-subtitle>
+      <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.value" v-model="ruleSetSelected" :value="ruleset.value" @change="updateRuleSetInStore" :label="ruleset.label"></v-checkbox>
     </v-container>
-
-<!--    todo: supp test -->
-    <p>analyse choisie = {{ analyseSelected }}</p>
-    <p>choix P3 = {{ choiceP3 }}</p>
-<!--    todo: supp test -->
-
-  </v-container>
+  </v-card>
 </template>
 
-<script>
-export default {
-  name: "blocTypeAnalyse",
-  data() {
+<script setup>
+  import { useAnalyseStore } from "@/stores/analyse";
+  import { ref } from 'vue';
+
+  const analyseStore = useAnalyseStore();
+  const emit= defineEmits(['valuesSelected','isSeleced'])
+  let analysesList = [
+    {
+      label: 'RAPIDE',
+      value: 'QUICK',
+      bulle: "Règles essentielles / de base"
+    },
+    {
+      label: 'EXPERTE',
+      value: 'COMPLETE',
+      bulle: "Règles essentielles / avancées"
+    },
+    {
+      label: 'CIBLÉE',
+      value: 'FOCUS',
+      bulle: "Lorem ipsum lorem ipsum"
+    },
+  ];
+  let familleDocumentList = [
+    //Famille AUDIOVISUEL
+    {
+      label: "Audiovisuel",
+      value: "AUDIOVISUEL"
+    },
+    //FAMILLE CARTE
+    {
+      label: "Carte",
+      value: "CARTE"
+    },
+//FAMILLE DOCUMENT ELECTRONIQUE
+    {
+      label: "Doc. Electronique",
+      value: "DOCUMENT ELECTRONIQUE"
+    },
+//FAMILLE ENREGISTREMENT
+    {
+      label: "Enregistrement",
+      value: "ENREGISTREMENT"
+    },
+//FAMILLE IMAGE
+    {
+      label: "Image",
+      value: "IMAGE"
+    },
+//FAMILLE MANUSCRIT
+    {
+      label: "Manuscrit",
+      value: "MANUSCRIT"
+    },
+//FAMILLE MULTIMEDIA
+    {
+      label: "Multimédia",
+      value: "MULTIMEDIA"
+    },
+//FAMILLE MUSIQUE
+    {
+      label: "Musique",
+      value: "MUSIQUE"
+    },
+//FAMILLE OBJET
+    {
+      label: "Objet",
+      value: "OBJET"
+    },
+//FAMILLE PARTITION
+    {
+      label: "Partition",
+      value: "PARTITION"
+    },
+//FAMILLE RESSOURCE CONTINUE
+    {
+      label: "Recource continue",
+      value: "RESSOURCE CONTINUE"
+    },
+//FAMILLE MONOGRAPHIE
+    {
+      label: "Monographie",
+      value: "MONOGRAPHIE"
+    },
+  ];
+  let ruleSetList = [
+    {
+      value: "zone 210/214",
+      label: "Zones 210/214 (Publication, production, diffusion)"
+    },
+    {
+      value: "unm 2022",
+      label: "Implémentations UNM 2022"
+    },
+    {
+      value: "presence de $6/$7",
+      label: "Translitérations (présence de $6/$7)"
+    },
+    {
+      value: "zones de donnees codees",
+      label: "Zones de données codées (1XX)"
+    },
+    {
+      value: "zones d'indexation-matiere",
+      label: "Zones d'indexation-matière (6XX)"
+    },
+  ];
+
+  let analyseSelected = ref('');
+  let familleDocumentSetSelected = ref([]);
+  let ruleSetSelected = ref([]);
+
+  function updateAnalyseSelectedInStore() {
+    analyseStore.setAnalyseSelected(analyseSelected.value);
+    emitOnEvent();
+  }
+  function updateFamilleDocumentSetInStore() {
+    analyseStore.setFamilleDocumentSet(familleDocumentSetSelected.value);
+    emitOnEvent();
+  }
+  function updateRuleSetInStore() {
+    analyseStore.setRuleSet(ruleSetSelected.value);
+    emitOnEvent();
+  }
+
+  function isSelected() {
+    return (analyseSelected.value !== '' && analyseSelected.value !== 'FOCUS') || (analyseSelected.value === 'FOCUS' && (familleDocumentSetSelected.value.length !== 0 || ruleSetSelected.value.length !== 0));
+  }
+
+  function valuesSelected() {
     return {
-      analyseSelected: null,
-      choiceP3: [],
+      analyseType: analyseSelected.value,
+      documentType: familleDocumentSetSelected.value,
+      ruleSet: ruleSetSelected.value
     }
   }
-};
+
+  function emitOnEvent(){
+    emit('valuesSelected', valuesSelected());
+    emit('isSelected', isSelected());
+  }
+
 </script>
