@@ -5,12 +5,12 @@
     <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
       <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
         <template v-slot:activator="{ on, attrs }">
-          <v-radio :label="analyse.label" :value="analyse.value" v-bind="attrs" v-on="on"></v-radio>
+          <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
         </template>
         <span>{{analyse.bulle}}</span>
       </v-tooltip>
     </v-radio-group>
-    <v-container v-if="analyseSelected === 'FOCUS'" >
+    <v-container v-if="analyseSelected.value === 'FOCUS'" >
       <v-card-subtitle class="pa-0 ma-0">> Par type(s) de documents</v-card-subtitle>
       <v-container class="d-flex flex-wrap pa-0 ma-0">
         <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.value" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.value" :label="familleDoc.label"></v-checkbox>
