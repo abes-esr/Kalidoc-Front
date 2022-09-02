@@ -26,7 +26,7 @@
   import { ref } from 'vue';
 
   const analyseStore = useAnalyseStore();
-  const emit= defineEmits(['valuesSelected','isSelected'])
+  const emit = defineEmits(['isSelected'])
   let analysesList = [
     {
       label: 'RAPIDE',
@@ -43,7 +43,7 @@
       value: 'FOCUS',
       bulle: "Lorem ipsum lorem ipsum"
     },
-  ];
+  ]; //TODO ws
   let familleDocumentList = [
     //Famille AUDIOVISUEL
     {
@@ -105,7 +105,7 @@
       label: "Monographie",
       value: "MONOGRAPHIE"
     },
-  ];
+  ]; //TODO ws
   let ruleSetList = [
     {
       value: "zone 210/214",
@@ -127,7 +127,7 @@
       value: "zones d'indexation-matiere",
       label: "Zones d'indexation-matière (6XX)"
     },
-  ];
+  ]; //TODO ws
 
   let analyseSelected = ref('');
   let familleDocumentSetSelected = ref([]);
@@ -150,6 +150,7 @@
     return (analyseSelected.value !== '' && analyseSelected.value !== 'FOCUS') || (analyseSelected.value === 'FOCUS' && (familleDocumentSetSelected.value.length !== 0 || ruleSetSelected.value.length !== 0));
   }
 
+  /** anciene fonction regroupant les valeurs saisies.*/
   function valuesSelected() {
     return {
       analyseType: analyseSelected.value,
@@ -159,7 +160,6 @@
   }
 
   function emitOnEvent(){
-    emit('valuesSelected', valuesSelected());
     emit('isSelected', isSelected());
   }
 
