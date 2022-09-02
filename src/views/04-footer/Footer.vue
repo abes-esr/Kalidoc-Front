@@ -1,7 +1,7 @@
 <template>
-   <v-footer absolute padless height="200" color="#0f75bc">
-      <v-row align="center" style="background-color: #0f75bc; color: white; font-size: 1em">
-         <v-col cols="auto" class="mr-auto" lg="8" style='text-align: start; padding-left: 2em; padding-right: 2em' v-if="!$vuetify.breakpoint.md && !$vuetify.breakpoint.sm">
+   <v-footer absolute padless height="200" color="#e6e6e6">
+      <v-row align="center" style="background-color: #e6e6e6; color: white; font-size: 1em">
+         <v-col cols="auto" class="mr-auto" lg="8" style='color: black; text-align: start; padding-left: 2em; padding-right: 2em' v-if="!$vuetify.breakpoint.md && !$vuetify.breakpoint.sm">
             <span>
                Description de à quoi sert l'application. "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -11,16 +11,16 @@
             </span>
          </v-col>
          <v-col md="auto" style='text-align: start; padding-left: 2em'>
-            <div><a href="https://documentation.abes.fr/sudoc/" style="color: white">Sudoc</a></div>
-            <div><a href="https://documentation.abes.fr/aideperiscope/" style="color: white">Documentation</a></div>
-            <div><a href="https://stp.abes.fr/node/3?origine=sudocpro" style="color: white">ABESstp</a></div>
+            <div><a href="https://documentation.abes.fr/sudoc/" style="color: black">Sudoc</a></div>
+            <div><a href="https://documentation.abes.fr/aideperiscope/" style="color: black">Documentation</a></div>
+            <div><a href="https://stp.abes.fr/node/3?origine=sudocpro" style="color: black">ABESstp</a></div>
          </v-col>
          <v-col cols="auto" style="padding-right: 2em; padding-left: 2em">
             <span style='padding-right: 1em'><a href="https://abes.fr/"><img src="@/assets/abes.png" alt="logo abes"/></a></span>
             <span><a href="https://www.enseignementsup-recherche.gouv.fr/fr"><img src="@/assets/MESRI_logo.svg" alt="logo mesri"/></a></span>
          </v-col>
       </v-row>
-      <v-row align='center' style="background-color: #2c2968; color: white; font-size: 1em">
+      <v-row align='center' style="background-color: black; color: white; font-size: 1em">
          <v-col cols="auto" class="mr-auto" style='text-align: start; padding-left: 2em'>
             <span>Application, servant à cela — {{ new Date().getFullYear() }} </span>
          </v-col>
