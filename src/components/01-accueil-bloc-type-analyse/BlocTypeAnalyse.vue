@@ -150,6 +150,7 @@
     return (analyseSelected.value !== '' && analyseSelected.value !== 'FOCUS') || (analyseSelected.value === 'FOCUS' && (familleDocumentSetSelected.value.length !== 0 || ruleSetSelected.value.length !== 0));
   }
 
+  /** anciene fonction regroupant les valeurs saisies.*/
   function valuesSelected() {
     return {
       analyseType: analyseSelected.value,
