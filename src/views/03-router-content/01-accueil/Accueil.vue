@@ -43,12 +43,21 @@ function setIsPpnListIsEmpty(booleanInBlocRechercheParPpn) {
 
 function launchRequest() {
   console.log("appel axios")
+  //todo: Adapter l'appel des setters avec le retour de l'appel axios
+  analyseStore.setNbPpnTotal(10);
+  analyseStore.setNbPpnTrouves(9);
+  analyseStore.setNbPpnErreurs(5);
+  analyseStore.setNbPpnOk(4);
 }
 
 /**
  * A supprimer lorsqu'appel axios implémenté
  */
 function test() {
+  analyseStore.setNbPpnTotal(10);
+  analyseStore.setNbPpnTrouves(9);
+  analyseStore.setNbPpnErreurs(5);
+  analyseStore.setNbPpnOk(4);
   router.push('/resultats')
 }
 </script>
