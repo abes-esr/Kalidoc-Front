@@ -1,0 +1,33 @@
+
+/*-------------------*/
+/*     TITLE BAR     */
+/*-------------------*/
+
+.titleBar {
+    background-color: #252c61;
+    margin: 0 0 1em 0;
+}
+
+.titleBarLogo {
+    height: 88px;
+    padding: 6px 0 0 0;
+}
+
+.titleBarRow {
+    max-height: 6em;
+    height: 150px
+}
+
+#titleBarCols {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.titleBarButtonInactive {
+
+}
+
+.titleBarButtonSelected {
+    border-bottom-style: solid ;
+    border-color: #ff4d17;
+}
