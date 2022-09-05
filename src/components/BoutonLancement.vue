@@ -9,32 +9,40 @@
 
 import {useAnalyseStore} from "@/stores/analyse";
 import axios from "axios";
+import { useResultatStore } from "@/stores/resultat";
 
 const analyseStore = useAnalyseStore(); //Store
+const resultatStore = useResultatStore();
 
 const props = defineProps({isDisabled: Boolean});
-const emit = defineEmits(["onClick"]);
-const apiUrl = 'http://localhost:8082/api/v1/';
-let json = {"ppnList":["143519379"],"typeAnalyse":"QUICK"};
+const emit = defineEmits(['onClick', 'backendError', 'finished']);
 
 function launchRequest() {
-  console.log("appel axios")
-
   axios({
     method: 'post',
-    url: apiUrl + 'check',
-    data: json
+    url: process.env.VUE_APP_ROOT_API + 'check',
+    data: {
+      ppnList: analyseStore.getPpnValidsList,
+      typeAnalyse: analyseStore.getAnalyseSelected.value
+    }
   }).then((response) => {
-    console.log(response)
+    resultatStore.setResultsListArray(response.data.resultRules);
+    resultatStore.setNbPpnTotal(response.data.nbPpnAnalyses);
+    resultatStore.setNbPpnInconnus(response.data.nbPpnInconnus);
+    resultatStore.setNbPpnErreurs(response.data.npPpnErrones);
+    resultatStore.setNbPpnOk(response.data.nbPpnOk);
+    emitOnFinished();
   }).catch((error) => {
-    console.log(error);
+    emitOnEvent(error);
   });
+}
 
-  //todo: Adapter l'appel des setters avec le retour de l'appel axios
-  analyseStore.setNbPpnTotal(5);
-  analyseStore.setNbPpnTrouves(9);
-  analyseStore.setNbPpnErreurs(5);
-  analyseStore.setNbPpnOk(4);
+function emitOnEvent(error){
+  emit('backendError', error);
+}
+
+function emitOnFinished(){
+  emit('finished', true);
 }
 
 </script>

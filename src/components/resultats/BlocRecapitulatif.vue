@@ -22,9 +22,9 @@
             }}
           </v-chip>
         </v-container>
-        <v-container class="d-flex justify-space-between pb-0"><span>Nb. de ppn trouvés</span>
+        <v-container class="d-flex justify-space-between pb-0"><span>Nb. de ppn non trouvés</span>
           <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
-              getNbPpnTrouves()
+              getNbPpnInconnus()
             }}
           </v-chip>
         </v-container>
@@ -34,24 +34,26 @@
 </template>
 
 <script setup>
-import {useAnalyseStore} from "@/stores/analyse";
 
-const analyseStore = useAnalyseStore();
+
+import { useResultatStore } from "@/stores/resultat";
+
+const resultatStore = useResultatStore();
 
 function getNbPpnTotal() {
-  return analyseStore.getNbPpnTotal;
+  return resultatStore.getNbPpnTotal;
 }
 
-function getNbPpnTrouves() {
-  return analyseStore.getNbPpnTrouves;
+function getNbPpnInconnus() {
+  return resultatStore.getNbPpnInconnus;
 }
 
 function getNbPpnErreurs() {
-  return analyseStore.getNbPpnErreurs;
+  return resultatStore.getNbPpnErreurs;
 }
 
 function getNbPpnOk() {
-  return analyseStore.getNbPpnOk;
+  return resultatStore.getNbPpnOk;
 }
 
 </script>
