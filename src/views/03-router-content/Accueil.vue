@@ -3,19 +3,16 @@
     <bloc-type-analyse @isSelected="setIsAnalyseSelected"></bloc-type-analyse>
     <bloc-recherche-par-ppn @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
     <bloc-recherche-par-fichier-ppn></bloc-recherche-par-fichier-ppn>
-    <v-btn @click="launchRequest" depressed color="primary" v-if="!isPpnListIsEmpty && isAnalyseSelected">Lancer
-      l'analyse
-    </v-btn>
-    <v-btn depressed color="error" v-if="isPpnListIsEmpty || !isAnalyseSelected" disabled>Lancer l'analyse</v-btn>
+    <bouton-lancement :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)">Lancer l'analyse</bouton-lancement>
     <!-- a supprimer lorsque appel axios implémenté -->
     <v-btn @click="test">Aller à la page de résultats</v-btn>
   </v-container>
 </template>
-
 <script setup>
-import BlocTypeAnalyse from "@/components/01-accueil-bloc-type-analyse/BlocTypeAnalyse";
-import BlocRechercheParPpn from "@/components/02-accueil-bloc-recherche-par-ppn/BlocRechercheParPpn";
-import BlocRechercheParFichierPpn from "@/components/02-accueil-bloc-recherche-par-ppn/BlocRechercheParFichierPpn";
+import BlocTypeAnalyse from "@/components/accueil/BlocTypeAnalyse";
+import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn";
+import BlocRechercheParFichierPpn from "@/components/accueil/BlocRechercheParFichierPpn";
+import BoutonLancement from "@/components/BoutonLancement";
 
 import {useAnalyseStore} from "@/stores/analyse";
 import {ref} from 'vue';
@@ -39,15 +36,6 @@ function setIsAnalyseSelected(booleanInBlocTypeAnalyseEmited) {
  */
 function setIsPpnListIsEmpty(booleanInBlocRechercheParPpn) {
   isPpnListIsEmpty.value = booleanInBlocRechercheParPpn;
-}
-
-function launchRequest() {
-  console.log("appel axios")
-  //todo: Adapter l'appel des setters avec le retour de l'appel axios
-  analyseStore.setNbPpnTotal(10);
-  analyseStore.setNbPpnTrouves(9);
-  analyseStore.setNbPpnErreurs(5);
-  analyseStore.setNbPpnOk(4);
 }
 
 /**

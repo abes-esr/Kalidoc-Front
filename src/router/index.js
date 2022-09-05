@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import accueil from "@/views/03-router-content/01-accueil/Accueil";
-import resultat from '@/views/03-router-content/02-resultats/Resultat';
-import Accueil from "@/views/03-router-content/01-accueil/Accueil";
+import accueil from "@/views/03-router-content/Accueil";
+import resultat from '@/views/03-router-content/Resultat';
+import Accueil from "@/views/03-router-content/Accueil";
 
 Vue.use(VueRouter)
 
