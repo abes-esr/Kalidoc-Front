@@ -6,25 +6,25 @@
       <v-container class="d-flex align-start flex-column pt-0">
         <v-container class="d-flex justify-space-between pb-0"><span>Nb. total de PPN analysés</span>
           <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
-              nbPpnTotal
+              getNbPpnTotal()
             }}
           </v-chip>
         </v-container>
         <v-container class="d-flex justify-space-between pb-0"><span>Nb. de PPN avec erreurs</span>
           <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
-              nbPpnErreurs
+              getNbPpnErreurs()
             }}
           </v-chip>
         </v-container>
         <v-container class="d-flex justify-space-between pb-0"><span>Nb. de PPN sans erreurs</span>
           <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
-              nbPpnOk
+              getNbPpnOk()
             }}
           </v-chip>
         </v-container>
         <v-container class="d-flex justify-space-between pb-0"><span>Nb. de ppn trouvés</span>
           <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
-              nbPpnTrouves
+              getNbPpnTrouves()
             }}
           </v-chip>
         </v-container>
@@ -35,14 +35,8 @@
 
 <script setup>
 import {useAnalyseStore} from "@/stores/analyse";
-import {ref} from 'vue';
 
 const analyseStore = useAnalyseStore();
-
-const nbPpnTotal = ref(getNbPpnTotal());
-const nbPpnTrouves = ref(getNbPpnTrouves());
-const nbPpnErreurs = ref(getNbPpnErreurs());
-const nbPpnOk = ref(getNbPpnOk());
 
 function getNbPpnTotal() {
   return analyseStore.getNbPpnTotal;
@@ -59,7 +53,6 @@ function getNbPpnErreurs() {
 function getNbPpnOk() {
   return analyseStore.getNbPpnOk;
 }
-
 
 </script>
 
