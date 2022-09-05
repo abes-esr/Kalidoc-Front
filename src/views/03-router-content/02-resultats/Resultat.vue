@@ -1,7 +1,15 @@
 <template>
-  <v-container>
-    <bloc-rappel-type-analyse></bloc-rappel-type-analyse>
-    <bloc-recapitulatif></bloc-recapitulatif>
+  <v-container fluid>
+    <v-row>
+      <v-col><bloc-rappel-type-analyse></bloc-rappel-type-analyse></v-col>
+    </v-row>
+    <v-row>
+      <v-col><v-card class="secondary" height="200%"></v-card></v-col>
+      <v-col>
+        <v-card height="100%" class="primary"></v-card>
+        <bloc-recapitulatif height="100%"></bloc-recapitulatif>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <script>
