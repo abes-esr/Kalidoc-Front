@@ -10,22 +10,14 @@ export const useAnalyseStore = defineStore('analyse', {
       analyseSelected: '',
       familleDocumentSet: [],
       ruleSet: [],
-      nbPpnTotal: 0,
-      nbPpnTrouves: 0,
-      nbPpnErreurs:0,
-      nbPpnOk:0,
     }
   },
   getters: {
-    getValidsPpnList: (state) => state.ppnValidsList,
-    getInvalidsPpnList: (state) => state.ppnInvalidsList,
+    getPpnValidsList: (state) => state.ppnValidsList,
+    getPpnInvalidsList: (state) => state.ppnInvalidsList,
     getAnalyseSelected: (state) => state.analyseSelected,
     getFamilleDocumentSet: (state) => state.familleDocumentSet,
     getRuleSet: (state) => state.ruleSet,
-    getNbPpnTotal: (state) => state.nbPpnTotal,
-    getNbPpnTrouves: (state) => state.nbPpnTrouves,
-    getNbPpnErreurs: (state) => state.nbPpnErreurs,
-    getNbPpnOk: (state) => state.nbPpnOk
   },
   actions: {
     setPpnValidsList(ppnList) {
@@ -43,17 +35,5 @@ export const useAnalyseStore = defineStore('analyse', {
     setRuleSet(ruleSet) {
       this.ruleSet = ruleSet;
     },
-    setNbPpnTotal(ppnTotal) {
-      this.nbPpnTotal = ppnTotal;
-    },
-    setNbPpnTrouves(ppnTrouves) {
-      this.nbPpnTrouves = ppnTrouves;
-    },
-    setNbPpnErreurs(ppnErreurs) {
-      this.nbPpnErreurs = ppnErreurs;
-    },
-    setNbPpnOk(ppnOk) {
-      this.nbPpnOk = ppnOk;
-    }
   }
 })
