@@ -11,7 +11,6 @@
   const analyseStore = useAnalyseStore();
   const typeAnalyse = ref(getTypeAnalyse())
   function getTypeAnalyse() {
-    console.log(JSON.stringify(analyseStore));
     return analyseStore.getAnalyseSelected;
   }
 </script>
