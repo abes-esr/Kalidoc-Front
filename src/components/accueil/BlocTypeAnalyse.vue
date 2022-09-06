@@ -13,17 +13,18 @@
     <v-container v-if="analyseSelected.value === 'FOCUS'" >
       <v-card-subtitle class="pa-0 ma-0">> Par type(s) de documents</v-card-subtitle>
       <v-container class="d-flex flex-wrap pa-0 ma-0">
-        <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.value" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.value" :label="familleDoc.label"></v-checkbox>
+        <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.id" :label="familleDoc.libelle"></v-checkbox>
       </v-container>
       <v-card-subtitle class="pa-0 ma-0">> Par jeu(x) de règles préconçu(s) </v-card-subtitle>
-      <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.value" v-model="ruleSetSelected" :value="ruleset.value" @change="updateRuleSetInStore" :label="ruleset.label"></v-checkbox>
+      <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset.id" @change="updateRuleSetInStore" :label="ruleset.libelle"></v-checkbox>
     </v-container>
   </v-card>
 </template>
 
 <script setup>
   import { useAnalyseStore } from "@/stores/analyse";
-  import { ref } from 'vue';
+  import { onMounted, ref } from "vue";
+  import axios from "axios";
 
   const analyseStore = useAnalyseStore();
   const emit = defineEmits(['isSelected'])
@@ -41,97 +42,42 @@
     {
       label: 'CIBLÉE',
       value: 'FOCUS',
-      bulle: "Lorem ipsum lorem ipsum"
+      bulle: "Règles personnalisées"
     },
-  ]; //TODO ws
-  let familleDocumentList = [
-    //Famille AUDIOVISUEL
-    {
-      label: "Audiovisuel",
-      value: "AUDIOVISUEL"
-    },
-    //FAMILLE CARTE
-    {
-      label: "Carte",
-      value: "CARTE"
-    },
-//FAMILLE DOCUMENT ELECTRONIQUE
-    {
-      label: "Doc. Electronique",
-      value: "DOCUMENT ELECTRONIQUE"
-    },
-//FAMILLE ENREGISTREMENT
-    {
-      label: "Enregistrement",
-      value: "ENREGISTREMENT"
-    },
-//FAMILLE IMAGE
-    {
-      label: "Image",
-      value: "IMAGE"
-    },
-//FAMILLE MANUSCRIT
-    {
-      label: "Manuscrit",
-      value: "MANUSCRIT"
-    },
-//FAMILLE MULTIMEDIA
-    {
-      label: "Multimédia",
-      value: "MULTIMEDIA"
-    },
-//FAMILLE MUSIQUE
-    {
-      label: "Musique",
-      value: "MUSIQUE"
-    },
-//FAMILLE OBJET
-    {
-      label: "Objet",
-      value: "OBJET"
-    },
-//FAMILLE PARTITION
-    {
-      label: "Partition",
-      value: "PARTITION"
-    },
-//FAMILLE RESSOURCE CONTINUE
-    {
-      label: "Recource continue",
-      value: "RESSOURCE CONTINUE"
-    },
-//FAMILLE MONOGRAPHIE
-    {
-      label: "Monographie",
-      value: "MONOGRAPHIE"
-    },
-  ]; //TODO ws
-  let ruleSetList = [
-    {
-      value: "zone 210/214",
-      label: "Zones 210/214 (Publication, production, diffusion)"
-    },
-    {
-      value: "unm 2022",
-      label: "Implémentations UNM 2022"
-    },
-    {
-      value: "presence de $6/$7",
-      label: "Translitérations (présence de $6/$7)"
-    },
-    {
-      value: "zones de donnees codees",
-      label: "Zones de données codées (1XX)"
-    },
-    {
-      value: "zones d'indexation-matiere",
-      label: "Zones d'indexation-matière (6XX)"
-    },
-  ]; //TODO ws
+  ];
+  let familleDocumentList = ref([]);
+  let ruleSetList = ref([]);
 
   let analyseSelected = ref('');
   let familleDocumentSetSelected = ref([]);
   let ruleSetSelected = ref([]);
+
+  onMounted(() => {
+    feedFamilleDocumentList()
+    feedRuleSetList();
+  })
+
+  function feedFamilleDocumentList(){
+    axios({
+      method: 'get',
+      url: process.env.VUE_APP_ROOT_API + 'getFamillesDocuments',
+    }).then((response) => {
+      response.data.forEach((el) => familleDocumentList.value.push(el));
+    }).catch((error) => {
+      emitOnEvent(error);
+    });
+  }
+
+  function feedRuleSetList(){
+    axios({
+      method: 'get',
+      url: process.env.VUE_APP_ROOT_API + 'getTypesAnalyses',
+    }).then((response) => {
+      response.data.forEach((el) => ruleSetList.value.push(el));
+    }).catch((error) => {
+      emitOnEvent(error);
+    });
+  }
 
   function updateAnalyseSelectedInStore() {
     analyseStore.setAnalyseSelected(analyseSelected.value);
