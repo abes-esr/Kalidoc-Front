@@ -13,10 +13,10 @@
     <v-container v-if="analyseSelected.value === 'FOCUS'" >
       <v-card-subtitle class="pa-0 ma-0">> Par type(s) de documents</v-card-subtitle>
       <v-container class="d-flex flex-wrap pa-0 ma-0">
-        <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.id" :label="familleDoc.value.libelle"></v-checkbox>
+        <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.id" :label="familleDoc.libelle"></v-checkbox>
       </v-container>
       <v-card-subtitle class="pa-0 ma-0">> Par jeu(x) de règles préconçu(s) </v-card-subtitle>
-      <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.value" v-model="ruleSetSelected" :value="ruleset.value" @change="updateRuleSetInStore" :label="ruleset.label"></v-checkbox>
+      <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset.id" @change="updateRuleSetInStore" :label="ruleset.libelle"></v-checkbox>
     </v-container>
   </v-card>
 </template>
@@ -44,7 +44,7 @@
       value: 'FOCUS',
       bulle: "Règles personnalisées"
     },
-  ]; //TODO ws
+  ];
   let familleDocumentList = ref([]);
   let ruleSetList = ref([]);
 
@@ -53,8 +53,7 @@
   let ruleSetSelected = ref([]);
 
   onMounted(() => {
-    let data = feedFamilleDocumentList();
-    data.data.forEach((el) => familleDocumentList.value.push(el));
+    feedFamilleDocumentList()
     feedRuleSetList();
   })
 
@@ -63,7 +62,7 @@
       method: 'get',
       url: process.env.VUE_APP_ROOT_API + 'getFamillesDocuments',
     }).then((response) => {
-      return response;
+      response.data.forEach((el) => familleDocumentList.value.push(el));
     }).catch((error) => {
       emitOnEvent(error);
     });
@@ -74,7 +73,7 @@
       method: 'get',
       url: process.env.VUE_APP_ROOT_API + 'getTypesAnalyses',
     }).then((response) => {
-      ruleSetList = response.data;
+      response.data.forEach((el) => ruleSetList.value.push(el));
     }).catch((error) => {
       emitOnEvent(error);
     });
