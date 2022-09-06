@@ -9,15 +9,15 @@ export const useAnalyseStore = defineStore('analyse', {
       ppnInvalidsList: [],
       analyseSelected: '',
       familleDocumentSet: [],
-      ruleSet: []
+      ruleSet: [],
     }
   },
   getters: {
-    getValidsPpnList: (state) => state.ppnValidsList,
-    getInvalidsPpnList: (state) => state.ppnInvalidsList,
+    getPpnValidsList: (state) => state.ppnValidsList,
+    getPpnInvalidsList: (state) => state.ppnInvalidsList,
     getAnalyseSelected: (state) => state.analyseSelected,
     getFamilleDocumentSet: (state) => state.familleDocumentSet,
-    getRuleSet: (state) => state.ruleSet
+    getRuleSet: (state) => state.ruleSet,
   },
   actions: {
     setPpnValidsList(ppnList) {
