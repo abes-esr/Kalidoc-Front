@@ -1,24 +1,27 @@
 <template>
-  <v-card class="pa-3">
-    <v-card-title>Sélectionner un type d'analyse</v-card-title>
-    <v-divider></v-divider>
-    <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
-      <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
-        <template v-slot:activator="{ on, attrs }">
-          <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
-        </template>
-        <span>{{analyse.bulle}}</span>
-      </v-tooltip>
-    </v-radio-group>
-    <v-container v-if="analyseSelected.value === 'FOCUS'" >
-      <v-card-subtitle class="pa-0 ma-0">> Par type(s) de documents</v-card-subtitle>
-      <v-container class="d-flex flex-wrap pa-0 ma-0">
-        <v-checkbox  v-for="familleDoc in familleDocumentList" :key="familleDoc.value" v-model="familleDocumentSetSelected" class="pr-1" @change="updateFamilleDocumentSetInStore" :value="familleDoc.value" :label="familleDoc.label"></v-checkbox>
+  <v-container >
+    <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
+    <v-container class="borderSelectAnalyseType">
+      <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
+        <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
+          <template v-slot:activator="{ on, attrs }">
+            <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on">sdf</v-radio>
+          </template>
+          <span>{{analyse.bulle}}</span>
+        </v-tooltip>
+      </v-radio-group>
+      <v-container v-if="analyseSelected.value === 'FOCUS'" >
+        <span class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
+        <v-container class="d-flex flex-wrap pa-0 mb-2 pl-8">
+          <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.value" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc.value" :label="familleDoc.label"></v-checkbox>
+        </v-container>
+        <span class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
+        <v-container class="d-flex flex-column pa-0 mb-2 pl-8">
+          <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.value" v-model="ruleSetSelected" :value="ruleset.value" @change="updateRuleSetInStore" :label="ruleset.label" class="ma-1" style="max-height: 30px"></v-checkbox>
+        </v-container>
       </v-container>
-      <v-card-subtitle class="pa-0 ma-0">> Par jeu(x) de règles préconçu(s) </v-card-subtitle>
-      <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.value" v-model="ruleSetSelected" :value="ruleset.value" @change="updateRuleSetInStore" :label="ruleset.label"></v-checkbox>
     </v-container>
-  </v-card>
+  </v-container>
 </template>
 
 <script setup>

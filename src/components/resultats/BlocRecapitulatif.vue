@@ -1,29 +1,30 @@
 <template>
   <v-container>
-    <v-card flat tile class="titleBar">Récapitulatif</v-card>
     <v-card flat style="color:#252C61;">
-      <v-card-title class="pb-0" style="font-weight: bold;">Analyse en cours</v-card-title>
-      <v-container class="d-flex align-start flex-column pt-0">
-        <v-container class="d-flex justify-space-between pb-0"><span>Nb. total de PPN analysés</span>
-          <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
+      <v-card-title class="d-flex justify-center pt-1 pb-2" style="font-weight: bold; font-size: 1.6em;">Récapitulatif</v-card-title>
+      <v-card-subtitle class="d-flex justify-center pt-1 pb-2 mb-0"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></v-card-subtitle>
+      <v-container class="d-flex align-start flex-column pt-0 pb-1 mt-0">
+        <v-container class="d-flex justify-center pt-0 pb-0 mt-0 mb-2" style="max-width: 350px; border-bottom-style: solid; border-color: #252c61; border-bottom-width:2px;"></v-container>
+        <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em"><span>Nb. total de PPN analysés</span>
+          <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
               getNbPpnTotal()
             }}
           </v-chip>
         </v-container>
-        <v-container class="d-flex justify-space-between pb-0"><span>Nb. de PPN avec erreurs</span>
-          <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
+        <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em"><span>Nb. de PPN avec erreurs</span>
+          <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC" >{{
               getNbPpnErreurs()
             }}
           </v-chip>
         </v-container>
-        <v-container class="d-flex justify-space-between pb-0"><span>Nb. de PPN sans erreurs</span>
-          <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
+        <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em"><span>Nb. de PPN sans erreurs</span>
+          <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
               getNbPpnOk()
             }}
           </v-chip>
         </v-container>
-        <v-container class="d-flex justify-space-between pb-0"><span>Nb. de ppn non trouvés</span>
-          <v-chip class="numberValue" label disabled text-color="white" color="#0F75BC">{{
+        <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em"><span>Nb. de ppn non trouvés</span>
+          <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
               getNbPpnInconnus()
             }}
           </v-chip>
@@ -35,7 +36,7 @@
 
 <script setup>
 
-
+import BlocRappelTypeAnalyse from "@/components/resultats/BlocRappelTypeAnalyse";
 import { useResultatStore } from "@/stores/resultat";
 
 const resultatStore = useResultatStore();
@@ -59,14 +60,6 @@ function getNbPpnOk() {
 </script>
 
 <style scoped>
-.titleBar {
-  border-bottom-style: solid;
-  border-color: #252C61;
-  border-bottom-width:5px;
-  font-size: 30px;
-  font-weight:bold;
-  color: #252C61
-}
 .numberValue {
   width: 59px;
   opacity: unset;

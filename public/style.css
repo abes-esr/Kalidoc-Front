@@ -31,3 +31,65 @@
     border-bottom-style: solid ;
     border-color: #ff4d17;
 }
+
+#footerDescription {
+    color: black; text-align: start; padding-left: 2em; padding-right: 2em; width: 100%;
+}
+
+#footerAbesLinks {
+    width: 100%;
+    text-align: start;
+    padding-left: 2em;
+    flex: 1;
+}
+
+#footerLogo {
+    width: auto;
+    flex: 0 0 auto;
+    padding-right: 2em;
+    padding-left: 2em;
+}
+
+.footerTopRow {
+    align-items: center;
+    background-color: #e6e6e6;
+    color: white;
+    font-size: 1em;
+    width: 100%;
+}
+
+.footerBottomRow {
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-size: 1em;
+    text-align: start;
+    padding-left: 2em;
+    padding-right: 2em
+}
+
+#linkWhite {
+    color: white;
+}
+
+#linkBlack {
+    color: black;
+}
+
+.borderAddPpn {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:4px;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-left-width:1px;
+}
+
+.borderSelectAnalyseType {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:4px;
+    border-right-width:0;
+    border-bottom-width:0;
+    border-left-width:0;
+}
