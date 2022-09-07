@@ -3,27 +3,10 @@
 /*     TITLE BAR     */
 /*-------------------*/
 
-.titleBar {
-    background-color: #252c61;
-    margin: 0 0 0.6em 0;
-}
-
-.titleBarNormalSizeLogo {
+.titleBarLogo {
     height: 88px;
-}
-
-.titleBarTinyLogo {
-    height: 66px;
-}
-
-.titleBarRow {
-    max-height: 6em;
-    height: 150px
-}
-
-#titleBarCols {
-    padding-left: 2em;
-    padding-right: 2em;
+    position: relative;
+    top: 14px;
 }
 
 .titleBarButtonInactive {
@@ -32,7 +15,7 @@
 
 .titleBarButtonSelected {
     border-bottom-style: solid ;
-    border-color: #ff4d17;
+    border-color: #cf491b;
 }
 
 #footerDescription {
@@ -44,13 +27,6 @@
     text-align: start;
     padding-left: 2em;
     flex: 1;
-}
-
-#footerLogo {
-    width: auto;
-    flex: 0 0 auto;
-    padding-right: 2em;
-    padding-left: 2em;
 }
 
 .footerTopRow {
@@ -65,18 +41,35 @@
     align-items: center;
     background-color: black;
     color: white;
-    font-size: 1em;
+    font-size: small;
     text-align: start;
     padding-left: 2em;
     padding-right: 2em
 }
 
-#linkWhite {
-    color: white;
+.fontPrimaryColor {
+    color: #252C61;
 }
 
-#linkBlack {
-    color: black;
+.fontSecondaryColor {
+    color: #cf491b;
+}
+
+.bgColorPrimary {
+    background-color: #252C61;
+}
+
+.bgColorSecondary {
+    background-color: #cf491b;
+}
+
+#linkWhite {
+    color: white;
+    text-decoration: none;
+}
+
+#linkBlue {
+    color: #252C61;
 }
 
 .borderAddPpn {
