@@ -5,12 +5,15 @@
 
 .titleBar {
     background-color: #252c61;
-    margin: 0 0 1em 0;
+    margin: 0 0 0.6em 0;
 }
 
-.titleBarLogo {
+.titleBarNormalSizeLogo {
     height: 88px;
-    padding: 6px 0 0 0;
+}
+
+.titleBarTinyLogo {
+    height: 66px;
 }
 
 .titleBarRow {
