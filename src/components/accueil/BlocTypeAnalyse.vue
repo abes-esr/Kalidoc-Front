@@ -111,7 +111,6 @@
   }
 
   function emitOnEvent(){
-    console.log("test");
     emit('isSelected', isSelected());
   }
   function emitOnError(error){
