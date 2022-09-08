@@ -1,6 +1,9 @@
 <template>
   <v-container >
-    <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
+    <v-row class="ma-0 pa-0">
+      <v-img class="mr-1" src="@/assets/2inBox.svg" max-height="24px" height="24px" max-width="24px" width="24px" style="margin-top: 3px"></v-img>
+      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
+    </v-row>
     <v-container class="borderSelectAnalyseType">
       <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
@@ -34,17 +37,17 @@
     {
       label: 'RAPIDE',
       value: 'QUICK',
-      bulle: "Règles essentielles / de base"
+      bulle: "Règles essentielles"
     },
     {
       label: 'EXPERTE',
       value: 'COMPLETE',
-      bulle: "Règles essentielles / avancées"
+      bulle: "Règles essentielles & règles avancées"
     },
     {
       label: 'CIBLÉE',
       value: 'FOCUS',
-      bulle: "Lorem ipsum lorem ipsum"
+      bulle: "Règles filtrées par type de document et/ou par jeux de règles préconçus"
     },
   ]; //TODO ws
   let familleDocumentList = [

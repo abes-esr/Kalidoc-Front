@@ -1,18 +1,22 @@
 <template>
   <v-container>
-    <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
+    <v-row class="ma-0 pa-0">
+      <v-img class="mr-1" src="@/assets/1inBox.svg" max-height="24px" height="24px" max-width="24px" width="24px" style="margin-top: 3px"></v-img>
+      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
+    </v-row>
     <v-container class="pa-2 ma-0 borderAddPpn">
-      <v-combobox append-icon="" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-2">
+      <div class="pl-2 pr-3 mb-5 text-justify fontPrimaryColor" style="font-size: small">Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois</div>
+      <v-combobox filled append-icon="" height="200px" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-2">
         <template v-slot:selection="{item}">
           <v-chip close @click:close="removeItem(item)">
             <span class="pr-2">{{ item }}</span>
           </v-chip>
         </template>
       </v-combobox>
-      <v-container class="d-flex align-end flex-column pt-0 mt-0"><v-btn outlined small @click="removeAllItems">Vider la liste de ppn</v-btn></v-container>
+      <v-container class="d-flex align-end flex-column pt-0 mb-14 pr-2" style="margin-top: -38px;"><v-btn depressed small tile @click="removeAllItems" style="border: 1px solid black">Vider la liste</v-btn></v-container>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
-        Les PPN dans la liste ci-dessous que vous avez saisis ne respectent pas la syntaxe requise et ne seront donc pas pris en compte au lancement de l'analyse :<br>
-        Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)<br>
+        Les PPN listés ci-dessous ne respectent présente une syntaxe non conforme et ne seront pas analysés :<br>
+        <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>

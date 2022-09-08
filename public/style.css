@@ -9,10 +9,6 @@
     top: 14px;
 }
 
-.titleBarButtonInactive {
-
-}
-
 .titleBarButtonSelected {
     border-bottom-style: solid ;
     border-color: #cf491b;
@@ -76,6 +72,15 @@
     border-style: solid;
     border-color: #252c61;
     border-top-width:4px;
+    border-right-width:1px;
+    border-bottom-width:0px;
+    border-left-width:1px;
+}
+
+.borderAddPpnBottom {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:0px;
     border-right-width:1px;
     border-bottom-width:1px;
     border-left-width:1px;

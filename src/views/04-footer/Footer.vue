@@ -5,7 +5,7 @@
       <v-row class="footerTopRow" align="start" justify="start" no-gutters>
 <!--        DESCRIPTION NAVIGATEUR-->
         <v-col cols="6" id="footerDescription" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
-          <div style="font-size: 1em; font-weight: 700">Qualimarc</div>
+          <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span></div>
           <div style="font-size: 0.8em; text-align: justify">Description complète de l'utilité de l'application. "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
               exercitation ullamco laboris."
@@ -20,11 +20,15 @@
          <v-container>
            <span class="pa-0 ma-0" style="font-size: 0.8em;">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://documentation.abes.fr/sudoc/" id="linkBlue">Documentation</a>
+             <a href="http://www.sudoc.abes.fr/" target="_blank" id="linkBlue">Sudoc</a>
            </span><br>
            <span class="pa-0 ma-0" style="font-size: 0.8em;">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://stp.abes.fr/node/3?origine=sudocpro" id="linkBlue">Assistance</a>
+             <a href="https://documentation.abes.fr/sudoc/" target="_blank" id="linkBlue">Guide Méthodologique</a>
+           </span><br>
+           <span class="pa-0 ma-0" style="font-size: 0.8em;">
+             <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
+             <a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" id="linkBlue">Guichet ABESstp</a>
            </span>
          </v-container>
         </v-col>
@@ -35,13 +39,17 @@
             <span style="color: #252C61; font-size: 1em; font-weight: 500; margin-left: 2px">Accès direct</span>
           </v-row>
           <v-container class="pa-0 pl-2">
-           <span style="font-size: 0.8em;">
+          <span class="pa-0 ma-0" style="font-size: 0.8em;">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://documentation.abes.fr/sudoc/" id="linkBlue">Documentation</a>
+             <a href="http://www.sudoc.abes.fr/" target="_blank" id="linkBlue">Sudoc</a>
+          </span><br>
+           <span class="pa-0 ma-0" style="font-size: 0.8em;">
+             <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
+             <a href="https://documentation.abes.fr/sudoc/" id="linkBlue">Guide Méthodologique</a>
            </span><br>
-            <span style="font-size: 0.8em;">
+            <span class="pa-0 ma-0" style="font-size: 0.8em;">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://stp.abes.fr/node/3?origine=sudocpro" id="linkBlue">Assistance</a>
+             <a href="https://stp.abes.fr/node/3?origine=sudocpro" id="linkBlue">Guichet ABESstp</a>
            </span>
           </v-container>
         </v-col>
@@ -60,13 +68,13 @@
 <!--     FOOTER NOIR-->
       <v-row class="footerBottomRow">
          <v-col cols="6" class="mr-auto">
-            <span>QUALIMARC — {{ new Date().getFullYear() }} </span>
+           <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span> — {{ new Date().getFullYear() }} </div>
          </v-col>
          <v-col cols="auto">
            <a href="" id="linkWhite">Données personnelles</a> |
-           <a href="https://abes.fr/pages-cgu/conditions-generales-utilisation-sites-abes.html" id="linkWhite">C.G.U.</a> |
-           <a href="https://abes.fr/mentions-legales/" id="linkWhite">Mentions légales</a> |
-           <a href="https://abes.fr/accessibilite/" id="linkWhite">Accessibilité</a>
+           <a href="https://abes.fr/pages-cgu/conditions-generales-utilisation-sites-abes.html" target="_blank" id="linkWhite">C.G.U.</a> |
+           <a href="https://abes.fr/mentions-legales/" target="_blank" id="linkWhite">Mentions légales</a> |
+           <a href="https://abes.fr/accessibilite/" target="_blank" id="linkWhite">Accessibilité</a>
          </v-col>
       </v-row>
 

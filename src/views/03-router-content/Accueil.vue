@@ -1,11 +1,9 @@
 <template>
   <v-container fluid>
-    <v-alert border="left" colored-border type="info">
-      Pour des raisons de performance, nous vous recommandons d'utiliser l'import de fichier pour plus de 5000 PPN
-    </v-alert>
+    <div class="ml-1 mb-2 fontPrimaryColor">Outil d'analyse des notices bibliographiques du Sudoc</div>
     <v-row>
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
-        <bloc-recherche-par-ppn class="mb-8 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
+        <bloc-recherche-par-ppn class="mb-0 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
         <bloc-recherche-par-fichier-ppn class="mb-2 pa-0"></bloc-recherche-par-fichier-ppn>
       </v-col>
       <v-col class="ma-2 pa-2" style="min-height: 34em">
