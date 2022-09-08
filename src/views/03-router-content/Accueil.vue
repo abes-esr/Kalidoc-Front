@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <message-erreur :backendErrorMessage="backendErrorMessage"></message-erreur>
-    <bloc-type-analyse @isSelected="setIsAnalyseSelected"></bloc-type-analyse>
+    <bloc-type-analyse @isSelected="setIsAnalyseSelected" @backendError="setBackendError" ></bloc-type-analyse>
     <bloc-recherche-par-ppn @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
     <bloc-recherche-par-fichier-ppn></bloc-recherche-par-fichier-ppn>
     <bouton-lancement :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)" @backendError="setBackendError" @finished="redirect">Lancer l'analyse</bouton-lancement>

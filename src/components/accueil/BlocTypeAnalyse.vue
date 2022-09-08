@@ -24,10 +24,18 @@
 <script setup>
   import { useAnalyseStore } from "@/stores/analyse";
   import { onMounted, ref } from "vue";
-  import axios from "axios";
+  import QualimarcService from "@/service/QualimarcService";
 
+  // Store
   const analyseStore = useAnalyseStore();
-  const emit = defineEmits(['isSelected'])
+
+  // Emit
+  const emit = defineEmits(['isSelected', 'backendError'])
+
+  // Service
+  const serviceApi = QualimarcService ;
+
+  // Data
   let analysesList = [
     {
       label: 'RAPIDE',
@@ -48,6 +56,7 @@
   let familleDocumentList = ref([]);
   let ruleSetList = ref([]);
 
+  // Selected Data
   let analyseSelected = ref('');
   let familleDocumentSetSelected = ref([]);
   let ruleSetSelected = ref([]);
@@ -58,24 +67,20 @@
   })
 
   function feedFamilleDocumentList(){
-    axios({
-      method: 'get',
-      url: process.env.VUE_APP_ROOT_API + 'getFamillesDocuments',
-    }).then((response) => {
-      response.data.forEach((el) => familleDocumentList.value.push(el));
-    }).catch((error) => {
-      emitOnEvent(error);
-    });
+      serviceApi.getFamillesDocuments()
+        .then((response) => {
+          response.data.forEach((el) => familleDocumentList.value.push(el));
+        }).catch((error) => {
+          emitOnError(error);
+        });
   }
 
   function feedRuleSetList(){
-    axios({
-      method: 'get',
-      url: process.env.VUE_APP_ROOT_API + 'getTypesAnalyses',
-    }).then((response) => {
+    serviceApi.getTypesAnalyses()
+      .then((response) => {
       response.data.forEach((el) => ruleSetList.value.push(el));
     }).catch((error) => {
-      emitOnEvent(error);
+      emitOnError(error);
     });
   }
 
@@ -107,6 +112,9 @@
 
   function emitOnEvent(){
     emit('isSelected', isSelected());
+  }
+  function emitOnError(error){
+    emit('backendError', error);
   }
 
 </script>
