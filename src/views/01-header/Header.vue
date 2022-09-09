@@ -44,17 +44,21 @@
          </v-row>
        </v-col>
        <v-col cols="3">
-         <v-row justify="center" no-gutters>
-           <v-col class="ml-2 mr-0 pr-0"><a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" title="Assistance">
+         <v-row class="ma-0 pa-0">
+           <v-col class="ml-2 mr-0 pr-0">
+            <a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" title="Assistance">
              <v-btn fab x-small color="white">
                <v-img src="@/assets/chatBubbles.svg" max-height="24px" max-width="24px"></v-img>
              </v-btn>
-           </a></v-col>
-           <v-col class="ma-0 pl-0 pl-2 pr-2"><a href="https://documentation.abes.fr/sudoc/" target="_blank" title="Assistance">
+            </a>
+           </v-col>
+           <v-col class="ma-0 pl-0 pl-2 pr-2">
+            <a href="https://documentation.abes.fr/sudoc/" target="_blank" title="Assistance">
              <v-btn fab x-small color="white">
                <v-img src="@/assets/questionMark.svg" max-height="24px" max-width="24px"></v-img>
              </v-btn>
-           </a></v-col>
+            </a>
+           </v-col>
          </v-row>
        </v-col>
      </v-row>

@@ -6,9 +6,7 @@
 <!--        DESCRIPTION NAVIGATEUR-->
         <v-col cols="6" id="footerDescription" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
           <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span></div>
-          <div style="font-size: 0.8em; text-align: justify">Description complète de l'utilité de l'application. "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris."
+          <div style="font-size: 0.8em; text-align: justify"><span style="font-weight: 700">Quali<span style="font-weight: 400">Marc</span></span> est un outil qui diagnostique la qualité des notices bibliographiques, à la volée ou par lot, explique les enrichissements à apporter, permet de consulter les règles élaborées pour ce diagnostic et d’en créer de nouvelles, propres à ses besoins ou à un chantier de vérification précis.
           </div>
         </v-col>
 <!--        ACCES DIRECT NAVIGATEUR-->

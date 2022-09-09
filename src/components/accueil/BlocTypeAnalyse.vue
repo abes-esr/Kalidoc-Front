@@ -1,7 +1,7 @@
 <template>
   <v-container >
     <v-row class="ma-0 pa-0">
-      <v-img class="mr-1" src="@/assets/2inBox.svg" max-height="24px" height="24px" max-width="24px" width="24px" style="margin-top: 3px"></v-img>
+      <v-icon color="#252C61">mdi-numeric-2-box</v-icon>
       <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
     </v-row>
     <v-container class="borderSelectAnalyseType">

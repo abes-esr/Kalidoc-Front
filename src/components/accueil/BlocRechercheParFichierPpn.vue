@@ -1,8 +1,12 @@
 <template>
   <v-container class="borderAddPpnBottom">
-    <v-container class="d-flex justify-center" style="margin-top: -70px;"><v-img class="mr-3" src="@/assets/arrowUp.svg" max-width="20px"></v-img><span style="font-weight: 700">OU</span><v-img class="ml-3" src="@/assets/arrowDown.svg" max-width="20px"></v-img></v-container>
+    <v-container class="d-flex justify-center" style="margin-top: -70px;">
+      <v-icon class="mr-3" color="black">mdi-chevron-double-up</v-icon>
+      <span style="font-weight: 700">OU</span>
+      <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
+      </v-container>
     <v-container>
-      <v-file-input filled label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN" prepend-icon="" append-outer-icon="mdi-download" show-size type="file" aria-label="Dépôt du fichier" truncate-length=75 for="files" accept=".csv,.txt" :rules="rules" v-model="fichierCharge" @change="autorisationEnvoi" ref="fileInput"></v-file-input>
+      <v-file-input filled label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN" prepend-icon="" append-outer-icon="mdi-file-download-outline" show-size type="file" aria-label="Dépôt du fichier" truncate-length=75 for="files" accept=".csv,.txt" :rules="rules" v-model="fichierCharge" @change="autorisationEnvoi" ref="fileInput"></v-file-input>
     </v-container>
   </v-container>
 </template>
