@@ -1,30 +1,34 @@
 <template>
   <v-container>
-    <v-card-title>Liste de ppn &nbsp;<v-btn outlined small @click="removeAllItems">Vider toute la saisie</v-btn></v-card-title>
-    <v-alert border="left" colored-border type="info">
-      Pour des raisons de performance, nous vous recommandons d'utiliser l'import de fichier pour plus de 5000 PPN
-    </v-alert>
-    <v-combobox append-icon="" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple outlined small-chips :label="comboboxPpnLabel" class="style2">
-      <template v-slot:selection="{item}">
-        <v-chip close @click:close="removeItem(item)">
-          <span class="pr-2">{{ item }}</span>
-        </v-chip>
-      </template>
-    </v-combobox>
-    <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
-      Les PPN dans la liste ci-dessous que vous avez saisis ne respectent pas la syntaxe requise et ne seront donc pas pris en compte au lancement de l'analyse :<br>
-      Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)<br>
-      <v-expansion-panels>
-      <v-expansion-panel>
-        <v-expansion-panel-header>
-          PPN avec une mauvaise syntaxe que vous avez collé (cliquez pour dérouler)
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
+    <v-row class="ma-0 pa-0">
+      <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
+      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
+    </v-row>
+    <v-container class="pa-2 ma-0 borderAddPpn">
+      <div class="pl-0 pr-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois</div>
+      <v-combobox filled append-icon="" height="200px" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-1">
+        <template v-slot:selection="{item}">
+          <v-chip close @click:close="removeItem(item)">
+            <span class="pr-2">{{ item }}</span>
+          </v-chip>
+        </template>
+      </v-combobox>
+      <v-container class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" depressed small tile @click="removeAllItems" style="border: 1px solid black">Vider la liste <v-icon color="grey">mdi-chevron-up</v-icon></v-btn></v-container>
+      <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
+        Les PPN listés ci-dessous ne respectent présente une syntaxe non conforme et ne seront pas analysés :<br>
+        <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
+        <v-expansion-panels>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              PPN saisi avec une syntaxe éronnée (cliquer pour dérouler)
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
         </v-expansion-panels>
-    </v-alert>
+      </v-alert>
+    </v-container>
   </v-container>
 </template>
 
@@ -101,7 +105,5 @@ import { ref } from 'vue';
 </script>
 
 <style>
-.v-expansion-panel::before {
-  box-shadow: none;
-}
+
 </style>

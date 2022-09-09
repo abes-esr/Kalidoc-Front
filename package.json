@@ -12,7 +12,7 @@
     "roboto-fontface": "Un paquetage simple fournissant la police de caractères Roboto. Utilisé par vuetify et installé lors de son installation"
   },
   "dependencies": {
-    "@mdi/font": "5.9.55",
+    "@mdi/font": "^5.9.55",
     "@pinia/nuxt": "^0.4.0",
     "axios": "^0.27.2",
     "pinia": "^2.0.17",

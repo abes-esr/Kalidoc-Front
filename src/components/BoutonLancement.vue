@@ -1,8 +1,10 @@
 <template>
-  <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button pr-2 mr-1" :disabled="props.isDisabled">
-    <slot></slot>
-    <img src="@/assets/arrow.png" class="ml-2" width="22px" height="22px">
-  </v-btn>
+  <v-container class="d-flex justify-center mt-0 mb-0 pt-0 pb-0">
+    <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button pr-2 mr-1" :disabled="props.isDisabled">
+      <slot></slot>
+      <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
+    </v-btn>
+  </v-container>
 </template>
 
 <script setup>
@@ -44,6 +46,7 @@ function emitOnError(error){
 function emitOnFinished(){
   emit('finished', true);
 }
+
 </script>
 
 <style scoped>
