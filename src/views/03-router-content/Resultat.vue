@@ -3,7 +3,7 @@
     <v-container class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
     <v-icon>mdi-home</v-icon>
     <v-icon size="small">mdi-chevron-right</v-icon>
-      <router-link to="/" style="color: grey; text-decoration: none">Interface de vérification</router-link>
+      <span style="color: grey; text-decoration: none">Interface de vérification</span>
     <v-icon size="small">mdi-chevron-right</v-icon>
     Résultats de l'analyse
     </v-container>

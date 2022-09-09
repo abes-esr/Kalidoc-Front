@@ -68,6 +68,6 @@
 <script setup>
 import { ref } from 'vue';
 
-let activeBtn = ref("0");
+let activeBtn = ref("btn1");
 
 </script>
