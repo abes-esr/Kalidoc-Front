@@ -7,13 +7,12 @@
         <bloc-recherche-par-fichier-ppn class="mb-2 pa-0"></bloc-recherche-par-fichier-ppn>
       </v-col>
       <v-col class="ma-2 pa-2" style="min-height: 34em">
-        <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected"></bloc-type-analyse>
+        <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>
         <message-erreur class="mb-2 pa-4" :backendErrorMessage="backendErrorMessage"></message-erreur>
         <bouton-lancement class="mb-2" :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)" @backendError="setBackendError" @finished="redirect">Lancer l'analyse</bouton-lancement>
       </v-col>
     </v-row>
   </v-container>
-
 </template>
 <script setup>
 import BlocTypeAnalyse from "@/components/accueil/BlocTypeAnalyse";
