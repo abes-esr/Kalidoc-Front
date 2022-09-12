@@ -1,17 +1,14 @@
 //Stockage des choix d'analyse et des ppn valides et invalides
-
 import { defineStore } from 'pinia'
 
 export const useAnalyseStore = defineStore('analyse', {
-  state: () => {
-    return {
+  state: () => ({
       ppnValidsList: [],
       ppnInvalidsList: [],
       analyseSelected: '',
       familleDocumentSet: [],
       ruleSet: [],
-    }
-  },
+    }),
   getters: {
     getPpnValidsList: (state) => state.ppnValidsList,
     getPpnInvalidsList: (state) => state.ppnInvalidsList,

@@ -1,0 +1,100 @@
+
+/*-------------------*/
+/*     TITLE BAR     */
+/*-------------------*/
+
+.titleBarLogo {
+    height: 88px;
+    position: relative;
+    top: 14px;
+}
+
+.titleBarButtonSelected {
+    border-bottom-style: solid ;
+    border-color: #cf491b;
+}
+
+#footerDescription {
+    color: black; text-align: start; padding-left: 2em; padding-right: 2em; width: 100%;
+}
+
+#footerAbesLinks {
+    width: 100%;
+    text-align: start;
+    padding-left: 2em;
+    flex: 1;
+}
+
+.footerTopRow {
+    align-items: center;
+    background-color: #e6e6e6;
+    color: white;
+    font-size: 1em;
+    width: 100%;
+}
+
+.footerBottomRow {
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-size: small;
+    text-align: start;
+    padding-left: 2em;
+    padding-right: 2em
+}
+
+.fontPrimaryColor {
+    color: #252C61;
+}
+
+.fontSecondaryColor {
+    color: #cf491b;
+}
+
+.bgColorPrimary {
+    background-color: #252C61;
+}
+
+.bgColorSecondary {
+    background-color: #cf491b;
+}
+
+#linkWhite {
+    color: white;
+    text-decoration: none;
+}
+
+#linkBlue {
+    color: #252C61;
+}
+
+.borderAddPpn {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:4px;
+    border-right-width:1px;
+    border-bottom-width:0;
+    border-left-width:1px;
+}
+
+.borderAddPpnBottom {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:0;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-left-width:1px;
+}
+
+.borderSelectAnalyseType {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:4px;
+    border-right-width:0;
+    border-bottom-width:0;
+    border-left-width:0;
+}
+
+.tailleTexte {
+    font-size: 0.4em;
+}
