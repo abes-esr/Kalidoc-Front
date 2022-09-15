@@ -5,7 +5,15 @@
     <v-data-table
       :headers="headers"
       :items="items"
+      :footer-props="{
+        itemsPerPageOptions: [5,10,20,30,-1]
+      }"
     >
+      <template v-slot:item.masquee="{ item }">
+        <v-simple-checkbox
+          v-model="item.masquee"
+        ></v-simple-checkbox>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -13,35 +21,116 @@
 <script setup>
 import { ref } from "vue"
 let headers = ref([
-  { text: "Afficher/Masque", value: "masquer"},
+  { text: "Aff/Masq.", value: "masquee"},
   { text: "PPN", value: "ppn"},
-  { text: "Type", value: "type"},
+  { text: "Type PPN", value: "type"},
   { text: "Nd. erreurs", value: "nberreurs"}
-])
+]);
+
+// Donnée d'exemple pour remplire le tableau
 let items = ref([
   {
-    masquer : true,
+    masquee : true,
     ppn : "111111111",
     type: "doc",
     nberreurs: 1
   },
   {
-    masquer : true,
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
+    ppn : "111111111",
+    type: "doc",
+    nberreurs: 1
+  },
+  {
+    masquee : true,
     ppn : "222222222",
     type: "doc",
     nberreurs: 2
   },
   {
-    masquer : false,
+    masquee : false,
     ppn : "333333333",
     type: "peri",
     nberreurs: 102
   },
   {
-    masquer : false,
+    masquee : false,
     ppn : "444444444",
     type: "media",
     nberreurs: 1
   }
-])
+]);
+
 </script>
