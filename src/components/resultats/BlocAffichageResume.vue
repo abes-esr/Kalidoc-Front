@@ -8,11 +8,26 @@
       :footer-props="{
         itemsPerPageOptions: [5,10,20,30,-1]
       }"
+      dense
     >
-      <template v-slot:item.masquee="{ item }">
-        <v-simple-checkbox
-          v-model="item.masquee"
-        ></v-simple-checkbox>
+            <template v-slot:item.masquee="{ item }">
+<!--              <v-icon v-if="item.masquee" @click="item.masquee = !item.masquee" small>  mdi-eye </v-icon>-->
+<!--              <v-icon v-if="!item.masquee"  @click="item.masquee = !item.masquee" small>  mdi-eye-off-outline </v-icon>-->
+              <v-checkbox
+                  v-model="item.masquee"
+                  on-icon="mdi-eye"
+                  off-icon="mdi-eye-off-outline"
+                  dense
+              ></v-checkbox>
+            </template>
+      <template v-slot:item.ppn="{ item }"  >
+        <p>{{item.ppn}}</p>
+      </template>
+      <template v-slot:item.type="{ item }" class="primary" :disabled="item.masquee">
+        {{item.type}}
+      </template>
+      <template v-slot:item.nberreurs="{ item }" :disabled="item.masquee">
+        {{item.nberreurs}}
       </template>
     </v-data-table>
   </v-card>
@@ -20,6 +35,8 @@
 
 <script setup>
 import { ref } from "vue"
+
+
 let headers = ref([
   { text: "Aff/Masq.", value: "masquee"},
   { text: "PPN", value: "ppn"},
@@ -31,19 +48,19 @@ let headers = ref([
 let items = ref([
   {
     masquee : true,
-    ppn : "111111111",
+    ppn : "111113111",
     type: "doc",
     nberreurs: 1
   },
   {
     masquee : true,
-    ppn : "111111111",
+    ppn : "114511111",
     type: "doc",
     nberreurs: 1
   },
   {
     masquee : true,
-    ppn : "111111111",
+    ppn : "111116111",
     type: "doc",
     nberreurs: 1
   },
