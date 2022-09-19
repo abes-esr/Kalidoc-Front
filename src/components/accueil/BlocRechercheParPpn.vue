@@ -6,7 +6,7 @@
     </v-row>
     <v-container class="pa-2 ma-0 borderAddPpn">
       <div class="pl-0 pr-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois</div>
-      <v-combobox filled append-icon="" height="200px" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-1">
+      <v-combobox filled append-icon="" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-1">
         <template v-slot:selection="{item}">
           <v-chip close @click:close="removeItem(item)">
             <span class="pr-2">{{ item }}</span>
