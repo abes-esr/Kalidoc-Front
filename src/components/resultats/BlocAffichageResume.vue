@@ -32,6 +32,9 @@
 
 <script setup>
 import { ref } from "vue"
+import { useResultatStore } from "@/stores/resultat";
+
+const resultatStore = useResultatStore();
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -41,110 +44,14 @@ let headers = ref([
 ]);
 let loading = ref(false);
 // Donnée d'exemple pour remplire le tableau
-let items = ref([
-  {
-    affiche : true,
-    ppn : "111113111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "114511111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111116111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "111111111",
-    type: "doc",
-    nberreurs: 1
-  },
-  {
-    affiche : true,
-    ppn : "222222222",
-    type: "doc",
-    nberreurs: 2
-  },
-  {
-    affiche : false,
-    ppn : "333333333",
-    type: "peri",
-    nberreurs: 102
-  },
-  {
-    affiche : false,
-    ppn : "444444444",
-    type: "media",
-    nberreurs: 1
-  }
-]);
+let items = ref(feedItems());
+
+function feedItems(){
+  let arrayToReturn = [];
+  resultatStore.getResultsList.forEach((el) => {
+    //TODO arrayToReturn.
+  })
+}
 
 
 /**
