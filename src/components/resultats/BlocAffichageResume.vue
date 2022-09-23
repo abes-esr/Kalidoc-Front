@@ -14,7 +14,7 @@
       dense
     >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{headers}">
-        <span style='color: white;'>{{ header.text }}</span>
+        <span style='color: white;'>{{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
       </template>
 
       <template v-slot:item.affiche="{ item }">
