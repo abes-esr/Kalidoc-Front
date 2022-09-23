@@ -6,7 +6,7 @@
       :headers="headers"
       :loading="loading"
       loading-text="Chargement..."
-      :items=feedItems()
+      :items="items"
       :item-class="classItemMasked"
       :footer-props="{
         itemsPerPageOptions: [5,10,20,30,-1]
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { useResultatStore } from "@/stores/resultat";
 
 const resultatStore = useResultatStore();
@@ -39,23 +39,32 @@ const resultatStore = useResultatStore();
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
   { text: "PPN", value: "ppn", class: "headerTableClass"},
-  { text: "Type PPN", value: "typeDocument", class: "headerTableClass"},
+  { text: "Type de documents", value: "typeDocument", class: "headerTableClass"},
   { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass"}
 ]);
 let loading = ref(false);
+let items = ref([]);
 
+onMounted(() => {
+  feedItems()
+})
+
+/**
+ * fonction permetant de recuperer les ppns du store
+ */
 function feedItems(){
-  let arrayToReturn = [];
+  loading.value = true;
+  items.value = [];
   resultatStore.getResultsList.forEach((el) => {
-    arrayToReturn.push( {
+    items.value.push( {
+      affiche: true,
       ppn: el.ppn,
       typeDocument: el.typeDocument,
       nberreurs: el.messages.length
     })
   });
-  return arrayToReturn;
+  loading.value = false;
 }
-
 
 /**
  * Fonction qui renvoi un style de class pour griser les items masquées
