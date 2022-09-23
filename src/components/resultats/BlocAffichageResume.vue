@@ -49,7 +49,7 @@ function feedItems(){
   resultatStore.getResultsList.forEach((el) => {
     arrayToReturn.push( {
       ppn: el.ppn,
-      type: el.typeDocument,
+      typeDocument: el.typeDocument,
       nberreurs: el.messages.length
     })
   });
