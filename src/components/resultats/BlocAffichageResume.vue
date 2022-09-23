@@ -6,7 +6,7 @@
       :headers="headers"
       :loading="loading"
       loading-text="Chargement..."
-      :items="items"
+      :items=feedItems()
       :item-class="classItemMasked"
       :footer-props="{
         itemsPerPageOptions: [5,10,20,30,-1]
@@ -39,18 +39,21 @@ const resultatStore = useResultatStore();
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
   { text: "PPN", value: "ppn", class: "headerTableClass"},
-  { text: "Type PPN", value: "type", class: "headerTableClass"},
-  { text: "Nd. erreurs", value: "nberreurs", class: "headerTableClass"}
+  { text: "Type PPN", value: "typeDocument", class: "headerTableClass"},
+  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass"}
 ]);
 let loading = ref(false);
-// Donnée d'exemple pour remplire le tableau
-let items = ref(feedItems());
 
 function feedItems(){
   let arrayToReturn = [];
   resultatStore.getResultsList.forEach((el) => {
-    //TODO arrayToReturn.
-  })
+    arrayToReturn.push( {
+      ppn: el.ppn,
+      type: el.typeDocument,
+      nberreurs: el.messages.length
+    })
+  });
+  return arrayToReturn;
 }
 
 
