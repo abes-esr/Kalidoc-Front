@@ -4,6 +4,8 @@
     <v-divider></v-divider>
     <v-data-table
       :headers="headers"
+      :loading="loading"
+      loading-text="Chargement..."
       :items="items"
       :item-class="classItemMasked"
       :footer-props="{
@@ -11,11 +13,16 @@
       }"
       dense
     >
+      <template v-for="header in headers" v-slot:[`header.${header.value}`]="{headers}">
+        <span style='color: white;'>{{ header.text }}</span>
+      </template>
+
       <template v-slot:item.affiche="{ item }">
         <v-checkbox
             v-model="item.affiche"
             on-icon="mdi-eye"
             off-icon="mdi-eye-off-outline"
+            color="#CF4A1A"
             dense
         ></v-checkbox>
       </template>
@@ -26,14 +33,13 @@
 <script setup>
 import { ref } from "vue"
 
-
 let headers = ref([
-  { text: "Aff/Masq.", value: "affiche"},
-  { text: "PPN", value: "ppn"},
-  { text: "Type PPN", value: "type"},
-  { text: "Nd. erreurs", value: "nberreurs"}
+  { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
+  { text: "PPN", value: "ppn", class: "headerTableClass"},
+  { text: "Type PPN", value: "type", class: "headerTableClass"},
+  { text: "Nd. erreurs", value: "nberreurs", class: "headerTableClass"}
 ]);
-
+let loading = ref(false);
 // Donnée d'exemple pour remplire le tableau
 let items = ref([
   {
@@ -140,6 +146,7 @@ let items = ref([
   }
 ]);
 
+
 /**
  * Fonction qui renvoi un style de class pour griser les items masquées
  * @param item
@@ -152,6 +159,11 @@ function classItemMasked(item){
 <style>
 .masked{
   color: grey;
+  background-color: whitesmoke;
 }
 
+.headerTableClass{
+  color: white;
+  background-color: #676C91;
+}
 </style>
