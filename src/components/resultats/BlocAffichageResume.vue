@@ -27,12 +27,16 @@
         ></v-simple-checkbox>
       </template>
     </v-data-table>
+    Rechercher les PPN dans WinIBW<bouton-winibw :isDisabled="items.length == 0" :ppnList="ppnList" @onClick="displayPopup"></bouton-winibw>
+    <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog"></PopupRequestWinibw>
   </v-card>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue"
 import { useResultatStore } from "@/stores/resultat";
+import BoutonWinibw from "@/components/BoutonWinibw";
+import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
 
 const resultatStore = useResultatStore();
 
@@ -44,9 +48,13 @@ let headers = ref([
 ]);
 let loading = ref(false);
 let items = ref([]);
+let ppnList = ref([]);
+let winibwRequest = ref('null');
+let dialog = ref(false);
 
 onMounted(() => {
-  feedItems()
+  feedItems();
+  feedPpnList();
 })
 
 /**
@@ -66,6 +74,22 @@ function feedItems(){
   loading.value = false;
 }
 
+/**
+ * Fonction permettant de récupérer les PPN pour la création de la requête WINIBW
+ */
+function feedPpnList() {
+  items.value.forEach(item => {
+    ppnList.value.push(item.ppn);
+  });
+}
+
+/**
+ * Fonction permettant d'afficher une popup contenant la requête WinIBW
+ */
+function displayPopup(request) {
+  winibwRequest.value = request;
+  dialog.value = true;
+}
 /**
  * Fonction qui renvoi un style de class pour griser les items masquées
  * @param item
