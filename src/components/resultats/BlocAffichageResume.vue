@@ -69,7 +69,6 @@ let searchType = ref('null');
 onMounted(() => {
   feedItems();
   feedPpnList();
-  feedListType();
 })
 
 /**
