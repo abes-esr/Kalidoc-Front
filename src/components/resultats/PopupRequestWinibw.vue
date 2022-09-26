@@ -5,16 +5,27 @@
         <v-toolbar
             color="#252C61"
             dark
-        >Requête WinIBW</v-toolbar>
+        >Générer la requête WinIBW</v-toolbar>
         <v-card-text>
-          <div class="font-weight-bold pa-12">{{ props.winibwRequest }}</div>
-          <v-btn @click="copyText"><v-icon>mdi-content-copy</v-icon></v-btn>
+          <tr>
+            <td>
+              <div class="font-weight-bold pa-12">{{ props.winibwRequest }}</div>
+            </td>
+            <td>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn @click="copyText" v-bind="attrs" v-on="on"><v-icon>mdi-content-copy</v-icon></v-btn>
+                </template>
+                <span>Copier la requête</span>
+              </v-tooltip>
+            </td>
+          </tr>
         </v-card-text>
         <v-card-actions class="justify-end">
-          <v-btn
-              text
-              @click="dialog.value = false"
-          >Fermer</v-btn>
+            <v-btn
+                text
+                @click="emitOnClose"
+            >Fermer</v-btn>
         </v-card-actions>
       </v-card>
     </template>
@@ -23,12 +34,17 @@
 
 <script setup>
 const props = defineProps({winibwRequest: String, dialog: Boolean});
+const emit = defineEmits(['onClose']);
 
 /** fonction permettant de copier la requête winIBW dans le presse-papier
  *
  */
 function copyText() {
   navigator.clipboard.writeText(props.winibwRequest);
+}
+
+function emitOnClose() {
+  emit('onClose', false);
 }
 </script>
 

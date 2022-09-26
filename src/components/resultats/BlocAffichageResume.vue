@@ -16,7 +16,6 @@
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
         <span style='color: white;'>{{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
       </template>
-
       <template v-slot:item.affiche="{ item }">
         <v-simple-checkbox
             v-model="item.affiche"
@@ -26,9 +25,22 @@
             dense
         ></v-simple-checkbox>
       </template>
+      <template v-slot:body.append>
+        <tr>
+          <td colspan="4">
+            <v-container class="d-flex flex-row-reverse ">
+              <table>
+                <tr>
+                  <td>Rechercher les PPN dans WinIBW</td><td><bouton-winibw :isDisabled="items.length == 0" :ppnList="ppnList" @onClick="displayPopup"></bouton-winibw></td>
+                </tr>
+              </table>
+            </v-container>
+          </td>
+        </tr>
+      </template>
     </v-data-table>
-    Rechercher les PPN dans WinIBW<bouton-winibw :isDisabled="items.length == 0" :ppnList="ppnList" @onClick="displayPopup"></bouton-winibw>
-    <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog"></PopupRequestWinibw>
+
+    <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
   </v-card>
 </template>
 
@@ -51,10 +63,13 @@ let items = ref([]);
 let ppnList = ref([]);
 let winibwRequest = ref('null');
 let dialog = ref(false);
+let listType = ref([]);
+let searchType = ref('null');
 
 onMounted(() => {
   feedItems();
   feedPpnList();
+  feedListType();
 })
 
 /**
@@ -90,6 +105,14 @@ function displayPopup(request) {
   winibwRequest.value = request;
   dialog.value = true;
 }
+
+/**
+ * Fonction permettant de récupérer l'état d'ouverture de la popup de requête Winibw
+ */
+function setDialog(onClose) {
+  dialog.value = onClose;
+}
+
 /**
  * Fonction qui renvoi un style de class pour griser les items masquées
  * @param item
