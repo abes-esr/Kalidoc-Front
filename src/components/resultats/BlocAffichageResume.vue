@@ -13,18 +13,18 @@
       }"
       dense
     >
-      <template v-for="header in headers" v-slot:[`header.${header.value}`]="{headers}">
+      <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
         <span style='color: white;'>{{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
       </template>
 
       <template v-slot:item.affiche="{ item }">
-        <v-checkbox
+        <v-simple-checkbox
             v-model="item.affiche"
             on-icon="mdi-eye"
             off-icon="mdi-eye-off-outline"
             color="#CF4A1A"
             dense
-        ></v-checkbox>
+        ></v-simple-checkbox>
       </template>
     </v-data-table>
   </v-card>
@@ -39,7 +39,7 @@ const resultatStore = useResultatStore();
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
   { text: "PPN", value: "ppn", class: "headerTableClass"},
-  { text: "Type de documents", value: "typeDocument", class: "headerTableClass"},
+  { text: "Type de document", value: "typeDocument", class: "headerTableClass"},
   { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass"}
 ]);
 let loading = ref(false);
@@ -72,13 +72,17 @@ function feedItems(){
  * @return {string}
  */
 function classItemMasked(item){
-  return item.affiche ? '' : 'masked'
+  return item.affiche ? 'showed' : 'masked'
 }
 </script>
 <style>
 .masked{
-  color: grey;
+  color: lightgrey;
   background-color: whitesmoke;
+}
+.showed{
+  color: #252C61;
+  font-weight: bold;
 }
 
 .headerTableClass{

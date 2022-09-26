@@ -48,7 +48,6 @@ function setBackendError(error) {
 }
 
 function redirect() {
-  console.log('redirection');
   router.push('/resultats');
 }
 </script>
