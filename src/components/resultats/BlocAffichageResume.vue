@@ -29,13 +29,24 @@
             </div>
           </v-menu>
 
+<!--          // TODO faire un choix pour le placement de la checkbox d'affichage/masquage de toutes les lignes-->
         <v-menu v-if="header.value === 'affiche'">
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="mr-2" fab small depressed color="#676C91" width="20px" height="20px">
-              <v-checkbox class="ma-0 pa-0 pl-2 mt-4" color="white" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"></v-checkbox>
+              <v-checkbox class="ma-0 pa-0 pl-2 mt-4" color="#CF4A1A" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"></v-checkbox>
             </v-btn>
           </template>
         </v-menu>
+
+<!--        <v-btn class="ma-0 pa-0 pt-2 pl-2" v-if="header.value === 'affiche'" fab small depressed color="#676C91" width="20px" height="20px">-->
+<!--          <v-checkbox v-slot:activator="{ on, attrs }" color="#CF4A1A" v-bind="attrs" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"/>-->
+<!--        </v-btn>-->
+
+<!--          <v-menu v-if="header.value === 'affiche'">-->
+<!--          <template v-slot:activator="{ on, attrs }">-->
+<!--            <v-checkbox color="#CF4A1A" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"/>-->
+<!--          </template>-->
+<!--          </v-menu>-->
 
         <span style='color: white;'>
           {{ header.text }}
@@ -50,10 +61,26 @@
             dense
         ></v-simple-checkbox>
       </template>
+
       <template v-slot:body.append>
         <tr>
-          <td colspan="4">
-            <v-container class="d-flex flex-row-reverse ">
+<!--          // TODO faire un choix pour le placement de la checkbox d'affichage/masquage de toutes les lignes-->
+<!--          <td>-->
+<!--            <table>-->
+<!--              <tr>-->
+<!--                <td>-->
+<!--                <v-menu max-width="0px">-->
+<!--                  <template v-slot:activator="{ on, attrs }">-->
+<!--                    <v-checkbox color="#CF4A1A" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>-->
+<!--                  </template>-->
+<!--                </v-menu>-->
+<!--                </td>-->
+<!--                <td>Masquer/démasquer tout</td>-->
+<!--              </tr>-->
+<!--            </table>-->
+<!--          </td>-->
+          <td colspan="4" >
+            <v-container class="d-flex flex-row-reverse">
               <table>
                 <tr>
                   <td>Générer la requête pour WinIBW</td><td><bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw></td>
