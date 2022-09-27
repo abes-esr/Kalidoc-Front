@@ -6,7 +6,7 @@
       :headers="headers"
       :loading="loading"
       loading-text="Chargement..."
-      :items="items"
+      :items="filterPpnByType()"
       :item-class="classItemMasked"
       :footer-props="{
         itemsPerPageOptions: [5,10,20,30,-1]
@@ -14,7 +14,26 @@
       dense
     >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-        <span style='color: white;'>{{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
+        <template v-if="header.value === 'typeDocument'">
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
+                <v-icon small color="white">
+                  mdi-filter
+                </v-icon>
+              </v-btn>
+            </template>
+            <div style='background-color:white;color: black;' class="pl-4 pr-8">
+              <v-btn class="d-block" plain v-for="type in selectType" :key="type.id" @click="eventTypeChoice(type)">
+                {{ type }}
+              </v-btn>
+            </div>
+          </v-menu>
+          <span style='color: white;'> {{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
+        </template>
+        <template v-else>
+          <span style='color: white;'>{{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
+        </template>
       </template>
       <template v-slot:item.affiche="{ item }">
         <v-simple-checkbox
@@ -31,7 +50,7 @@
             <v-container class="d-flex flex-row-reverse ">
               <table>
                 <tr>
-                  <td>Rechercher les PPN dans WinIBW</td><td><bouton-winibw :isDisabled="items.length == 0" :ppnList="ppnList" @onClick="displayPopup"></bouton-winibw></td>
+                  <td>Générer la requête pour WinIBW</td><td><bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw></td>
                 </tr>
               </table>
             </v-container>
@@ -49,8 +68,10 @@ import { ref, onMounted } from "vue"
 import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
+import QualimarcService from "@/service/QualimarcService";
 
 const resultatStore = useResultatStore();
+const serviceApi = QualimarcService;
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -60,15 +81,15 @@ let headers = ref([
 ]);
 let loading = ref(false);
 let items = ref([]);
-let ppnList = ref([]);
 let winibwRequest = ref('null');
 let dialog = ref(false);
-let listType = ref([]);
-let searchType = ref('null');
+let selectType = ref([]);
+let type = '';
+let ppnFiltered = [];
 
 onMounted(() => {
   feedItems();
-  feedPpnList();
+  feedTypeList();
 })
 
 /**
@@ -91,9 +112,26 @@ function feedItems(){
 /**
  * Fonction permettant de récupérer les PPN pour la création de la requête WINIBW
  */
-function feedPpnList() {
-  items.value.forEach(item => {
-    ppnList.value.push(item.ppn);
+function getPpnList() {
+  let ppnList = [];
+  let listItems = (ppnFiltered.length === 0 || type === "") ? items.value : ppnFiltered;
+  listItems.forEach(item => {
+    ppnList.push(item.ppn);
+  });
+  return ppnList;
+}
+
+/**
+ * Fonction permettant d'initialiser les listes de types de documents affichés dans le filtre
+ */
+function feedTypeList() {
+  selectType.value.push("Tous");
+  serviceApi.getFamillesDocuments()
+      .then((response) => {
+        response.data.forEach((el) => selectType.value.push(el.libelle));
+      }).catch((error) => {
+        //TODO : emit erreur si impossible de récupérer les types via appel axios
+    //emitOnError(error);
   });
 }
 
@@ -103,6 +141,10 @@ function feedPpnList() {
 function displayPopup(request) {
   winibwRequest.value = request;
   dialog.value = true;
+}
+
+function isWinibwButtonDisabled() {
+  return filterPpnByType().length === 0;
 }
 
 /**
@@ -120,6 +162,23 @@ function setDialog(onClose) {
 function classItemMasked(item){
   return item.affiche ? 'showed' : 'masked'
 }
+
+function eventTypeChoice(element) {
+  type = (element === "Tous") ? "" : element;
+  filterPpnByType();
+}
+
+function filterPpnByType(){
+    if (type !== "") {
+      ppnFiltered = items.value.filter(item => {
+          return item.typeDocument === type;
+      });
+      return ppnFiltered;
+    }
+    return items.value;
+}
+
+
 </script>
 <style>
 .masked{
