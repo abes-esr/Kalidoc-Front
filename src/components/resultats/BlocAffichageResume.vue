@@ -84,7 +84,7 @@ let items = ref([]);
 let winibwRequest = ref('null');
 let dialog = ref(false);
 let selectType = ref([]);
-let type = '';
+let type = ref(null);
 let ppnFiltered = [];
 
 onMounted(() => {
@@ -114,7 +114,7 @@ function feedItems(){
  */
 function getPpnList() {
   let ppnList = [];
-  let listItems = (ppnFiltered.length === 0 || type === "") ? items.value : ppnFiltered;
+  let listItems = (ppnFiltered.length === 0 || type.value === null) ? items.value : ppnFiltered;
   listItems.forEach(item => {
     ppnList.push(item.ppn);
   });
@@ -164,14 +164,14 @@ function classItemMasked(item){
 }
 
 function eventTypeChoice(element) {
-  type = (element === "Tous") ? "" : element;
-  filterPpnByType();
+  type.value = (element === "Tous") ? null : element;
+  return filterPpnByType();
 }
 
 function filterPpnByType(){
-    if (type !== "") {
+    if (type.value !== null) {
       ppnFiltered = items.value.filter(item => {
-          return item.typeDocument === type;
+          return item.typeDocument === type.value;
       });
       return ppnFiltered;
     }
