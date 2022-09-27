@@ -28,6 +28,9 @@
               </v-btn>
             </div>
           </v-menu>
+        <template v-if="header.value === 'affiche'">
+          <v-checkbox v-if="header.value === 'affiche'" color="#CF4A1A" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"></v-checkbox>
+        </template>
         <span style='color: white;'>
           {{ header.text }}
           <v-icon color="white" small >mdi-sort</v-icon></span>
@@ -175,6 +178,12 @@ function filterPpnByType(){
     return items.value;
 }
 
+function toggleMask(value) {
+  items.value.forEach(item => {
+    item.affiche = value;
+  })
+
+}
 
 </script>
 <style>
