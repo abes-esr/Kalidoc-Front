@@ -8,6 +8,8 @@
       loading-text="Chargement..."
       :items="filterPpnByType()"
       :item-class="classItemMasked"
+      @click:row="updateBlocDetail"
+      item-key="ppn"
       :footer-props="{
         itemsPerPageOptions: [5,10,20,30,-1]
       }"
@@ -72,6 +74,8 @@ import QualimarcService from "@/service/QualimarcService";
 
 const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
+
+const emit = defineEmits(['onChangePpn']);
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -143,6 +147,9 @@ function displayPopup(request) {
   dialog.value = true;
 }
 
+/**
+ * Fonction permettant de savoir si le bouton de génération de la requête winibw est désactivé
+ */
 function isWinibwButtonDisabled() {
   return filterPpnByType().length === 0;
 }
@@ -163,6 +170,15 @@ function classItemMasked(item){
   return item.affiche ? 'showed' : 'masked'
 }
 
+/**
+ * Fonction renvoyant le ppn de la ligne sélectionné vers le composant parent
+ */
+function updateBlocDetail(item, row) {
+  let selectState = (row.isSelected) ? false : true;
+  row.select(selectState);
+  emit("onChangePpn", item.ppn);
+}
+
 function eventTypeChoice(element) {
   type.value = (element === "Tous") ? null : element;
   return filterPpnByType();
@@ -178,7 +194,9 @@ function filterPpnByType(){
     return items.value;
 }
 
+function selectItem(item) {
 
+}
 </script>
 <style>
 .masked{
@@ -193,5 +211,18 @@ function filterPpnByType(){
 .headerTableClass{
   color: white;
   background-color: #676C91;
+}
+
+.theme--light.v-data-table tbody tr.v-data-table__selected {
+  background: #DADCE7 !important;
+}
+.theme--dark.v-data-table tbody tr.v-data-table__selected {
+  background: #DADCE7 !important;
+}
+.theme--dark.v-data-table tbody tr.v-data-table__selected:hover {
+  background: #DADCE7 !important;
+}
+.theme--light.v-data-table tbody tr.v-data-table__selected:hover {
+  background: #DADCE7 !important;
 }
 </style>
