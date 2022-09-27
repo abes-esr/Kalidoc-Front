@@ -14,8 +14,7 @@
       dense
     >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-        <template v-if="header.value === 'typeDocument'">
-          <v-menu offset-y>
+          <v-menu offset-y v-if="header.value === 'typeDocument'">
             <template v-slot:activator="{ on, attrs }">
               <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
                 <v-icon small color="white">
@@ -29,11 +28,9 @@
               </v-btn>
             </div>
           </v-menu>
-          <span style='color: white;'> {{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
-        </template>
-        <template v-else>
-          <span style='color: white;'>{{ header.text }} <v-icon color="white" small >mdi-sort</v-icon></span>
-        </template>
+        <span style='color: white;'>
+          {{ header.text }}
+          <v-icon color="white" small >mdi-sort</v-icon></span>
       </template>
       <template v-slot:item.affiche="{ item }">
         <v-simple-checkbox
