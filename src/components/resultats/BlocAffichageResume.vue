@@ -28,18 +28,21 @@
               </v-btn>
             </div>
           </v-menu>
+
         <v-menu v-if="header.value === 'affiche'">
           <template v-slot:activator="{ on, attrs }">
-            <v-checkbox color="#CF4A1A" v-bind="attrs" v-on="on"  on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"/>
+            <v-btn class="mr-2" fab small depressed color="#676C91" width="20px" height="20px">
+              <v-checkbox class="ma-0 pa-0 pl-2 mt-4" color="#CF4A1A" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"></v-checkbox>
+            </v-btn>
           </template>
         </v-menu>
+
         <span style='color: white;'>
           {{ header.text }}
           <v-icon color="white" small >mdi-sort</v-icon></span>
       </template>
       <template v-slot:item.affiche="{ item }">
         <v-simple-checkbox
-
             v-model="item.affiche"
             on-icon="mdi-eye"
             off-icon="mdi-eye-off-outline"
