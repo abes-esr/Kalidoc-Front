@@ -18,7 +18,7 @@ const resultatStore = useResultatStore();
 
 // Props & Emit
 const props = defineProps({isDisabled: Boolean});
-const emit = defineEmits(['onClick', 'backendError', 'finished']);
+const emit = defineEmits(['backendError', 'finished']);
 
 // Service
 const serviceApi = QualimarcService

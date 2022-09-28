@@ -17,11 +17,21 @@ export class QualimarcService {
                 typeAnalyse: typeAnalyse
         })
     }
-    
+
+    /**
+     * Renvoie la liste des familles de docuemnts
+     * @return {Promise<AxiosResponse<any>>}
+     * response.data : { id, libelle}
+     */
     getFamillesDocuments(){
       return this.client.get("getFamillesDocuments")
     }
 
+    /**
+     * Renvoie la liste des types d'analyses
+     * @return {Promise<AxiosResponse<any>>}
+     * response.data : {id, libelle}
+     */
     getTypesAnalyses(){
       return this.client.get("getTypesAnalyses")
     }
