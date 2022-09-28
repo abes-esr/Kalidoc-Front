@@ -9,6 +9,7 @@
       :items="filterPpnByType()"
       :item-class="classItemMasked"
       @click:row="updateBlocDetail"
+      single-select
       item-key="ppn"
       :footer-props="{
         itemsPerPageOptions: [5,10,20,30,-1]
@@ -174,8 +175,7 @@ function classItemMasked(item){
  * Fonction renvoyant le ppn de la ligne sélectionné vers le composant parent
  */
 function updateBlocDetail(item, row) {
-  let selectState = (row.isSelected) ? false : true;
-  row.select(selectState);
+  row.select(!row.isSelected);
   emit("onChangePpn", item.ppn);
 }
 
