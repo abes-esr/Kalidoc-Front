@@ -2,9 +2,9 @@
 
   <v-container class="ma-0 pa-0">
     <v-row class="ma-0 pa-0">
-      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Détail des erreurs par PPN</span>
+      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
     </v-row>
-    <v-container class="pa-2 ma-0 borderErrorDetailPerPpn">
+    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
 
     <v-data-table
       :headers="headers"
@@ -208,6 +208,10 @@ function filterPpnByType(){
     return items.value;
 }
 
+/**
+ * Fonction qui permet d'afficher ou de masquer toutes les lignes
+ * @param value
+ */
 function toggleMask(value) {
   items.value.forEach(item => {
     item.affiche = value;

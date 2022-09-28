@@ -104,6 +104,23 @@
     border-left-width:1px;
 }
 
-.tailleTexte {
-    font-size: 0.4em;
+.borderPicturePpnErrorDetail {
+    border: solid 1px lightgray;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+    max-width: 65px;
+    max-height: 75px
+}
+
+.dataTableHeaderDetailErrorPerPpn{
+    color: white;
+    background-color: #e6e6e6;
+}
+
+.detailErrorPpnSubtitle {
+    font-size: 1.2em;
+    padding-left: 76px;
+    height: 38px;
+    color: white;
 }
