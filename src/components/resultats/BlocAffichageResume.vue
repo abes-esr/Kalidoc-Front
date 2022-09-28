@@ -8,6 +8,9 @@
       loading-text="Chargement..."
       :items="filterPpnByType()"
       :item-class="classItemMasked"
+      @click:row="updateBlocDetail"
+      single-select
+      item-key="ppn"
       :footer-props="{
         itemsPerPageOptions: [5,10,20,30,-1]
       }"
@@ -28,26 +31,6 @@
               </v-btn>
             </div>
           </v-menu>
-
-<!--          // TODO faire un choix pour le placement de la checkbox d'affichage/masquage de toutes les lignes-->
-        <v-menu v-if="header.value === 'affiche'">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn class="mr-2" fab small depressed color="#676C91" width="20px" height="20px">
-              <v-checkbox class="ma-0 pa-0 pl-2 mt-4" color="#CF4A1A" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"></v-checkbox>
-            </v-btn>
-          </template>
-        </v-menu>
-
-<!--        <v-btn class="ma-0 pa-0 pt-2 pl-2" v-if="header.value === 'affiche'" fab small depressed color="#676C91" width="20px" height="20px">-->
-<!--          <v-checkbox v-slot:activator="{ on, attrs }" color="#CF4A1A" v-bind="attrs" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"/>-->
-<!--        </v-btn>-->
-
-<!--          <v-menu v-if="header.value === 'affiche'">-->
-<!--          <template v-slot:activator="{ on, attrs }">-->
-<!--            <v-checkbox color="#CF4A1A" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" dense @change="toggleMask"/>-->
-<!--          </template>-->
-<!--          </v-menu>-->
-
         <span style='color: white;'>
           {{ header.text }}
           <v-icon color="white" small >mdi-sort</v-icon></span>
@@ -61,25 +44,19 @@
             dense
         ></v-simple-checkbox>
       </template>
-
       <template v-slot:body.append>
         <tr>
-<!--          // TODO faire un choix pour le placement de la checkbox d'affichage/masquage de toutes les lignes-->
-<!--          <td>-->
-<!--            <table>-->
-<!--              <tr>-->
-<!--                <td>-->
-<!--                <v-menu max-width="0px">-->
-<!--                  <template v-slot:activator="{ on, attrs }">-->
-<!--                    <v-checkbox color="#CF4A1A" v-on="on" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>-->
-<!--                  </template>-->
-<!--                </v-menu>-->
-<!--                </td>-->
-<!--                <td>Masquer/démasquer tout</td>-->
-<!--              </tr>-->
-<!--            </table>-->
-<!--          </td>-->
-          <td colspan="4" >
+          <td colspan="2">
+            <table>
+              <tr>
+                <td>
+                  <v-checkbox color="#CF4A1A" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
+                </td>
+                <td>Masquer/démasquer tout</td>
+              </tr>
+            </table>
+          </td>
+          <td colspan="2" >
             <v-container class="d-flex flex-row-reverse">
               <table>
                 <tr>
@@ -105,6 +82,8 @@ import QualimarcService from "@/service/QualimarcService";
 
 const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
+
+const emit = defineEmits(['onChangePpn']);
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -176,6 +155,9 @@ function displayPopup(request) {
   dialog.value = true;
 }
 
+/**
+ * Fonction permettant de savoir si le bouton de génération de la requête winibw est désactivé
+ */
 function isWinibwButtonDisabled() {
   return filterPpnByType().length === 0;
 }
@@ -194,6 +176,14 @@ function setDialog(onClose) {
  */
 function classItemMasked(item){
   return item.affiche ? 'showed' : 'masked'
+}
+
+/**
+ * Fonction renvoyant le ppn de la ligne sélectionné vers le composant parent
+ */
+function updateBlocDetail(item, row) {
+  row.select(!row.isSelected);
+  emit("onChangePpn", item.ppn);
 }
 
 function eventTypeChoice(element) {
@@ -232,5 +222,18 @@ function toggleMask(value) {
 .headerTableClass{
   color: white;
   background-color: #676C91;
+}
+
+.theme--light.v-data-table tbody tr.v-data-table__selected {
+  background: #DADCE7 !important;
+}
+.theme--dark.v-data-table tbody tr.v-data-table__selected {
+  background: #DADCE7 !important;
+}
+.theme--dark.v-data-table tbody tr.v-data-table__selected:hover {
+  background: #DADCE7 !important;
+}
+.theme--light.v-data-table tbody tr.v-data-table__selected:hover {
+  background: #DADCE7 !important;
 }
 </style>
