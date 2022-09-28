@@ -1,7 +1,11 @@
 <template>
-  <v-card>
-    <v-card-title>Liste des PPN avec erreurs</v-card-title>
-    <v-divider></v-divider>
+
+  <v-container class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Détail des erreurs par PPN</span>
+    </v-row>
+    <v-container class="pa-2 ma-0 borderErrorDetailPerPpn">
+
     <v-data-table
       :headers="headers"
       :loading="loading"
@@ -70,7 +74,10 @@
     </v-data-table>
 
     <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
-  </v-card>
+
+    </v-container>
+  </v-container>
+
 </template>
 
 <script setup>

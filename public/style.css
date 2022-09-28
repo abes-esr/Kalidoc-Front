@@ -95,6 +95,15 @@
     border-left-width:0;
 }
 
+.borderErrorDetailPerPpn {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:4px;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-left-width:1px;
+}
+
 .tailleTexte {
     font-size: 0.4em;
 }
