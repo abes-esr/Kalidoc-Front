@@ -46,8 +46,18 @@
       </template>
       <template v-slot:body.append>
         <tr>
-          <td colspan="4">
-            <v-container class="d-flex flex-row-reverse ">
+          <td colspan="2">
+            <table>
+              <tr>
+                <td>
+                  <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
+                </td>
+                <td>Masquer/démasquer tout</td>
+              </tr>
+            </table>
+          </td>
+          <td colspan="2" >
+            <v-container class="d-flex flex-row-reverse">
               <table>
                 <tr>
                   <td>Générer la requête pour WinIBW</td><td><bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw></td>
@@ -189,6 +199,13 @@ function filterPpnByType(){
       return ppnFiltered;
     }
     return items.value;
+}
+
+function toggleMask(value) {
+  items.value.forEach(item => {
+    item.affiche = value;
+  })
+
 }
 
 </script>
