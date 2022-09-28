@@ -6,8 +6,8 @@
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img src="@/assets/card-off-outline.svg" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91">{TitreDuLivre} / {Auteur}</div>
-      <div class="mb-2 pt-1 text-justify fontPrimaryColor detailErrorPpnSubtitle">Détail des erreurs pour {PPN}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{TitreDuLivre} / {Auteur}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {PPN}</div>
       <div>
         <v-data-table
             :headers="headers"
