@@ -194,9 +194,6 @@ function filterPpnByType(){
     return items.value;
 }
 
-function selectItem(item) {
-
-}
 </script>
 <style>
 .masked{
