@@ -1,7 +1,11 @@
 <template>
-  <v-card>
-    <v-card-title>Liste des PPN avec erreurs</v-card-title>
-    <v-divider></v-divider>
+
+  <v-container class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
+    </v-row>
+    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
+
     <v-data-table
       :headers="headers"
       :loading="loading"
@@ -70,7 +74,10 @@
     </v-data-table>
 
     <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
-  </v-card>
+
+    </v-container>
+  </v-container>
+
 </template>
 
 <script setup>
@@ -202,6 +209,10 @@ function filterPpnByType(){
     return items.value;
 }
 
+/**
+ * Fonction qui permet d'afficher ou de masquer toutes les lignes
+ * @param value
+ */
 function toggleMask(value) {
   items.value.forEach(item => {
     item.affiche = value;

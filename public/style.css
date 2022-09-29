@@ -95,6 +95,31 @@
     border-left-width:0;
 }
 
-.tailleTexte {
-    font-size: 0.4em;
+.borderErrorDetailPerPpn {
+    border-style: solid;
+    border-color: #252c61;
+    border-top-width:4px;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-left-width:1px;
+}
+
+.borderPicturePpnErrorDetail {
+    border: solid 1px lightgray;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+    max-width: 65px;
+    max-height: 75px
+}
+
+.dataTableHeaderDetailErrorPerPpn{
+    color: white;
+    background-color: #e6e6e6;
+}
+
+.detailErrorPpnSubtitle {
+    font-size: 1.2em;
+    padding-left: 76px;
+    height: 38px;
 }
