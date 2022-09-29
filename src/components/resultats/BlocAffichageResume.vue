@@ -111,12 +111,13 @@ function feedItems(){
   loading.value = true;
   items.value = [];
   resultatStore.getResultsList.forEach((el) => {
-    items.value.push( {
-      affiche: true,
-      ppn: el.ppn,
-      typeDocument: el.typeDocument,
-      nberreurs: el.messages.length
-    })
+    if(el.detailerreurs)
+      items.value.push( {
+        affiche: true,
+        ppn: el.ppn,
+        typeDocument: el.typeDocument,
+        nberreurs: el.detailerreurs.length
+      })
   });
   loading.value = false;
 }
