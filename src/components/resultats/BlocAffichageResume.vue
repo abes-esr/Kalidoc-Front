@@ -105,6 +105,7 @@ let dialog = ref(false);
 let selectType = ref([]);
 let type = ref(null);
 let ppnFiltered = [];
+let errorsDetails = [];
 
 onMounted(() => {
   feedItems();
@@ -191,7 +192,18 @@ function classItemMasked(item){
  */
 function updateBlocDetail(item, row) {
   row.select(!row.isSelected);
-  emit("onChangePpn", item.ppn);
+
+  resultatStore.getResultsList.forEach((el) => {
+    if(el.ppn === item.ppn) {
+      errorsDetails.push({
+        zone1: el.detailerreurs[0].zoneunm1,
+        zone2: el.detailerreurs[0].zoneunm2,
+        message: el.detailerreurs[0].message,
+      })
+    }
+  });
+
+  emit("onChangePpn", item.ppn, errorsDetails);
 }
 
 function eventTypeChoice(element) {

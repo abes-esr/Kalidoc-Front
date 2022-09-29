@@ -12,21 +12,21 @@
         <v-data-table
             :headers="headers"
             :items="items"
-            :page.sync="page1"
             :items-per-page="itemsPerPage"
             hide-default-footer
             @page-count="pageCount = $event"
             dense
             class="elevation-0"
         ></v-data-table>
+
       </div>
     </v-container>
 
     <div class="text-center pt-2">
-      <v-pagination
-          v-model="page"
-          :length="pageCount"
-      ></v-pagination>
+<!--      <v-pagination-->
+<!--          v-model="page"-->
+<!--          :length="pageCount"-->
+<!--      ></v-pagination>-->
     </div>
   </v-container>
 
@@ -34,29 +34,22 @@
 
 <script setup>
   import {ref} from "vue";
-  import { useResultatStore } from "@/stores/resultat";
 
-  const props = defineProps({currentPpn: String});
-  const resultatStore = useResultatStore();
+  const props = defineProps({currentPpn: String, errorsDetails: []});
 
   let page = ref(1);
   let pageCount = ref(0);
   let itemsPerPage = ref(5);
-  let resultsList = ref([]);
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
+  // TODO trouver comment nourrir la liste items à partir de errorsDetails
   let items = ref([
-    {zone1: "210", zone2: "", message: "Zone 210 : doit être remplacée par zone 214"},
-    {zone1: "606", zone2: "", message: "Zone 606 : absence de liens $3"},
-    {zone1: "700$b", zone2: "", message: "Zone 700 : 700$b contient un terme générique à compléter"},
-    {zone1: "", zone2: "210", message: "Zone 210 : doit être remplacée par zone 214"},
-    {zone1: "", zone2: "606", message: "Zone 606 : absence de liens $3"},
-    {zone1: "", zone2: "700$b", message: "Zone 700 : 700$b contient un terme générique à compléter"},
-    {zone1: "201", zone2: "", message: "Zone 210 : doit être remplacée par zone 214"},
+    // {zone1: "606", zone2: "", message: "Zone 606 : absence de liens $3"},
+    // {zone1: "700$b", zone2: "", message: "Zone 700 : 700$b contient un terme générique à compléter"},
   ])
 
 </script>
