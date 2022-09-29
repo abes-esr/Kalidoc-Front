@@ -7,12 +7,12 @@
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img src="@/assets/card-off-outline.svg" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{TitreDuLivre} / {Auteur}</div>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {PPN}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
       <div>
         <v-data-table
             :headers="headers"
             :items="items"
-            :page.sync="page"
+            :page.sync="page1"
             :items-per-page="itemsPerPage"
             hide-default-footer
             @page-count="pageCount = $event"
@@ -34,12 +34,15 @@
 
 <script setup>
   import {ref} from "vue";
+  import { useResultatStore } from "@/stores/resultat";
 
   const props = defineProps({currentPpn: String});
+  const resultatStore = useResultatStore();
 
   let page = ref(1);
   let pageCount = ref(0);
   let itemsPerPage = ref(5);
+  let resultsList = ref([]);
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
