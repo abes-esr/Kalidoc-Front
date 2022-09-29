@@ -56,6 +56,7 @@
     {zone1: "", zone2: "210", message: "Zone 210 : doit être remplacée par zone 214"},
     {zone1: "", zone2: "606", message: "Zone 606 : absence de liens $3"},
     {zone1: "", zone2: "700$b", message: "Zone 700 : 700$b contient un terme générique à compléter"},
+    {zone1: "201", zone2: "", message: "Zone 210 : doit être remplacée par zone 214"},
   ])
 
 </script>
