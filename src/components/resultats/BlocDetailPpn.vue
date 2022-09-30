@@ -18,10 +18,8 @@
             dense
             class="elevation-0"
         ></v-data-table>
-
       </div>
     </v-container>
-
     <div class="text-center pt-2">
 <!--      <v-pagination-->
 <!--          v-model="page"-->
@@ -33,9 +31,11 @@
 </template>
 
 <script setup>
-  import {ref} from "vue";
+  import {ref, onUpdated } from "vue";
+  import { useResultatStore } from "@/stores/resultat";
 
-  const props = defineProps({currentPpn: String, errorsDetails: []});
+  const props = defineProps({currentPpn: String});
+  const resultatStore = useResultatStore();
 
   let page = ref(1);
   let pageCount = ref(0);
@@ -51,6 +51,21 @@
     // {zone1: "606", zone2: "", message: "Zone 606 : absence de liens $3"},
     // {zone1: "700$b", zone2: "", message: "Zone 700 : 700$b contient un terme générique à compléter"},
   ])
+
+  onUpdated(() => {
+    resultatStore.getResultsList.forEach((result) => {
+      if(result.ppn === props.currentPpn) {
+        result.detailerreurs.forEach((erreur)=> {
+          items.value.push({zone1: erreur.zoneunm1})
+          // items.value.push({
+          //   zone1: erreur.zoneunm1,
+          //   zone2: erreur.zoneunm2,
+          //   message: erreur.message,
+          // })
+        })
+      }
+    });
+  })
 
 </script>
 

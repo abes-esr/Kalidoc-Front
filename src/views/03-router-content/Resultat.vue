@@ -12,7 +12,7 @@
         <BlocAffichageResume @onChangePpn="sendPpnToBlocDetail"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="7" lg="7" xl="7">
-        <bloc-detail-ppn :currentPpn="currentPpn" :detailErreurs="detailErreurs"></bloc-detail-ppn>
+        <bloc-detail-ppn :currentPpn="currentPpn"></bloc-detail-ppn>
         <bloc-recapitulatif class="pl-1 pr-1" style="min-height: 13em" ></bloc-recapitulatif>
         <bouton-lancement style="min-height: 2em" @onClick="refreshRecap">Relancer l'analyse</bouton-lancement>
       </v-col>
@@ -29,11 +29,9 @@ import BlocDetailPpn from "@/components/resultats/BlocDetailPpn";
 import {ref} from "vue";
 
 let currentPpn = ref('');
-let detailErreurs = ref( []);
 
-function sendPpnToBlocDetail(ppn, errorsDetails) {
+function sendPpnToBlocDetail(ppn) {
   currentPpn.value = ppn;
-  detailErreurs = errorsDetails;
 }
 
 function refreshRecap() {
