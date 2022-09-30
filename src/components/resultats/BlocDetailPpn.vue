@@ -7,25 +7,26 @@
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-btn v-else style="position:absolute;" class="borderPicturePpnErrorDetail" fab small depressed :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-btn>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ titre }} / {{ auteur }}</div>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
+
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page].titre }} / {{ itemsPpnParent[page].auteur }}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ itemsPpnParent[page].ppn }}</div>
       <div>
         <v-data-table
             :headers="headers"
-            :items="items"
+            :items="itemsPpnParent[page].itemsDetailPpn"
             :items-per-page="itemsPerPage"
             hide-default-footer
-            @page-count="pageCount = $event"
             dense
             class="elevation-0"
         ></v-data-table>
       </div>
     </v-container>
     <div class="text-center pt-2">
-<!--      <v-pagination-->
-<!--          v-model="page"-->
-<!--          :length="pageCount"-->
-<!--      ></v-pagination>-->
+      <v-pagination
+          v-model="page"
+          :length="itemsPpnParent.length"
+          @input="log"
+      ></v-pagination>
     </div>
   </v-container>
 
@@ -36,48 +37,51 @@
   import { useResultatStore } from "@/stores/resultat";
   import CoverService from "@/service/CoverService";
 
-  const props = defineProps({currentPpn: String});
+  const props = defineProps({currentPpn: String,currentItems: Array});
   const emit = defineEmits(['backendError']);
 
   const resultatStore = useResultatStore();
   const service = CoverService;
 
   let page = ref(1);
-  let pageCount = ref(0);
   let itemsPerPage = ref(5);
-  let titre = ref();
-  let auteur = ref();
-  let resultsList = ref([]);
   let coverLink = ref('');
   let iconTypeDocument = ref({color:"black",img:"mdi-help"});
+  let itemsPpnParent = ref([]);
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
-  let items = ref([])
+
 
   /**
    * Fonction qui permet de vérifier un changement de valeur du ppn courant
    */
   watchEffect(() => {
     if(props.currentPpn){
+      itemsPpnParent.value = [];
       coverLink.value = '';
-      resultatStore.getResultsList.forEach((result) => {
-        if(result.ppn === props.currentPpn) {
-          titre.value = result.titre;
-          auteur.value = result.auteur;
-          items.value = [];
-          result.detailerreurs.forEach((erreur)=> {
-            items.value.push({
-              zone1: erreur.zoneunm1,
-              zone2: erreur.zoneunm2,
-              message: erreur.message
+      resultatStore.getResultsList
+          .filter(e => props.currentItems
+              .filter(el => el.ppn === e.ppn).length > 0)
+          .forEach(result => {
+            let temp = [];
+            result.detailerreurs.forEach((erreur)=> {temp.push({
+                zone1: erreur.zoneunm1,
+                zone2: erreur.zoneunm2,
+                message: erreur.message
+              });
             })
-          })
-        }
-      });
+            itemsPpnParent.value.push({
+              titre: result.titre,
+              auteur: result.auteur,
+              ppn: result.ppn,
+              itemsDetailPpn: temp,
+            })
+          });
+      console.log(itemsPpnParent.value)
     }
   })
 
@@ -85,7 +89,9 @@
     feedCover();
   })
 
-
+  function log(page){
+    console.log(itemsPpnParent.value);
+  }
   function feedCover() {
     const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
     let ocn;

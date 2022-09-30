@@ -12,7 +12,8 @@
       loading-text="Chargement..."
       :items="filterPpnByType()"
       :item-class="classItemMasked"
-      @click:row="updateBlocDetail"
+      @click:row="sendCurrentPpnToParent"
+      @current-items="sendItemsToParent"
       single-select
       item-key="ppn"
       :footer-props="{
@@ -90,7 +91,7 @@ import QualimarcService from "@/service/QualimarcService";
 const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
 
-const emit = defineEmits(['onChangePpn']);
+const emit = defineEmits(['onChangePpn','onChangeItems']);
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -189,9 +190,13 @@ function classItemMasked(item){
 /**
  * Fonction renvoyant le ppn de la ligne sélectionné vers le composant parent
  */
-function updateBlocDetail(item, row) {
+function sendCurrentPpnToParent(item, row) {
   row.select(!row.isSelected);
   emit("onChangePpn", item.ppn);
+}
+
+function sendItemsToParent(items) {
+  emit("onChangeItems", items);
 }
 
 function eventTypeChoice(element) {
