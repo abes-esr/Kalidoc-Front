@@ -5,14 +5,13 @@
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
-      <img src="@/assets/card-off-outline.svg" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
+      <img :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{TitreDuLivre} / {Auteur}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
       <div>
         <v-data-table
             :headers="headers"
             :items="items"
-            :page.sync="page1"
             :items-per-page="itemsPerPage"
             hide-default-footer
             @page-count="pageCount = $event"
@@ -33,16 +32,19 @@
 </template>
 
 <script setup>
-  import {ref} from "vue";
+  import {onMounted, ref} from "vue";
   import { useResultatStore } from "@/stores/resultat";
+  import CoverService from "@/service/CoverService";
 
   const props = defineProps({currentPpn: String});
   const resultatStore = useResultatStore();
+  const service = CoverService;
 
   let page = ref(1);
   let pageCount = ref(0);
   let itemsPerPage = ref(5);
   let resultsList = ref([]);
+  let coverLink = ref('@/assets/card-off-outline.svg');
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
@@ -58,6 +60,33 @@
     {zone1: "", zone2: "700$b", message: "Zone 700 : 700$b contient un terme générique à compléter"},
   ])
 
+  onMounted(() => {
+    feedCover();
+  })
+
+  function feedCover() {
+    service.getCoverByOcn("49115949").then((response) => {
+      coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
+    }).catch((error) => {
+      emitOnError(error);
+    });
+    if (coverLink.value === '') {
+      //pas de retour avec OCN, on tente avec ISBN
+      service.getCoverByIsbn("49115949").then((response) => {
+        coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
+      }).catch((error) => {
+        emitOnError(error);
+      });
+    }
+    if (coverLink.value === '') {
+      //pas de réponse du ws GB, on affiche une image correspondant au type de document de la notice
+
+    }
+  }
+
+  function emitOnError(error){
+    emit('backendError', error);
+  }
 </script>
 
 <style scoped>
