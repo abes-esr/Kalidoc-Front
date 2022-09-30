@@ -25,7 +25,7 @@
                 {{ header.text }}
             </span>
             <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
-              (Règle essentielle / <b>Règles avancées</b>)
+              <span style="color: grey">(</span>Règle essentielle / <b>Règles avancées</b><span style="color: grey">)</span>
             </span>
           </template>
         </v-data-table>
