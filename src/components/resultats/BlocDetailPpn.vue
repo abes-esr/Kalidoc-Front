@@ -14,6 +14,7 @@
             :headers="headers"
             :items="items"
             :items-per-page="itemsPerPage"
+            :item-class="classItemPriority"
             hide-default-footer
             @page-count="pageCount = $event"
             dense
@@ -73,13 +74,29 @@
             items.value.push({
               zone1: erreur.zoneunm1,
               zone2: erreur.zoneunm2,
-              message: erreur.message
+              message: erreur.message,
+              priority: erreur.priority
             })
           })
         }
       });
     }
   })
+
+  /**
+   * Fonction qui modifie la class de l'item sélectionné en fonction de sa priorité
+   * @param item
+   * @returns {string}
+   */
+  function classItemPriority(item){
+    if(item.priority === "P1") {
+      return 'priorityP1'
+    } else if(item.priority === "P2") {
+      return 'priorityP2'
+    } else {
+      return 'priorityP1'
+    }
+  }
 
   onUpdated(() => {
     feedCover();
@@ -199,6 +216,14 @@
   }
 </script>
 
-<style scoped>
+<style>
+
+.priorityP1{
+  font-weight: normal;
+}
+
+.priorityP2{
+  font-weight: bold;
+}
 
 </style>
