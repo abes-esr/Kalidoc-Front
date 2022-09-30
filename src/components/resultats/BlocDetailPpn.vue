@@ -173,7 +173,7 @@
         iconTypeDocument.value.color="brown";
         break;
       case "Multimédia":
-        iconTypeDocument.value.img="mdi-audio-video";
+        iconTypeDocument.value.img="mdi-movie-play-outline";
         iconTypeDocument.value.color="purple";
         break;
       case "Objet":
