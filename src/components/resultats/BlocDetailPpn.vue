@@ -63,6 +63,7 @@
    */
   watchEffect(() => {
     if(props.currentPpn){
+      coverLink.value = '';
       resultatStore.getResultsList.forEach((result) => {
         if(result.ppn === props.currentPpn) {
           titre.value = result.titre;
@@ -115,12 +116,14 @@
 
   function getCoverByIsbn(isbn) {
     //pas de retour avec OCN, on tente avec ISBN
-    service.getCoverByIsbn(isbn).then((response) => {
-      if (response.data.items)
-        coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
-    }).catch((error) => {
-      emitOnError(error);
-    });
+    if (isbn !== '' && isbn !== undefined && isbn !== null) {
+      service.getCoverByIsbn(isbn).then((response) => {
+        if (response.data.items)
+          coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
+      }).catch((error) => {
+        emitOnError(error);
+      });
+    }
   }
 
   function getIconTypeDocument(typeDocument) {
