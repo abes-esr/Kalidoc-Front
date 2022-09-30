@@ -7,7 +7,7 @@
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-btn v-else style="position:absolute;" class="borderPicturePpnErrorDetail" fab small depressed :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-btn>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{TitreDuLivre} / {Auteur}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ titre }} / {{ auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
       <div>
         <v-data-table
@@ -21,7 +21,6 @@
         ></v-data-table>
       </div>
     </v-container>
-
     <div class="text-center pt-2">
 <!--      <v-pagination-->
 <!--          v-model="page"-->
@@ -33,7 +32,7 @@
 </template>
 
 <script setup>
-  import {onUpdated, ref} from "vue";
+  import {ref, onUpdated, watchEffect } from "vue";
   import { useResultatStore } from "@/stores/resultat";
   import CoverService from "@/service/CoverService";
 
@@ -46,6 +45,8 @@
   let page = ref(1);
   let pageCount = ref(0);
   let itemsPerPage = ref(5);
+  let titre = ref();
+  let auteur = ref();
   let resultsList = ref([]);
   let coverLink = ref('');
   let iconTypeDocument = ref({color:"black",img:"mdi-help"});
@@ -55,11 +56,29 @@
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
-  // TODO trouver comment nourrir la liste items à partir de errorsDetails
-  let items = ref([
-    // {zone1: "606", zone2: "", message: "Zone 606 : absence de liens $3"},
-    // {zone1: "700$b", zone2: "", message: "Zone 700 : 700$b contient un terme générique à compléter"},
-  ])
+  let items = ref([])
+
+  /**
+   * Fonction qui permet de vérifier un changement de valeur du ppn courant
+   */
+  watchEffect(() => {
+    if(props.currentPpn){
+      resultatStore.getResultsList.forEach((result) => {
+        if(result.ppn === props.currentPpn) {
+          titre.value = result.titre;
+          auteur.value = result.auteur;
+          items.value = [];
+          result.detailerreurs.forEach((erreur)=> {
+            items.value.push({
+              zone1: erreur.zoneunm1,
+              zone2: erreur.zoneunm2,
+              message: erreur.message
+            })
+          })
+        }
+      });
+    }
+  })
 
   onUpdated(() => {
     feedCover();
