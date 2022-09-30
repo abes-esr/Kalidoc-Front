@@ -5,14 +5,14 @@
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
-      <img src="@/assets/card-off-outline.svg" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{TitreDuLivre} / {Auteur}</div>
+      <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
+      <v-btn v-else style="position:absolute;" class="borderPicturePpnErrorDetail" fab small depressed :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-btn>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ titre }} / {{ auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
       <div>
         <v-data-table
             :headers="headers"
             :items="items"
-            :page.sync="page1"
             :items-per-page="itemsPerPage"
             hide-default-footer
             @page-count="pageCount = $event"
@@ -21,43 +21,182 @@
         ></v-data-table>
       </div>
     </v-container>
-
     <div class="text-center pt-2">
-      <v-pagination
-          v-model="page"
-          :length="pageCount"
-      ></v-pagination>
+<!--      <v-pagination-->
+<!--          v-model="page"-->
+<!--          :length="pageCount"-->
+<!--      ></v-pagination>-->
     </div>
   </v-container>
 
 </template>
 
 <script setup>
-  import {ref} from "vue";
+  import {ref, onUpdated, watchEffect } from "vue";
   import { useResultatStore } from "@/stores/resultat";
+  import CoverService from "@/service/CoverService";
 
   const props = defineProps({currentPpn: String});
+  const emit = defineEmits(['backendError']);
+
   const resultatStore = useResultatStore();
+  const service = CoverService;
 
   let page = ref(1);
   let pageCount = ref(0);
   let itemsPerPage = ref(5);
+  let titre = ref();
+  let auteur = ref();
   let resultsList = ref([]);
+  let coverLink = ref('');
+  let iconTypeDocument = ref({color:"black",img:"mdi-help"});
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
-  let items = ref([
-    {zone1: "210", zone2: "", message: "Zone 210 : doit être remplacée par zone 214"},
-    {zone1: "606", zone2: "", message: "Zone 606 : absence de liens $3"},
-    {zone1: "700$b", zone2: "", message: "Zone 700 : 700$b contient un terme générique à compléter"},
-    {zone1: "", zone2: "210", message: "Zone 210 : doit être remplacée par zone 214"},
-    {zone1: "", zone2: "606", message: "Zone 606 : absence de liens $3"},
-    {zone1: "", zone2: "700$b", message: "Zone 700 : 700$b contient un terme générique à compléter"},
-  ])
+  let items = ref([])
 
+  /**
+   * Fonction qui permet de vérifier un changement de valeur du ppn courant
+   */
+  watchEffect(() => {
+    if(props.currentPpn){
+      coverLink.value = '';
+      resultatStore.getResultsList.forEach((result) => {
+        if(result.ppn === props.currentPpn) {
+          titre.value = result.titre;
+          auteur.value = result.auteur;
+          items.value = [];
+          result.detailerreurs.forEach((erreur)=> {
+            items.value.push({
+              zone1: erreur.zoneunm1,
+              zone2: erreur.zoneunm2,
+              message: erreur.message
+            })
+          })
+        }
+      });
+    }
+  })
+
+  onUpdated(() => {
+    feedCover();
+  })
+
+
+  function feedCover() {
+    const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
+    let ocn;
+    let isbn;
+    let typeDocument;
+    if (detailCurrentPpn.length > 0) {
+      ocn = detailCurrentPpn[0].ocn;
+      isbn = detailCurrentPpn[0].isbn;
+      typeDocument = detailCurrentPpn[0].typeDocument;
+    }
+    if (ocn !== '' && ocn !== undefined && ocn !== null) {
+      service.getCoverByOcn(ocn).then((response) => {
+        coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
+        if (coverLink.value === '') {
+          getCoverByIsbn(isbn);
+        }
+      }).catch((error) => {
+        emitOnError(error);
+      });
+    } else {
+      getCoverByIsbn(isbn);
+    }
+    if (coverLink.value === '') {
+      //pas de réponse du ws GB, on affiche une image correspondant au type de document de la notice
+      getIconTypeDocument(typeDocument);
+    }
+  }
+
+  function getCoverByIsbn(isbn) {
+    //pas de retour avec OCN, on tente avec ISBN
+    if (isbn !== '' && isbn !== undefined && isbn !== null) {
+      service.getCoverByIsbn(isbn).then((response) => {
+        if (response.data.items)
+          coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
+      }).catch((error) => {
+        emitOnError(error);
+      });
+    }
+  }
+
+  function getIconTypeDocument(typeDocument) {
+    switch (typeDocument) {
+      case "Monographie":
+        iconTypeDocument.value.img="mdi-bookshelf";
+        iconTypeDocument.value.color="green";
+        break;
+      case "Doc Elec":
+        iconTypeDocument.value.img="mdi-mouse-variant";
+        iconTypeDocument.value.color="orange";
+        break;
+      case "Enregistrement":
+        iconTypeDocument.value.img="mdi-volume-high";
+        iconTypeDocument.value.color="pink";
+        break;
+      case "Image":
+        iconTypeDocument.value.img="mdi-camera";
+        iconTypeDocument.value.color="orange";
+        break;
+      case "Manuscrit":
+        iconTypeDocument.value.img="mdi-script-outlin";
+        iconTypeDocument.value.color="brown";
+        break;
+      case "Multimédia":
+        iconTypeDocument.value.img="mdi-multimedia";
+        iconTypeDocument.value.color="purple";
+        break;
+      case "Objet":
+        iconTypeDocument.value.img="mdi-cube";
+        iconTypeDocument.value.color="cyan";
+        break;
+      case "Musique":
+        iconTypeDocument.value.img="mdi-album";
+        iconTypeDocument.value.color="orange";
+        break;
+      case "Partition":
+        iconTypeDocument.value.img="mdi-music";
+        iconTypeDocument.value.color="red";
+        break;
+      case "Ressource continue":
+        iconTypeDocument.value.img="mdi-newspaper-variant-outline";
+        iconTypeDocument.value.color="grey";
+        break;
+      case "Audiovisuel":
+        iconTypeDocument.value.img="mdi-video-vintage";
+        iconTypeDocument.value.color="purple";
+        break;
+      case "Carte":
+        iconTypeDocument.value.img="mdi-web";
+        iconTypeDocument.value.color="blue";
+        break;
+      case "Thèse soutenance":
+        iconTypeDocument.value.img="mdi-school";
+        iconTypeDocument.value.color="black";
+        break;
+      case "Thèse reproduction":
+        iconTypeDocument.value.img="mdi-school";
+        iconTypeDocument.value.color="black";
+        break;
+      case "Partie composante":
+        iconTypeDocument.value.img="mdi-card-search-outline";
+        iconTypeDocument.value.color="blue";
+        break;
+      default:
+        iconTypeDocument.value.img="mdi-help";
+        iconTypeDocument.value.color="black";
+    }
+  }
+
+  function emitOnError(error){
+    emit('backendError', error);
+  }
 </script>
 
 <style scoped>
