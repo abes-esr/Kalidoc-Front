@@ -6,7 +6,7 @@
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img src="@/assets/card-off-outline.svg" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{TitreDuLivre} / {Auteur}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ titre }} / {{ auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
       <div>
         <v-data-table
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-  import {ref, onUpdated } from "vue";
+  import {ref, watchEffect } from "vue";
   import { useResultatStore } from "@/stores/resultat";
 
   const props = defineProps({currentPpn: String});
@@ -40,6 +40,8 @@
   let page = ref(1);
   let pageCount = ref(0);
   let itemsPerPage = ref(5);
+  let titre = '';
+  let auteur = '';
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
@@ -47,24 +49,30 @@
     {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
   // TODO trouver comment nourrir la liste items à partir de errorsDetails
-  let items = ref([
-    // {zone1: "606", zone2: "", message: "Zone 606 : absence de liens $3"},
-    // {zone1: "700$b", zone2: "", message: "Zone 700 : 700$b contient un terme générique à compléter"},
-  ])
+  let items = ref([])
 
-  onUpdated(() => {
-    resultatStore.getResultsList.forEach((result) => {
-      if(result.ppn === props.currentPpn) {
-        result.detailerreurs.forEach((erreur)=> {
-          items.value.push({zone1: erreur.zoneunm1})
-          // items.value.push({
-          //   zone1: erreur.zoneunm1,
-          //   zone2: erreur.zoneunm2,
-          //   message: erreur.message,
-          // })
-        })
-      }
-    });
+  /**
+   * Fonction qui permet de vérifier un changement de valeur du ppn courant
+   */
+  watchEffect(() => {
+    if(props.currentPpn){
+      resultatStore.getResultsList.forEach((result) => {
+        if(result.ppn === props.currentPpn) {
+          // console.log(result.titre)
+          // console.log(result.auteur)
+          titre = result.titre.toString();
+          auteur = result.auteur.toString();
+          items.value = [];
+          result.detailerreurs.forEach((erreur)=> {
+            items.value.push({
+              zone1: erreur.zoneunm1,
+              zone2: erreur.zoneunm2,
+              message: erreur.message
+            })
+          })
+        }
+      });
+    }
   })
 
 </script>
