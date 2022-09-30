@@ -40,15 +40,14 @@
   let page = ref(1);
   let pageCount = ref(0);
   let itemsPerPage = ref(5);
-  let titre = '';
-  let auteur = '';
+  let titre = ref();
+  let auteur = ref();
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn"},
     {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
-  // TODO trouver comment nourrir la liste items à partir de errorsDetails
   let items = ref([])
 
   /**
@@ -58,10 +57,8 @@
     if(props.currentPpn){
       resultatStore.getResultsList.forEach((result) => {
         if(result.ppn === props.currentPpn) {
-          // console.log(result.titre)
-          // console.log(result.auteur)
-          titre = result.titre.toString();
-          auteur = result.auteur.toString();
+          titre.value = result.titre;
+          auteur.value = result.auteur;
           items.value = [];
           result.detailerreurs.forEach((erreur)=> {
             items.value.push({
