@@ -1,22 +1,21 @@
 <template>
 
-  <v-container class="ma-0 pa-0">
+  <v-container v-if="itemsPpnParent.length > 0 && itemsPpnParent[page-1]" class="ma-0 pa-0">
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ titre }} / {{ auteur }}</div>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ itemsPpnParent[page-1].ppn }}</div>
       <div>
         <v-data-table
             :headers="headers"
-            :items="items"
+            :items="itemsPpnParent[page-1].itemsDetailPpn"
             :items-per-page="itemsPerPage"
             :item-class="classItemPriority"
             hide-default-footer
-            @page-count="pageCount = $event"
             dense
             class="elevation-0"
         >
@@ -32,10 +31,11 @@
       </div>
     </v-container>
     <div class="text-center pt-2">
-<!--      <v-pagination-->
-<!--          v-model="page"-->
-<!--          :length="pageCount"-->
-<!--      ></v-pagination>-->
+      <v-pagination
+          v-model="page"
+          :length="itemsPpnParent.length"
+          @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
+      ></v-pagination>
     </div>
   </v-container>
 
@@ -46,48 +46,52 @@
   import { useResultatStore } from "@/stores/resultat";
   import CoverService from "@/service/CoverService";
 
-  const props = defineProps({currentPpn: String});
-  const emit = defineEmits(['backendError']);
+  const props = defineProps({currentPpn: String,currentItems: Array});
+  const emit = defineEmits(['backendError','onChangePpn']);
 
   const resultatStore = useResultatStore();
   const service = CoverService;
 
   let page = ref(1);
-  let pageCount = ref(0);
   let itemsPerPage = ref(5);
-  let titre = ref();
-  let auteur = ref();
   let coverLink = ref('');
   let iconTypeDocument = ref({color:"black",img:"mdi-help"});
+  let itemsPpnParent = ref([]);
 
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
     {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
-  let items = ref([])
+
 
   /**
    * Fonction qui permet de vérifier un changement de valeur du ppn courant
    */
   watchEffect(() => {
     if(props.currentPpn){
+      itemsPpnParent.value = [];
       coverLink.value = '';
-      resultatStore.getResultsList.forEach((result) => {
-        if(result.ppn === props.currentPpn) {
-          titre.value = result.titre;
-          auteur.value = result.auteur;
-          items.value = [];
-          result.detailerreurs.forEach((erreur)=> {
-            items.value.push({
-              zone1: erreur.zoneunm1,
-              zone2: erreur.zoneunm2,
-              message: erreur.message,
-              priority: erreur.priority
+      resultatStore.getResultsList
+          .filter(e => props.currentItems
+              .filter(el => el.ppn === e.ppn).length > 0)
+          .forEach(result => {
+            let temp = [];
+            result.detailerreurs.forEach((erreur)=> {temp.push({
+                zone1: erreur.zoneunm1,
+                zone2: erreur.zoneunm2,
+                priority: erreur.priority,
+                message: erreur.message
+              });
             })
-          })
-        }
-      });
+            itemsPpnParent.value[props.currentItems.map(item => item.ppn).indexOf(result.ppn)] = {
+              titre: result.titre,
+              auteur: result.auteur,
+              ppn: result.ppn,
+              itemsDetailPpn: temp,
+            }
+          });
+      page.value = itemsPpnParent.value.map(item => item.ppn).indexOf(props.currentPpn) + 1;
     }
   })
 
@@ -218,6 +222,10 @@
 
   function emitOnError(error){
     emit('backendError', error);
+  }
+
+  function sendCurrentPpnToParent(currentPpn) {
+    emit('onChangePpn', currentPpn);
   }
 </script>
 
