@@ -6,8 +6,7 @@
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
-      <v-btn v-else style="position:absolute;" class="borderPicturePpnErrorDetail" fab small depressed :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-btn>
-
+      <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ itemsPpnParent[page-1].ppn }}</div>
       <div>
@@ -81,6 +80,7 @@
             result.detailerreurs.forEach((erreur)=> {temp.push({
                 zone1: erreur.zoneunm1,
                 zone2: erreur.zoneunm2,
+                priority: erreur.priority,
                 message: erreur.message
               });
             })
