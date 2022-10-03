@@ -97,9 +97,7 @@
    * @returns {string}
    */
   function classItemPriority(item){
-    if(item.priority === "P1") {
-      return 'priorityP1'
-    } else if(item.priority === "P2") {
+    if(item.priority === "P2") {
       return 'priorityP2'
     } else {
       return 'priorityP1'
