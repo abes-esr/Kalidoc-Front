@@ -14,11 +14,18 @@
       <v-col xs="12" sm="12" md="7" lg="7" xl="7">
         <v-tooltip top open-delay="700">
           <template v-slot:activator="{on}">
-            <v-btn  v-on="on" outlined><download-csv :delimiter="','" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','zones et sous zones','type de document','message d\'erreur','type d\'erreur','date création/dernière modification de la notice','RCR créateur/dernier modificateur de la notice']"> Exporter </download-csv></v-btn>
+            <v-btn :disabled="itemsToExport().length === 0" style="float: right" class="button mr-1" v-on="on" color="#0F75BC">
+              <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','zones et sous zones','type de document','message d\'erreur','type d\'erreur','date creation/derniere modification de la notice','RCR createur/dernier modificateur de la notice']">
+                TELECHARGER TOUS
+                LES RESULTATS
+              </download-csv>
+              <v-icon color="white" class="ml-2">mdi-download</v-icon>
+            </v-btn>
           </template>
-          <span>Exporter la sélection au format CSV</span>
+          <span>Télécharger le détail de chaque erreur trouvées dans les ppn de l’analyse en cours </span>
         </v-tooltip>
         <bloc-detail-ppn @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
+        <v-spacer v-if="!currentPpn" class="pa-4"></v-spacer>
         <bloc-recapitulatif class="pl-1 pr-1" style="min-height: 13em" ></bloc-recapitulatif>
         <bouton-lancement style="min-height: 2em">Relancer l'analyse</bouton-lancement>
       </v-col>
@@ -50,18 +57,18 @@ function sendItemsToBlocResultat(items) {
 
 function itemsToExport() {
   let itemsToExport = [];
-  console.log(resultatStore.getResultsList)
   resultatStore.getResultsList.forEach(result => {
     if (result.detailerreurs){
       result.detailerreurs.forEach(messageErreur => {
+        let zoneunm2 = (messageErreur.zoneunm2) ?  " " + messageErreur.zoneunm2 : "";
         itemsToExport.push({
-          ppn: result.ppn,
-          zonesEtSousZones: messageErreur.zoneunm1 + " " + messageErreur.zoneunm2,
-          typeDocument: result.typeDocument,
-          messageErreur: messageErreur.message,
-          typeErreur: messageErreur.priority,
-          dateCreation: result.dateCreation,
-          rcr: result.rcr
+          'ppn': result.ppn,
+          'zones et sous zones': "\"" + messageErreur.zoneunm1 + zoneunm2 + "\"",
+          'type de document': result.typeDocument,
+          'message d\'erreur': messageErreur.message,
+          'type d\'erreur': messageErreur.priority,
+          'date creation/derniere modification de la notice': result.dateModification,
+          'RCR createur/dernier modificateur de la notice': result.rcr
         });
       });
     }
@@ -69,3 +76,8 @@ function itemsToExport() {
   return itemsToExport;
 }
 </script>
+<style scoped>
+.button {
+  color:white;
+}
+</style>
