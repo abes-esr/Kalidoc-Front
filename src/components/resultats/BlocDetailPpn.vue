@@ -15,10 +15,20 @@
             :headers="headers"
             :items="itemsPpnParent[page-1].itemsDetailPpn"
             :items-per-page="itemsPerPage"
+            :item-class="classItemPriority"
             hide-default-footer
             dense
             class="elevation-0"
-        ></v-data-table>
+        >
+          <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
+            <span style="color: grey; font-weight: 600">
+                {{ header.text }}
+            </span>
+            <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
+              <span style="color: grey">(</span>Règle essentielle / <b>Règles avancées</b><span style="color: grey">)</span>
+            </span>
+          </template>
+        </v-data-table>
       </div>
     </v-container>
     <div class="text-center pt-2">
@@ -50,9 +60,9 @@
   let itemsPpnParent = ref([]);
 
   let headers = ref([
-    {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
-    {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn"},
-    {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
+    {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
+    {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
+    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
 
 
@@ -85,10 +95,22 @@
     }
   })
 
+  /**
+   * Fonction qui modifie la class de l'item sélectionné en fonction de sa priorité
+   * @param item
+   * @returns {string}
+   */
+  function classItemPriority(item){
+    if(item.priority === "P2") {
+      return 'priorityP2'
+    } else {
+      return 'priorityP1'
+    }
+  }
+
   onUpdated(() => {
     feedCover();
   })
-
 
   function feedCover() {
     const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
@@ -153,7 +175,7 @@
         iconTypeDocument.value.color="brown";
         break;
       case "Multimédia":
-        iconTypeDocument.value.img="mdi-multimedia";
+        iconTypeDocument.value.img="mdi-movie-play-outline";
         iconTypeDocument.value.color="purple";
         break;
       case "Objet":
@@ -207,6 +229,14 @@
   }
 </script>
 
-<style scoped>
+<style>
+
+.priorityP1{
+  font-weight: normal;
+}
+
+.priorityP2{
+  font-weight: bold;
+}
 
 </style>
