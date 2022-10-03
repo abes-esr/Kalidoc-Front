@@ -8,12 +8,12 @@
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-btn v-else style="position:absolute;" class="borderPicturePpnErrorDetail" fab small depressed :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-btn>
 
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page].titre }} / {{ itemsPpnParent[page].auteur }}</div>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ itemsPpnParent[page].ppn }}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ itemsPpnParent[page-1].ppn }}</div>
       <div>
         <v-data-table
             :headers="headers"
-            :items="itemsPpnParent[page].itemsDetailPpn"
+            :items="itemsPpnParent[page-1].itemsDetailPpn"
             :items-per-page="itemsPerPage"
             hide-default-footer
             dense
@@ -25,6 +25,7 @@
       <v-pagination
           v-model="page"
           :length="itemsPpnParent.length"
+          @change="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
           @input="log"
       ></v-pagination>
     </div>
@@ -38,7 +39,7 @@
   import CoverService from "@/service/CoverService";
 
   const props = defineProps({currentPpn: String,currentItems: Array});
-  const emit = defineEmits(['backendError']);
+  const emit = defineEmits(['backendError','onChangePpn']);
 
   const resultatStore = useResultatStore();
   const service = CoverService;
@@ -202,6 +203,10 @@
 
   function emitOnError(error){
     emit('backendError', error);
+  }
+
+  function sendCurrentPpnToParent(currentPpn) {
+    emit('onChangePpn', currentPpn);
   }
 </script>
 
