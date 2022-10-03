@@ -1,6 +1,6 @@
 <template>
 
-  <v-container class="ma-0 pa-0">
+  <v-container v-if="itemsPpnParent.length > 0 && itemsPpnParent[page-1]" class="ma-0 pa-0">
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
     </v-row>
@@ -74,12 +74,12 @@
                 message: erreur.message
               });
             })
-            itemsPpnParent.value.push({
+            itemsPpnParent.value[props.currentItems.map(item => item.ppn).indexOf(result.ppn)] = {
               titre: result.titre,
               auteur: result.auteur,
               ppn: result.ppn,
               itemsDetailPpn: temp,
-            })
+            }
           });
       page.value = itemsPpnParent.value.map(item => item.ppn).indexOf(props.currentPpn) + 1;
     }

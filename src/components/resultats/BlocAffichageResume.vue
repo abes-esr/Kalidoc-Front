@@ -83,7 +83,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, watchEffect} from "vue"
+import { ref, onMounted, watchEffect } from "vue"
 import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
@@ -93,7 +93,7 @@ const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
 
 const emit = defineEmits(['onChangePpn','onChangeItems']);
-const props = defineProps({currentPpn: String})
+const props = defineProps({currentPpn: String});
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -108,6 +108,7 @@ let dialog = ref(false);
 let selectType = ref([]);
 let type = ref(null);
 let ppnFiltered = [];
+let selectedRows = [];
 let model = ref([]);
 
 onMounted(() => {
