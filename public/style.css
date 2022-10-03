@@ -119,7 +119,7 @@
 }
 
 .detailErrorPpnSubtitle {
-    font-size: 1.2em;
+    font-size: 1em;
     padding-left: 76px;
-    height: 38px;
+    min-height: 38px;
 }

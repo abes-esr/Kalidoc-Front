@@ -6,7 +6,7 @@
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
-      <v-btn v-else style="position:absolute;" class="borderPicturePpnErrorDetail" fab small depressed :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-btn>
+      <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ titre }} / {{ auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ currentPpn }}</div>
       <div>
@@ -14,11 +14,21 @@
             :headers="headers"
             :items="items"
             :items-per-page="itemsPerPage"
+            :item-class="classItemPriority"
             hide-default-footer
             @page-count="pageCount = $event"
             dense
             class="elevation-0"
-        ></v-data-table>
+        >
+          <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
+            <span style="color: grey; font-weight: 600">
+                {{ header.text }}
+            </span>
+            <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
+              <span style="color: grey">(</span>Règle essentielle / <b>Règles avancées</b><span style="color: grey">)</span>
+            </span>
+          </template>
+        </v-data-table>
       </div>
     </v-container>
     <div class="text-center pt-2">
@@ -47,14 +57,13 @@
   let itemsPerPage = ref(5);
   let titre = ref();
   let auteur = ref();
-  let resultsList = ref([]);
   let coverLink = ref('');
   let iconTypeDocument = ref({color:"black",img:"mdi-help"});
 
   let headers = ref([
-    {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn"},
-    {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn"},
-    {text: "Message d'erreur (Régle essentielle / Règle avancée)", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
+    {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
+    {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
+    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
   ]);
   let items = ref([])
 
@@ -73,7 +82,8 @@
             items.value.push({
               zone1: erreur.zoneunm1,
               zone2: erreur.zoneunm2,
-              message: erreur.message
+              message: erreur.message,
+              priority: erreur.priority
             })
           })
         }
@@ -81,10 +91,22 @@
     }
   })
 
+  /**
+   * Fonction qui modifie la class de l'item sélectionné en fonction de sa priorité
+   * @param item
+   * @returns {string}
+   */
+  function classItemPriority(item){
+    if(item.priority === "P2") {
+      return 'priorityP2'
+    } else {
+      return 'priorityP1'
+    }
+  }
+
   onUpdated(() => {
     feedCover();
   })
-
 
   function feedCover() {
     const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
@@ -149,7 +171,7 @@
         iconTypeDocument.value.color="brown";
         break;
       case "Multimédia":
-        iconTypeDocument.value.img="mdi-multimedia";
+        iconTypeDocument.value.img="mdi-movie-play-outline";
         iconTypeDocument.value.color="purple";
         break;
       case "Objet":
@@ -199,6 +221,14 @@
   }
 </script>
 
-<style scoped>
+<style>
+
+.priorityP1{
+  font-weight: normal;
+}
+
+.priorityP2{
+  font-weight: bold;
+}
 
 </style>
