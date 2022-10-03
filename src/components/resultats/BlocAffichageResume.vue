@@ -7,19 +7,20 @@
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
 
     <v-data-table
-      :headers="headers"
-      :loading="loading"
-      loading-text="Chargement..."
-      :items="filterPpnByType()"
-      :item-class="classItemMasked"
-      @click:row="sendCurrentPpnToParent"
-      @current-items="sendItemsToParent"
-      single-select
-      item-key="ppn"
-      :footer-props="{
-        itemsPerPageOptions: [5,10,20,30,-1]
-      }"
-      dense
+        v-model="model"
+        :headers="headers"
+        :loading="loading"
+        loading-text="Chargement..."
+        :items="filterPpnByType()"
+        :item-class="classItemMasked"
+        @click:row="sendCurrentPpnToParent"
+        @current-items="sendItemsToParent"
+        single-select
+        item-key="ppn"
+        :footer-props="{
+          itemsPerPageOptions: [5,10,20,30,-1]
+        }"
+        dense
     >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
           <v-menu offset-y v-if="header.value === 'typeDocument'">
@@ -82,7 +83,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import {ref, onMounted, watchEffect} from "vue"
 import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
@@ -92,6 +93,7 @@ const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
 
 const emit = defineEmits(['onChangePpn','onChangeItems']);
+const props = defineProps({currentPpn: String})
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -106,12 +108,18 @@ let dialog = ref(false);
 let selectType = ref([]);
 let type = ref(null);
 let ppnFiltered = [];
+let model = ref([]);
 
 onMounted(() => {
   feedItems();
   feedTypeList();
 })
 
+watchEffect(() => {
+  if(props.currentPpn){
+    updateItemSelected(props.currentPpn)
+  }
+})
 /**
  * fonction permetant de recuperer les ppns du store
  */
@@ -212,6 +220,12 @@ function filterPpnByType(){
       return ppnFiltered;
     }
     return items.value;
+}
+
+function updateItemSelected(ppn){
+  let itemByType = filterPpnByType()
+  model.value = [];
+  model.value.push(itemByType[itemByType.map(item => item.ppn).indexOf(ppn)]);
 }
 
 /**
