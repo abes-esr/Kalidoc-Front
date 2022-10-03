@@ -1,20 +1,26 @@
 <template>
-  <v-card>
-    <v-card-title>Liste des PPN avec erreurs</v-card-title>
-    <v-divider></v-divider>
+
+  <v-container class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
+    </v-row>
+    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
+
     <v-data-table
-      :headers="headers"
-      :loading="loading"
-      loading-text="Chargement..."
-      :items="filterPpnByType()"
-      :item-class="classItemMasked"
-      @click:row="updateBlocDetail"
-      single-select
-      item-key="ppn"
-      :footer-props="{
-        itemsPerPageOptions: [5,10,20,30,-1]
-      }"
-      dense
+        v-model="model"
+        :headers="headers"
+        :loading="loading"
+        loading-text="Chargement..."
+        :items="filterPpnByType()"
+        :item-class="classItemMasked"
+        @click:row="sendCurrentPpnToParent"
+        @current-items="sendItemsToParent"
+        single-select
+        item-key="ppn"
+        :footer-props="{
+          itemsPerPageOptions: [5,10,20,30,-1]
+        }"
+        dense
     >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
           <v-menu offset-y v-if="header.value === 'typeDocument'">
@@ -70,11 +76,14 @@
     </v-data-table>
 
     <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
-  </v-card>
+
+    </v-container>
+  </v-container>
+
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, watchEffect } from "vue"
 import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
@@ -83,7 +92,8 @@ import QualimarcService from "@/service/QualimarcService";
 const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
 
-const emit = defineEmits(['onChangePpn']);
+const emit = defineEmits(['onChangePpn','onChangeItems']);
+const props = defineProps({currentPpn: String});
 
 let headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
@@ -98,12 +108,19 @@ let dialog = ref(false);
 let selectType = ref([]);
 let type = ref(null);
 let ppnFiltered = [];
+let selectedRows = [];
+let model = ref([]);
 
 onMounted(() => {
   feedItems();
   feedTypeList();
 })
 
+watchEffect(() => {
+  if(props.currentPpn){
+    updateItemSelected(props.currentPpn)
+  }
+})
 /**
  * fonction permetant de recuperer les ppns du store
  */
@@ -111,12 +128,13 @@ function feedItems(){
   loading.value = true;
   items.value = [];
   resultatStore.getResultsList.forEach((el) => {
-    items.value.push( {
-      affiche: true,
-      ppn: el.ppn,
-      typeDocument: el.typeDocument,
-      nberreurs: el.messages.length
-    })
+    if(el.detailerreurs)
+      items.value.push( {
+        affiche: true,
+        ppn: el.ppn,
+        typeDocument: el.typeDocument,
+        nberreurs: el.detailerreurs.length
+      })
   });
   loading.value = false;
 }
@@ -181,9 +199,13 @@ function classItemMasked(item){
 /**
  * Fonction renvoyant le ppn de la ligne sélectionné vers le composant parent
  */
-function updateBlocDetail(item, row) {
+function sendCurrentPpnToParent(item, row) {
   row.select(!row.isSelected);
   emit("onChangePpn", item.ppn);
+}
+
+function sendItemsToParent(items) {
+  emit("onChangeItems", items);
 }
 
 function eventTypeChoice(element) {
@@ -201,6 +223,16 @@ function filterPpnByType(){
     return items.value;
 }
 
+function updateItemSelected(ppn){
+  let itemByType = filterPpnByType()
+  model.value = [];
+  model.value.push(itemByType[itemByType.map(item => item.ppn).indexOf(ppn)]);
+}
+
+/**
+ * Fonction qui permet d'afficher ou de masquer toutes les lignes
+ * @param value
+ */
 function toggleMask(value) {
   items.value.forEach(item => {
     item.affiche = value;
