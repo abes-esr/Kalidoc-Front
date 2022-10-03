@@ -25,8 +25,7 @@
       <v-pagination
           v-model="page"
           :length="itemsPpnParent.length"
-          @change="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
-          @input="log"
+          @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
       ></v-pagination>
     </div>
   </v-container>
@@ -82,7 +81,7 @@
               itemsDetailPpn: temp,
             })
           });
-      console.log(itemsPpnParent.value)
+      page.value = itemsPpnParent.value.map(item => item.ppn).indexOf(props.currentPpn) + 1;
     }
   })
 
@@ -90,9 +89,7 @@
     feedCover();
   })
 
-  function log(page){
-    console.log(itemsPpnParent.value);
-  }
+
   function feedCover() {
     const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
     let ocn;
