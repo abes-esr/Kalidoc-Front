@@ -12,6 +12,18 @@
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="7" lg="7" xl="7">
+
+        <v-tooltip top open-delay="700">
+          <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
+            <div class="ma-0 pa-0" style="position: relative">
+              <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: -10px; right: -10px; margin-right: 12px; margin-bottom: 20px" class="button" v-on="on" color="#0F75BC">
+                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','zones et sous zones','type de document','message d\'erreur','type d\'erreur','date creation/derniere modification de la notice','RCR createur/dernier modificateur de la notice']">
+                  TELECHARGER TOUS<br/>
+                  LES RESULTATS
+                </download-csv>
+                <v-icon color="white" class="ml-2">mdi-download</v-icon>
+              </v-btn>
+            </div>
         <v-tooltip top>
           <template v-slot:activator="{on}">
             <v-btn :disabled="itemsToExport().length === 0" style="float: right" class="button mr-1" v-on="on" color="#0F75BC">
@@ -24,6 +36,7 @@
           </template>
           <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
         </v-tooltip>
+
         <bloc-detail-ppn @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
         <v-spacer v-if="!currentPpn" class="pa-4"></v-spacer>
         <bloc-recapitulatif class="pl-1 pr-1" style="min-height: 13em" ></bloc-recapitulatif>
