@@ -16,7 +16,7 @@
           <template v-slot:activator="{on}">
             <v-btn :disabled="itemsToExport().length === 0" style="float: right" class="button mr-1" v-on="on" color="#0F75BC">
               <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','zones et sous zones','type de document','message d\'erreur','type d\'erreur','date creation/derniere modification de la notice','RCR createur/dernier modificateur de la notice']">
-                TELECHARGER TOUS
+                TELECHARGER TOUS<br/>
                 LES RESULTATS
               </download-csv>
               <v-icon color="white" class="ml-2">mdi-download</v-icon>
