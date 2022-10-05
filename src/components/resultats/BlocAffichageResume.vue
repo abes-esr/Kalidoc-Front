@@ -58,7 +58,7 @@
                 <td>
                   <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
                 </td>
-                <td>Masquer/démasquer tout</td>
+                <td>Afficher/masquer tout</td>
               </tr>
             </table>
           </td>
