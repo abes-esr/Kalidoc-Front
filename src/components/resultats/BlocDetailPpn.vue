@@ -1,10 +1,9 @@
 <template>
-
-  <v-container v-if="itemsPpnParent.length > 0 && itemsPpnParent[page-1]" class="ma-0 pa-0">
+  <v-container class="ma-0 pa-0">
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
     </v-row>
-    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
+    <v-container v-if="itemsPpnParent.length > 0 && itemsPpnParent[page-1]" class="pa-0 ma-0 borderErrorDetailPerPpn">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
@@ -29,14 +28,18 @@
           </template>
         </v-data-table>
       </div>
+      <div class="text-center pt-2">
+        <v-pagination
+            v-model="page"
+            :length="itemsPpnParent.length"
+            @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
+        ></v-pagination>
+      </div>
     </v-container>
-    <div class="text-center pt-2">
-      <v-pagination
-          v-model="page"
-          :length="itemsPpnParent.length"
-          @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
-      ></v-pagination>
-    </div>
+    <v-container v-else class="pa-0 ma-0 borderErrorDetailPerPpn">
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91;"></div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor"><b>Cliquer sur un ppn de la liste du bloc de gauche pour afficher les détails des erreurs</b></div>
+    </v-container>
   </v-container>
 
 </template>
