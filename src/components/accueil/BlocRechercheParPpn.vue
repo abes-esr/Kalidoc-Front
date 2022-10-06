@@ -60,6 +60,8 @@ import { ref } from 'vue';
     function removeAllItems(){
       if(!!ppnListCombobox.value){
         ppnListCombobox.value = [];
+        ppnInvalids.value = [];
+        analyseStore.setPpnInvalidsList(ppnInvalids.value); // Vide la liste des ppn invalides
         analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
         emitOnEvent();
       }
