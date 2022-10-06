@@ -19,7 +19,7 @@
           <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
             <div class="ma-0 pa-0" style="position: relative">
               <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" v-on="on" color="#0F75BC">
-                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','type de document','zone/sous-zone 1','zone/sous-zone 2','message d\'erreur','type d\'erreur','date derniere modification de la notice','RCR dernier modificateur de la notice']">
+                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" separator-excel>
                   TELECHARGER TOUS<br/>
                   LES RESULTATS
                 </download-csv>
@@ -64,16 +64,16 @@ function itemsToExport() {
   resultatStore.getResultsList.forEach(result => {
     if (result.detailerreurs){
       result.detailerreurs.forEach(messageErreur => {
-        let zoneunm2 = (messageErreur.zoneunm2) ?  " " + messageErreur.zoneunm2 : "";
+        let zoneunm2 = (messageErreur.zoneunm2) ? messageErreur.zoneunm2 : "";
         itemsToExport.push({
           'ppn': result.ppn,
           'type de document': result.typeDocument,
-          'zone/sous-zone 1': "\"" + messageErreur.zoneunm1 + "\"",
-          'zone/sous-zone 2': "\"" + zoneunm2 + "\"", //todo: si rien alors rien
+          'zone/sous-zone 1': messageErreur.zoneunm1,
+          'zone/sous-zone 2': zoneunm2,
           'message d\'erreur': messageErreur.message,
           'type d\'erreur': messageErreur.priority,
-          'date creation/derniere modification de la notice': result.dateModification,
-          'RCR createur/dernier modificateur de la notice': result.rcr
+          'date derniere modification de la notice': result.dateModification,
+          'RCR dernier modificateur de la notice': result.rcr
         });
       });
     }
