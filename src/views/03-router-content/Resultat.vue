@@ -12,15 +12,18 @@
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="7" lg="7" xl="7">
-        <v-tooltip top>
-          <template v-slot:activator="{on}">
-            <v-btn :disabled="itemsToExport().length === 0" style="float: right" class="button mr-1" v-on="on" color="#0F75BC">
-              <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','type de document','zone/sous-zone 1','zone/sous-zone 2','message d\'erreur','type d\'erreur','date derniere modification de la notice','RCR dernier modificateur de la notice']">
-                TELECHARGER TOUS<br/>
-                LES RESULTATS
-              </download-csv>
-              <v-icon color="white" class="ml-2">mdi-download</v-icon>
-            </v-btn>
+
+        <v-tooltip top open-delay="700">
+          <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
+            <div class="ma-0 pa-0" style="position: relative">
+              <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: -10px; right: -10px; margin-right: 12px; margin-bottom: 20px" class="button" v-on="on" color="#0F75BC">
+                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','type de document','zone/sous-zone 1','zone/sous-zone 2','message d\'erreur','type d\'erreur','date derniere modification de la notice','RCR dernier modificateur de la notice']">
+                  TELECHARGER TOUS<br/>
+                  LES RESULTATS
+                </download-csv>
+                <v-icon color="white" class="ml-2">mdi-download</v-icon>
+              </v-btn>
+            </div>
           </template>
           <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
         </v-tooltip>

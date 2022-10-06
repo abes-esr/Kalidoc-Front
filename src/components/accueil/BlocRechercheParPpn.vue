@@ -15,12 +15,12 @@
       </v-combobox>
       <v-container class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" depressed small tile @click="removeAllItems" style="border: 1px solid black">Vider la liste <v-icon color="grey">mdi-chevron-up</v-icon></v-btn></v-container>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
-        Les PPN listés ci-dessous ne respectent présente une syntaxe non conforme et ne seront pas analysés :<br>
+        Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
         <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              PPN saisi avec une syntaxe éronnée (cliquer pour dérouler)
+              PPN saisi(s) avec une syntaxe érronée (cliquer pour dérouler)
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
@@ -60,6 +60,8 @@ import { ref } from 'vue';
     function removeAllItems(){
       if(!!ppnListCombobox.value){
         ppnListCombobox.value = [];
+        ppnInvalids.value = [];
+        analyseStore.setPpnInvalidsList(ppnInvalids.value); // Vide la liste des ppn invalides
         analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
         emitOnEvent();
       }
