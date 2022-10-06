@@ -1,9 +1,13 @@
 <template>
-  <v-container class="d-flex justify-center mt-0 mb-0 pt-0 pb-0">
-    <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button pr-2 mr-1" :disabled="props.isDisabled">
-      <slot></slot>
-      <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
-    </v-btn>
+    <v-container class="mt-0 mb-0 pt-0 pb-0" style="min-height: 10px">
+
+    <div class="ma-0 pa-0 mb-4" style="position: relative">
+      <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button pr-2 mr-1" :disabled="props.isDisabled" :loading="spinnerActive" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;">
+        <slot></slot>
+        <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
+      </v-btn>
+    </div>
+
   </v-container>
 </template>
 
@@ -11,6 +15,7 @@
 import { useAnalyseStore } from "@/stores/analyse";
 import { useResultatStore } from "@/stores/resultat";
 import QualimarcService from "@/service/QualimarcService";
+import {ref} from "vue";
 
 // Store
 const analyseStore = useAnalyseStore();
@@ -23,8 +28,11 @@ const emit = defineEmits(['backendError', 'finished']);
 // Service
 const serviceApi = QualimarcService
 
-function checkPpnWithTypeAnalyse() {
+// Spinner
+let spinnerActive = ref(false);
 
+function checkPpnWithTypeAnalyse() {
+  spinnerActive.value = true;
   serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value)
     .then((response) => {
         resultatStore.setResultsListArray(response.data.resultRules);
@@ -32,9 +40,11 @@ function checkPpnWithTypeAnalyse() {
         resultatStore.setNbPpnInconnus(response.data.nbPpnInconnus);
         resultatStore.setNbPpnErreurs(response.data.npPpnErrones);
         resultatStore.setNbPpnOk(response.data.nbPpnOk);
+        spinnerActive.value = false;
         emitOnFinished();
       })
     .catch((error) => {
+      spinnerActive.value = false;
         emitOnError(error);
     });
 }
