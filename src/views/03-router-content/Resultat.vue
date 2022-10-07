@@ -12,24 +12,21 @@
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="7" lg="7" xl="7">
-
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
-
-        <v-tooltip top open-delay="700">
-          <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
-            <div class="ma-0 pa-0" style="position: relative">
-              <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" v-on="on" color="#0F75BC">
-                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" separator-excel>
-                  TELECHARGER TOUS<br/>
-                  LES RESULTATS
-                </download-csv>
-                <v-icon color="white" class="ml-2">mdi-download</v-icon>
-              </v-btn>
-            </div>
-          </template>
-          <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
-        </v-tooltip>
-
+        <div class="ma-0 pa-0" style="position: relative">
+          <v-tooltip left>
+            <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
+                <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" v-on="on" color="#0F75BC">
+                  <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" separator-excel>
+                    TELECHARGER TOUS<br/>
+                    LES RESULTATS
+                  </download-csv>
+                  <v-icon color="white" class="ml-2">mdi-download</v-icon>
+                </v-btn>
+            </template>
+            <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
+          </v-tooltip>
+        </div>
         <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" ></bloc-recapitulatif>
         <bouton-lancement style="min-height: 2em">Relancer l'analyse</bouton-lancement>
       </v-col>
