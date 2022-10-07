@@ -12,25 +12,22 @@
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="7" lg="7" xl="7">
-
-        <v-tooltip top open-delay="700">
-          <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
-            <div class="ma-0 pa-0" style="position: relative">
-              <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: -10px; right: -10px; margin-right: 12px; margin-bottom: 20px" class="button" v-on="on" color="#0F75BC">
-                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" :fields="['ppn','zones et sous zones','type de document','message d\'erreur','type d\'erreur','date creation/derniere modification de la notice','RCR createur/dernier modificateur de la notice']">
-                  TELECHARGER TOUS<br/>
-                  LES RESULTATS
-                </download-csv>
-                <v-icon color="white" class="ml-2">mdi-download</v-icon>
-              </v-btn>
-            </div>
-          </template>
-          <span>Télécharger le détail de chaque erreur trouvées dans les ppn de l’analyse en cours </span>
-        </v-tooltip>
-
-        <bloc-detail-ppn @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
-        <v-spacer v-if="!currentPpn" class="pa-4"></v-spacer>
-        <bloc-recapitulatif class="pl-1 pr-1" style="min-height: 13em" ></bloc-recapitulatif>
+        <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
+        <div class="ma-0 pa-0" style="position: relative">
+          <v-tooltip left>
+            <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
+                <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" v-on="on" color="#0F75BC">
+                  <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" separator-excel>
+                    TELECHARGER TOUS<br/>
+                    LES RESULTATS
+                  </download-csv>
+                  <v-icon color="white" class="ml-2">mdi-download</v-icon>
+                </v-btn>
+            </template>
+            <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
+          </v-tooltip>
+        </div>
+        <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" ></bloc-recapitulatif>
         <bouton-lancement style="min-height: 2em">Relancer l'analyse</bouton-lancement>
       </v-col>
     </v-row>
@@ -64,15 +61,22 @@ function itemsToExport() {
   resultatStore.getResultsList.forEach(result => {
     if (result.detailerreurs){
       result.detailerreurs.forEach(messageErreur => {
-        let zoneunm2 = (messageErreur.zoneunm2) ?  " " + messageErreur.zoneunm2 : "";
+        let zoneunm2 = (messageErreur.zoneunm2) ? messageErreur.zoneunm2 : "";
+        let priority;
+        if (messageErreur.priority === "P1"){
+          priority = "Règle essentielle"
+        } else if (messageErreur.priority === "P2"){
+          priority = "Règle avancée"
+        }
         itemsToExport.push({
           'ppn': result.ppn,
-          'zones et sous zones': "\"" + messageErreur.zoneunm1 + zoneunm2 + "\"",
           'type de document': result.typeDocument,
+          'zone/sous-zone 1': messageErreur.zoneunm1,
+          'zone/sous-zone 2': zoneunm2,
           'message d\'erreur': messageErreur.message,
-          'type d\'erreur': messageErreur.priority,
-          'date creation/derniere modification de la notice': result.dateModification,
-          'RCR createur/dernier modificateur de la notice': result.rcr
+          'type d\'erreur': priority,
+          'date derniere modification de la notice': result.dateModification,
+          'RCR dernier modificateur de la notice': result.rcr
         });
       });
     }
