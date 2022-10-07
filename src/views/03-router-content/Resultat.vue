@@ -65,13 +65,19 @@ function itemsToExport() {
     if (result.detailerreurs){
       result.detailerreurs.forEach(messageErreur => {
         let zoneunm2 = (messageErreur.zoneunm2) ? messageErreur.zoneunm2 : "";
+        let priority;
+        if (messageErreur.priority === "P1"){
+          priority = "Règle essentielle"
+        } else if (messageErreur.priority === "P2"){
+          priority = "Règle avancée"
+        }
         itemsToExport.push({
           'ppn': result.ppn,
           'type de document': result.typeDocument,
           'zone/sous-zone 1': messageErreur.zoneunm1,
           'zone/sous-zone 2': zoneunm2,
           'message d\'erreur': messageErreur.message,
-          'type d\'erreur': messageErreur.priority,
+          'type d\'erreur': priority,
           'date derniere modification de la notice': result.dateModification,
           'RCR dernier modificateur de la notice': result.rcr
         });
