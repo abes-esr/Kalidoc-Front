@@ -32,6 +32,7 @@
         <v-pagination
             v-model="page"
             :length="itemsPpnParent.length"
+            :total-visible="12"
             @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
         ></v-pagination>
       </div>
