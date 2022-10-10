@@ -7,7 +7,7 @@
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor">Détail des erreurs pour {{ itemsPpnParent[page-1].ppn }}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor" style="font-size: 0.92em">PPN {{ itemsPpnParent[page-1].ppn }}</div>
       <div>
         <v-data-table
             :headers="headers"
@@ -23,7 +23,7 @@
                 {{ header.text }}
             </span>
             <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
-              <span style="color: grey">(</span>Règle essentielle / <b>Règles avancées</b><span style="color: grey">)</span>
+              <span style="color: grey">(</span>Règle essentielle / <b>Règle avancée</b><span style="color: grey">)</span>
             </span>
           </template>
         </v-data-table>
