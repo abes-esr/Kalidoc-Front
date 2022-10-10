@@ -23,7 +23,7 @@
                 {{ header.text }}
             </span>
             <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
-              <span style="color: grey">(</span>Règle essentielle / <b>Règle avancée</b><span style="color: grey">)</span>
+              <span style="color: grey">(</span><b>Règle essentielle</b> / Règle avancée<span style="color: grey">)</span>
             </span>
           </template>
         </v-data-table>
@@ -101,13 +101,12 @@
   /**
    * Fonction qui modifie la class de l'item sélectionné en fonction de sa priorité
    * @param item
-   * @returns {string}
+   * @returns {{priorityP1: boolean, priorityP2: boolean}}
    */
   function classItemPriority(item){
-    if(item.priority === "P2") {
-      return 'priorityP2'
-    } else {
-      return 'priorityP1'
+    return {
+      priorityP1: item.priority === 'P1',
+      priorityP2: item.priority === 'P2',
     }
   }
 
@@ -235,11 +234,11 @@
 <style>
 
 .priorityP1{
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .priorityP2{
-  font-weight: bold;
+  font-weight: normal;
 }
 
 </style>
