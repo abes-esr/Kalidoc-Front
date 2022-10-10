@@ -15,7 +15,6 @@
             :item-class="classItemPriority"
             hide-default-footer
             dense
-            fixed-header
             height="20vh"
             class="elevation-0"
         >
