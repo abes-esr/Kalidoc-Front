@@ -235,11 +235,11 @@
 <style>
 
 .priorityP1{
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .priorityP2{
-  font-weight: bold;
+  font-weight: normal;
 }
 
 </style>
