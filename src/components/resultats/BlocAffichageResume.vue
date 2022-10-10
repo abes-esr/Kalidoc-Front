@@ -190,10 +190,13 @@ function setDialog(onClose) {
 /**
  * Fonction qui renvoi un style de class pour griser les items masquées
  * @param item
- * @return {string}
+ * @return {{masked: boolean, showed: (boolean|*)}}
  */
 function classItemMasked(item){
-  return item.affiche ? 'showed' : 'masked'
+  return {
+    showed: item.affiche,
+    masked: !item.affiche,
+  }
 }
 
 /**
