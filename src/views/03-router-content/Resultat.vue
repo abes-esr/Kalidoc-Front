@@ -17,7 +17,7 @@
           <v-tooltip left>
             <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
                 <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" v-on="on" color="#0F75BC">
-                  <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv" separator-excel>
+                  <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv">
                     TÉLÉCHARGER TOUS<br/>
                     LES RESULTATS
                   </download-csv>
