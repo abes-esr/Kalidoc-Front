@@ -61,7 +61,12 @@ function itemsToExport() {
   resultatStore.getResultsList.forEach(result => {
     if (result.detailerreurs){
       result.detailerreurs.forEach(messageErreur => {
-        let zoneunm2 = (messageErreur.zoneunm2) ? messageErreur.zoneunm2 : "";
+        let zoneunm2 = (messageErreur.zones[1]) ? messageErreur.zones[1] : "";
+        let autresZones = "";
+        for (let i = 2;i<messageErreur.zones.length;i++) {
+          autresZones += messageErreur.zones[i]
+          if (i !== (messageErreur.zones.length - 1)) autresZones += " | ";
+        }
         let priority;
         if (messageErreur.priority === "P1"){
           priority = "Règle essentielle"
@@ -71,8 +76,9 @@ function itemsToExport() {
         itemsToExport.push({
           'ppn': result.ppn,
           'type de document': result.typeDocument,
-          'zone/sous-zone 1': messageErreur.zoneunm1,
+          'zone/sous-zone 1': messageErreur.zones[0],
           'zone/sous-zone 2': zoneunm2,
+          'autres zones/sous-zones':autresZones,
           'message d\'erreur': messageErreur.message,
           'type d\'erreur': priority,
           'date derniere modification de la notice': result.dateModification,
