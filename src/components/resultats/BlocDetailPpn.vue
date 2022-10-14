@@ -81,8 +81,8 @@
           .forEach(result => {
             let temp = [];
             result.detailerreurs.forEach((erreur)=> {temp.push({
-                zone1: erreur.zoneunm1,
-                zone2: erreur.zoneunm2,
+                zone1: erreur.zones[0],
+                zone2: erreur.zones[1],
                 priority: erreur.priority,
                 message: erreur.message
               });
