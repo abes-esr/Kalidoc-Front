@@ -12,10 +12,10 @@
         <v-data-table
             :headers="headers"
             :items="itemsPpnParent[page-1].itemsDetailPpn"
-            :items-per-page="itemsPerPage"
             :item-class="classItemPriority"
             hide-default-footer
             dense
+            height="20vh"
             class="elevation-0"
         >
           <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
@@ -57,7 +57,6 @@
   const service = CoverService;
 
   let page = ref(1);
-  let itemsPerPage = ref(5);
   let coverLink = ref('');
   let iconTypeDocument = ref({color:"black",img:"mdi-help"});
   let itemsPpnParent = ref([]);
