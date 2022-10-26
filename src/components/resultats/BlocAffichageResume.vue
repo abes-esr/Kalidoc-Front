@@ -96,10 +96,10 @@ const emit = defineEmits(['onChangePpn','onChangeItems']);
 const props = defineProps({currentPpn: String});
 
 let headers = ref([
-  { text: "Aff/Masq.", value: "affiche", class: "headerTableClass"},
-  { text: "PPN", value: "ppn", class: "headerTableClass"},
-  { text: "Type de document", value: "typeDocument", class: "headerTableClass"},
-  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass"}
+  { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 130},
+  { text: "PPN", value: "ppn", class: "headerTableClass", width: 104},
+  { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 208},
+  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 130}
 ]);
 let loading = ref(false);
 let items = ref([]);
