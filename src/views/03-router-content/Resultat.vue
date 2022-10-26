@@ -8,10 +8,10 @@
     Résultats de l'analyse
     </v-container>
     <v-row cols="12">
-      <v-col xs="12" sm="12" md="5" lg="5" xl="5">
+      <v-col xs="12" sm="12" md="6" lg="5" xl="5">
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn"></BlocAffichageResume>
       </v-col>
-      <v-col xs="12" sm="12" md="7" lg="7" xl="7">
+      <v-col xs="12" sm="12" md="6" lg="7" xl="7">
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
         <div class="ma-0 pa-0" style="position: relative">
           <v-tooltip left>
