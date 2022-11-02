@@ -14,11 +14,11 @@
         </v-tooltip>
       </v-radio-group>
       <v-container v-if="analyseSelected.value === 'FOCUSED'" >
-        <span class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
+        <span  v-if="familleDocumentList.length > 0"class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
         <v-container class="d-flex flex-wrap pa-0 mb-2 pl-8">
           <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc" :label="familleDoc.libelle"></v-checkbox>
         </v-container>
-        <span class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
+        <span v-if="ruleSetList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
         <v-container class="d-flex flex-column pa-0 mb-2 pl-8">
           <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" :label="ruleset.libelle" class="ma-1" style="max-height: 30px"></v-checkbox>
         </v-container>
@@ -104,7 +104,7 @@
   }
 
   function isSelected() {
-    return (analyseSelected.value !== '' && analyseSelected.value !== 'FOCUSED') || (analyseSelected.value === 'FOCUSED' && (familleDocumentSetSelected.value.length !== 0 || ruleSetSelected.value.length !== 0));
+    return ((analyseSelected.value.value !== '' && analyseSelected.value.value !== 'FOCUSED') || (analyseSelected.value.value === 'FOCUSED' && ((familleDocumentSetSelected.value.length > 0) || (ruleSetSelected.value.length > 0))));
   }
 
   /** anciene fonction regroupant les valeurs saisies.*/
