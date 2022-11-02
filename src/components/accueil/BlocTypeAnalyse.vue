@@ -14,7 +14,7 @@
         </v-tooltip>
       </v-radio-group>
       <v-container v-if="analyseSelected.value === 'FOCUSED'" >
-        <span  v-if="familleDocumentList.length > 0"class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
+        <span  v-if="familleDocumentList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
         <v-container class="d-flex flex-wrap pa-0 mb-2 pl-8">
           <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc" :label="familleDoc.libelle"></v-checkbox>
         </v-container>
@@ -91,6 +91,12 @@
   }
 
   function updateAnalyseSelectedInStore() {
+    //RAZ de la selection
+    familleDocumentSetSelected.value = [];
+    analyseStore.setFamilleDocumentSet(familleDocumentSetSelected.value);
+    ruleSetSelected.value = [];
+    analyseStore.setRuleSet(ruleSetSelected.value);
+
     analyseStore.setAnalyseSelected(analyseSelected.value);
     emitOnEvent();
   }
