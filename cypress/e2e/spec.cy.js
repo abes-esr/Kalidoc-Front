@@ -8,6 +8,6 @@ describe('First Test', () => {
 
     cy.contains("CIBL").click();
     cy.contains("Audiovisuel").click();
-    // cy.contains("LANCER").should('be.disabled');
+    //cy.contains("LANCER").should('be.');
   })
 })

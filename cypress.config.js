@@ -7,3 +7,8 @@ module.exports = defineConfig({
     },
   },
 });
+
+module.exports = {
+  projectId: "i4mqah"
+  // The rest of the Cypress config options go here...
+}
