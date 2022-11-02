@@ -8,6 +8,10 @@ describe('First Test', () => {
 
     cy.contains("CIBL").click();
     cy.contains("Audiovisuel").click();
-    // cy.contains("LANCER").should('be.disabled');
+    cy.get('.button').should('be.disabled');
+
+    cy.get('.v-select__selections').click().type("123456789");
+    cy.contains("RAPIDE").click();
+    cy.get('.button').should('be.enabled');
   })
 })
