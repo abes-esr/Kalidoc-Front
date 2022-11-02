@@ -33,7 +33,7 @@ let spinnerActive = ref(false);
 
 function checkPpnWithTypeAnalyse() {
   spinnerActive.value = true;
-  serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value)
+  serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
     .then((response) => {
         resultatStore.setResultsListArray(response.data.resultRules);
         resultatStore.setNbPpnTotal(response.data.nbPpnAnalyses);

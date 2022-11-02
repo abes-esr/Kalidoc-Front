@@ -9,13 +9,22 @@ export class QualimarcService {
    * fonction permetant de faire passer les regles sur une liste de ppn selon le type d'analyse choisi
    * @param ppnList la liste de ppn ex: ["123456789","987654321"]
    * @param typeAnalyse le type d'analyse choisi ex: "QUICK"
+   * @param famillesDocuments la/les familles de doc choisi
+   * @param ruleSet les jeux de regles choisi
    * @returns {Promise<AxiosResponse<any>>}
    */
-    checkPpnWithTypeAnalyse(ppnList, typeAnalyse) {
-        return this.client.post('check',{
-                ppnList: ppnList,
-                typeAnalyse: typeAnalyse
-        })
+    checkPpnWithTypeAnalyse(ppnList, typeAnalyse, famillesDocuments, ruleSet) {
+        let data = {
+            ppnList: ppnList,
+            typeAnalyse: typeAnalyse,
+        }
+        if(ruleSet.length > 0){
+            data.ruleSet = ruleSet
+        }
+        if(famillesDocuments.length > 0){
+            data.famillesDocuments = famillesDocuments
+        }
+        return this.client.post('check',data)
     }
 
     /**
@@ -28,12 +37,12 @@ export class QualimarcService {
     }
 
     /**
-     * Renvoie la liste des types d'analyses
+     * Renvoie la liste des jeux de regles
      * @return {Promise<AxiosResponse<any>>}
      * response.data : {id, libelle}
      */
-    getTypesAnalyses(){
-      return this.client.get("getTypesAnalyses")
+    getRuleSetList(){
+      return this.client.get("getRuleSets")
     }
 
 
