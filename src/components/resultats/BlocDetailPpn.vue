@@ -25,6 +25,8 @@
             <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
               <span style="color: grey">(</span><b>Règle essentielle</b> / Règle avancée<span style="color: grey">)</span>
             </span>
+            <span style='color: white;'>
+              <v-icon color="grey" small >mdi-sort</v-icon></span>
           </template>
         </v-data-table>
       </div>
@@ -62,9 +64,9 @@
   let itemsPpnParent = ref([]);
 
   let headers = ref([
-    {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
-    {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 120},
-    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn"}
+    {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
+    {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
+    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351}
   ]);
 
 

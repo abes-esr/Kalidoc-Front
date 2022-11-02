@@ -45,7 +45,7 @@ function checkPpnWithTypeAnalyse() {
       })
     .catch((error) => {
       spinnerActive.value = false;
-        emitOnError(error);
+      emitOnError(error);
     });
 }
 

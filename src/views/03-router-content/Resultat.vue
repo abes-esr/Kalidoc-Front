@@ -1,17 +1,17 @@
 <template>
   <v-container fluid>
     <v-container class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
-    <v-icon>mdi-home</v-icon>
-    <v-icon size="small">mdi-chevron-right</v-icon>
-      <span style="color: grey; text-decoration: none">Interface de vérification</span>
-    <v-icon size="small">mdi-chevron-right</v-icon>
-    Résultats de l'analyse
+      <v-icon @click="goToHome()">mdi-home</v-icon>
+      <v-icon size="small">mdi-chevron-right</v-icon>
+        <span @click="goToHome()" class="v-slider__thumb" style="color: grey; text-decoration: none">Interface de vérification</span>
+      <v-icon size="small">mdi-chevron-right</v-icon>
+      Résultats de l'analyse
     </v-container>
     <v-row cols="12">
-      <v-col xs="12" sm="12" md="5" lg="5" xl="5">
+      <v-col xs="12" sm="12" md="6" lg="5" xl="5">
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn"></BlocAffichageResume>
       </v-col>
-      <v-col xs="12" sm="12" md="7" lg="7" xl="7">
+      <v-col xs="12" sm="12" md="6" lg="7" xl="7">
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
         <div class="ma-0 pa-0" style="position: relative">
           <v-tooltip left>
@@ -42,6 +42,7 @@ import BlocDetailPpn from "@/components/resultats/BlocDetailPpn";
 
 import {ref} from "vue";
 import { useResultatStore } from "@/stores/resultat";
+import router from "@/router";
 
 const resultatStore = useResultatStore();
 
@@ -89,8 +90,17 @@ function itemsToExport() {
   });
   return itemsToExport;
 }
+
+function goToHome() {
+  router.push('/');
+}
 </script>
 <style scoped>
+.v-slider__thumb{
+  cursor:pointer;
+  height:42px;
+  width:42px;
+}
 .button {
   color:white;
 }
