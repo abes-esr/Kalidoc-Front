@@ -1,3 +1,21 @@
+function testValeurs() {
+    // Teste la valeur de chaque ppn
+    cy.get(':nth-child(1) > .v-chip__content').contains("123456789");
+    cy.get(':nth-child(2) > .v-chip__content').contains("123456790");
+
+    // Teste de la visibilité du v-alert
+    cy.get('.v-alert').should('not.be.hidden');
+
+    // Ouvre le v-alert
+    cy.get('.v-expansion-panel-header__icon > .v-icon').click();
+
+    // Teste de la valeur du chip dans le v-alert
+    cy.get('.v-expansion-panel-content__wrap > .v-chip > .v-chip__content').contains("45df753");
+    // Teste le vidage de la liste
+    cy.get('.pe-1 > .v-btn__content').click();
+    cy.get('.v-select__selections').should('have.value', '');
+}
+
 before(() => {
     // Mock
     cy.intercept("http://localhost:8082/api/v1/getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
@@ -26,22 +44,7 @@ describe('Ajout d\' ppn et vidage de la liste', () => {
         cy.get('.v-select__selections').click().type("45df753");
         cy.get('.v-select__selections').type('{enter}');
 
-        // Teste des valeurs de chaque chip
-        cy.get(':nth-child(1) > .v-chip__content').contains("123456789");
-        cy.get(':nth-child(2) > .v-chip__content').contains("123456790");
-
-        // Teste de la visibilité du v-alert
-        cy.get('.v-alert').should('not.be.hidden');
-
-        // Ouvre le v-alert
-        cy.get('.v-expansion-panel-header__icon > .v-icon').click();
-
-        // Teste de la valeur du chip dans le v-alert
-        cy.get('.v-expansion-panel-content__wrap > .v-chip > .v-chip__content').contains("45df753");
-
-        // Teste le vidage de la liste
-        cy.get('.pe-1 > .v-btn__content').click();
-        cy.get('.v-select__selections').should('have.value', '');
+        testValeurs();
     })
 
     it ('Ajout d\'une liste de ppn',() => {
@@ -50,21 +53,7 @@ describe('Ajout d\' ppn et vidage de la liste', () => {
         cy.get('.v-select__selections').click().type("123456789,123456790 45df753");
         cy.get('.v-select__selections').type('{enter}');
 
-        // Teste la valeur de chaque ppn
-        cy.get(':nth-child(1) > .v-chip__content').contains("123456789");
-        cy.get(':nth-child(2) > .v-chip__content').contains("123456790");
-
-        // Teste de la visibilité du v-alert
-        cy.get('.v-alert').should('not.be.hidden');
-
-        // Ouvre le v-alert
-        cy.get('.v-expansion-panel-header__icon > .v-icon').click();
-
-        // Teste de la valeur du chip dans le v-alert
-        cy.get('.v-expansion-panel-content__wrap > .v-chip > .v-chip__content').contains("45df753");
-        // Teste le vidage de la liste
-        cy.get('.pe-1 > .v-btn__content').click();
-        cy.get('.v-select__selections').should('have.value', '');
+        testValeurs();
     })
 
     it('Ajout d\'un fichier de ppn', () => {
