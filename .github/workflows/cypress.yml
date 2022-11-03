@@ -10,5 +10,3 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v4
-        with:
-          start: cypress run --record --key c63592b4-b14f-4df8-abab-356504d2ce3b
