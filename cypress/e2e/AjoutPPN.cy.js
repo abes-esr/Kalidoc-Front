@@ -10,11 +10,19 @@ before(() => {
     cy.visit('http://localhost:8080');
 })
 
-describe('Ajout de ppn et vidage de la liste', () => {
+beforeEach(() => {
+    // Réglage de la taille de la fenêtre
+    cy.viewport(1400, 1000);
+})
+
+describe('Ajout d\' ppn et vidage de la liste', () => {
     it('Ajout de ppn un par un', () => {
+
         // Teste l'ajout d'un ppn par ppn
         cy.get('.v-select__selections').click().type("123456789 ");
+        cy.get('.v-select__selections').type('{enter}');
         cy.get('.v-select__selections').click().type("123456790 ");
+        cy.get('.v-select__selections').type('{enter}');
         cy.get('.v-select__selections').click().type("45df753");
         cy.get('.v-select__selections').type('{enter}');
 
@@ -37,6 +45,7 @@ describe('Ajout de ppn et vidage de la liste', () => {
     })
 
     it ('Ajout d\'une liste de ppn',() => {
+
         // Teste l'ajout d'une liste de ppn
         cy.get('.v-select__selections').click().type("123456789,123456790 45df753");
         cy.get('.v-select__selections').type('{enter}');
