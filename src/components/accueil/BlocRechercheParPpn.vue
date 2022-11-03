@@ -13,7 +13,7 @@
           </v-chip>
         </template>
       </v-combobox>
-      <v-container class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" depressed small tile @click="removeAllItems" style="border: 1px solid black">Vider la liste <v-icon color="grey">mdi-chevron-up</v-icon></v-btn></v-container>
+      <v-container class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" id="btnClearAll" depressed small tile @click="removeAllItems" style="border: 1px solid black">Vider la liste <v-icon color="grey">mdi-chevron-up</v-icon></v-btn></v-container>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
         Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
         <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
