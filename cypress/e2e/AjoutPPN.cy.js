@@ -18,14 +18,14 @@ function testValeurs() {
 
 before(() => {
     // Mock
-    cy.intercept("http://localhost:8082/api/v1/getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
-    cy.intercept("http://localhost:8082/api/v1/getRuleSets",[]);
+    cy.intercept(Cypress.env('urlApi') + "getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
+    cy.intercept(Cypress.env('urlApi') + "getRuleSets",[]);
 
     // Réglage de la taille de la fenêtre
     cy.viewport(1400, 1000);
 
     // Affichage de la home page
-    cy.visit('http://localhost:8080');
+    cy.visit(Cypress.env('url'));
 })
 
 beforeEach(() => {

@@ -1,12 +1,12 @@
 describe('First Test', () => {
   it('Nothing to do', () => {
     //Mock
-    cy.intercept("http://localhost:8082/api/v1/getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
-    cy.intercept("http://localhost:8082/api/v1/getRuleSets",[]);
+    cy.intercept(Cypress.env('urlApi') + "getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
+    cy.intercept(Cypress.env('urlApi') + "getRuleSets",[]);
 
     cy.viewport(1000, 1000);
 
-    cy.visit('http://localhost:8080');
+    cy.visit(Cypress.env('url'));
 
     cy.contains("CIBL").click();
     cy.contains("Audiovisuel").click();
