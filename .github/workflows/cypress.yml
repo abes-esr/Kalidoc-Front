@@ -12,9 +12,3 @@ jobs:
       - run: npm install
       - name: Cypress run
         uses: cypress-io/github-action@v3
-        with:
-          project: ../src
-          browser: chrome
-          build: npm build
-          start: npm run serve
-          wait-on: "http://localhost:8080"
