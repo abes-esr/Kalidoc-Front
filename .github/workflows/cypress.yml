@@ -10,6 +10,7 @@ jobs:
         with:
           node-version: 14.16.0
       - run: npm install
-      - run: npm run serve
       - name: Cypress run
-        uses: cypress-io/github-action@v3
+        uses: cypress-io/github-action@v4
+        with:
+          browser: edge
