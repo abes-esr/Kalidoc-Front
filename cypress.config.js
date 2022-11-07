@@ -4,7 +4,7 @@ module.exports = defineConfig({
   projectId: "i4mqah",
   env: {
     url: 'http://localhost:8080/',
-    urlApi: 'https://qualimarc-dev.sudoc.fr/api/v1/',
+    urlApi: '',
   },
   e2e: {
     setupNodeEvents(on, config) {
