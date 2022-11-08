@@ -2,6 +2,7 @@ describe('First Test', () => {
   it('Nothing to do', () => {
     cy.contains("CIBL").click();
     cy.contains("Audiovisuel").click();
+
     cy.get('.button').should('be.disabled');
 
     cy.get('.v-select__selections').click().type("123456789");
