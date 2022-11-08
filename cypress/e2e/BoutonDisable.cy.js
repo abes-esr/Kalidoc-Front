@@ -1,9 +1,9 @@
 describe('Bouton disable', () => {
   it('test if button should be disable or enable', () => {
     cy.contains("CIBL").click();
-    cy.get('.v-item--active > .v-input--selection-controls__input > .v-input--selection-controls__ripple').find("input").should("have.attr", "aria-checked", "true");
+    cy.get('[data-cy=FOCUSED]').should("have.attr", "aria-checked", "true");
     cy.contains("Audiovisuel").click();
-    cy.get('.flex-wrap > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple').should("be.checked")
+    cy.get('[data-cy=B]').should("be.checked")
     cy.get('.button').should('be.disabled');
 
     cy.get('.v-select__selections').click().type("123456789");
