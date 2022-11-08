@@ -1,8 +1,8 @@
 describe('First Test', () => {
   it('Nothing to do', () => {
     //Mock
-    cy.intercept(Cypress.env('urlApi') + "getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
-    cy.intercept(Cypress.env('urlApi') + "getRuleSets",[]);
+    cy.intercept(Cypress.env('urlApi') + "/getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
+    cy.intercept(Cypress.env('urlApi') + "/getRuleSets",[]);
 
     cy.viewport(1000, 1000);
 
@@ -10,6 +10,7 @@ describe('First Test', () => {
 
     cy.contains("CIBL").click();
     cy.contains("Audiovisuel").click();
+
     cy.get('.button').should('be.disabled');
 
     cy.get('.v-select__selections').click().type("123456789");
