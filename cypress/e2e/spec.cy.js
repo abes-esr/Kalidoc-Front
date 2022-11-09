@@ -21,5 +21,7 @@ describe('First Test', () => {
 
     cy.get('.pe-1 > .v-btn__content').click();
     cy.get('.v-select__selections').should('have.value', '');
+
+    cy.get('.v-chip__content > .pr-2').contains("123456789");
   })
 })
