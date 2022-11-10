@@ -12,7 +12,7 @@
             <v-data-table
                 :headers="headers"
                 loading-text="Chargement..."
-                :items="filterRulesByType()"
+                :items="filterRulesBySelector()"
                 :item-class="classItemPriority"
                 single-select
                 item-key="id"
@@ -48,6 +48,16 @@
                       {{ type }}
                     </v-btn>
                   </div>
+                  <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
+                    <v-btn class="d-block" plain v-for="id in selectId" :key="id.value" @click="eventIdChoice(id)">
+                      {{ id }}
+                    </v-btn>
+                  </div>
+                  <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'priority'">
+                    <v-btn class="d-block" plain v-for="priority in selectRulesPriority" :key="priority.value" @click="eventPriorityChoice(priority)">
+                      {{ priority }}
+                    </v-btn>
+                  </div>
                 </v-menu>
 
                 <!--                Suppression de l'icône de tri pour la colonne "Règle de vérification / qualité"-->
@@ -81,12 +91,18 @@ let items = ref([
   {id: "02", zoneUnm1:"606", zoneUnm2: "", typeDoc: "Tous", message: "Zone 606 : absence de liens $3", priority: "Essentielle"},
   {id: "03", zoneUnm1:"700$b", zoneUnm2: "", typeDoc: "Tous", message: "Zone 700 : 700$b contient un terme générique à compléter", priority: "Avancée"},
 ]);
+let id = ref(null);
+let selectId = ref([]);
 let type = ref(null);
 let selectType = ref([]);
+let rulesPriority = ref(null);
+let selectRulesPriority = ref([]);
 let rulesFiltered = [];
 
 onMounted(() => {
   feedTypeList();
+  feedIdList();
+  feedRulesPriorityList();
 })
 
 /**
@@ -114,6 +130,25 @@ function feedTypeList() {
 }
 
 /**
+ * Fonction permettant de remplir le liste d'Id affichés dans le filtre
+ */
+function feedIdList() {
+  selectId.value.push("Tous");
+  for(let i = 0; i < items.value.length; i++) {
+    selectId.value.push(items.value[i].id);
+  }
+}
+
+/**
+ * Fonction permettant de remplir le liste des règles de priorité affichées dans le filtre
+ */
+function feedRulesPriorityList() {
+  selectRulesPriority.value.push("Tous");
+  selectRulesPriority.value.push("Essentielle");
+  selectRulesPriority.value.push("Avancée");
+}
+
+/**
  * Fonction qui permet d'afficher les types de document
  * @param element
  * @returns {*[] | []}
@@ -123,10 +158,69 @@ function eventTypeChoice(element) {
   return filterRulesByType();
 }
 
+/**
+ * Fonction qui permet d'afficher les Id
+ * @param element
+ * @returns {*[] | []}
+ */
+function eventIdChoice(element) {
+  id.value = (element === "Tous") ? null : element;
+  return filterRulesById();
+}
+
+// TODO résoudre le problème de sélection de priorité
+/**
+ * Fonction qui permet d'afficher les priority
+ * @param element
+ * @returns {*[] | []}
+ */
+function eventPriorityChoice(element) {
+  rulesPriority.value = (element === "Tous") ? null : element;
+  return filterRulesByPriority();
+}
+
+function filterRulesBySelector() {
+  if (id.value === null && type.value === null) {
+    return items.value;
+  } else if (id.value !== null) {
+    return filterRulesById();
+  } else if (type.value !== null) {
+    return filterRulesByType();
+  } else if (rulesPriority.value !== null) {
+    return filterRulesByPriority();
+  } else return items.value;
+}
+
+function filterRulesById(){
+  if (id.value !== null) {
+    type.value = null;
+    rulesPriority.value = null;
+    rulesFiltered = items.value.filter(item => {
+      return item.id === id.value;
+    });
+    return rulesFiltered;
+  }
+  return items.value;
+}
+
 function filterRulesByType(){
   if (type.value !== null) {
+    id.value = null;
+    rulesPriority.value = null;
     rulesFiltered = items.value.filter(item => {
       return item.typeDoc === type.value;
+    });
+    return rulesFiltered;
+  }
+  return items.value;
+}
+
+function filterRulesByPriority(){
+  if (rulesPriority.value !== null) {
+    id.value = null;
+    type.value = null;
+    rulesFiltered = items.value.filter(item => {
+      return item.priority === rulesPriority.value;
     });
     return rulesFiltered;
   }
