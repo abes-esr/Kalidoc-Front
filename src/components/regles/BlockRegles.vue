@@ -14,7 +14,6 @@
                 loading-text="Chargement..."
                 :items="filterRulesByType()"
                 :item-class="classItemPriority"
-                hide-default-footer
                 single-select
                 item-key="id"
                 dense
