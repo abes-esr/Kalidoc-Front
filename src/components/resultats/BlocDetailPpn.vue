@@ -175,7 +175,7 @@
         iconTypeDocument.value.color="orange";
         break;
       case "Manuscrit":
-        iconTypeDocument.value.img="mdi-script-outlin";
+        iconTypeDocument.value.img="mdi-script-outline";
         iconTypeDocument.value.color="brown";
         break;
       case "Multimédia":
