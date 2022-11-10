@@ -12,10 +12,11 @@
             <v-data-table
                 :headers="headers"
                 loading-text="Chargement..."
-                :items="items"
+                :items="filterRulesByType()"
                 :item-class="classItemPriority"
                 hide-default-footer
                 single-select
+                item-key="id"
                 dense
             >
 
@@ -81,6 +82,7 @@ let items = ref([
   {id: "02", zoneUnm1:"606", zoneUnm2: "", typeDoc: "Tous", message: "Zone 606 : absence de liens $3", priority: "Essentielle"},
   {id: "03", zoneUnm1:"700$b", zoneUnm2: "", typeDoc: "Tous", message: "Zone 700 : 700$b contient un terme générique à compléter", priority: "Avancée"},
 ]);
+let type = ref(null);
 let selectType = ref([]);
 let rulesFiltered = [];
 
@@ -119,13 +121,13 @@ function feedTypeList() {
  */
 function eventTypeChoice(element) {
   type.value = (element === "Tous") ? null : element;
-  return filterPpnByType();
+  return filterRulesByType();
 }
 
-function filterPpnByType(){
+function filterRulesByType(){
   if (type.value !== null) {
     rulesFiltered = items.value.filter(item => {
-      return item.typeDocument === type.value;
+      return item.typeDoc === type.value;
     });
     return rulesFiltered;
   }
