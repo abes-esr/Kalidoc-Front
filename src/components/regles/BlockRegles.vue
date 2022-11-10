@@ -5,7 +5,7 @@
       <v-row class="ma-0 pa-0">
         <v-col>
 
-          <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
+          <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
 
           <!--          Container de formatage des bordures de la data table-->
           <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
