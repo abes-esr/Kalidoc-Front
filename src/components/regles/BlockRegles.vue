@@ -14,7 +14,6 @@
                 loading-text="Chargement..."
                 :items="items"
                 :item-class="classItemPriority"
-                hide-default-footer
                 single-select
                 dense
             >
