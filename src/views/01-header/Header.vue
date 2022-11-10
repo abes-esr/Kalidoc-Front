@@ -11,7 +11,7 @@
        <v-col cols="8" class="pl-6">
          <v-row class="ma-0 pa-0 pl-2" justify="center">
            <v-btn text tile color="white" value="interfaceVerification" @click="activeBtn = 'btn1'" :class="{titleBarButtonSelected: activeBtn === 'btn1' }" to="/" v-if="">Interface de vérification</v-btn>
-           <v-btn text tile color="white" value="interfaceRegles" @click="activeBtn = 'btn2'" :class="{titleBarButtonSelected: activeBtn === 'btn2' }" to="/resultats" v-if="">Interface des règles</v-btn>
+           <v-btn text tile color="white" value="interfaceRegles" @click="activeBtn = 'btn2'" :class="{titleBarButtonSelected: activeBtn === 'btn2' }" to="/regles" v-if="">Interface des règles</v-btn>
            <v-btn text tile color="white" value="historique" @click="activeBtn = 'btn3'" :class="{titleBarButtonSelected: activeBtn === 'btn3' }" v-if="">Historique</v-btn>
          </v-row>
        </v-col>
@@ -39,7 +39,7 @@
        <v-col cols="7">
          <v-row class="ma-0 pa-0" justify="center">
            <v-btn text tile color="white" value="interfaceVerification" small @click="activeBtn = 'btn1'" :class="{titleBarButtonSelected: activeBtn === 'btn1' }" to="/" v-if="">Vérification</v-btn>
-           <v-btn text tile color="white" value="interfaceRegles" small @click="activeBtn = 'btn2'" :class="{titleBarButtonSelected: activeBtn === 'btn2' }" to="/resultats" v-if="">Règles</v-btn>
+           <v-btn text tile color="white" value="interfaceRegles" small @click="activeBtn = 'btn2'" :class="{titleBarButtonSelected: activeBtn === 'btn2' }" to="/regles" v-if="">Règles</v-btn>
            <v-btn text tile color="white" value="historique" small @click="activeBtn = 'btn3'" :class="{titleBarButtonSelected: activeBtn === 'btn3' }" v-if="">Historique</v-btn>
          </v-row>
        </v-col>
