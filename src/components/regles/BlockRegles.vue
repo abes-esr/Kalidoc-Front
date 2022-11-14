@@ -44,17 +44,17 @@
                     </v-btn>
                   </template>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                    <v-btn class="d-block" plain v-for="type in selectType" :key="type.id" @click="eventTypeChoice(type)">
+                    <v-btn class="d-block" plain v-for="type in listSelectedType" :key="type.id" @click="eventTypeChoice(type)">
                       {{ type }}
                     </v-btn>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
-                    <v-btn class="d-block" plain v-for="id in selectId" :key="id.value" @click="eventIdChoice(id)">
+                    <v-btn class="d-block" plain v-for="id in listSelectedId" :key="id.value" @click="eventIdChoice(id)">
                       {{ id }}
                     </v-btn>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'priority'">
-                    <v-btn class="d-block" plain v-for="priority in selectRulesPriority" :key="priority.value" @click="eventPriorityChoice(priority)">
+                    <v-btn class="d-block" plain v-for="priority in listSelectedRulesPriority" :key="priority.value" @click="eventPriorityChoice(priority)">
                       {{ priority }}
                     </v-btn>
                   </div>
@@ -87,16 +87,16 @@ let headers = ref([
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ]);
 let items = ref([
-  {id: "01", zoneUnm1:"210", zoneUnm2: "", typeDoc: "Tous", message: "Si présence de zone 210 et absence de 214", priority: "Essentielle"},
+  {id: "01", zoneUnm1:"210", zoneUnm2: "", typeDoc: "Carte", message: "Si présence de zone 210 et absence de 214", priority: "Essentielle"},
   {id: "02", zoneUnm1:"606", zoneUnm2: "", typeDoc: "Tous", message: "Zone 606 : absence de liens $3", priority: "Essentielle"},
-  {id: "03", zoneUnm1:"700$b", zoneUnm2: "", typeDoc: "Tous", message: "Zone 700 : 700$b contient un terme générique à compléter", priority: "Avancée"},
+  {id: "03", zoneUnm1:"700$b", zoneUnm2: "", typeDoc: "Manuscrit", message: "Zone 700 : 700$b contient un terme générique à compléter", priority: "Avancée"},
 ]);
 let id = ref(null);
-let selectId = ref([]);
+let listSelectedId = ref([]);
 let type = ref(null);
-let selectType = ref([]);
-let rulesPriority = ref(null);
-let selectRulesPriority = ref([]);
+let listSelectedType = ref([]);
+let priority = ref(null);
+let listSelectedRulesPriority = ref([]);
 let rulesFiltered = [];
 
 onMounted(() => {
@@ -121,10 +121,10 @@ function classItemPriority(item){
  * Fonction permettant d'initialiser les listes de types de documents affichés dans le filtre
  */
 function feedTypeList() {
-  selectType.value.push("Tous");
+  listSelectedType.value.push("Tous");
   serviceApi.getFamillesDocuments()
       .then((response) => {
-        response.data.forEach((el) => selectType.value.push(el.libelle));
+        response.data.forEach((el) => listSelectedType.value.push(el.libelle));
       }).catch((error) => {
   });
 }
@@ -133,9 +133,9 @@ function feedTypeList() {
  * Fonction permettant de remplir le liste d'Id affichés dans le filtre
  */
 function feedIdList() {
-  selectId.value.push("Tous");
+  listSelectedId.value.push("Tous");
   for(let i = 0; i < items.value.length; i++) {
-    selectId.value.push(items.value[i].id);
+    listSelectedId.value.push(items.value[i].id);
   }
 }
 
@@ -143,9 +143,9 @@ function feedIdList() {
  * Fonction permettant de remplir le liste des règles de priorité affichées dans le filtre
  */
 function feedRulesPriorityList() {
-  selectRulesPriority.value.push("Tous");
-  selectRulesPriority.value.push("Essentielle");
-  selectRulesPriority.value.push("Avancée");
+  listSelectedRulesPriority.value.push("Tous");
+  listSelectedRulesPriority.value.push("Essentielle");
+  listSelectedRulesPriority.value.push("Avancée");
 }
 
 /**
@@ -175,18 +175,18 @@ function eventIdChoice(element) {
  * @returns {*[] | []}
  */
 function eventPriorityChoice(element) {
-  rulesPriority.value = (element === "Tous") ? null : element;
+  priority.value = (element === "Tous") ? null : element;
   return filterRulesByPriority();
 }
 
 function filterRulesBySelector() {
-  if (id.value === null && type.value === null) {
+  if (id.value === null && type.value === null && priority.value === null) {
     return items.value;
   } else if (id.value !== null) {
     return filterRulesById();
   } else if (type.value !== null) {
     return filterRulesByType();
-  } else if (rulesPriority.value !== null) {
+  } else if (priority.value !== null) {
     return filterRulesByPriority();
   } else return items.value;
 }
@@ -194,7 +194,7 @@ function filterRulesBySelector() {
 function filterRulesById(){
   if (id.value !== null) {
     type.value = null;
-    rulesPriority.value = null;
+    priority.value = null;
     rulesFiltered = items.value.filter(item => {
       return item.id === id.value;
     });
@@ -206,7 +206,7 @@ function filterRulesById(){
 function filterRulesByType(){
   if (type.value !== null) {
     id.value = null;
-    rulesPriority.value = null;
+    priority.value = null;
     rulesFiltered = items.value.filter(item => {
       return item.typeDoc === type.value;
     });
@@ -216,16 +216,16 @@ function filterRulesByType(){
 }
 
 function filterRulesByPriority(){
-  if (rulesPriority.value !== null) {
-    id.value = null;
-    type.value = null;
-    rulesFiltered = items.value.filter(item => {
-      return item.priority === rulesPriority.value;
-    });
-    return rulesFiltered;
+    if (priority.value !== null) {
+      id.value = null;
+      type.value = null;
+      rulesFiltered = items.value.filter(item => {
+        return item.priority === priority.value;
+      });
+      return rulesFiltered;
+    }
+    return items.value;
   }
-  return items.value;
-}
 
 </script>
 
