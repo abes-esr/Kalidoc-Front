@@ -45,6 +45,15 @@ export class QualimarcService {
       return this.client.get("getRuleSets")
     }
 
+    /**
+     * Renvoie la liste des règles
+     * @return {Promise<AxiosResponse<any>>}
+     * response.data : {id, zoneUnm1, zoneUnm2, typeDoc, message, priority}
+     */
+    getRules() {
+        return this.client.get("rules")
+    }
+
 
 }
 export default new QualimarcService();
