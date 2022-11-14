@@ -145,10 +145,7 @@ function feedTypeList() {
  */
 function feedIdList() {
   listSelectedId.value.push("Tous");
-  console.log(items.value.length);
   for(let i = 0; i < items.value.length; i++) {
-    console.log("HERE !");
-    console.log(items.value);
     listSelectedId.value.push(items.value[i].id);
   }
 }
