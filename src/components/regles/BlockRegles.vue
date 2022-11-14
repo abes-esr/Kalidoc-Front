@@ -168,7 +168,6 @@ function eventIdChoice(element) {
   return filterRulesById();
 }
 
-// TODO résoudre le problème de sélection de priorité
 /**
  * Fonction qui permet d'afficher les priority
  * @param element
