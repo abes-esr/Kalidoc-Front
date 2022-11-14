@@ -86,11 +86,7 @@ let headers = ref([
   { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ]);
-let items = ref([
-  {id: "01", zoneUnm1:"210", zoneUnm2: "", typeDoc: "Carte", message: "Si présence de zone 210 et absence de 214", priority: "Essentielle"},
-  {id: "02", zoneUnm1:"606", zoneUnm2: "", typeDoc: "Tous", message: "Zone 606 : absence de liens $3", priority: "Essentielle"},
-  {id: "03", zoneUnm1:"700$b", zoneUnm2: "", typeDoc: "Manuscrit", message: "Zone 700 : 700$b contient un terme générique à compléter", priority: "Avancée"},
-]);
+let items = ref([]);
 let id = ref(null);
 let listSelectedId = ref([]);
 let type = ref(null);
@@ -100,10 +96,25 @@ let listSelectedRulesPriority = ref([]);
 let rulesFiltered = [];
 
 onMounted(() => {
+  feedItems();
   feedTypeList();
-  feedIdList();
   feedRulesPriorityList();
 })
+
+/**
+ * fonction permetant de recuperer la liste des règles
+ */
+function feedItems(){
+  items.value = [];
+  serviceApi.getRules()
+      .then((response) => {
+        response.data.forEach((el) => items.value.push(el));
+        feedIdList();
+      }).catch((error) => {
+    //TODO : emit erreur si impossible de récupérer les types via appel axios
+    //emitOnError(error);
+  });
+}
 
 /**
  * Fonction qui modifie la class de l'item sélectionné en fonction de sa priorité
@@ -134,7 +145,10 @@ function feedTypeList() {
  */
 function feedIdList() {
   listSelectedId.value.push("Tous");
+  console.log(items.value.length);
   for(let i = 0; i < items.value.length; i++) {
+    console.log("HERE !");
+    console.log(items.value);
     listSelectedId.value.push(items.value[i].id);
   }
 }
