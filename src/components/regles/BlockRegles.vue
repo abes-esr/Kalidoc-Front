@@ -28,9 +28,19 @@
                 <!--                Champ de recherche pour la colonne "Règles de vérification / qualité"-->
                 <v-menu offset-y v-if="header.value === 'message'">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-text-field dense label="Rechercher (saisir un mot)" single-line solo v-bind="attrs" v-on="on" style="margin-bottom: -20px">
-                      Rechercher (saisir un mot)
-                    </v-text-field>
+                    <v-autocomplete
+                        @click="filterRulesByMessage"
+                        v-model="ruleMessage"
+                        :items="items"
+                        :filter="customFilter"
+                        item-text="message"
+                        dense
+                        label="rechercher par mot clef"
+                        solo
+                    ></v-autocomplete>
+<!--                    <v-text-field dense label="Rechercher (saisir un mot)" single-line solo v-bind="attrs" v-on="on" style="margin-bottom: -20px">-->
+<!--                      Rechercher (saisir un mot)-->
+<!--                    </v-text-field>-->
                   </template>
                 </v-menu>
 
@@ -44,18 +54,18 @@
                     </v-btn>
                   </template>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                    <v-btn class="d-block" plain v-for="type in listSelectedType" :key="type.id" @click="eventTypeChoice(type)">
-                      {{ type }}
+                    <v-btn class="d-block" plain v-for="ruleType in listSelectedRulesTypeDoc" :key="ruleType.id" @click="eventTypeChoice(ruleType)">
+                      {{ ruleType }}
                     </v-btn>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
-                    <v-btn class="d-block" plain v-for="id in listSelectedId" :key="id.value" @click="eventIdChoice(id)">
-                      {{ id }}
+                    <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="eventIdChoice(ruleId)">
+                      {{ ruleId }}
                     </v-btn>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'priority'">
-                    <v-btn class="d-block" plain v-for="priority in listSelectedRulesPriority" :key="priority.value" @click="eventPriorityChoice(priority)">
-                      {{ priority }}
+                    <v-btn class="d-block" plain v-for="rulePriority in listSelectedRulesPriority" :key="rulePriority.value" @click="eventPriorityChoice(rulePriority)">
+                      {{ rulePriority }}
                     </v-btn>
                   </div>
                 </v-menu>
@@ -74,7 +84,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from "vue";
+import {ref, onMounted, watchEffect} from "vue";
 import QualimarcService from "@/service/QualimarcService";
 
 const serviceApi = QualimarcService;
@@ -87,19 +97,46 @@ let headers = ref([
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ]);
 let items = ref([]);
-let id = ref(null);
-let listSelectedId = ref([]);
-let type = ref(null);
-let listSelectedType = ref([]);
-let priority = ref(null);
+let ruleId = ref(null);
+let listSelectedRulesId = ref([]);
+let ruleTypeDoc = ref(null);
+let listSelectedRulesTypeDoc = ref([]);
+let rulePriority = ref(null);
 let listSelectedRulesPriority = ref([]);
+let ruleMessage = ref(null);
+let listSelectedRulesMessages = ref([]);
 let rulesFiltered = [];
+
 
 onMounted(() => {
   feedItems();
   feedTypeList();
   feedRulesPriorityList();
 })
+
+// /**
+//  * Fonction qui permet de vérifier un changement de valeur du ppn courant
+//  */
+// watchEffect(() => {
+//   if(ruleMessage.value){
+//     filterRulesByMessage();
+//   }
+// })
+
+/**
+ *
+ * @param item l'item sélectionné
+ * @param queryText le texte saisi par l'utilisateur
+ * @param itemText le texte qui apparait dans le champ de saisie
+ * @returns {boolean} le boolean de retour
+ */
+function customFilter (item, queryText, itemText) {
+  const textOne = item.message.toLowerCase()
+  const searchText = queryText.toLowerCase()
+  return textOne.indexOf(searchText) > -1
+};
+
+
 
 /**
  * fonction permetant de recuperer la liste des règles
@@ -132,10 +169,10 @@ function classItemPriority(item){
  * Fonction permettant d'initialiser les listes de types de documents affichés dans le filtre
  */
 function feedTypeList() {
-  listSelectedType.value.push("Tous");
+  listSelectedRulesTypeDoc.value.push("Tous");
   serviceApi.getFamillesDocuments()
       .then((response) => {
-        response.data.forEach((el) => listSelectedType.value.push(el.libelle));
+        response.data.forEach((el) => listSelectedRulesTypeDoc.value.push(el.libelle));
       }).catch((error) => {
   });
 }
@@ -144,9 +181,9 @@ function feedTypeList() {
  * Fonction permettant de remplir le liste d'Id affichés dans le filtre
  */
 function feedIdList() {
-  listSelectedId.value.push("Tous");
+  listSelectedRulesId.value.push("Tous");
   for(let i = 0; i < items.value.length; i++) {
-    listSelectedId.value.push(items.value[i].id);
+    listSelectedRulesId.value.push(items.value[i].id);
   }
 }
 
@@ -165,7 +202,7 @@ function feedRulesPriorityList() {
  * @returns {*[] | []}
  */
 function eventTypeChoice(element) {
-  type.value = (element === "Tous") ? null : element;
+  ruleTypeDoc.value = (element === "Tous") ? null : element;
   return filterRulesByType();
 }
 
@@ -175,7 +212,7 @@ function eventTypeChoice(element) {
  * @returns {*[] | []}
  */
 function eventIdChoice(element) {
-  id.value = (element === "Tous") ? null : element;
+  ruleId.value = (element === "Tous") ? null : element;
   return filterRulesById();
 }
 
@@ -185,28 +222,29 @@ function eventIdChoice(element) {
  * @returns {*[] | []}
  */
 function eventPriorityChoice(element) {
-  priority.value = (element === "Tous") ? null : element;
+  rulePriority.value = (element === "Tous") ? null : element;
   return filterRulesByPriority();
 }
 
 function filterRulesBySelector() {
-  if (id.value === null && type.value === null && priority.value === null) {
+  if (ruleId.value === null && ruleTypeDoc.value === null && rulePriority.value === null) {
     return items.value;
-  } else if (id.value !== null) {
+  } else if (ruleId.value !== null) {
     return filterRulesById();
-  } else if (type.value !== null) {
+  } else if (ruleTypeDoc.value !== null) {
     return filterRulesByType();
-  } else if (priority.value !== null) {
+  } else if (rulePriority.value !== null) {
     return filterRulesByPriority();
   } else return items.value;
 }
 
 function filterRulesById(){
-  if (id.value !== null) {
-    type.value = null;
-    priority.value = null;
+  if (ruleId.value !== null) {
+    ruleTypeDoc.value = null;
+    rulePriority.value = null;
+    ruleMessage.value = null;
     rulesFiltered = items.value.filter(item => {
-      return item.id === id.value;
+      return item.id === ruleId.value;
     });
     return rulesFiltered;
   }
@@ -214,11 +252,12 @@ function filterRulesById(){
 }
 
 function filterRulesByType(){
-  if (type.value !== null) {
-    id.value = null;
-    priority.value = null;
+  if (ruleTypeDoc.value !== null) {
+    ruleId.value = null;
+    rulePriority.value = null;
+    ruleMessage.value = null;
     rulesFiltered = items.value.filter(item => {
-      return item.typeDoc === type.value;
+      return item.typeDoc === ruleTypeDoc.value;
     });
     return rulesFiltered;
   }
@@ -226,16 +265,31 @@ function filterRulesByType(){
 }
 
 function filterRulesByPriority(){
-    if (priority.value !== null) {
-      id.value = null;
-      type.value = null;
+    if (rulePriority.value !== null) {
+      ruleId.value = null;
+      ruleTypeDoc.value = null;
+      ruleMessage.value = null;
       rulesFiltered = items.value.filter(item => {
-        return item.priority === priority.value;
+        return item.priority === rulePriority.value;
       });
       return rulesFiltered;
     }
     return items.value;
   }
+
+function filterRulesByMessage(){
+  console.log(ruleMessage.value)
+  if (ruleMessage.value !== null) {
+    ruleId.value = null;
+    ruleTypeDoc.value = null;
+    rulePriority.value = null;
+    rulesFiltered = items.value.filter(item => {
+      return item.message === ruleMessage.value;
+    });
+    return rulesFiltered;
+  }
+  return items.value;
+}
 
 </script>
 
