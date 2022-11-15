@@ -14,11 +14,12 @@
                 loading-text="Chargement..."
                 :items="filterRulesBySelector()"
                 :item-class="classItemPriority"
+                :search="ruleMessage"
+                :custom-filter="searchByMessage"
                 single-select
                 item-key="id"
                 dense
             >
-
               <!--              Remplissage du header-->
               <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
                             <span style='color: white;'>
@@ -28,19 +29,14 @@
                 <!--                Champ de recherche pour la colonne "Règles de vérification / qualité"-->
                 <v-menu offset-y v-if="header.value === 'message'">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-autocomplete
-                        @click="filterRulesByMessage"
+                    <v-text-field
                         v-model="ruleMessage"
-                        :items="items"
-                        :filter="customFilter"
-                        item-text="message"
-                        dense
                         label="rechercher par mot clef"
+                        class="ma-0 pa-0"
+                        dense
                         solo
-                    ></v-autocomplete>
-<!--                    <v-text-field dense label="Rechercher (saisir un mot)" single-line solo v-bind="attrs" v-on="on" style="margin-bottom: -20px">-->
-<!--                      Rechercher (saisir un mot)-->
-<!--                    </v-text-field>-->
+                        style="max-height: 40px"
+                    ></v-text-field>
                   </template>
                 </v-menu>
 
@@ -54,7 +50,7 @@
                     </v-btn>
                   </template>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                    <v-btn class="d-block" plain v-for="ruleType in listSelectedRulesTypeDoc" :key="ruleType.id" @click="eventTypeChoice(ruleType)">
+                    <v-btn class="d-block" plain v-for="ruleType in listSelectedRulesTypeDoc" :key="ruleType.id" @click="eventTypeDocChoice(ruleType)">
                       {{ ruleType }}
                     </v-btn>
                   </div>
@@ -71,7 +67,7 @@
                 </v-menu>
 
                 <!--                Suppression de l'icône de tri pour la colonne "Règle de vérification / qualité"-->
-                <v-icon color="white" small v-if="header.value != 'message'">mdi-sort</v-icon>
+                <v-icon color="white" small v-if="header.value !== 'message'">mdi-sort</v-icon>
               </template>
 
             </v-data-table>
@@ -104,9 +100,7 @@ let listSelectedRulesTypeDoc = ref([]);
 let rulePriority = ref(null);
 let listSelectedRulesPriority = ref([]);
 let ruleMessage = ref(null);
-let listSelectedRulesMessages = ref([]);
 let rulesFiltered = [];
-
 
 onMounted(() => {
   feedItems();
@@ -114,29 +108,19 @@ onMounted(() => {
   feedRulesPriorityList();
 })
 
-// /**
-//  * Fonction qui permet de vérifier un changement de valeur du ppn courant
-//  */
-// watchEffect(() => {
-//   if(ruleMessage.value){
-//     filterRulesByMessage();
-//   }
-// })
-
 /**
- *
- * @param item l'item sélectionné
- * @param queryText le texte saisi par l'utilisateur
- * @param itemText le texte qui apparait dans le champ de saisie
- * @returns {boolean} le boolean de retour
+ * Fonction qui permet de faire la correspondance entre la saisie de l'utilisateur et les items
+ * @param value renvoie les valeurs de toutes les cases du dataTable qui contienne la recherche (n'est pas utilisé ici, mais obligation de le laisser)
+ * @param search la saisie de l'utilisateur
+ * @param item les items qui match avec la saisie de l'utilisateur
+ * @returns {boolean} valeur de retour
  */
-function customFilter (item, queryText, itemText) {
-  const textOne = item.message.toLowerCase()
-  const searchText = queryText.toLowerCase()
-  return textOne.indexOf(searchText) > -1
-};
-
-
+function searchByMessage (value, search, item) {
+  return item.message != null &&
+      ruleMessage != null &&
+      typeof item.message === 'string' &&
+      item.message.toString().toLocaleUpperCase().indexOf(search.toLocaleUpperCase()) !== -1
+}
 
 /**
  * fonction permetant de recuperer la liste des règles
@@ -197,19 +181,19 @@ function feedRulesPriorityList() {
 }
 
 /**
- * Fonction qui permet d'afficher les types de document
- * @param element
- * @returns {*[] | []}
+ * Fonction qui permet d'afficher les typeDoc sélectionnés par l'utilisateur
+ * @param element l'élément sélectionné
+ * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
  */
-function eventTypeChoice(element) {
+function eventTypeDocChoice(element) {
   ruleTypeDoc.value = (element === "Tous") ? null : element;
-  return filterRulesByType();
+  return filterRulesByTypeDoc();
 }
 
 /**
- * Fonction qui permet d'afficher les Id
- * @param element
- * @returns {*[] | []}
+ * Fonction qui permet d'afficher les Id sélectionnés par l'utilisateur
+ * @param element l'élément sélectionné
+ * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
  */
 function eventIdChoice(element) {
   ruleId.value = (element === "Tous") ? null : element;
@@ -217,27 +201,35 @@ function eventIdChoice(element) {
 }
 
 /**
- * Fonction qui permet d'afficher les priority
- * @param element
- * @returns {*[] | []}
+ * Fonction qui permet d'afficher les Priority sélectionnés par l'utilisateur
+ * @param element l'élément sélectionné
+ * @returns {*[] | []} appelle la fonction d'affichage des Priority sélectionnés par l'utilisateur
  */
 function eventPriorityChoice(element) {
   rulePriority.value = (element === "Tous") ? null : element;
   return filterRulesByPriority();
 }
 
+/**
+ * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par Id, typeDoc ou Priority
+ * @returns {[]|[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
+ */
 function filterRulesBySelector() {
   if (ruleId.value === null && ruleTypeDoc.value === null && rulePriority.value === null) {
     return items.value;
   } else if (ruleId.value !== null) {
     return filterRulesById();
   } else if (ruleTypeDoc.value !== null) {
-    return filterRulesByType();
+    return filterRulesByTypeDoc();
   } else if (rulePriority.value !== null) {
     return filterRulesByPriority();
   } else return items.value;
 }
 
+/**
+ * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par Id
+ * @returns {[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
+ */
 function filterRulesById(){
   if (ruleId.value !== null) {
     ruleTypeDoc.value = null;
@@ -251,7 +243,11 @@ function filterRulesById(){
   return items.value;
 }
 
-function filterRulesByType(){
+/**
+ * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par typeDoc
+ * @returns {[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
+ */
+function filterRulesByTypeDoc(){
   if (ruleTypeDoc.value !== null) {
     ruleId.value = null;
     rulePriority.value = null;
@@ -264,6 +260,10 @@ function filterRulesByType(){
   return items.value;
 }
 
+/**
+ * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par Priority
+ * @returns {[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
+ */
 function filterRulesByPriority(){
     if (rulePriority.value !== null) {
       ruleId.value = null;
@@ -276,20 +276,6 @@ function filterRulesByPriority(){
     }
     return items.value;
   }
-
-function filterRulesByMessage(){
-  console.log(ruleMessage.value)
-  if (ruleMessage.value !== null) {
-    ruleId.value = null;
-    ruleTypeDoc.value = null;
-    rulePriority.value = null;
-    rulesFiltered = items.value.filter(item => {
-      return item.message === ruleMessage.value;
-    });
-    return rulesFiltered;
-  }
-  return items.value;
-}
 
 </script>
 
