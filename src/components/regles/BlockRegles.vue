@@ -253,7 +253,7 @@ function filterRulesByTypeDoc(){
     rulePriority.value = null;
     ruleMessage.value = null;
     rulesFiltered = items.value.filter(item => {
-      return item.typeDoc === ruleTypeDoc.value;
+      return  item.typeDoc.toLowerCase().includes(ruleTypeDoc.value.toLowerCase());
     });
     return rulesFiltered;
   }
