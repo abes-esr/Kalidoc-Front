@@ -9,7 +9,7 @@
 
           <!--          Container de formatage des bordures de la data table-->
           <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
-            <v-data-table
+            <v-data-table id="bgColorIdColumnRulesTable"
                 :headers="headers"
                 loading-text="Chargement..."
                 :items="filterRulesBySelector()"
