@@ -59,6 +59,10 @@
     background-color: #cf491b;
 }
 
+#bgColorSecondary table thead tr th {
+    background-color: #e6e6e6;
+}
+
 #linkWhite {
     color: white;
     text-decoration: none;
