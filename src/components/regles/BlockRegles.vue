@@ -22,9 +22,17 @@
             >
               <!--              Remplissage du header-->
               <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-                            <span style='color: white;'>
-                              {{ header.text }}<br>
-                            </span>
+                <!--                Header Id avec Tooltip-->
+                <v-tooltip bottom v-if="header.value === 'id'">
+                  <template v-slot:activator="{ on }">
+                    <span v-on="on" style='color: white;'>{{ header.textBtn }}</span><br>
+                  </template>
+                  <span>{{ header.tooltip}}</span>
+                </v-tooltip>
+                <!--                Autres headers-->
+                <span style='color: white;' v-if="header.value === 'zoneUnm1' || header.value === 'zoneUnm2' || header.value === 'typeDoc' || header.value === 'message' || header.value === 'priority'">
+                    {{ header.text }}<br>
+                </span>
 
                 <!--                Champ de recherche pour la colonne "Règles de vérification / qualité"-->
                 <v-menu offset-y v-if="header.value === 'message'">
@@ -80,12 +88,12 @@
 </template>
 
 <script setup>
-import {ref, onMounted, watchEffect} from "vue";
+import {ref, onMounted} from "vue";
 import QualimarcService from "@/service/QualimarcService";
 
 const serviceApi = QualimarcService;
 let headers = ref([
-  { text: "ID Règle", value: "id", class: "headerTableClass", width: 20},
+  { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID Règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
   { text: "Zone UNM 1", value: "zoneUnm1", class: "headerTableClass", width: 30},
   { text: "Zone UNM 2", value: "zoneUnm2", class: "headerTableClass", width: 30},
   { text: "Type de document", value: "typeDoc", class: "headerTableClass", width: 80},
@@ -101,6 +109,9 @@ let rulePriority = ref(null);
 let listSelectedRulesPriority = ref([]);
 let ruleMessage = ref(null);
 let rulesFiltered = [];
+
+//  TODO mettre des checkBox dans le menu déroulant des types de documents
+//  TODO corriger l'absence de multiselection sur plusieurs column
 
 onMounted(() => {
   feedItems();
