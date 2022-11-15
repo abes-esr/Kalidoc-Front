@@ -35,7 +35,7 @@
                         class="ma-0 pa-0"
                         dense
                         solo
-                        style="max-height: 40px"
+                        style="max-height: 40px; color: lightgrey; font-weight: 400; font-style: italic; font-size: 1.2em"
                     ></v-text-field>
                   </template>
                 </v-menu>
