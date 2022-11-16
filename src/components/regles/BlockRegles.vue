@@ -11,6 +11,7 @@
             </v-col>
             <v-col class="pt-4">
               <v-row class="ma-0 pa-0" justify="end">
+                <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
                 <v-btn class="ma-0 pa-0" x-small outlined color="#cf491b" @click="resetSelector()">
                   <v-icon small color="#cf491b">
                     mdi-filter-remove
@@ -72,17 +73,17 @@
                     </v-btn>
                   </template>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                    <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc)">
+                    <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) && addSelector(ruleTypeDoc)">
                       {{ ruleTypeDoc }}
                     </v-btn>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
-                    <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="eventIdChoice(ruleId)">
+                    <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="eventIdChoice(ruleId) && addSelector(ruleId)">
                       {{ ruleId }}
                     </v-btn>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'priority'">
-                    <v-btn class="d-block" plain v-for="rulePriority in listSelectedRulesPriority" :key="rulePriority.value" @click="eventPriorityChoice(rulePriority)">
+                    <v-btn class="d-block" plain v-for="rulePriority in listSelectedRulesPriority" :key="rulePriority.value" @click="eventPriorityChoice(rulePriority) && addSelector(rulePriority)">
                       {{ rulePriority }}
                     </v-btn>
                   </div>
@@ -123,6 +124,7 @@ let rulePriority = ref(null);
 let listSelectedRulesPriority = ref([]);
 let ruleMessage = ref(null);
 let rulesFiltered = [];
+let selector = ref(null);
 
 //  TODO mettre des checkBox dans le menu déroulant des types de documents
 
@@ -138,6 +140,16 @@ function resetSelector() {
   ruleTypeDoc.value = null;
   rulePriority.value = null;
   rulesFiltered = items.value;
+  selector.value = null;
+}
+
+function addSelector(select) {
+  if (selector.value === null){
+    selector.value = select;
+  } else {
+    selector.value += ", " + select + " ";
+  }
+
 }
 
 /**
