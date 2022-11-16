@@ -27,6 +27,7 @@
             <v-data-table id="bgColorIdColumnRulesTable"
                 :headers="headers"
                 loading-text="Chargement..."
+                :loading="isLoading"
                 :items="filterRulesBySelector()"
                 :item-class="classItemPriority"
                 :search="ruleMessage"
@@ -123,8 +124,9 @@ let listSelectedRulesTypeDoc = ref([]);
 let rulePriority = ref(null);
 let listSelectedRulesPriority = ref([]);
 let ruleMessage = ref(null);
-let rulesFiltered = [];
 let selector = ref(null);
+let isLoading = ref(true);
+let rulesFiltered = [];
 
 //  TODO mettre des checkBox dans le menu déroulant des types de documents
 
@@ -170,14 +172,17 @@ function searchByMessage (value, search, item) {
  * fonction permetant de recuperer la liste des règles
  */
 function feedItems(){
+  isLoading.value = true;
   items.value = [];
   serviceApi.getRules()
       .then((response) => {
         response.data.forEach((el) => items.value.push(el));
         feedIdList();
+        isLoading.value = false;
       }).catch((error) => {
     //TODO : emit erreur si impossible de récupérer les types via appel axios
     //emitOnError(error);
+        isLoading.value = false;
   });
 }
 
