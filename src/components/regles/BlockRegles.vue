@@ -5,7 +5,21 @@
       <v-row class="ma-0 pa-0">
         <v-col>
 
-          <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
+          <v-row justify="space-between">
+            <v-col>
+              <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
+            </v-col>
+            <v-col class="pt-4">
+              <v-row class="ma-0 pa-0" justify="end">
+                <v-btn class="ma-0 pa-0" x-small outlined color="#cf491b" @click="resetSelector()">
+                  <v-icon small color="#cf491b">
+                    mdi-filter-remove
+                  </v-icon>
+                  Effacer tous les filtres
+                </v-btn>
+              </v-row>
+            </v-col>
+          </v-row>
 
           <!--          Container de formatage des bordures de la data table-->
           <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
@@ -58,8 +72,8 @@
                     </v-btn>
                   </template>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                    <v-btn class="d-block" plain v-for="ruleType in listSelectedRulesTypeDoc" :key="ruleType.id" @click="eventTypeDocChoice(ruleType)">
-                      {{ ruleType }}
+                    <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc)">
+                      {{ ruleTypeDoc }}
                     </v-btn>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
@@ -111,13 +125,20 @@ let ruleMessage = ref(null);
 let rulesFiltered = [];
 
 //  TODO mettre des checkBox dans le menu déroulant des types de documents
-//  TODO corriger l'absence de multiselection sur plusieurs column
 
 onMounted(() => {
   feedItems();
   feedTypeList();
   feedRulesPriorityList();
+  resetSelector();
 })
+
+function resetSelector() {
+  ruleId.value = null;
+  ruleTypeDoc.value = null;
+  rulePriority.value = null;
+  rulesFiltered = items.value;
+}
 
 /**
  * Fonction qui permet de faire la correspondance entre la saisie de l'utilisateur et les items
@@ -251,7 +272,6 @@ function filterRulesById(){
     });
     return rulesFiltered;
   }
-  return items.value;
 }
 
 /**
@@ -260,15 +280,24 @@ function filterRulesById(){
  */
 function filterRulesByTypeDoc(){
   if (ruleTypeDoc.value !== null) {
+    if(rulesFiltered !== null) {// Si un sélecteur est déjà appliqué
+      let tempRulesFiltered = rulesFiltered;
+      rulesFiltered = [];
+      rulesFiltered = tempRulesFiltered.filter(tempRulesFiltered => {
+        return tempRulesFiltered.typeDoc.toLocaleLowerCase().includes(ruleTypeDoc.value.toLocaleLowerCase());
+      });
+    } else {
+      { // Si aucun sélecteur n'est appliqué
+        rulesFiltered = items.value.filter(item => {
+          return item.typeDoc.toLocaleLowerCase().includes(ruleTypeDoc.value.toLocaleLowerCase());
+        });
+      }
+    }
     ruleId.value = null;
     rulePriority.value = null;
     ruleMessage.value = null;
-    rulesFiltered = items.value.filter(item => {
-      return  item.typeDoc.toLowerCase().includes(ruleTypeDoc.value.toLowerCase());
-    });
     return rulesFiltered;
   }
-  return items.value;
 }
 
 /**
@@ -277,15 +306,24 @@ function filterRulesByTypeDoc(){
  */
 function filterRulesByPriority(){
     if (rulePriority.value !== null) {
+      if(rulesFiltered !== null) {// Si un sélecteur est déjà appliqué
+        let tempRulesFiltered = rulesFiltered;
+        rulesFiltered = [];
+        rulesFiltered = tempRulesFiltered.filter(tempRulesFiltered => {
+          return tempRulesFiltered.priority === rulePriority.value;
+        });
+      } else {
+        { // Si aucun sélecteur n'est appliqué
+          rulesFiltered = items.value.filter(item => {
+            return item.priority === rulePriority.value;
+          });
+        }
+      }
       ruleId.value = null;
       ruleTypeDoc.value = null;
       ruleMessage.value = null;
-      rulesFiltered = items.value.filter(item => {
-        return item.priority === rulePriority.value;
-      });
       return rulesFiltered;
     }
-    return items.value;
   }
 
 </script>
