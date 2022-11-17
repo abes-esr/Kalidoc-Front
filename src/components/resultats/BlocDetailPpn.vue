@@ -11,6 +11,8 @@
       <div>
         <v-data-table id="bgColorSecondary"
             fixed-header
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="desc"
             :headers="headers"
             :items="itemsPpnParent[page-1].itemsDetailPpn"
             :item-class="classItemPriority"
@@ -63,7 +65,8 @@
   let coverLink = ref('');
   let iconTypeDocument = ref({color:"black",img:"mdi-help"});
   let itemsPpnParent = ref([]);
-
+  let sortBy = "zone1";
+  let desc = false;
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
