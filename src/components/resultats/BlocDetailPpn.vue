@@ -210,11 +210,7 @@
         iconTypeDocument.value.img="mdi-web";
         iconTypeDocument.value.color="blue";
         break;
-      case "Thèse soutenance":
-        iconTypeDocument.value.img="mdi-school";
-        iconTypeDocument.value.color="black";
-        break;
-      case "Thèse reproduction":
+      case "Thèse":
         iconTypeDocument.value.img="mdi-school";
         iconTypeDocument.value.color="black";
         break;
