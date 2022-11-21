@@ -1,9 +1,11 @@
 <template>
-  <v-container>
-    <v-card class="ma-0 pa-0" color="white" >
-<!--            TITRE ET SOUS TITRE DU COMPOSANT RECAPITULATIF -->
-      <v-card-title class="d-flex justify-center ma-0 pa-0 pt-1" style="font-weight: bold; font-size: 1.6em;">Récapitulatif</v-card-title>
-      <v-card-subtitle class="d-flex justify-center ma-0 pa-0"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></v-card-subtitle>
+  <v-container class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</span>
+    </v-row>
+    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
+      <span style="color: grey; font-weight: 400; font-size: 0.9em;"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></span>
+
 <!--            MENU RECAPITULATIF DES RESULTATS DES RECHERCHES EFFECTUEES -->
       <v-tabs v-model="tab" background-color="white" color="black" grow show-arrows>
         <v-tabs-slider color="#252C61"></v-tabs-slider>
@@ -48,7 +50,7 @@
           </v-card>
         </v-tab-item>
       </v-tabs-items>
-    </v-card>
+    </v-container>
   </v-container>
 </template>
 
