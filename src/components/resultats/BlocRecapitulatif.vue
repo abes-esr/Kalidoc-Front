@@ -20,14 +20,13 @@
             <v-col>
               <CardRecapitulatif :numero-lancement="i"/>
             </v-col>
-            <v-col v-if="isItemsSizeGreaterThanOneAndLesserThanSize(i)">
+            <v-col v-if="isSecondCardHasToBeDisplayed(i)">
               <CardRecapitulatif :numero-lancement="i+1"/>
             </v-col>
           </v-row>
         </v-carousel-item>
       </v-carousel>
     </v-container>
-    <v-btn @click="test()">test {{items.length}}</v-btn>
   </v-container>
 </template>
 
@@ -36,26 +35,19 @@ import BlocRappelTypeAnalyse from "@/components/resultats/BlocRappelTypeAnalyse"
 import CardRecapitulatif from "@/components/resultats/CardRecapitulatif";
 import {ref} from 'vue';
 
-const items = ref(["1"]);
+const nombreResultatAnalyse = ref(1);
 const page = ref(0);
 
-
-function test() {
-  items.value.push("2");
-  console.log(items.value.length);
-  goLastSlide();
-}
-
 function getNumberSlides() {
-  return items.value.length === 1 ? 1 : items.value.length - 1;
+  return nombreResultatAnalyse.value <= 2 ? 1 : nombreResultatAnalyse.value - 1;
 }
 
-function goLastSlide() {
-  page.value = (items.value.length > 2) ? items.value.length - 2 : 0;
+function goToLastSlide() {
+  page.value = (nombreResultatAnalyse.value > 2) ? nombreResultatAnalyse.value - 2 : 0;
 }
 
-function isItemsSizeGreaterThanOneAndLesserThanSize(i) {
-  return (items.value.length > 1) && (i < items.value.length);
+function isSecondCardHasToBeDisplayed(i) {
+  return (nombreResultatAnalyse.value > 1) && (i < nombreResultatAnalyse.value);
 }
 
 </script>
