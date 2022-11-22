@@ -36,10 +36,10 @@ function checkPpnWithTypeAnalyse() {
   serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
     .then((response) => {
         resultatStore.setResultsListArray(response.data.resultRules);
-        resultatStore.setNbPpnTotal(response.data.nbPpnAnalyses);
-        resultatStore.setNbPpnInconnus(response.data.nbPpnInconnus);
-        resultatStore.setNbPpnErreurs(response.data.npPpnErrones);
-        resultatStore.setNbPpnOk(response.data.nbPpnOk);
+        resultatStore.pushNbPpnTotal(response.data.nbPpnAnalyses);
+        resultatStore.pushNbPpnInconnus(response.data.nbPpnInconnus);
+        resultatStore.pushNbPpnErreurs(response.data.npPpnErrones);
+        resultatStore.pushNbPpnOk(response.data.nbPpnOk);
         spinnerActive.value = false;
         emitOnFinished();
       })

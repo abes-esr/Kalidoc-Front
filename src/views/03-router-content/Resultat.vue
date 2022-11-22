@@ -9,7 +9,7 @@
     </v-container>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="6" lg="5" xl="5">
-        <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn"></BlocAffichageResume>
+        <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="6" lg="7" xl="7">
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
@@ -27,8 +27,8 @@
             <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
           </v-tooltip>
         </div>
-        <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" ></bloc-recapitulatif>
-        <bouton-lancement style="min-height: 2em">Relancer l'analyse</bouton-lancement>
+        <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" :nombre-resultat-analyse="nbLancement"></bloc-recapitulatif>
+        <bouton-lancement style="min-height: 2em" @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
       </v-col>
     </v-row>
   </v-container>
@@ -46,8 +46,9 @@ import router from "@/router";
 
 const resultatStore = useResultatStore();
 
-let currentPpn = ref('');
-let currentItems = ref([]);
+const currentPpn = ref('');
+const currentItems = ref([]);
+const nbLancement = ref(0);
 
 function sendPpnToBlocResultat(ppn) {
   currentPpn.value = ppn;
@@ -93,6 +94,10 @@ function itemsToExport() {
 
 function goToHome() {
   router.push('/');
+}
+
+function updateNbLancement() {
+  nbLancement.value = resultatStore.getNbPpnTotal.length;
 }
 </script>
 <style scoped>

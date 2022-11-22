@@ -6,10 +6,10 @@ export const useResultatStore = defineStore('resultat', {
   state: () => {
     return {
       resultsList: [],
-      nbPpnTotal: 0,
-      nbPpnInconnus: 0,
-      nbPpnErreurs:0,
-      nbPpnOk:0,
+      nbPpnTotal: [],
+      nbPpnInconnus: [],
+      nbPpnErreurs:[],
+      nbPpnOk:[],
     }
   },
   getters: {
@@ -26,17 +26,17 @@ export const useResultatStore = defineStore('resultat', {
     pushRequestListOneElement(resultsInString) {
       this.resultsList.push(resultsInString)
     },
-    setNbPpnTotal(ppnTotal) {
-      this.nbPpnTotal = ppnTotal;
+    pushNbPpnTotal(ppnTotal) {
+      this.nbPpnTotal.push(ppnTotal);
     },
-    setNbPpnInconnus(ppnInconnus) {
-      this.nbPpnInconnus = ppnInconnus;
+    pushNbPpnInconnus(ppnInconnus) {
+      this.nbPpnInconnus.push(ppnInconnus);
     },
-    setNbPpnErreurs(ppnErreurs) {
-      this.nbPpnErreurs = ppnErreurs;
+    pushNbPpnErreurs(ppnErreurs) {
+      this.nbPpnErreurs.push(ppnErreurs);
     },
-    setNbPpnOk(ppnOk) {
-      this.nbPpnOk = ppnOk;
+    pushNbPpnOk(ppnOk) {
+      this.nbPpnOk.push(ppnOk);
     }
   }
 })

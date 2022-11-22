@@ -20,12 +20,19 @@ import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn";
 import BlocRechercheParFichierPpn from "@/components/accueil/BlocRechercheParFichierPpn";
 import BoutonLancement from "@/components/BoutonLancement";
 import MessageErreur from "@/components/MessageErreur";
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import router from "@/router";
+import {useResultatStore} from "@/stores/resultat";
 
-let isAnalyseSelected = ref(false);
-let isPpnListIsEmpty = ref(true);
-let backendErrorMessage = ref(null);
+const isAnalyseSelected = ref(false);
+const isPpnListIsEmpty = ref(true);
+const backendErrorMessage = ref(null);
+
+const resultatStore = useResultatStore();
+
+onMounted(() => {
+  resultatStore.$reset();
+});
 
 /**
  *
