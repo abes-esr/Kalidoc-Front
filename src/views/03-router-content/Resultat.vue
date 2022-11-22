@@ -27,8 +27,8 @@
             <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
           </v-tooltip>
         </div>
-        <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" ></bloc-recapitulatif>
-        <bouton-lancement style="min-height: 2em">Relancer l'analyse</bouton-lancement>
+        <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" :nombre-resultat-analyse="nbLancement"></bloc-recapitulatif>
+        <bouton-lancement style="min-height: 2em" @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
       </v-col>
     </v-row>
   </v-container>
@@ -46,8 +46,9 @@ import router from "@/router";
 
 const resultatStore = useResultatStore();
 
-let currentPpn = ref('');
-let currentItems = ref([]);
+const currentPpn = ref('');
+const currentItems = ref([]);
+const nbLancement = ref(0);
 
 function sendPpnToBlocResultat(ppn) {
   currentPpn.value = ppn;
@@ -93,6 +94,10 @@ function itemsToExport() {
 
 function goToHome() {
   router.push('/');
+}
+
+function updateNbLancement() {
+  nbLancement.value = resultatStore.getNbPpnTotal.length;
 }
 </script>
 <style scoped>

@@ -33,22 +33,33 @@
 <script setup>
 import BlocRappelTypeAnalyse from "@/components/resultats/BlocRappelTypeAnalyse";
 import CardRecapitulatif from "@/components/resultats/CardRecapitulatif";
-import {ref} from 'vue';
+import {ref, watchEffect} from 'vue';
 
-const nombreResultatAnalyse = ref(1);
 const page = ref(0);
+const props = defineProps({
+  // props
+  'nombreResultatAnalyse': {
+    type: Number,
+    required: true
+  }
+});
 
+watchEffect(() => {
+  if (props.nombreResultatAnalyse) {
+    goToLastSlide();
+  }
+})
 
 function getNumberSlides() {
-  return nombreResultatAnalyse.value <= 2 ? 1 : nombreResultatAnalyse.value - 1;
+  return props.nombreResultatAnalyse <= 2 ? 1 : props.nombreResultatAnalyse - 1;
 }
 
 function goToLastSlide() {
-  page.value = (nombreResultatAnalyse.value > 2) ? nombreResultatAnalyse.value - 2 : 0;
+  page.value = (props.nombreResultatAnalyse > 2) ? props.nombreResultatAnalyse - 2 : 0;
 }
 
 function isSecondCardHasToBeDisplayed(i) {
-  return (nombreResultatAnalyse.value > 1) && (i < nombreResultatAnalyse.value);
+  return (props.nombreResultatAnalyse > 1) && (i < props.nombreResultatAnalyse);
 }
 
 </script>
