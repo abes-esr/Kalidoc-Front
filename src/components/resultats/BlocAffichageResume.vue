@@ -93,23 +93,22 @@ const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
 
 const emit = defineEmits(['onChangePpn','onChangeItems']);
-const props = defineProps({currentPpn: String});
+const props = defineProps({currentPpn: String, nbLancement:Number});
 
-let headers = ref([
+const headers = ref([
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 130},
   { text: "PPN", value: "ppn", class: "headerTableClass", width: 104},
   { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 208},
   { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 130}
 ]);
-let loading = ref(false);
-let items = ref([]);
-let winibwRequest = ref('null');
-let dialog = ref(false);
-let selectType = ref([]);
-let type = ref(null);
-let ppnFiltered = [];
-let selectedRows = [];
-let model = ref([]);
+const loading = ref(false);
+const items = ref([]);
+const winibwRequest = ref('null');
+const dialog = ref(false);
+const selectType = ref([]);
+const type = ref(null);
+const ppnFiltered = [];
+const model = ref([]);
 
 onMounted(() => {
   feedItems();
@@ -119,6 +118,9 @@ onMounted(() => {
 watchEffect(() => {
   if(props.currentPpn){
     updateItemSelected(props.currentPpn)
+  }
+  if(props.nbLancement) {
+    feedItems()
   }
 })
 /**
