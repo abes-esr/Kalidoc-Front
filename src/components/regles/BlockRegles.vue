@@ -5,20 +5,43 @@
       <v-row class="ma-0 pa-0">
         <v-col>
 
-          <v-row justify="space-between">
+          <v-row class="mb-2" justify="space-between">
+            <!--            TITRE-->
             <v-col>
               <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
             </v-col>
+            <!--            BOUTON EFFACER LES FILTRES-->
             <v-col class="pt-4">
-              <v-row class="ma-0 pa-0" justify="end">
+              <v-row class="ma-0 pa-0" justify="center">
                 <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
-                <v-btn class="ma-0 pa-0" x-small outlined color="#cf491b" @click="resetSelector()">
-                  <v-icon small color="#cf491b">
-                    mdi-filter-remove
-                  </v-icon>
-                  Effacer tous les filtres
-                </v-btn>
+                <v-tooltip left>
+                  <template v-slot:activator="{on}">
+                    <v-btn class="ma-0" small outlined color="#cf491b" @click="resetSelector()" v-on="on">
+                      Effacer tous les filtres
+                      <v-icon class="ml-2" small color="#cf491b">
+                        mdi-filter-remove
+                      </v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Effacer tous les filtres actifs</span>
+                </v-tooltip>
               </v-row>
+            </v-col>
+            <!--            BOUTON TELECHARGER LES REGLES-->
+            <v-col class="pt-4">
+                <v-row class="ma-0 pa-0" justify="end">
+                  <v-tooltip left>
+                    <template v-slot:activator="{on}">
+                      <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
+                        <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
+                          TÉLÉCHARGER TOUTES LES REGLES
+                        </download-csv>
+                        <v-icon small color="white" class="ml-2">mdi-download</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Télécharger toutes les règles dans un fichier "qualimarc-export-rules.csv"</span>
+                  </v-tooltip>
+                </v-row>
             </v-col>
           </v-row>
 
@@ -127,6 +150,7 @@ let ruleMessage = ref(null);
 let selector = ref(null);
 let isLoading = ref(true);
 let rulesFiltered = [];
+
 
 //  TODO mettre des checkBox dans le menu déroulant des types de documents
 

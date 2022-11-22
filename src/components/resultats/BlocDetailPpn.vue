@@ -9,7 +9,7 @@
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor" style="font-size: 0.92em">PPN {{ itemsPpnParent[page-1].ppn }}</div>
       <div>
-        <v-data-table id="bgColorSecondary"
+        <v-data-table id="bgColorGrey"
             fixed-header
             :sort-by.sync="sortBy"
             :sort-desc.sync="desc"
