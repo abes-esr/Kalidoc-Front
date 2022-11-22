@@ -22,24 +22,49 @@
             class="elevation-0"
         >
           <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-            <span style="color: grey; font-weight: 600">
+            <span style="color: grey; font-weight: 600" v-if="header.value === 'zone1' || header.value === 'zone2' || header.value === 'message'">
                 {{ header.text }}
+              <span style='color: white;'>
+                <v-icon color="grey" small >mdi-sort</v-icon>
+              </span>
             </span>
-            <span style='color: black; font-weight: normal' v-if="header.value === 'priority'">
-              <br>
-              <span style="font-weight: 500; color: #252C61">essentielle</span>
+
+            <!--  Configuration de la colonne Règles  -->
+            <span style='color: #252C61; font-weight: 500' v-if="header.value === 'priority'">
+              {{ header.text }}
               <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
-              /
-              <span style="font-weight: 500; color: #6d7085">avancée</span>
+              <span style='color: white;'>
+                <v-icon color="grey" small >mdi-sort</v-icon>
+              </span>
+              <br>
+              <span style="font-weight: 500; color: #6d7085">Règle avancée </span>
               <v-icon x-small color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
             </span>
-            <span style='color: white;'>
-              <v-icon color="grey" small >mdi-sort</v-icon>
-            </span>
+
           </template>
           <template v-slot:item.priority="{ item }">
-            <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
-            <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+
+            <!--  Icone dans la colonne Règles  -->
+            <v-container class="ma-0 pa-0" align-items="center">
+              <v-row class="ma-0 pa-0">
+                <v-col class="ma-0 pa-0">
+                  <v-row class="ma-0 pa-0" justify="space-between">
+                    <v-col>
+                      <!--  ! IMPORTANT ! laisser cette colone pour aligner les icones  -->
+                    </v-col>
+                    <v-col>
+                        <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
+                        <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+                    </v-col>
+                    <v-col>
+                      <!--  ! IMPORTANT ! laisser cette colone pour aligner les icones  -->
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-container>
+
+
           </template>
         </v-data-table>
       </div>
@@ -81,7 +106,7 @@
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351},
-    {text: "Règles : ", value: "priority", class: "dataTableHeaderDetailErrorPerPpn", width: 170}
+    {text: "Règle essentielle ", value: "priority", class: "dataTableHeaderDetailErrorPerPpn", width: 170}
   ]);
 
 
@@ -256,12 +281,11 @@
 <style>
 
 .priorityP1{
-  font-weight: 600;
+  font-weight: 400;
   color: #252C61;
 }
 
 .priorityP2{
-  font-style: italic;
   font-weight: 400;
   color: #6d7085;
 }
