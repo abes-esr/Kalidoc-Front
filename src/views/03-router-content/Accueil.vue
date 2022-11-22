@@ -26,13 +26,12 @@ import {useResultatStore} from "@/stores/resultat";
 
 const isAnalyseSelected = ref(false);
 const isPpnListIsEmpty = ref(true);
-const backendErrorMessage = ref();
+const backendErrorMessage = ref(null);
 
 const resultatStore = useResultatStore();
 
 onMounted(() => {
-  console.log("Accueil mounted");
-  resultatStore.resetResultatStore;
+  resultatStore.$reset();
 });
 
 /**
