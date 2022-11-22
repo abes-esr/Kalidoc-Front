@@ -37,6 +37,13 @@ export const useResultatStore = defineStore('resultat', {
     },
     pushNbPpnOk(ppnOk) {
       this.nbPpnOk.push(ppnOk);
+    },
+    resetResultatStore() {
+      this.resultsList = [];
+      this.nbPpnTotal = [];
+      this.nbPpnInconnus = [];
+      this.nbPpnErreurs = [];
+      this.nbPpnOk = [];
     }
   }
 })
