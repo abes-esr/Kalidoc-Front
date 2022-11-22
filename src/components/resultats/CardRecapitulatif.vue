@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text class="align-center">
-       Analyse n°{{numeroLancement}}
+      <b>Analyse n°{{numeroLancement}}</b>
     </v-card-text>
     <v-card-text>
       <!--                    NOMBRE TOTAL DE PPN ANALYSES -->

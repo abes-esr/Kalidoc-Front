@@ -4,7 +4,7 @@
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</span>
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
-      <span style="color: grey; font-weight: 400; font-size: 0.9em;"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></span>
+      <div class="mb-2 pt-1 rappelTypeAnalyse" style="background-color: #676C91; color: white"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></div>
 
       <v-carousel
           v-model="page"
@@ -20,8 +20,8 @@
             <v-col>
               <CardRecapitulatif :numero-lancement="i"/>
             </v-col>
-            <v-col v-if="isSecondCardHasToBeDisplayed(i)">
-              <CardRecapitulatif :numero-lancement="i+1"/>
+            <v-col>
+              <CardRecapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :numero-lancement="i+1"/>
             </v-col>
           </v-row>
         </v-carousel-item>
