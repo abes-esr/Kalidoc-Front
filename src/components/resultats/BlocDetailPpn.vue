@@ -25,11 +25,21 @@
             <span style="color: grey; font-weight: 600">
                 {{ header.text }}
             </span>
-            <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
-              <span style="color: grey">(</span><b>Règle essentielle</b> / Règle avancée<span style="color: grey">)</span>
+            <span style='color: black; font-weight: normal' v-if="header.value === 'priority'">
+              <br>
+              <span style="font-weight: 500; color: #252C61">essentielle</span>
+              <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
+              /
+              <span style="font-weight: 500; color: #6d7085">avancée</span>
+              <v-icon x-small color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
             </span>
             <span style='color: white;'>
-              <v-icon color="grey" small >mdi-sort</v-icon></span>
+              <v-icon color="grey" small >mdi-sort</v-icon>
+            </span>
+          </template>
+          <template v-slot:item.priority="{ item }">
+            <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
+            <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
           </template>
         </v-data-table>
       </div>
@@ -70,7 +80,8 @@
   let headers = ref([
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
-    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351}
+    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351},
+    {text: "Règles : ", value: "priority", class: "dataTableHeaderDetailErrorPerPpn", width: 170}
   ]);
 
 
@@ -89,7 +100,8 @@
             result.detailerreurs.forEach((erreur)=> {temp.push({
                 zone1: erreur.zones[0],
                 zone2: erreur.zones[1],
-                priority: erreur.priority,
+                priority: getPriority(erreur.priority),
+                // priority: erreur.priority,
                 message: erreur.message
               });
             })
@@ -111,8 +123,8 @@
    */
   function classItemPriority(item){
     return {
-      priorityP1: item.priority === 'P1',
-      priorityP2: item.priority === 'P2',
+      priorityP1: item.priority === 'essentielle',
+      priorityP2: item.priority === 'avancée',
     }
   }
 
@@ -231,16 +243,27 @@
   function sendCurrentPpnToParent(currentPpn) {
     emit('onChangePpn', currentPpn);
   }
+
+  function getPriority(priority){
+    if (priority === "P1") {
+      return "essentielle"
+    } else if (priority === "P2") {
+      return "avancée"
+    }
+  }
 </script>
 
 <style>
 
 .priorityP1{
-  font-weight: bold;
+  font-weight: 600;
+  color: #252C61;
 }
 
 .priorityP2{
-  font-weight: normal;
+  font-style: italic;
+  font-weight: 400;
+  color: #6d7085;
 }
 
 </style>
