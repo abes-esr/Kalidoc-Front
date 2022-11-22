@@ -8,7 +8,7 @@
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. total de PPN analysés</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
-          getNbPpnTotal()
+          getNbPpnTotal(numeroLancement - 1)
           }}
         </v-chip>
       </v-container>
@@ -16,7 +16,7 @@
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. de PPN avec erreurs</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
-          getNbPpnErreurs()
+          getNbPpnErreurs(numeroLancement - 1)
           }}
         </v-chip>
       </v-container>
@@ -24,7 +24,7 @@
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. de PPN sans erreurs</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
-          getNbPpnOk()
+          getNbPpnOk(numeroLancement - 1)
           }}
         </v-chip>
       </v-container>
@@ -32,7 +32,7 @@
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. de ppn non trouvés</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
-          getNbPpnInconnus()
+          getNbPpnInconnus(numeroLancement - 1)
           }}
         </v-chip>
       </v-container>
@@ -53,20 +53,20 @@ const props = defineProps({
 
 const resultatStore = useResultatStore();
 
-function getNbPpnTotal() {
-  return resultatStore.getNbPpnTotal;
+function getNbPpnTotal(numeroLancement) {
+  return resultatStore.getNbPpnTotal[numeroLancement];
 }
 
-function getNbPpnInconnus() {
-  return resultatStore.getNbPpnInconnus;
+function getNbPpnInconnus(numeroLancement) {
+  return resultatStore.getNbPpnInconnus[numeroLancement];
 }
 
-function getNbPpnErreurs() {
-  return resultatStore.getNbPpnErreurs;
+function getNbPpnErreurs(numeroLancement) {
+  return resultatStore.getNbPpnErreurs[numeroLancement];
 }
 
-function getNbPpnOk() {
-  return resultatStore.getNbPpnOk;
+function getNbPpnOk(numeroLancement) {
+  return resultatStore.getNbPpnOk[numeroLancement];
 }
 </script>
 <style scoped>

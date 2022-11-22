@@ -13,7 +13,7 @@
           height="auto"
       >
         <v-carousel-item
-            v-for="(i) in getNumberSlides()"
+            v-for="i in getNumberSlides()"
             :key="i"
         >
           <v-row>
@@ -37,6 +37,7 @@ import {ref} from 'vue';
 
 const nombreResultatAnalyse = ref(1);
 const page = ref(0);
+
 
 function getNumberSlides() {
   return nombreResultatAnalyse.value <= 2 ? 1 : nombreResultatAnalyse.value - 1;
