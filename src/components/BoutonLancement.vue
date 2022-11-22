@@ -1,13 +1,13 @@
 <template>
-    <v-container class="mt-0 mb-0 pt-0 pb-0" style="min-height: 10px">
-
-    <div class="ma-0 pa-0 mb-4" style="position: relative">
-      <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button pr-2 mr-1" :disabled="props.isDisabled" :loading="spinnerActive" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;">
+  <v-container>
+    <v-container>
+    <div class="ma-0 pa-0 mb-4 pt-4">
+      <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button" :disabled="props.isDisabled" :loading="spinnerActive">
         <slot></slot>
         <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
       </v-btn>
     </div>
-
+    </v-container>
   </v-container>
 </template>
 
@@ -36,10 +36,10 @@ function checkPpnWithTypeAnalyse() {
   serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
     .then((response) => {
         resultatStore.setResultsListArray(response.data.resultRules);
-        resultatStore.setNbPpnTotal(response.data.nbPpnAnalyses);
-        resultatStore.setNbPpnInconnus(response.data.nbPpnInconnus);
-        resultatStore.setNbPpnErreurs(response.data.npPpnErrones);
-        resultatStore.setNbPpnOk(response.data.nbPpnOk);
+        resultatStore.pushNbPpnTotal(response.data.nbPpnAnalyses);
+        resultatStore.pushNbPpnInconnus(response.data.nbPpnInconnus);
+        resultatStore.pushNbPpnErreurs(response.data.npPpnErrones);
+        resultatStore.pushNbPpnOk(response.data.nbPpnOk);
         spinnerActive.value = false;
         emitOnFinished();
       })

@@ -9,7 +9,7 @@
       <v-col class="ma-2 pa-2" style="min-height: 34em">
         <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>
         <message-erreur class="mb-2 pa-4" :backendErrorMessage="backendErrorMessage"></message-erreur>
-        <bouton-lancement class="mb-2" :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)" @backendError="setBackendError" @finished="redirect">Lancer l'analyse</bouton-lancement>
+        <bouton-lancement class="mb-2 pa-0" :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)" @backendError="setBackendError" @finished="redirect">Lancer l'analyse</bouton-lancement>
       </v-col>
     </v-row>
   </v-container>
@@ -20,12 +20,19 @@ import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn";
 import BlocRechercheParFichierPpn from "@/components/accueil/BlocRechercheParFichierPpn";
 import BoutonLancement from "@/components/BoutonLancement";
 import MessageErreur from "@/components/MessageErreur";
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import router from "@/router";
+import {useResultatStore} from "@/stores/resultat";
 
-let isAnalyseSelected = ref(false);
-let isPpnListIsEmpty = ref(true);
-let backendErrorMessage = ref(null);
+const isAnalyseSelected = ref(false);
+const isPpnListIsEmpty = ref(true);
+const backendErrorMessage = ref(null);
+
+const resultatStore = useResultatStore();
+
+onMounted(() => {
+  resultatStore.$reset();
+});
 
 /**
  *
