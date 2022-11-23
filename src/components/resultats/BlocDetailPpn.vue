@@ -40,30 +40,15 @@
             </span>
 
           </template>
+
+          <!--  Icone dans la colonne Règles  -->
           <template v-slot:item.priority="{ item }">
-
-            <!--  Icone dans la colonne Règles  -->
-            <v-container class="ma-0 pa-0" align-items="center">
-              <v-row class="ma-0 pa-0">
-                <v-col class="ma-0 pa-0">
-                  <v-row class="ma-0 pa-0" justify="space-between">
-                    <v-col>
-                      <!--  ! IMPORTANT ! laisser cette colone pour aligner les icones  -->
-                    </v-col>
-                    <v-col>
-                        <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
-                        <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
-                    </v-col>
-                    <v-col>
-                      <!--  ! IMPORTANT ! laisser cette colone pour aligner les icones  -->
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
+            <v-container class="ma-0 pa-0 d-flex justify-center">
+                      <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
+                      <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
             </v-container>
-
-
           </template>
+
         </v-data-table>
       </div>
       <div class="text-center pt-2">
@@ -94,18 +79,18 @@
   const resultatStore = useResultatStore();
   const service = CoverService;
 
-  let page = ref(1);
+  const page = ref(1);
   let coverLink = ref('');
   let iconTypeDocument = ref({color:"black",img:"mdi-help"});
   let itemsPpnParent = ref([]);
   let sortBy = "zone1";
   let desc = false;
-  let headers = ref([
+  const headers = [
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351},
     {text: " Règle essentielle", value: "priority", class: "dataTableHeaderDetailErrorPerPpn", width: 170}
-  ]);
+  ];
 
 
   /**
