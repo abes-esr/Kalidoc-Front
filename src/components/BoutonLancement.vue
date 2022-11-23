@@ -1,13 +1,9 @@
 <template>
-  <v-container>
-    <v-container>
-    <div class="ma-0 pa-0 mb-4 pt-4">
-      <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button" :disabled="props.isDisabled" :loading="spinnerActive">
-        <slot></slot>
-        <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
-      </v-btn>
-    </div>
-    </v-container>
+  <v-container class="ma-0 pa-0">
+    <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button" :disabled="props.isDisabled" :loading="spinnerActive">
+      <slot></slot>
+      <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
