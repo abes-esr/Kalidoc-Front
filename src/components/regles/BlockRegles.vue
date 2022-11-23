@@ -131,24 +131,24 @@ import {ref, onMounted} from "vue";
 import QualimarcService from "@/service/QualimarcService";
 
 const serviceApi = QualimarcService;
-let headers = ref([
+const headers =[
   { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID Règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
   { text: "Zone UNM 1", value: "zoneUnm1", class: "headerTableClass", width: 30},
   { text: "Zone UNM 2", value: "zoneUnm2", class: "headerTableClass", width: 30},
   { text: "Type de document", value: "typeDoc", class: "headerTableClass", width: 80},
   { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
-]);
-let items = ref([]);
-let ruleId = ref(null);
-let listSelectedRulesId = ref([]);
-let ruleTypeDoc = ref(null);
-let listSelectedRulesTypeDoc = ref([]);
-let rulePriority = ref(null);
-let listSelectedRulesPriority = ref([]);
-let ruleMessage = ref(null);
-let selector = ref(null);
-let isLoading = ref(true);
+];
+const items = ref([]);
+const ruleId = ref(null);
+const listSelectedRulesId = ref([]);
+const ruleTypeDoc = ref(null);
+const listSelectedRulesTypeDoc = ref([]);
+const rulePriority = ref(null);
+const listSelectedRulesPriority = ref([]);
+const ruleMessage = ref(null);
+const selector = ref(null);
+const isLoading = ref(true);
 let rulesFiltered = [];
 
 //  TODO mettre des checkBox dans le menu déroulant des types de documents

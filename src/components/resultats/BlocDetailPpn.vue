@@ -124,7 +124,6 @@
                 zone1: erreur.zones[0],
                 zone2: erreur.zones[1],
                 priority: getPriority(erreur.priority),
-                // priority: erreur.priority,
                 message: erreur.message
               });
             })

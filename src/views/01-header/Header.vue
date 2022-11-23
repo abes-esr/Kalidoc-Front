@@ -69,7 +69,7 @@
 import {onUpdated, ref, onMounted} from 'vue';
 import router from '../../router/index'
 
-let activeBtn = ref("btn1");
+const activeBtn = ref("btn1");
 
 onUpdated(() => {
   currentRouteName();
@@ -81,11 +81,11 @@ onMounted(() => {
 
 function currentRouteName() {
   if (router.currentRoute.path != null && router.currentRoute.path === "/") {
-    activeBtn = "btn1";
+    activeBtn.value = "btn1";
   } else if (router.currentRoute.path != null && router.currentRoute.path === "/resultats"){
-    activeBtn = "btn1";
+    activeBtn.value = "btn1";
   } else if (router.currentRoute.path != null && router.currentRoute.path === "/regles"){
-    activeBtn = "btn2";
+    activeBtn.value = "btn2";
   }
 }
 

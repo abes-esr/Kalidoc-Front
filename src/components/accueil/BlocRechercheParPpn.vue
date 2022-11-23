@@ -35,13 +35,16 @@
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
 import { ref } from 'vue';
+//Store
+const analyseStore = useAnalyseStore();
 
-const analyseStore = useAnalyseStore(); //Store
-const emit = defineEmits(['isPpnListEmpty']); //Evenement envoyé au parent avec un booléen indiquant si la liste est vide ou non
-let comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
-let lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
-let ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
-let ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
+//Emit
+const emit = defineEmits(['isPpnListEmpty']);
+
+const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
+const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
+const ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
+const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
 
 /**
  * Suppression d'un élément ppn déclenché au moment du clic sur la croix

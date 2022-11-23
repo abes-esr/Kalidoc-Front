@@ -6,7 +6,7 @@
       <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
       </v-container>
     <v-container>
-      <v-file-input filled label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN" prepend-icon="" append-outer-icon="mdi-file-download-outline" show-size type="file" aria-label="Dépôt du fichier" truncate-length=75 for="files" accept=".csv,.txt" :rules="rules" v-model="fichierCharge" @change="autorisationEnvoi" ref="fileInput"></v-file-input>
+      <v-file-input filled label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN" prepend-icon="" append-outer-icon="mdi-file-download-outline" show-size type="file" aria-label="Dépôt du fichier" truncate-length=75 for="files" accept=".csv,.txt" :rules="rules" v-model="fichierLoaded" @change="isAllowToSend" ref="fileInput"></v-file-input>
     </v-container>
   </v-container>
 </template>
@@ -14,16 +14,11 @@
 <script setup>
 import { ref } from 'vue';
 
-  let name = ref("BlocRechercheParFichierPpn");
-  let fichierPresent = ref(false);
-  let fichierCharge = ref([]);
-  let rules = ref([(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'application/vnd.ms-excel') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)']);
+const fichierLoaded = ref([]);
+const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'application/vnd.ms-excel') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
+let isFichierPresent = false;
 
-  function autorisationEnvoi() {
-    if (fichierCharge !== null) {
-      fichierPresent = (fichierCharge.type === 'text/csv') || (fichierCharge.type === 'application/vnd.ms-excel') || (fichierCharge.type === 'text/plain');
-    } else {
-      fichierPresent = false;
-    }
-  }
+function isAllowToSend() {
+  isFichierPresent = (fichierLoaded.value !== null) && (fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'application/vnd.ms-excel') || (fichierLoaded.value.type === 'text/plain');
+}
 </script>
