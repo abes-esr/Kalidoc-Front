@@ -61,17 +61,17 @@
   const resultatStore = useResultatStore();
   const service = CoverService;
 
-  let page = ref(1);
-  let coverLink = ref('');
-  let iconTypeDocument = ref({color:"black",img:"mdi-help"});
-  let itemsPpnParent = ref([]);
-  let sortBy = "zone1";
-  let desc = false;
-  let headers = ref([
+  const page = ref(1);
+  const coverLink = ref('');
+  const iconTypeDocument = ref({color:"black",img:"mdi-help"});
+  const itemsPpnParent = ref([]);
+  const sortBy = "zone1";
+  const desc = false;
+  const headers = [
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351}
-  ]);
+  ];
 
 
   /**

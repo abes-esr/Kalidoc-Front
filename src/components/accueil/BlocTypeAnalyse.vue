@@ -42,7 +42,7 @@
   const serviceApi = QualimarcService ;
 
   // Data
-  let analysesList = [
+  const analysesList = [
     {
       label: 'RAPIDE',
       value: 'QUICK',
@@ -59,13 +59,13 @@
       bulle: "Règles filtrées par type de document et/ou par jeux de règles préconçus"
     },
   ];
-  let familleDocumentList = ref([]);
-  let ruleSetList = ref([]);
+  const familleDocumentList = ref([]);
+  const ruleSetList = ref([]);
 
   // Selected Data
-  let analyseSelected = ref('');
-  let familleDocumentSetSelected = ref([]);
-  let ruleSetSelected = ref([]);
+  const analyseSelected = ref('');
+  const familleDocumentSetSelected = ref([]);
+  const ruleSetSelected = ref([]);
 
   onMounted(() => {
     feedFamilleDocumentList()
@@ -111,15 +111,6 @@
 
   function isSelected() {
     return ((analyseSelected.value.value !== '' && analyseSelected.value.value !== 'FOCUSED') || (analyseSelected.value.value === 'FOCUSED' && ((familleDocumentSetSelected.value.length > 0) || (ruleSetSelected.value.length > 0))));
-  }
-
-  /** anciene fonction regroupant les valeurs saisies.*/
-  function valuesSelected() {
-    return {
-      analyseType: analyseSelected.value,
-      documentType: familleDocumentSetSelected.value,
-      ruleSet: ruleSetSelected.value
-    }
   }
 
   function emitOnEvent(){
