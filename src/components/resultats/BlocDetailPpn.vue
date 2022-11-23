@@ -80,9 +80,9 @@
   const service = CoverService;
 
   const page = ref(1);
-  let coverLink = ref('');
-  let iconTypeDocument = ref({color:"black",img:"mdi-help"});
-  let itemsPpnParent = ref([]);
+  const coverLink = ref('');
+  const iconTypeDocument = ref({color:"black",img:"mdi-help"});
+  const itemsPpnParent = ref([]);
   let sortBy = "zone1";
   let desc = false;
   const headers = [
