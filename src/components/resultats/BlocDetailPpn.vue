@@ -33,9 +33,7 @@
             <span style='color: #252C61; font-weight: 500' v-if="header.value === 'priority'">
               {{ header.text }}
               <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
-              <span style='color: white;'>
-                <v-icon color="grey" small >mdi-sort</v-icon>
-              </span>
+              <v-icon color="grey" small >mdi-sort</v-icon>
               <br>
               <span style="font-weight: 500; color: #6d7085">Règle avancée </span>
               <v-icon x-small color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
