@@ -145,8 +145,8 @@
    */
   function classItemPriority(item){
     return {
-      priorityP1: item.priority === 'essentielle',
-      priorityP2: item.priority === 'avancée',
+      essentielle: item.priority === 'essentielle',
+      avancee: item.priority === 'avancée',
     }
   }
 
@@ -277,12 +277,12 @@
 
 <style>
 
-.priorityP1{
+.essentielle{
   font-weight: 400;
   color: #252C61;
 }
 
-.priorityP2{
+.avancee{
   font-weight: 400;
   color: #6d7085;
 }
