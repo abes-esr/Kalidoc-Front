@@ -16,6 +16,7 @@
             :headers="headers"
             :items="itemsPpnParent[page-1].itemsDetailPpn"
             :item-class="classItemPriority"
+            :items-per-page="itemsPpnParent[page-1].itemsDetailPpn.length"
             hide-default-footer
             dense
             height="20vh"
