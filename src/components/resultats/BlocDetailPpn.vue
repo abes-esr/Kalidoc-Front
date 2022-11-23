@@ -31,12 +31,12 @@
 
             <!--  Configuration de la colonne Règles  -->
             <span style='color: #252C61; font-weight: 500' v-if="header.value === 'priority'">
-              {{ header.text }}
               <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
+              {{ header.text }}
               <v-icon color="grey" small >mdi-sort</v-icon>
               <br>
-              <span style="font-weight: 500; color: #6d7085">Règle avancée </span>
               <v-icon x-small color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+              <span style="font-weight: 500; color: #6d7085"> Règle avancée</span>
             </span>
 
           </template>
@@ -104,7 +104,7 @@
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351},
-    {text: "Règle essentielle ", value: "priority", class: "dataTableHeaderDetailErrorPerPpn", width: 170}
+    {text: " Règle essentielle", value: "priority", class: "dataTableHeaderDetailErrorPerPpn", width: 170}
   ]);
 
 
