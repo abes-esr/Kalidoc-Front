@@ -10,7 +10,11 @@
           <template v-slot:activator="{ on, attrs }">
             <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
           </template>
-          <span>{{analyse.bulle}}</span>
+          <span>
+            {{analyse.bulle}}
+            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'RAPIDE'" color="white">mdi-checkbox-blank-circle</v-icon>
+            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'EXPERTE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+          </span>
         </v-tooltip>
       </v-radio-group>
       <v-container v-if="analyseSelected.value === 'FOCUSED'" >
@@ -42,7 +46,7 @@
   const serviceApi = QualimarcService ;
 
   // Data
-  let analysesList = [
+  const analysesList = [
     {
       label: 'RAPIDE',
       value: 'QUICK',
@@ -59,13 +63,13 @@
       bulle: "Règles filtrées par type de document et/ou par jeux de règles préconçus"
     },
   ];
-  let familleDocumentList = ref([]);
-  let ruleSetList = ref([]);
+  const familleDocumentList = ref([]);
+  const ruleSetList = ref([]);
 
   // Selected Data
-  let analyseSelected = ref('');
-  let familleDocumentSetSelected = ref([]);
-  let ruleSetSelected = ref([]);
+  const analyseSelected = ref('');
+  const familleDocumentSetSelected = ref([]);
+  const ruleSetSelected = ref([]);
 
   onMounted(() => {
     feedFamilleDocumentList()
@@ -111,15 +115,6 @@
 
   function isSelected() {
     return ((analyseSelected.value.value !== '' && analyseSelected.value.value !== 'FOCUSED') || (analyseSelected.value.value === 'FOCUSED' && ((familleDocumentSetSelected.value.length > 0) || (ruleSetSelected.value.length > 0))));
-  }
-
-  /** anciene fonction regroupant les valeurs saisies.*/
-  function valuesSelected() {
-    return {
-      analyseType: analyseSelected.value,
-      documentType: familleDocumentSetSelected.value,
-      ruleSet: ruleSetSelected.value
-    }
   }
 
   function emitOnEvent(){

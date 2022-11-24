@@ -7,7 +7,7 @@
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
 
     <v-data-table
-        v-model="model"
+        v-model="modelDataTable"
         :headers="headers"
         :loading="loading"
         loading-text="Chargement..."
@@ -95,20 +95,20 @@ const serviceApi = QualimarcService;
 const emit = defineEmits(['onChangePpn','onChangeItems']);
 const props = defineProps({currentPpn: String, nbLancement:Number});
 
-const headers = ref([
+const headers = [
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 130},
   { text: "PPN", value: "ppn", class: "headerTableClass", width: 104},
   { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 208},
   { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 130}
-]);
+];
 const loading = ref(false);
 const items = ref([]);
 const winibwRequest = ref('null');
 const dialog = ref(false);
 const selectType = ref([]);
 const type = ref(null);
-const ppnFiltered = [];
-const model = ref([]);
+let ppnFiltered = [];
+const modelDataTable = ref([]);
 
 onMounted(() => {
   feedItems();
@@ -230,8 +230,8 @@ function filterPpnByType(){
 
 function updateItemSelected(ppn){
   let itemByType = filterPpnByType()
-  model.value = [];
-  model.value.push(itemByType[itemByType.map(item => item.ppn).indexOf(ppn)]);
+  modelDataTable.value = [];
+  modelDataTable.value.push(itemByType[itemByType.map(item => item.ppn).indexOf(ppn)]);
 }
 
 /**

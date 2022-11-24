@@ -29,7 +29,7 @@ const emit = defineEmits(['backendError', 'finished']);
 const serviceApi = QualimarcService
 
 // Spinner
-let spinnerActive = ref(false);
+const spinnerActive = ref(false);
 
 function checkPpnWithTypeAnalyse() {
   spinnerActive.value = true;

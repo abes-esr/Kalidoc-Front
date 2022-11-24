@@ -43,7 +43,7 @@ import { ref } from "vue";
 const props = defineProps({winibwRequest: String, dialog: Boolean});
 const emit = defineEmits(['onClose']);
 
-let messageDisplayed = ref(false);
+const messageDisplayed = ref(false);
 
 /** fonction permettant de copier la requête winIBW dans le presse-papier
  *
