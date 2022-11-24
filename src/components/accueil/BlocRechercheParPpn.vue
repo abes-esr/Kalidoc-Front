@@ -34,7 +34,7 @@
 
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
-import { ref } from 'vue';
+import {ref} from 'vue';
 //Store
 const analyseStore = useAnalyseStore();
 
