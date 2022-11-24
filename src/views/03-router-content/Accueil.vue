@@ -23,15 +23,18 @@ import MessageErreur from "@/components/MessageErreur";
 import {onMounted, ref} from 'vue';
 import router from "@/router";
 import {useResultatStore} from "@/stores/resultat";
+import {useAnalyseStore} from "@/stores/analyse";
 
 const isAnalyseSelected = ref(false);
 const isPpnListIsEmpty = ref(true);
 const backendErrorMessage = ref(null);
 
 const resultatStore = useResultatStore();
+const analyseStore = useAnalyseStore();
 
 onMounted(() => {
   resultatStore.$reset();
+  analyseStore.$reset();
 });
 
 /**
