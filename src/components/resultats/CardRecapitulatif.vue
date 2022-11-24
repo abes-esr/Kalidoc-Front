@@ -1,10 +1,9 @@
 <template>
   <v-card flat>
-    <v-card-text class="align-center">
-      <b>Analyse n°{{numeroLancement}}</b>
-    </v-card-text>
     <v-card-text>
-      <!--                    NOMBRE TOTAL DE PPN ANALYSES -->
+      <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
+        <span>Analyse n°{{numeroLancement}}</span>
+      </v-container>
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. total de PPN analysés</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
@@ -12,7 +11,6 @@
           }}
         </v-chip>
       </v-container>
-      <!--                    NOMBRE DE PPN AVEC ERREURS -->
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. de PPN avec erreurs</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
@@ -20,7 +18,6 @@
           }}
         </v-chip>
       </v-container>
-      <!--                    NOMBRE DE PPN SANS ERREURS -->
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. de PPN sans erreurs</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{
@@ -28,7 +25,6 @@
           }}
         </v-chip>
       </v-container>
-      <!--                    NOMBRE DE PPN NON TROUVES -->
       <v-container class="d-flex justify-space-between pt-0 pb-1" style="width: 24em">
         <span>Nb. de ppn non trouvés</span>
         <v-chip class="numberValue" small label disabled text-color="white" color="#0F75BC">{{

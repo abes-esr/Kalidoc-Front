@@ -28,7 +28,12 @@
           </v-tooltip>
         </div>
         <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" :nombre-resultat-analyse="nbLancement"></bloc-recapitulatif>
-        <bouton-lancement style="min-height: 2em" @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
+        <v-card
+        flat
+        class="float-right ma-0 pa-0"
+        >
+          <bouton-lancement class="ma-0 pa-0 " @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
