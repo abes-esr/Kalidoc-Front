@@ -10,17 +10,17 @@
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor" style="font-size: 0.92em">PPN {{ itemsPpnParent[page-1].ppn }}</div>
       <div>
         <v-data-table id="bgColorGrey"
-            fixed-header
-            :sort-by.sync="sortBy"
-            :sort-desc.sync="desc"
-            :headers="headers"
-            :items="itemsPpnParent[page-1].itemsDetailPpn"
-            :item-class="classItemPriority"
-            :items-per-page="itemsPpnParent[page-1].itemsDetailPpn.length"
-            hide-default-footer
-            dense
-            height="20vh"
-            class="elevation-0"
+                      fixed-header
+                      :sort-by.sync="sortBy"
+                      :sort-desc.sync="desc"
+                      :headers="headers"
+                      :items="itemsPpnParent[page-1].itemsDetailPpn"
+                      :item-class="classItemPriority"
+                      :items-per-page="itemsPpnParent[page-1].itemsDetailPpn.length"
+                      :height="itemsPpnParent[page-1].itemsDetailPpn.length > 10 ? '40vh' : 'auto'"
+                      hide-default-footer
+                      dense
+                      class="elevation-0"
         >
           <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
             <span style="color: grey; font-weight: 600">
@@ -243,5 +243,4 @@
 .priorityP2{
   font-weight: normal;
 }
-
 </style>
