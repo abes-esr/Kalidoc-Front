@@ -10,7 +10,11 @@
           <template v-slot:activator="{ on, attrs }">
             <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
           </template>
-          <span>{{analyse.bulle}}</span>
+          <span>
+            {{analyse.bulle}}
+            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'RAPIDE'" color="white">mdi-checkbox-blank-circle</v-icon>
+            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'EXPERTE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+          </span>
         </v-tooltip>
       </v-radio-group>
       <v-container v-if="analyseSelected.value === 'FOCUSED'" >

@@ -23,15 +23,33 @@
                       class="elevation-0"
         >
           <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-            <span style="color: grey; font-weight: 600">
+            <span style="color: grey; font-weight: 600" v-if="header.value === 'zone1' || header.value === 'zone2' || header.value === 'message'">
                 {{ header.text }}
+              <span style='color: white;'>
+                <v-icon color="grey" small >mdi-sort</v-icon>
+              </span>
             </span>
-            <span style='color: black; font-weight: normal' v-if="header.value === 'message'">
-              <span style="color: grey">(</span><b>Règle essentielle</b> / Règle avancée<span style="color: grey">)</span>
+
+            <!--  Configuration de la colonne Règles  -->
+            <span style='color: #252C61; font-weight: 500' v-if="header.value === 'priority'">
+              <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
+              {{ header.text }}
+              <v-icon color="grey" small >mdi-sort</v-icon>
+              <br>
+              <v-icon x-small color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+              <span style="font-weight: 500; color: #6d7085"> Règle avancée</span>
             </span>
-            <span style='color: white;'>
-              <v-icon color="grey" small >mdi-sort</v-icon></span>
+
           </template>
+
+          <!--  Icone dans la colonne Règles  -->
+          <template v-slot:item.priority="{ item }">
+            <v-container class="ma-0 pa-0 d-flex justify-center">
+                      <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
+                      <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+            </v-container>
+          </template>
+
         </v-data-table>
       </div>
       <div class="text-center pt-2">
@@ -66,12 +84,13 @@
   const coverLink = ref('');
   const iconTypeDocument = ref({color:"black",img:"mdi-help"});
   const itemsPpnParent = ref([]);
-  const sortBy = "zone1";
-  const desc = false;
+  let sortBy = "zone1";
+  let desc = false;
   const headers = [
     {text: "Zone UNM1", value: "zone1", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
     {text: "Zone UNM2", value: "zone2", class: "dataTableHeaderDetailErrorPerPpn", width: 133},
-    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351}
+    {text: "Message d'erreur", value: "message", class: "dataTableHeaderDetailErrorPerPpn", width: 351},
+    {text: " Règle essentielle", value: "priority", class: "dataTableHeaderDetailErrorPerPpn", width: 170}
   ];
 
 
@@ -90,7 +109,7 @@
             result.detailerreurs.forEach((erreur)=> {temp.push({
                 zone1: erreur.zones[0],
                 zone2: erreur.zones[1],
-                priority: erreur.priority,
+                priority: getPriority(erreur.priority),
                 message: erreur.message
               });
             })
@@ -112,8 +131,8 @@
    */
   function classItemPriority(item){
     return {
-      priorityP1: item.priority === 'P1',
-      priorityP2: item.priority === 'P2',
+      essentielle: item.priority === 'essentielle',
+      avancee: item.priority === 'avancée',
     }
   }
 
@@ -232,15 +251,25 @@
   function sendCurrentPpnToParent(currentPpn) {
     emit('onChangePpn', currentPpn);
   }
+
+  function getPriority(priority){
+    if (priority === "P1") {
+      return "essentielle"
+    } else if (priority === "P2") {
+      return "avancée"
+    }
+  }
 </script>
 
 <style>
 
-.priorityP1{
-  font-weight: bold;
+.essentielle{
+  font-weight: 400;
+  color: #252C61;
 }
 
-.priorityP2{
-  font-weight: normal;
+.avancee{
+  font-weight: 400;
+  color: #6d7085;
 }
 </style>

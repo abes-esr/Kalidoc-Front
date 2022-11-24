@@ -29,19 +29,19 @@
             </v-col>
             <!--            BOUTON TELECHARGER LES REGLES-->
             <v-col class="pt-4">
-                <v-row class="ma-0 pa-0" justify="end">
-                  <v-tooltip left>
-                    <template v-slot:activator="{on}">
-                      <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
-                        <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
-                          TÉLÉCHARGER TOUTES LES REGLES
-                        </download-csv>
-                        <v-icon small color="white" class="ml-2">mdi-download</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>Télécharger toutes les règles dans un fichier "qualimarc-export-rules.csv"</span>
-                  </v-tooltip>
-                </v-row>
+              <v-row class="ma-0 pa-0" justify="end">
+                <v-tooltip left>
+                  <template v-slot:activator="{on}">
+                    <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
+                      <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
+                        TÉLÉCHARGER TOUTES LES REGLES
+                      </download-csv>
+                      <v-icon small color="white" class="ml-2">mdi-download</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Télécharger toutes les règles dans un fichier "qualimarc-export-rules.csv"</span>
+                </v-tooltip>
+              </v-row>
             </v-col>
           </v-row>
 
@@ -150,7 +150,6 @@ const ruleMessage = ref(null);
 const selector = ref(null);
 const isLoading = ref(true);
 let rulesFiltered = [];
-
 
 //  TODO mettre des checkBox dans le menu déroulant des types de documents
 
