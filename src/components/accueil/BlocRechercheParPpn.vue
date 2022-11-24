@@ -34,7 +34,7 @@
 
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 //Store
 const analyseStore = useAnalyseStore();
 
@@ -46,6 +46,9 @@ const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères sais
 const ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
 const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
 
+onMounted(() => {
+  analyseStore.$reset();
+})
 /**
  * Suppression d'un élément ppn déclenché au moment du clic sur la croix
  * @param item le ppn en question
