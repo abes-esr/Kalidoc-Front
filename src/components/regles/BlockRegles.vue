@@ -26,7 +26,7 @@
                 </v-tooltip>
               </v-row>
               <v-row class="ma-0 pa-0" justify="center">
-                <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
+                <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector.toString() }}</span>
               </v-row>
             </v-col>
             <!--            BOUTON TELECHARGER LES REGLES-->
@@ -53,7 +53,7 @@
                 :headers="headers"
                 loading-text="Chargement..."
                 :loading="isLoading"
-                :items="filterRulesBySelector()"
+                :items="filterRulesBySelector('element')"
                 :item-class="classItemPriority"
                 :search="ruleMessage"
                 :custom-filter="searchByMessage"
@@ -142,16 +142,16 @@ const headers =[
   { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ];
-const items = ref([]);
-const ruleId = ref(null);
-const listSelectedRulesId = ref([]);
-const ruleTypeDoc = ref(null);
-const listSelectedRulesTypeDoc = ref([]);
-const rulePriority = ref(null);
-const listSelectedRulesPriority = ref([]);
-const ruleMessage = ref(null);
-const selector = ref(null);
-const isLoading = ref(true);
+let items = ref([]);
+let ruleId = ref(null);
+let listSelectedRulesId = ref([]);
+let ruleTypeDoc = ref(new Array(0));
+let listSelectedRulesTypeDoc = ref([]);
+let rulePriority = ref(null);
+let listSelectedRulesPriority = ref([]);
+let ruleMessage = ref(null);
+let selector = ref([]);
+let isLoading = ref(true);
 let rulesFiltered = [];
 let selectCheckbox = ref([]);
 
@@ -167,19 +167,46 @@ onMounted(() => {
 
 function resetSelector() {
   ruleId.value = null;
-  ruleTypeDoc.value = null;
+  ruleTypeDoc.value = new Array(0);
   rulePriority.value = null;
   rulesFiltered = items.value;
-  selector.value = null;
+  selector.value = [];
 }
 
 function addSelector(select) {
-  if (selector.value === null){
-    selector.value = select;
-  } else {
-    selector.value += ", " + select + " ";
+  if (selector.value.length === 0) {
+    selector.value.push(select);
+  } else if (selector.value.length > 0) {
+    if (!selector.value.includes(select)){
+      if (select === "Essentielle") {
+        if (selector.value.includes("Toutes")){
+          selector.value.splice(selector.value.indexOf("Toutes", 1))
+        }
+        if (selector.value.includes("Avancée")){
+          selector.value.splice(selector.value.indexOf("Avancée", 1))
+        }
+        selector.value.push(select);
+      } else if (select === "Avancée") {
+        if (selector.value.includes("Toutes")){
+          selector.value.splice(selector.value.indexOf("Toutes", 1))
+        }
+        if(selector.value.includes("Essentielle")){
+          selector.value.splice(selector.value.indexOf("Essentielle", 1))
+        }
+        selector.value.push(select);
+      } else if(select === "Toutes") {
+          if(selector.value.includes("Essentielle")){
+            selector.value.splice(selector.value.indexOf("Essentielle", 1))
+          }
+          if (selector.value.includes("Avancée")){
+            selector.value.splice(selector.value.indexOf("Avancée", 1))
+          }
+          selector.value.push(select);
+      } else {
+        selector.value.push(select);
+      }
+    }
   }
-
 }
 
 /**
@@ -263,9 +290,12 @@ function feedRulesPriorityList() {
  * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
  */
 function eventTypeDocChoice(element) {
-  ruleTypeDoc.value = (element === "Tous") ? null : element;
-  selectCheckbox.value = (element === "Tous") ? null : element;
-  return filterRulesByTypeDoc();
+  if(element === "Tous"){
+    ruleTypeDoc.value = new Array(0);
+  } else {
+      ruleTypeDoc.value.push(element);
+  }
+  return filterRulesBySelector();
 }
 
 /**
@@ -275,7 +305,7 @@ function eventTypeDocChoice(element) {
  */
 function eventIdChoice(element) {
   ruleId.value = (element === "Tous") ? null : element;
-  return filterRulesById();
+  return filterRulesBySelector();
 }
 
 /**
@@ -285,7 +315,7 @@ function eventIdChoice(element) {
  */
 function eventPriorityChoice(element) {
   rulePriority.value = (element === "Toutes") ? null : element;
-  return filterRulesByPriority();
+  return filterRulesBySelector();
 }
 
 /**
@@ -293,11 +323,11 @@ function eventPriorityChoice(element) {
  * @returns {[]|[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
  */
 function filterRulesBySelector() {
-  if (ruleId.value === null && ruleTypeDoc.value === null && rulePriority.value === null) {
+  if (ruleId.value === null && ruleTypeDoc.value.length === 0 && rulePriority.value === null) {
     return items.value;
   } else if (ruleId.value !== null) {
     return filterRulesById();
-  } else if (ruleTypeDoc.value !== null) {
+  } else if (ruleTypeDoc.value.length > 0) {
     return filterRulesByTypeDoc();
   } else if (rulePriority.value !== null) {
     return filterRulesByPriority();
@@ -325,7 +355,7 @@ function filterRulesById(){
  * @returns {[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
  */
 function filterRulesByTypeDoc(){
-  if (ruleTypeDoc.value !== null) {
+  // if (ruleTypeDoc.value !== null) {
     if(rulesFiltered !== null) {// Si un sélecteur est déjà appliqué
       let tempRulesFiltered = rulesFiltered;
       rulesFiltered = [];
@@ -343,7 +373,7 @@ function filterRulesByTypeDoc(){
     rulePriority.value = null;
     ruleMessage.value = null;
     return rulesFiltered;
-  }
+  // }
 }
 
 /**
@@ -368,9 +398,6 @@ function filterRulesByPriority(){
       ruleMessage.value = null;
 
     }
-    // if(selector.value !== null) {
-    //   selector.value.splice(selector.value.indexOf(rulePriority.value), 1);
-    // }
   return rulesFiltered;
   }
 
