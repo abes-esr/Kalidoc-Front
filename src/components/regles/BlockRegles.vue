@@ -13,7 +13,6 @@
             <!--            BOUTON EFFACER LES FILTRES-->
             <v-col class="pt-4">
               <v-row class="ma-0 pa-0" justify="center">
-                <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
                 <v-tooltip left>
                   <template v-slot:activator="{on}">
                     <v-btn class="ma-0" small outlined color="#cf491b" @click="resetSelector()" v-on="on">
@@ -25,6 +24,9 @@
                   </template>
                   <span>Effacer tous les filtres actifs</span>
                 </v-tooltip>
+              </v-row>
+              <v-row class="ma-0 pa-0" justify="center">
+                <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
               </v-row>
             </v-col>
             <!--            BOUTON TELECHARGER LES REGLES-->
@@ -98,8 +100,9 @@
                   </template>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
                     <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) && addSelector(ruleTypeDoc)">
-                      {{ ruleTypeDoc }}
+                      <v-checkbox v-model="selectCheckbox" :label="ruleTypeDoc" :value="ruleTypeDoc"></v-checkbox>
                     </v-btn>
+                    <div style="height: 30px"></div>
                   </div>
                   <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
                     <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="eventIdChoice(ruleId) && addSelector(ruleId)">
@@ -150,8 +153,10 @@ const ruleMessage = ref(null);
 const selector = ref(null);
 const isLoading = ref(true);
 let rulesFiltered = [];
+let selectCheckbox = ref([]);
 
-//  TODO mettre des checkBox dans le menu déroulant des types de documents
+//  TODO mettre à jour en temps réel le seletor
+//  TODO permettre la multiselection pour les types de document (ainsi que dans le bloc de la page résultats)
 
 onMounted(() => {
   feedItems();
@@ -247,7 +252,7 @@ function feedIdList() {
  * Fonction permettant de remplir le liste des règles de priorité affichées dans le filtre
  */
 function feedRulesPriorityList() {
-  listSelectedRulesPriority.value.push("Tous");
+  listSelectedRulesPriority.value.push("Toutes");
   listSelectedRulesPriority.value.push("Essentielle");
   listSelectedRulesPriority.value.push("Avancée");
 }
@@ -259,6 +264,7 @@ function feedRulesPriorityList() {
  */
 function eventTypeDocChoice(element) {
   ruleTypeDoc.value = (element === "Tous") ? null : element;
+  selectCheckbox.value = (element === "Tous") ? null : element;
   return filterRulesByTypeDoc();
 }
 
@@ -278,7 +284,7 @@ function eventIdChoice(element) {
  * @returns {*[] | []} appelle la fonction d'affichage des Priority sélectionnés par l'utilisateur
  */
 function eventPriorityChoice(element) {
-  rulePriority.value = (element === "Tous") ? null : element;
+  rulePriority.value = (element === "Toutes") ? null : element;
   return filterRulesByPriority();
 }
 
@@ -347,10 +353,8 @@ function filterRulesByTypeDoc(){
 function filterRulesByPriority(){
     if (rulePriority.value !== null) {
       if(rulesFiltered !== null) {// Si un sélecteur est déjà appliqué
-        let tempRulesFiltered = rulesFiltered;
-        rulesFiltered = [];
-        rulesFiltered = tempRulesFiltered.filter(tempRulesFiltered => {
-          return tempRulesFiltered.priority === rulePriority.value;
+        rulesFiltered = items.value.filter(item => {
+          return item.priority === rulePriority.value;
         });
       } else {
         { // Si aucun sélecteur n'est appliqué
@@ -362,8 +366,12 @@ function filterRulesByPriority(){
       ruleId.value = null;
       ruleTypeDoc.value = null;
       ruleMessage.value = null;
-      return rulesFiltered;
+
     }
+    // if(selector.value !== null) {
+    //   selector.value.splice(selector.value.indexOf(rulePriority.value), 1);
+    // }
+  return rulesFiltered;
   }
 
 </script>

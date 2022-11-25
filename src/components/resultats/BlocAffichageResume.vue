@@ -35,6 +35,7 @@
               <v-btn class="d-block" plain v-for="type in selectType" :key="type.id" @click="eventTypeChoice(type)">
                 <v-checkbox v-model="selectCheckbox" :label="type" :value="type"></v-checkbox>
               </v-btn>
+              <div style="height: 30px"></div>
             </div>
           </v-menu>
         <span style='color: white;'>
