@@ -33,7 +33,7 @@
             </template>
             <div style='background-color:white;color: black;' class="pl-4 pr-8">
               <v-btn class="d-block" plain v-for="type in selectType" :key="type.id" @click="eventTypeChoice(type)">
-                {{ type }}
+                <v-checkbox v-model="selectCheckbox" :label="type" :value="type"></v-checkbox>
               </v-btn>
             </div>
           </v-menu>
@@ -109,6 +109,7 @@ const selectType = ref([]);
 const type = ref(null);
 let ppnFiltered = [];
 const modelDataTable = ref([]);
+let selectCheckbox = ref([]);
 
 onMounted(() => {
   feedItems();
@@ -215,6 +216,7 @@ function sendItemsToParent(items) {
 
 function eventTypeChoice(element) {
   type.value = (element === "Tous") ? null : element;
+  selectCheckbox.value = (element === "Tous") ? null : element;
   return filterPpnByType();
 }
 
