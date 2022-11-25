@@ -58,6 +58,8 @@
             :length="itemsPpnParent.length"
             :total-visible="12"
             @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
+            @keydown.native.tab.exact="nextSelectedItem"
+            @keydown.native.tab.shift.exact="previousSelectedItem"
         ></v-pagination>
       </div>
     </v-container>
@@ -139,6 +141,23 @@
   onUpdated(() => {
     feedCover();
   })
+
+
+  function nextSelectedItem() {
+    console.log("nextSelectedItem");
+    if(page.value < itemsPpnParent.value.length){
+      page.value = page.value + 1;
+      sendCurrentPpnToParent(itemsPpnParent.value[page.value-1].ppn);
+    }
+  }
+
+  function previousSelectedItem() {
+    console.log("nextSelectedItem");
+    if(page.value > 1){
+      page.value = page.value - 1;
+      sendCurrentPpnToParent(itemsPpnParent.value[page.value-1].ppn);
+    }
+  }
 
   function feedCover() {
     const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
