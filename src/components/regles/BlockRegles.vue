@@ -371,11 +371,11 @@ function filterRulesByPriority(){
 <style>
 
 .essentielle{
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .avancee{
-  font-weight: normal;
+  font-weight: 400;
 }
 
 </style>
