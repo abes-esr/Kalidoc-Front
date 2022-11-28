@@ -8,10 +8,9 @@
        </v-col>
        <v-col :cols="(!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? '8' : '7'" :class="(!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? 'pl-6' : null">
          <v-row :class=" (!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? 'ma-0 pa-0 pl-2' : 'ma-0 pa-0'" justify="center">
-           <p>{{ routerPath }}</p>
-           <v-btn text tile color="white" value="interfaceVerification" :class="{titleBarButtonSelected: (route.path === '/') || (route.path === '/resultats') }" to="/">{{ (!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? 'Interface de vérification' : 'Vérification' }}</v-btn>
-           <v-btn text tile color="white" value="interfaceRegles" :class="{titleBarButtonSelected: route.path === '/regles' }" to="/regles"> {{( !$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? 'Interface des règles' : 'Règles' }}</v-btn>
-           <v-btn text tile color="white" value="historique" :class="{titleBarButtonSelected: route.path === '/historiques' }" to="/historiques" >Historique</v-btn>
+           <v-btn text tile color="white" @click="update" value="interfaceVerification" :class="{titleBarButtonSelected: (route.path === '/') || (route.path === '/resultats') }" to="/">{{ (!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? 'Interface de vérification' : 'Vérification' }}</v-btn>
+           <v-btn text tile color="white" @click="update" value="interfaceRegles" :class="{titleBarButtonSelected: route.path === '/regles' }" to="/regles"> {{( !$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? 'Interface des règles' : 'Règles' }}</v-btn>
+           <v-btn text tile color="white" @click="update" value="historique" :class="{titleBarButtonSelected: route.path === '/historiques' }" to="/historiques" >Historique</v-btn>
          </v-row>
        </v-col>
        <v-col :cols=" (!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm) ? '2' : '3'">
@@ -37,37 +36,7 @@
 </template>
 
 <script setup>
-import {onUpdated, ref, onMounted, watchEffect} from 'vue';
-import router from '../../router/index'
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router/composables"
 
-const activeBtn = ref("btn1");
-const routerPath = ref(router.currentRoute.path);
 const route = useRoute();
-
-watchEffect(() => {
-  console.log(route.path)
-  routerPath.value = route.path;
-});
-
-onUpdated(() => {
-  currentRouteName();
-})
-
-onMounted(() => {
-  currentRouteName();
-})
-
-function currentRouteName() {
-  if (router.currentRoute.path != null && router.currentRoute.path === "/") {
-    activeBtn.value = "btn1";
-  } else if (router.currentRoute.path != null && router.currentRoute.path === "/resultats"){
-    activeBtn.value = "btn1";
-  } else if (router.currentRoute.path != null && router.currentRoute.path === "/regles"){
-    activeBtn.value = "btn2";
-  } else if (router.currentRoute.path != null && router.currentRoute.path === "/historique"){
-    activeBtn.value = "btn3";
-  }
-}
-
 </script>
