@@ -8,60 +8,58 @@
       <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor" style="font-size: 0.92em">PPN {{ itemsPpnParent[page-1].ppn }}</div>
-      <div>
-        <v-data-table id="bgColorGrey"
-                      fixed-header
-                      :sort-by.sync="sortBy"
-                      :sort-desc.sync="desc"
-                      :headers="headers"
-                      :items="itemsPpnParent[page-1].itemsDetailPpn"
-                      :item-class="classItemPriority"
-                      :items-per-page="itemsPpnParent[page-1].itemsDetailPpn.length"
-                      :height="itemsPpnParent[page-1].itemsDetailPpn.length > 10 ? '40vh' : 'auto'"
-                      hide-default-footer
-                      dense
-                      class="elevation-0"
-        >
-          <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-            <span style="color: grey; font-weight: 600" v-if="header.value === 'zone1' || header.value === 'zone2' || header.value === 'message'">
-                {{ header.text }}
-              <span style='color: white;'>
-                <v-icon color="grey" small >mdi-sort</v-icon>
-              </span>
-            </span>
-
-            <!--  Configuration de la colonne Règles  -->
-            <span style='color: #252C61; font-weight: 500' v-if="header.value === 'priority'">
-              <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
+      <v-data-table id="bgColorGrey"
+                    fixed-header
+                    :sort-by.sync="sortBy"
+                    :sort-desc.sync="desc"
+                    :headers="headers"
+                    :items="itemsPpnParent[page-1].itemsDetailPpn"
+                    :item-class="classItemPriority"
+                    :items-per-page="itemsPpnParent[page-1].itemsDetailPpn.length"
+                    :height="itemsPpnParent[page-1].itemsDetailPpn.length > 10 ? '40vh' : 'auto'"
+                    hide-default-footer
+                    dense
+                    class="elevation-0"
+      >
+        <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
+          <span style="color: grey; font-weight: 600" v-if="header.value === 'zone1' || header.value === 'zone2' || header.value === 'message'">
               {{ header.text }}
+            <span style='color: white;'>
               <v-icon color="grey" small >mdi-sort</v-icon>
-              <br>
-              <v-icon x-small color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
-              <span style="font-weight: 500; color: #6d7085"> Règle avancée</span>
             </span>
+          </span>
 
-          </template>
+          <!--  Configuration de la colonne Règles  -->
+          <span style='color: #252C61; font-weight: 500' v-if="header.value === 'priority'">
+            <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
+            {{ header.text }}
+            <v-icon color="grey" small >mdi-sort</v-icon>
+            <br>
+            <v-icon x-small color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+            <span style="font-weight: 500; color: #6d7085"> Règle avancée</span>
+          </span>
 
-          <!--  Icone dans la colonne Règles  -->
-          <template v-slot:item.priority="{ item }">
-            <v-container class="ma-0 pa-0 d-flex justify-center">
-                      <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
-                      <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
-            </v-container>
-          </template>
+        </template>
 
-        </v-data-table>
-      </div>
-      <div class="text-center pt-2">
-        <v-pagination
-            v-model="page"
-            :length="itemsPpnParent.length"
-            :total-visible="12"
-            @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
-            @keydown.native.tab.exact="nextSelectedItem"
-            @keydown.native.tab.shift.exact="previousSelectedItem"
-        ></v-pagination>
-      </div>
+        <!--  Icone dans la colonne Règles  -->
+        <template v-slot:item.priority="{ item }">
+          <v-container class="ma-0 pa-0 d-flex justify-center">
+                    <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
+                    <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+          </v-container>
+        </template>
+      </v-data-table>
+      <v-pagination
+          class="text-center pt-2"
+          v-model="page"
+          :length="itemsPpnParent.length"
+          :total-visible="12"
+          @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
+          @keydown.native.down="nextSelectedItem"
+          @keydown.native.right="nextSelectedItem"
+          @keydown.native.up="previousSelectedItem"
+          @keydown.native.left="previousSelectedItem"
+      ></v-pagination>
     </v-container>
     <v-container v-else class="pa-0 ma-0 borderErrorDetailPerPpn">
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91;"></div>
@@ -144,17 +142,15 @@
 
 
   function nextSelectedItem() {
-    console.log("nextSelectedItem");
     if(page.value < itemsPpnParent.value.length){
-      page.value = page.value + 1;
+      page.value++;
       sendCurrentPpnToParent(itemsPpnParent.value[page.value-1].ppn);
     }
   }
 
   function previousSelectedItem() {
-    console.log("nextSelectedItem");
     if(page.value > 1){
-      page.value = page.value - 1;
+      page.value--;
       sendCurrentPpnToParent(itemsPpnParent.value[page.value-1].ppn);
     }
   }
