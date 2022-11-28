@@ -123,6 +123,21 @@ watchEffect(() => {
     feedItems()
   }
 })
+
+function nextSelectedItem() {
+  let index = items.value.findIndex(item => item.ppn === props.currentPpn);
+  if(index < items.value.length - 1) {
+    emit('onChangePpn', items.value[index + 1].ppn);
+  }
+}
+
+function previousSelectedItem() {
+  let index = items.value.findIndex(item => item.ppn === props.currentPpn);
+  if(index > 0) {
+    emit('onChangePpn', items.value[index - 1].ppn);
+  }
+}
+
 /**
  * fonction permetant de recuperer les ppns du store
  */
