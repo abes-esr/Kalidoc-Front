@@ -57,10 +57,4 @@ function emitOnClose() {
   messageDisplayed.value = false;
   emit('onClose', false);
 }
-
-
 </script>
-
-<style scoped>
-
-</style>

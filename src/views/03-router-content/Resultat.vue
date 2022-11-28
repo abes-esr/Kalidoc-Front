@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
-    <v-container class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
+    <v-card flat class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
       <v-icon @click="goToHome()">mdi-home</v-icon>
       <v-icon size="small">mdi-chevron-right</v-icon>
-        <span @click="goToHome()" class="v-slider__thumb" style="color: grey; text-decoration: none">Interface de vérification</span>
+      <span @click="goToHome()" class="v-slider__thumb" style="color: grey; text-decoration: none">Interface de vérification</span>
       <v-icon size="small">mdi-chevron-right</v-icon>
       Résultats de l'analyse
-    </v-container>
+    </v-card>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="6" lg="5" xl="5">
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>

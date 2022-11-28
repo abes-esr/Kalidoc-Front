@@ -14,6 +14,7 @@
     </v-row>
   </v-container>
 </template>
+
 <script setup>
 import BlocTypeAnalyse from "@/components/accueil/BlocTypeAnalyse";
 import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn";

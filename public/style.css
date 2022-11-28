@@ -124,11 +124,6 @@
     max-height: 75px
 }
 
-.dataTableHeaderDetailErrorPerPpn{
-    color: white;
-    background-color: #e6e6e6;
-}
-
 .detailErrorPpnSubtitle {
     font-size: 1em;
     padding-left: 76px;
