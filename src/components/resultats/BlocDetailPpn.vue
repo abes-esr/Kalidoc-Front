@@ -127,7 +127,7 @@
   /**
    * Fonction qui modifie la class de l'item sélectionné en fonction de sa priorité
    * @param item
-   * @returns {{priorityP1: boolean, priorityP2: boolean}}
+   * @returns {essentielle: boolean, avancee: boolean}
    */
   function classItemPriority(item){
     return {
