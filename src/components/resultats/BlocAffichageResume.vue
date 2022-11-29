@@ -1,6 +1,8 @@
 <template>
   <v-container class="ma-0 pa-0">
-    <input type="text" id="catched1" @focus="launchAction" style="position: absolute;left: -999px;">
+    <span v-shortkey="{up: ['arrowup'], left: ['arrowleft']}" @shortkey="goToPreviousLine()"></span>
+    <span v-shortkey="{down: ['arrowdown'], right: ['arrowright']}" @shortkey="goToNextLine()"></span>
+    <input type="text" id="catched1" @focus="focusOnFirstElement" style="position: absolute;left: -999px;">
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
@@ -110,6 +112,7 @@ const modelDataTable = ref([]);
 onMounted(() => {
   feedItems();
   feedTypeList();
+  nextSelectedItem();
 })
 
 watchEffect(() => {
@@ -135,8 +138,15 @@ function previousSelectedItem() {
   }
 }
 
-function launchAction() {
-  console.log('e')
+function focusOnFirstElement() {
+  nextSelectedItem()
+}
+
+function goToPreviousLine() {
+  previousSelectedItem()
+}
+
+function goToNextLine() {
   nextSelectedItem()
 }
 
