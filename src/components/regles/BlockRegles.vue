@@ -93,13 +93,13 @@
                 <v-menu offset-y v-if="header.value === 'id' || header.value === 'typeDoc' || header.value === 'priority'">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                      <v-icon v-if="header.value === 'typeDoc'" small color="white" :color="colorIconFilterTypeDoc()">
+                      <v-icon v-if="header.value === 'typeDoc'" small :color="colorIconFilterTypeDoc()">
                         mdi-filter
                       </v-icon>
-                      <v-icon v-if="header.value === 'id'" small color="white" :color="colorIconFilterId()">
+                      <v-icon v-if="header.value === 'id'" small :color="colorIconFilterId()">
                         mdi-filter
                       </v-icon>
-                      <v-icon v-if="header.value === 'priority'" small color="white":color="colorIconFilterPriority()">
+                      <v-icon v-if="header.value === 'priority'" small :color="colorIconFilterPriority()">
                         mdi-filter
                       </v-icon>
                     </v-btn>
@@ -276,7 +276,7 @@ function feedRulesPriorityList() {
 function eventTypeDocChoice(element) {
   selectedId.value = "Tous";
   if (element === "Tous") {
-    selectedTypeDoc.value = new Array(element.toString());
+    selectedTypeDoc.value = new Array(element);
   } else {
     if (selectedTypeDoc.value.length > 0) {
       if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si un "Tous" est présent dans le selectedTypeDoc
@@ -309,7 +309,7 @@ function filterRulesById(ruleId) {
       return item.id === ruleId;
     });
   } else if (ruleId === "Tous") {
-    return rulesFiltered.value = items.value;
+    rulesFiltered.value = items.value;
   }
 }
 
@@ -339,7 +339,6 @@ function filterRulesByTypeDoc(){
     rulesFiltered.value = items.value;
     selectedTypeDoc.value = new Array("Tous");
   }
-  return rulesFiltered;
 }
 
 /**
@@ -367,7 +366,6 @@ function filterRulesByPriority(priority) {
   } else if (selectedTypeDoc.value.length !== 0 && priority.toString() === "Toutes") {  //  si un/des type.s de document a/ont été sélectionné.s au préalable et priorité "Toutes"
     filterRulesByTypeDoc();
   }
-  return rulesFiltered;
 }
 
 </script>
@@ -380,10 +378,6 @@ function filterRulesByPriority(priority) {
 
 .avancee{
   font-weight: 400;
-}
-
-.orange{
-  color: #252C61;
 }
 
 </style>

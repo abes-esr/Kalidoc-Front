@@ -108,9 +108,9 @@ const winibwRequest = ref('null');
 const dialog = ref(false);
 const selectType = ref([]);
 const selectedTypeDoc = ref(new Array("Tous"));
-let ppnFiltered = ref([]);
+const ppnFiltered = ref([]);
 const modelDataTable = ref([]);
-let selectedCheckbox = ref([]);
+const selectedCheckbox = ref([]);
 
 onMounted(() => {
   feedItems();
@@ -232,23 +232,23 @@ function sendItemsToParent(items) {
  */
 function eventTypeChoice(type) {
   if (type === "Tous") {
-    selectedTypeDoc.value = new Array(type.toString());
+    selectedTypeDoc.value = new Array(type);
   } else {
     if (selectedTypeDoc.value.length > 0) {
       if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si un "Tous" est présent dans le selectedTypeDoc
         selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf("Tous"), 1);
       }
       if (selectedTypeDoc.value.indexOf(type) === -1) {  //  Ajout un selectedTypeDoc s'il n'est pas déjà dans la liste selectedTypeDoc
-        selectedTypeDoc.value.push(type.toString());
+        selectedTypeDoc.value.push(type);
       } else if (selectedTypeDoc.value.indexOf(type) >= 0) { //  Supprime un selectedTypeDoc coché lorsque l'on clique de nouveau sur lui
         selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(type), 1);
       }
     } else {
-      selectedTypeDoc.value = new Array(type.toString());
+      selectedTypeDoc.value = new Array(type);
     }
   }
   selectedCheckbox.value = selectedTypeDoc.value;
-  return filterPpnByType();
+  filterPpnByType();
 }
 
 /**
@@ -278,7 +278,6 @@ function filterPpnByType(){
       ppnFiltered.value = items.value;
       selectedTypeDoc.value = selectedCheckbox.value = new Array("Tous");
     }
-  return ppnFiltered;
 }
 
 function updateItemSelected(ppn){
