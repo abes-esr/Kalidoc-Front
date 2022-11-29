@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid v-shortkey="['tab']" @shortkey="focusOnBlocAffichageResume()">
     <v-container class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
       <v-icon @click="goToHome()">mdi-home</v-icon>
       <v-icon size="small">mdi-chevron-right</v-icon>
@@ -9,7 +9,7 @@
     </v-container>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="6" lg="5" xl="5">
-        <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
+        <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement" id="bloc1"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="6" lg="7" xl="7">
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
@@ -38,8 +38,8 @@
     </v-row>
   </v-container>
 </template>
-<script setup>
 
+<script setup>
 import BlocRecapitulatif from "@/components/resultats/BlocRecapitulatif";
 import BlocAffichageResume from "@/components/resultats/BlocAffichageResume";
 import BoutonLancement from "@/components/BoutonLancement";
@@ -104,7 +104,13 @@ function goToHome() {
 function updateNbLancement() {
   nbLancement.value = resultatStore.getNbPpnTotal.length;
 }
+
+function focusOnBlocAffichageResume() {
+  console.log('d')
+   document.getElementById("catched1").focus();
+}
 </script>
+
 <style scoped>
 .v-slider__thumb{
   cursor:pointer;

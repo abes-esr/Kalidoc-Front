@@ -1,5 +1,6 @@
 <template>
   <v-container class="ma-0 pa-0">
+    <p>bloc det ppn</p>
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
     </v-row>

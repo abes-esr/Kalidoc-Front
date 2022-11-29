@@ -1,5 +1,6 @@
 <template>
   <v-container class="ma-0 pa-0">
+    <input type="text" id="catched1" @focus="launchAction" style="position: absolute;left: -999px;">
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
@@ -78,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from "vue"
+import { ref, onMounted, watchEffect, onUpdated, onUnmounted } from "vue";
 import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
@@ -132,6 +133,11 @@ function previousSelectedItem() {
   if(index > 0) {
     emit('onChangePpn', itemsTrieAndFiltered[index - 1].ppn);
   }
+}
+
+function launchAction() {
+  console.log('e')
+  nextSelectedItem()
 }
 
 /**
@@ -255,7 +261,6 @@ function toggleMask(value) {
   items.value.forEach(item => {
     item.affiche = value;
   })
-
 }
 
 </script>
