@@ -9,7 +9,7 @@
     </v-container>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="6" lg="5" xl="5">
-        <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement" id="bloc1"></BlocAffichageResume>
+        <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="6" lg="7" xl="7">
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
@@ -106,7 +106,6 @@ function updateNbLancement() {
 }
 
 function focusOnBlocAffichageResume() {
-  console.log('d')
    document.getElementById("catched1").focus();
 }
 </script>
