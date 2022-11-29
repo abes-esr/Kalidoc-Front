@@ -13,3 +13,7 @@
 import Header from "@/views/01-header/Header";
 import Footer from "@/views/04-footer/Footer";
 </script>
+
+<style>
+@import './style/style.css';
+</style>

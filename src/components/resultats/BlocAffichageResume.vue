@@ -1,10 +1,9 @@
 <template>
-
   <v-container class="ma-0 pa-0">
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
-    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
+    <v-card flat tile class="pa-0 ma-0 borderBlocElements">
       <v-data-table
           v-model="modelDataTable"
           :headers="headers"
@@ -51,15 +50,15 @@
         </template>
         <template v-slot:body.append>
           <tr>
-            <td colspan="2">
-              <v-card flat class="d-flex justify-space-between mb-6">
-                <div class="d-flex align-center mb-6">
+            <td colspan="100%">
+              <v-card flat class="d-flex justify-space-between">
+                <div class="d-flex align-center">
                   <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
                   <span>Afficher/masquer tout</span>
                 </div>
-                <div class="d-flex align-center mb-6">
-                  <span>Générer la requête pour WinIBW</span>
-                  <bouton-winibw class="pl-1" :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
+                <div class="d-flex align-center">
+                  <span  class="pr-1">Générer la requête pour WinIBW</span>
+                  <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
                 </div>
               </v-card>
             </td>
@@ -67,7 +66,7 @@
         </template>
       </v-data-table>
       <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
-    </v-container>
+    </v-card>
   </v-container>
 
 </template>

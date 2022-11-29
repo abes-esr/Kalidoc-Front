@@ -1,7 +1,7 @@
 <template>
   <v-container class="ma-0 pa-0">
     <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</span>
-    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
+    <v-card flat class="pa-0 ma-0 borderBlocElements">
       <div class="mb-2 pt-1 rappelTypeAnalyse" style="background-color: #676C91; color: white"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></div>
       <v-carousel
           v-model="page"
@@ -23,7 +23,7 @@
           </v-row>
         </v-carousel-item>
       </v-carousel>
-    </v-container>
+    </v-card>
   </v-container>
 </template>
 

@@ -1,128 +1,117 @@
 <template>
-  <v-container>
+  <v-container align-items="center">
+    <v-row class="mb-2" justify="space-between">
+      <!--            TITRE-->
+      <v-col>
+        <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
+      </v-col>
+      <!--            BOUTON EFFACER LES FILTRES-->
+      <v-col class="pt-4">
+        <v-row class="ma-0 pa-0" justify="center">
+          <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
+          <v-tooltip left>
+            <template v-slot:activator="{on}">
+              <v-btn class="ma-0" small outlined color="#cf491b" @click="resetSelector()" v-on="on">
+                Effacer tous les filtres
+                <v-icon class="ml-2" small color="#cf491b">
+                  mdi-filter-remove
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>Effacer tous les filtres actifs</span>
+          </v-tooltip>
+        </v-row>
+      </v-col>
+      <!--            BOUTON TELECHARGER LES REGLES-->
+      <v-col class="pt-4">
+        <v-row class="ma-0 pa-0" justify="end">
+          <v-tooltip left>
+            <template v-slot:activator="{on}">
+              <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
+                <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
+                  TÉLÉCHARGER TOUTES LES REGLES
+                </download-csv>
+                <v-icon small color="white" class="ml-2">mdi-download</v-icon>
+              </v-btn>
+            </template>
+            <span>Télécharger toutes les règles dans un fichier "qualimarc-export-rules.csv"</span>
+          </v-tooltip>
+        </v-row>
+      </v-col>
+    </v-row>
 
-    <v-container align-items="center">
-      <v-row class="ma-0 pa-0">
-        <v-col>
+    <!--          Container de formatage des bordures de la data table-->
+    <v-data-table id="bgColorIdColumnRulesTable"
+                  class="pa-0 ma-0 borderBlocElements"
+                  :headers="headers"
+                  loading-text="Chargement..."
+                  :loading="isLoading"
+                  :items="filterRulesBySelector()"
+                  :item-class="classItemPriority"
+                  :search="ruleMessage"
+                  :custom-filter="searchByMessage"
+                  single-select
+                  item-key="id"
+                  dense
+    >
+      <!--              Remplissage du header-->
+      <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
+        <!--                Header Id avec Tooltip-->
+        <v-tooltip bottom v-if="header.value === 'id'">
+          <template v-slot:activator="{ on }">
+            <span v-on="on" style='color: white;'>{{ header.textBtn }}</span><br>
+          </template>
+          <span>{{ header.tooltip}}</span>
+        </v-tooltip>
+        <!--                Autres headers-->
+        <span style='color: white;' v-if="header.value === 'zoneUnm1' || header.value === 'zoneUnm2' || header.value === 'typeDoc' || header.value === 'message' || header.value === 'priority'">
+            {{ header.text }}<br>
+        </span>
 
-          <v-row class="mb-2" justify="space-between">
-            <!--            TITRE-->
-            <v-col>
-              <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
-            </v-col>
-            <!--            BOUTON EFFACER LES FILTRES-->
-            <v-col class="pt-4">
-              <v-row class="ma-0 pa-0" justify="center">
-                <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
-                <v-tooltip left>
-                  <template v-slot:activator="{on}">
-                    <v-btn class="ma-0" small outlined color="#cf491b" @click="resetSelector()" v-on="on">
-                      Effacer tous les filtres
-                      <v-icon class="ml-2" small color="#cf491b">
-                        mdi-filter-remove
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Effacer tous les filtres actifs</span>
-                </v-tooltip>
-              </v-row>
-            </v-col>
-            <!--            BOUTON TELECHARGER LES REGLES-->
-            <v-col class="pt-4">
-              <v-row class="ma-0 pa-0" justify="end">
-                <v-tooltip left>
-                  <template v-slot:activator="{on}">
-                    <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
-                      <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
-                        TÉLÉCHARGER TOUTES LES REGLES
-                      </download-csv>
-                      <v-icon small color="white" class="ml-2">mdi-download</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Télécharger toutes les règles dans un fichier "qualimarc-export-rules.csv"</span>
-                </v-tooltip>
-              </v-row>
-            </v-col>
-          </v-row>
-
-          <!--          Container de formatage des bordures de la data table-->
-          <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
-            <v-data-table id="bgColorIdColumnRulesTable"
-                :headers="headers"
-                loading-text="Chargement..."
-                :loading="isLoading"
-                :items="filterRulesBySelector()"
-                :item-class="classItemPriority"
-                :search="ruleMessage"
-                :custom-filter="searchByMessage"
-                single-select
-                item-key="id"
+        <!--                Champ de recherche pour la colonne "Règles de vérification / qualité"-->
+        <v-menu offset-y v-if="header.value === 'message'">
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+                v-model="ruleMessage"
+                label="rechercher par mot clef"
+                class="ma-0 pa-0"
                 dense
-            >
-              <!--              Remplissage du header-->
-              <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-                <!--                Header Id avec Tooltip-->
-                <v-tooltip bottom v-if="header.value === 'id'">
-                  <template v-slot:activator="{ on }">
-                    <span v-on="on" style='color: white;'>{{ header.textBtn }}</span><br>
-                  </template>
-                  <span>{{ header.tooltip}}</span>
-                </v-tooltip>
-                <!--                Autres headers-->
-                <span style='color: white;' v-if="header.value === 'zoneUnm1' || header.value === 'zoneUnm2' || header.value === 'typeDoc' || header.value === 'message' || header.value === 'priority'">
-                    {{ header.text }}<br>
-                </span>
+                solo
+                style="max-height: 40px; color: lightgrey; font-weight: 400; font-style: italic; font-size: 1.2em"
+            ></v-text-field>
+          </template>
+        </v-menu>
 
-                <!--                Champ de recherche pour la colonne "Règles de vérification / qualité"-->
-                <v-menu offset-y v-if="header.value === 'message'">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="ruleMessage"
-                        label="rechercher par mot clef"
-                        class="ma-0 pa-0"
-                        dense
-                        solo
-                        style="max-height: 40px; color: lightgrey; font-weight: 400; font-style: italic; font-size: 1.2em"
-                    ></v-text-field>
-                  </template>
-                </v-menu>
+        <!--                Icônes de tri pour les ID, les types de documents et les types de règles-->
+        <v-menu offset-y v-if="header.value === 'id' || header.value === 'typeDoc' || header.value === 'priority'">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
+              <v-icon small color="white">
+                mdi-filter
+              </v-icon>
+            </v-btn>
+          </template>
+          <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
+            <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) && addSelector(ruleTypeDoc)">
+              {{ ruleTypeDoc }}
+            </v-btn>
+          </div>
+          <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
+            <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="eventIdChoice(ruleId) && addSelector(ruleId)">
+              {{ ruleId }}
+            </v-btn>
+          </div>
+          <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'priority'">
+            <v-btn class="d-block" plain v-for="rulePriority in listSelectedRulesPriority" :key="rulePriority.value" @click="eventPriorityChoice(rulePriority) && addSelector(rulePriority)">
+              {{ rulePriority }}
+            </v-btn>
+          </div>
+        </v-menu>
 
-                <!--                Icônes de tri pour les ID, les types de documents et les types de règles-->
-                <v-menu offset-y v-if="header.value === 'id' || header.value === 'typeDoc' || header.value === 'priority'">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                      <v-icon small color="white">
-                        mdi-filter
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                    <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) && addSelector(ruleTypeDoc)">
-                      {{ ruleTypeDoc }}
-                    </v-btn>
-                  </div>
-                  <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
-                    <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="eventIdChoice(ruleId) && addSelector(ruleId)">
-                      {{ ruleId }}
-                    </v-btn>
-                  </div>
-                  <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'priority'">
-                    <v-btn class="d-block" plain v-for="rulePriority in listSelectedRulesPriority" :key="rulePriority.value" @click="eventPriorityChoice(rulePriority) && addSelector(rulePriority)">
-                      {{ rulePriority }}
-                    </v-btn>
-                  </div>
-                </v-menu>
-
-                <!--                Suppression de l'icône de tri pour la colonne "Règle de vérification / qualité"-->
-                <v-icon color="white" small v-if="header.value !== 'message'">mdi-sort</v-icon>
-              </template>
-
-            </v-data-table>
-          </v-container>
-
-        </v-col>
-      </v-row>
-    </v-container>
+        <!--                Suppression de l'icône de tri pour la colonne "Règle de vérification / qualité"-->
+        <v-icon color="white" small v-if="header.value !== 'message'">mdi-sort</v-icon>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
