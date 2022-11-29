@@ -93,7 +93,13 @@
                 <v-menu offset-y v-if="header.value === 'id' || header.value === 'typeDoc' || header.value === 'priority'">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                      <v-icon small color="white">
+                      <v-icon v-if="header.value === 'typeDoc'" small color="white" :color="colorIconFilterTypeDoc()">
+                        mdi-filter
+                      </v-icon>
+                      <v-icon v-if="header.value === 'id'" small color="white" :color="colorIconFilterId()">
+                        mdi-filter
+                      </v-icon>
+                      <v-icon v-if="header.value === 'priority'" small color="white":color="colorIconFilterPriority()">
                         mdi-filter
                       </v-icon>
                     </v-btn>
@@ -150,8 +156,9 @@ let listSelectedRulesPriority = ref([]);
 let ruleMessage = ref(null);
 let isLoading = ref(true);
 let rulesFiltered = ref([]);
-let selectedCheckbox = ref([]);
+let selectedCheckbox = ref(["Tous"]);
 let selectedPriority = ref("Toutes");
+let selectedId = ref("Tous");
 
 onMounted(() => {
   feedItems();
@@ -165,6 +172,25 @@ function resetSelector() {
   rulesFiltered.value = items.value;
   selectedCheckbox.value = "Tous";
   selectedPriority.value = "Toutes";
+  selectedId.value = "Tous";
+}
+
+function colorIconFilterTypeDoc() {
+  if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
+    return 'white';
+  } else return '#e69275';
+}
+
+function colorIconFilterId() {
+  if (selectedId.value === "Tous") {
+    return 'white';
+  } else return '#e69275';
+}
+
+function colorIconFilterPriority() {
+  if (selectedPriority.value === "Toutes") {
+    return 'white';
+  } else return '#e69275';
 }
 
 /**
@@ -248,6 +274,7 @@ function feedRulesPriorityList() {
  * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
  */
 function eventTypeDocChoice(element) {
+  selectedId.value = "Tous";
   if (element === "Tous") {
     selectedTypeDoc.value = new Array(element.toString());
   } else {
@@ -270,17 +297,18 @@ function eventTypeDocChoice(element) {
 
 /**
  * Fonction qui permet d'afficher une règle selon l'id sélectionné par l'utilisateur
- * @param selectedId l'id sélectionné
+ * @param ruleId l'id sélectionné
  * @returns {UnwrapRef<[]>}
  */
-function filterRulesById(selectedId) {
+function filterRulesById(ruleId) {
   selectedTypeDoc.value = selectedCheckbox.value = new Array("Tous");
   selectedPriority.value = "Toutes";
-  if (selectedId !== "Tous") {
+  selectedId.value = ruleId;
+  if (ruleId !== "Tous") {
     rulesFiltered.value = items.value.filter(item => {
-      return item.id === selectedId;
+      return item.id === ruleId;
     });
-  } else if (selectedId === "Tous") {
+  } else if (ruleId === "Tous") {
     return rulesFiltered.value = items.value;
   }
 }
@@ -320,6 +348,7 @@ function filterRulesByTypeDoc(){
  * @returns {Ref<UnwrapRef<[]>>}
  */
 function filterRulesByPriority(priority) {
+  selectedId.value = "Tous";
   if (selectedTypeDoc.value.length === 0 && priority.toString() === "Toutes") { //  si aucun type de document n'a été sélectionné au préalable et priorité "Toutes"
     rulesFiltered.value = items.value;
   } else if (selectedTypeDoc.value.length === 0 && priority.toString() !== "Toutes") {  //  si aucun type de document n'a été sélectionné au préalable et priorité différente de "Toutes"
@@ -351,6 +380,10 @@ function filterRulesByPriority(priority) {
 
 .avancee{
   font-weight: 400;
+}
+
+.orange{
+  color: #252C61;
 }
 
 </style>

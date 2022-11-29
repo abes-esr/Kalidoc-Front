@@ -26,7 +26,7 @@
           <v-menu offset-y v-if="header.value === 'typeDocument'">
             <template v-slot:activator="{ on, attrs }">
               <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                <v-icon small color="white">
+                <v-icon small color="white" :color="colorIconFilterTypeDoc()">
                   mdi-filter
                 </v-icon>
               </v-btn>
@@ -126,6 +126,13 @@ watchEffect(() => {
     feedItems()
   }
 })
+
+function colorIconFilterTypeDoc() {
+  if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
+    return 'white';
+  } else return '#e69275';
+}
+
 /**
  * fonction permetant de recuperer les ppns du store
  */
