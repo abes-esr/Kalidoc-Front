@@ -178,19 +178,19 @@ function resetSelector() {
 function colorIconFilterTypeDoc() {
   if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
     return 'white';
-  } else return '#e69275';
+  } else return '#FFC1AB';
 }
 
 function colorIconFilterId() {
   if (selectedId.value === "Tous") {
     return 'white';
-  } else return '#e69275';
+  } else return '#FFC1AB';
 }
 
 function colorIconFilterPriority() {
   if (selectedPriority.value === "Toutes") {
     return 'white';
-  } else return '#e69275';
+  } else return '#FFC1AB';
 }
 
 /**
