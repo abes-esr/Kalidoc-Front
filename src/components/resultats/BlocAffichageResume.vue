@@ -11,7 +11,7 @@
         :headers="headers"
         :loading="loading"
         loading-text="Chargement..."
-        :items="filterPpnByType()"
+        :items="ppnFiltered"
         :item-class="classItemMasked"
         @click:row="sendCurrentPpnToParent"
         @current-items="sendItemsToParent"
@@ -26,15 +26,16 @@
           <v-menu offset-y v-if="header.value === 'typeDocument'">
             <template v-slot:activator="{ on, attrs }">
               <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                <v-icon small color="white">
+                <v-icon small color="white" :color="colorIconFilterTypeDoc()">
                   mdi-filter
                 </v-icon>
               </v-btn>
             </template>
             <div style='background-color:white;color: black;' class="pl-4 pr-8">
               <v-btn class="d-block" plain v-for="type in selectType" :key="type.id" @click="eventTypeChoice(type)">
-                {{ type }}
+                <v-checkbox v-model="selectedCheckbox" :label="type" :value="type"></v-checkbox>
               </v-btn>
+              <div style="height: 30px"></div>
             </div>
           </v-menu>
         <span style='color: white;'>
@@ -106,13 +107,15 @@ const items = ref([]);
 const winibwRequest = ref('null');
 const dialog = ref(false);
 const selectType = ref([]);
-const type = ref(null);
-let ppnFiltered = [];
+const selectedTypeDoc = ref(new Array("Tous"));
+const ppnFiltered = ref([]);
 const modelDataTable = ref([]);
+const selectedCheckbox = ref([]);
 
 onMounted(() => {
   feedItems();
   feedTypeList();
+  ppnFiltered.value = items.value;
 })
 
 watchEffect(() => {
@@ -123,6 +126,13 @@ watchEffect(() => {
     feedItems()
   }
 })
+
+function colorIconFilterTypeDoc() {
+  if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
+    return 'white';
+  } else return '#e69275';
+}
+
 /**
  * fonction permetant de recuperer les ppns du store
  */
@@ -146,7 +156,7 @@ function feedItems(){
  */
 function getPpnList() {
   let ppnList = [];
-  let listItems = (ppnFiltered.length === 0 || type.value === null) ? items.value : ppnFiltered;
+  let listItems = (ppnFiltered.value.length === 0 || selectedTypeDoc.value === "Tous") ? items.value : ppnFiltered.value;
   listItems.forEach(item => {
     ppnList.push(item.ppn);
   });
@@ -179,7 +189,8 @@ function displayPopup(request) {
  * Fonction permettant de savoir si le bouton de génération de la requête winibw est désactivé
  */
 function isWinibwButtonDisabled() {
-  return filterPpnByType().length === 0;
+  // return filterPpnByType().length === 0;
+  return ppnFiltered.value.length === 0;
 }
 
 /**
@@ -213,23 +224,64 @@ function sendItemsToParent(items) {
   emit("onChangeItems", items);
 }
 
-function eventTypeChoice(element) {
-  type.value = (element === "Tous") ? null : element;
-  return filterPpnByType();
+/**
+ * Function qui permet de récupérer le selectedTypeDoc de document sélectionné
+ * et de modifier la liste de selectedTypeDoc de document
+ * @param type
+ * @returns {Ref<UnwrapRef<[]>>}
+ */
+function eventTypeChoice(type) {
+  if (type === "Tous") {
+    selectedTypeDoc.value = new Array(type);
+  } else {
+    if (selectedTypeDoc.value.length > 0) {
+      if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si un "Tous" est présent dans le selectedTypeDoc
+        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf("Tous"), 1);
+      }
+      if (selectedTypeDoc.value.indexOf(type) === -1) {  //  Ajout un selectedTypeDoc s'il n'est pas déjà dans la liste selectedTypeDoc
+        selectedTypeDoc.value.push(type);
+      } else if (selectedTypeDoc.value.indexOf(type) >= 0) { //  Supprime un selectedTypeDoc coché lorsque l'on clique de nouveau sur lui
+        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(type), 1);
+      }
+    } else {
+      selectedTypeDoc.value = new Array(type);
+    }
+  }
+  selectedCheckbox.value = selectedTypeDoc.value;
+  filterPpnByType();
 }
 
+/**
+ * Function qui permet de trier la liste de item à afficher dans la dataTable
+ * en fonction du.des types de documents
+ * sélectionnés
+ * @returns {Ref<UnwrapRef<[]>>}
+ */
 function filterPpnByType(){
-    if (type.value !== null) {
-      ppnFiltered = items.value.filter(item => {
-          return item.typeDocument === type.value;
-      });
-      return ppnFiltered;
+    if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si le selectedTypeDoc choisi est tous
+    ppnFiltered.value = items.value;
+    } else if (selectedTypeDoc.value.length >= 1 && selectedTypeDoc.value.indexOf("Tous") === -1) {  //  Si le selectedTypeDoc choisi n'est pas "Tous"
+      ppnFiltered.value = new Array(0);
+      let tempRulesFilterByTypeDocList = new Set();
+      for(let i = 0; i < selectedTypeDoc.value.length; i++) {
+        let tempList = items.value.filter(item => {
+          return item['typeDocument'].toLocaleLowerCase().includes(selectedTypeDoc.value[i].toString().toLocaleLowerCase())
+        });
+        tempList.forEach(item => {
+          tempRulesFilterByTypeDocList.add(item);
+        })
+      }
+      tempRulesFilterByTypeDocList.forEach(item => {
+        ppnFiltered.value.push(item)
+      })
+    } else if (selectedTypeDoc.value.length === 0) { //  Si aucun selectedTypeDoc n'est sélectionné
+      ppnFiltered.value = items.value;
+      selectedTypeDoc.value = selectedCheckbox.value = new Array("Tous");
     }
-    return items.value;
 }
 
 function updateItemSelected(ppn){
-  let itemByType = filterPpnByType()
+  let itemByType = ppnFiltered.value;
   modelDataTable.value = [];
   modelDataTable.value.push(itemByType[itemByType.map(item => item.ppn).indexOf(ppn)]);
 }
