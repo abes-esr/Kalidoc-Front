@@ -138,7 +138,7 @@ const headers =[
   { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID Règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
   { text: "Zone UNM 1", value: "zoneUnm1", class: "headerTableClass", width: 30},
   { text: "Zone UNM 2", value: "zoneUnm2", class: "headerTableClass", width: 30},
-  { text: "Type de document", value: "typeDoc", class: "headerTableClass", width: 80},
+  { text: "Type de document couvert par la règle", value: "typeDoc", class: "headerTableClass", width: 160},
   { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ];
