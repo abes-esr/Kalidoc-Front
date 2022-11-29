@@ -85,21 +85,21 @@
 }
 
 .borderAddPpn {
-    border-style: solid;
-    border-color: #252c61;
-    border-top-width:4px;
-    border-right-width:1px;
-    border-bottom-width:0;
-    border-left-width:1px;
+    border-style: solid!important;
+    border-color: #252c61!important;
+    border-top-width:4px!important;
+    border-right-width:1px!important;
+    border-bottom-width:0!important;
+    border-left-width:1px!important;
 }
 
 .borderAddPpnBottom {
-    border-style: solid;
-    border-color: #252c61;
-    border-top-width:0;
-    border-right-width:1px;
-    border-bottom-width:1px;
-    border-left-width:1px;
+    border-style: solid!important;
+    border-color: #252c61!important;
+    border-top-width:0!important;
+    border-right-width:1px!important;
+    border-bottom-width:1px!important;
+    border-left-width:1px!important;
 }
 
 .borderSelectAnalyseType {
