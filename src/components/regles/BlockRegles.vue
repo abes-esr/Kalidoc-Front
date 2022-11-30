@@ -8,11 +8,10 @@
       <!--            BOUTON EFFACER LES FILTRES-->
       <v-col class="pt-4">
         <v-row class="ma-0 pa-0" justify="center">
-          <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">{{ selector }}</span>
           <v-tooltip left>
             <template v-slot:activator="{on}">
               <v-btn class="ma-0" small outlined color="#cf491b" @click="resetSelector()" v-on="on">
-                Effacer tous les filtres
+                  Effacer tous les filtres
                 <v-icon class="ml-2" small color="#cf491b">
                   mdi-filter-remove
                 </v-icon>
@@ -20,6 +19,9 @@
             </template>
             <span>Effacer tous les filtres actifs</span>
           </v-tooltip>
+        </v-row>
+        <v-row class="ma-0 pa-0" justify="center">
+          <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">Type de document : {{ selectedTypeDoc.toString() }}<br>Priorité : {{ selectedPriority.toString() }}</span>
         </v-row>
       </v-col>
       <!--            BOUTON TELECHARGER LES REGLES-->
@@ -39,14 +41,13 @@
         </v-row>
       </v-col>
     </v-row>
-
     <!--          Container de formatage des bordures de la data table-->
     <v-data-table id="bgColorIdColumnRulesTable"
                   class="pa-0 ma-0 borderBlocElements"
                   :headers="headers"
                   loading-text="Chargement..."
                   :loading="isLoading"
-                  :items="filterRulesBySelector()"
+                  :items="rulesFiltered"
                   :item-class="classItemPriority"
                   :search="ruleMessage"
                   :custom-filter="searchByMessage"
@@ -86,28 +87,33 @@
         <v-menu offset-y v-if="header.value === 'id' || header.value === 'typeDoc' || header.value === 'priority'">
           <template v-slot:activator="{ on, attrs }">
             <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-              <v-icon small color="white">
+              <v-icon v-if="header.value === 'typeDoc'" small :color="colorIconFilterTypeDoc()">
+                mdi-filter
+              </v-icon>
+              <v-icon v-if="header.value === 'id'" small :color="colorIconFilterId()">
+                mdi-filter
+              </v-icon>
+              <v-icon v-if="header.value === 'priority'" small :color="colorIconFilterPriority()">
                 mdi-filter
               </v-icon>
             </v-btn>
           </template>
           <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-            <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) && addSelector(ruleTypeDoc)">
-              {{ ruleTypeDoc }}
-            </v-btn>
+            <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) ">
+              <v-checkbox v-model="selectedCheckbox" :label="ruleTypeDoc" :value="ruleTypeDoc"></v-checkbox>
+            </v-btn><div style="height: 30px"></div>
           </div>
           <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'id'">
-            <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="eventIdChoice(ruleId) && addSelector(ruleId)">
+            <v-btn class="d-block" plain v-for="ruleId in listSelectedRulesId" :key="ruleId.value" @click="filterRulesById(ruleId)">
               {{ ruleId }}
             </v-btn>
           </div>
           <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'priority'">
-            <v-btn class="d-block" plain v-for="rulePriority in listSelectedRulesPriority" :key="rulePriority.value" @click="eventPriorityChoice(rulePriority) && addSelector(rulePriority)">
+            <v-btn class="d-block" plain v-for="rulePriority in listSelectedRulesPriority" :key="rulePriority.value" @click="(selectedPriority = rulePriority) && filterRulesByPriority(rulePriority)">
               {{ rulePriority }}
             </v-btn>
           </div>
         </v-menu>
-
         <!--                Suppression de l'icône de tri pour la colonne "Règle de vérification / qualité"-->
         <v-icon color="white" small v-if="header.value !== 'message'">mdi-sort</v-icon>
       </template>
@@ -124,23 +130,21 @@ const headers =[
   { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID Règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
   { text: "Zone UNM 1", value: "zoneUnm1", class: "headerTableClass", width: 30},
   { text: "Zone UNM 2", value: "zoneUnm2", class: "headerTableClass", width: 30},
-  { text: "Type de document", value: "typeDoc", class: "headerTableClass", width: 80},
+  { text: "Type de document concerné par la règle", value: "typeDoc", class: "headerTableClass", width: 160},
   { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ];
-const items = ref([]);
-const ruleId = ref(null);
-const listSelectedRulesId = ref([]);
-const ruleTypeDoc = ref(null);
-const listSelectedRulesTypeDoc = ref([]);
-const rulePriority = ref(null);
-const listSelectedRulesPriority = ref([]);
-const ruleMessage = ref(null);
-const selector = ref(null);
-const isLoading = ref(true);
-let rulesFiltered = [];
-
-//  TODO mettre des checkBox dans le menu déroulant des types de documents
+let items = ref([]);
+let listSelectedRulesId = ref([]);
+let selectedTypeDoc = ref(new Array("Tous"));
+let listSelectedRulesTypeDoc = ref([]);
+let listSelectedRulesPriority = ref([]);
+let ruleMessage = ref(null);
+let isLoading = ref(true);
+let rulesFiltered = ref([]);
+let selectedCheckbox = ref(["Tous"]);
+let selectedPriority = ref("Toutes");
+let selectedId = ref("Tous");
 
 onMounted(() => {
   feedItems();
@@ -150,20 +154,29 @@ onMounted(() => {
 })
 
 function resetSelector() {
-  ruleId.value = null;
-  ruleTypeDoc.value = null;
-  rulePriority.value = null;
-  rulesFiltered = items.value;
-  selector.value = null;
+  selectedTypeDoc.value = new Array("Tous");
+  rulesFiltered.value = items.value;
+  selectedCheckbox.value = "Tous";
+  selectedPriority.value = "Toutes";
+  selectedId.value = "Tous";
 }
 
-function addSelector(select) {
-  if (selector.value === null){
-    selector.value = select;
-  } else {
-    selector.value += ", " + select + " ";
-  }
+function colorIconFilterTypeDoc() {
+  if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
+    return 'white';
+  } else return '#FFC1AB';
+}
 
+function colorIconFilterId() {
+  if (selectedId.value === "Tous") {
+    return 'white';
+  } else return '#FFC1AB';
+}
+
+function colorIconFilterPriority() {
+  if (selectedPriority.value === "Toutes") {
+    return 'white';
+  } else return '#FFC1AB';
 }
 
 /**
@@ -236,7 +249,7 @@ function feedIdList() {
  * Fonction permettant de remplir le liste des règles de priorité affichées dans le filtre
  */
 function feedRulesPriorityList() {
-  listSelectedRulesPriority.value.push("Tous");
+  listSelectedRulesPriority.value.push("Toutes");
   listSelectedRulesPriority.value.push("Essentielle");
   listSelectedRulesPriority.value.push("Avancée");
 }
@@ -247,113 +260,99 @@ function feedRulesPriorityList() {
  * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
  */
 function eventTypeDocChoice(element) {
-  ruleTypeDoc.value = (element === "Tous") ? null : element;
-  return filterRulesByTypeDoc();
+  selectedId.value = "Tous";
+  if (element === "Tous") {
+    selectedTypeDoc.value = new Array(element);
+  } else {
+    if (selectedTypeDoc.value.length > 0) {
+      if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si un "Tous" est présent dans le selectedTypeDoc
+        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf("Tous"), 1);
+      }
+      if (selectedTypeDoc.value.indexOf(element) === -1) {  //  Ajout un typeDoc s'il n'est pas déjà dans la liste selectedTypeDoc
+        selectedTypeDoc.value.push(element.toString());
+      } else if (selectedTypeDoc.value.indexOf(element) >= 0) { //  Supprime un typeDoc coché lorsque l'on clique de nouveau sur lui
+        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(element), 1);
+      }
+    } else {
+      selectedTypeDoc.value = new Array(element.toString());
+    }
+  }
+  selectedCheckbox.value = selectedTypeDoc.value;
+  filterRulesByTypeDoc();
 }
 
 /**
- * Fonction qui permet d'afficher les Id sélectionnés par l'utilisateur
- * @param element l'élément sélectionné
- * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
+ * Fonction qui permet d'afficher une règle selon l'id sélectionné par l'utilisateur
+ * @param ruleId l'id sélectionné
+ * @returns {UnwrapRef<[]>}
  */
-function eventIdChoice(element) {
-  ruleId.value = (element === "Tous") ? null : element;
-  return filterRulesById();
-}
-
-/**
- * Fonction qui permet d'afficher les Priority sélectionnés par l'utilisateur
- * @param element l'élément sélectionné
- * @returns {*[] | []} appelle la fonction d'affichage des Priority sélectionnés par l'utilisateur
- */
-function eventPriorityChoice(element) {
-  rulePriority.value = (element === "Tous") ? null : element;
-  return filterRulesByPriority();
-}
-
-/**
- * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par Id, typeDoc ou Priority
- * @returns {[]|[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
- */
-function filterRulesBySelector() {
-  if (ruleId.value === null && ruleTypeDoc.value === null && rulePriority.value === null) {
-    return items.value;
-  } else if (ruleId.value !== null) {
-    return filterRulesById();
-  } else if (ruleTypeDoc.value !== null) {
-    return filterRulesByTypeDoc();
-  } else if (rulePriority.value !== null) {
-    return filterRulesByPriority();
-  } else return items.value;
-}
-
-/**
- * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par Id
- * @returns {[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
- */
-function filterRulesById(){
-  if (ruleId.value !== null) {
-    ruleTypeDoc.value = null;
-    rulePriority.value = null;
-    ruleMessage.value = null;
-    rulesFiltered = items.value.filter(item => {
-      return item.id === ruleId.value;
+function filterRulesById(ruleId) {
+  selectedTypeDoc.value = selectedCheckbox.value = new Array("Tous");
+  selectedPriority.value = "Toutes";
+  selectedId.value = ruleId;
+  if (ruleId !== "Tous") {
+    rulesFiltered.value = items.value.filter(item => {
+      return item.id === ruleId;
     });
-    return rulesFiltered;
+  } else if (ruleId === "Tous") {
+    rulesFiltered.value = items.value;
   }
 }
 
 /**
- * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par typeDoc
- * @returns {[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
+ * Function qui permet de filtrer par type de document
+ * @returns {Ref<UnwrapRef<[]>>}
  */
 function filterRulesByTypeDoc(){
-  if (ruleTypeDoc.value !== null) {
-    if(rulesFiltered !== null) {// Si un sélecteur est déjà appliqué
-      let tempRulesFiltered = rulesFiltered;
-      rulesFiltered = [];
-      rulesFiltered = tempRulesFiltered.filter(tempRulesFiltered => {
-        return tempRulesFiltered.typeDoc.toLocaleLowerCase().includes(ruleTypeDoc.value.toLocaleLowerCase());
+  if (selectedTypeDoc.value.length === 1 && selectedTypeDoc.value.indexOf("Tous") >= 0) {  //  Si le typeDoc est "Tous"
+    rulesFiltered.value = items.value;
+    selectedTypeDoc.value = new Array("Tous");
+  } else if (selectedTypeDoc.value.length >= 1 && selectedTypeDoc.value.indexOf("Tous") === -1) { //  Si le typeDoc ne contient pas "Tous"
+    rulesFiltered.value = new Array(0);
+    let tempRulesFilterByTypeDocList = new Set();
+    for(let i = 0; i < selectedTypeDoc.value.length; i++) {
+      let tempList = items.value.filter(item => {
+        return item['typeDoc'].toLocaleLowerCase().includes(selectedTypeDoc.value[i].toString().toLocaleLowerCase())
       });
-    } else {
-      { // Si aucun sélecteur n'est appliqué
-        rulesFiltered = items.value.filter(item => {
-          return item.typeDoc.toLocaleLowerCase().includes(ruleTypeDoc.value.toLocaleLowerCase());
-        });
-      }
+      tempList.forEach(item => {
+        tempRulesFilterByTypeDocList.add(item);
+      })
     }
-    ruleId.value = null;
-    rulePriority.value = null;
-    ruleMessage.value = null;
-    return rulesFiltered;
+    tempRulesFilterByTypeDocList.forEach(item => {
+      rulesFiltered.value.push(item)
+    })
+  } else if (selectedTypeDoc.value.length === 0) {  //  Si le typeDoc est vide
+    rulesFiltered.value = items.value;
+    selectedTypeDoc.value = new Array("Tous");
   }
 }
 
 /**
- * Fonction qui permet de remplir la liste des items sélectionnés par l'utilisateur par Priority
- * @returns {[]|UnwrapRef<[]>} les items sélectionnés pas l'utilsateur
+ * Function qui permet de filtrer par priorité
+ * @param priority la priorité choisie par l'utilisateur
+ * @returns {Ref<UnwrapRef<[]>>}
  */
-function filterRulesByPriority(){
-    if (rulePriority.value !== null) {
-      if(rulesFiltered !== null) {// Si un sélecteur est déjà appliqué
-        let tempRulesFiltered = rulesFiltered;
-        rulesFiltered = [];
-        rulesFiltered = tempRulesFiltered.filter(tempRulesFiltered => {
-          return tempRulesFiltered.priority === rulePriority.value;
-        });
-      } else {
-        { // Si aucun sélecteur n'est appliqué
-          rulesFiltered = items.value.filter(item => {
-            return item.priority === rulePriority.value;
-          });
-        }
-      }
-      ruleId.value = null;
-      ruleTypeDoc.value = null;
-      ruleMessage.value = null;
-      return rulesFiltered;
-    }
+function filterRulesByPriority(priority) {
+  selectedId.value = "Tous";
+  if (selectedTypeDoc.value.length === 0 && priority.toString() === "Toutes") { //  si aucun type de document n'a été sélectionné au préalable et priorité "Toutes"
+    rulesFiltered.value = items.value;
+  } else if (selectedTypeDoc.value.length === 0 && priority.toString() !== "Toutes") {  //  si aucun type de document n'a été sélectionné au préalable et priorité différente de "Toutes"
+    rulesFiltered.value = items.value.filter(rule => {
+      return rule['priority'].toString().toLocaleLowerCase() === priority.toString().toLocaleLowerCase();
+    });
+  } else if (selectedTypeDoc.value.length !== 0 && priority.toString() !== "Toutes") {  //  si un/des type.s de document a/ont été sélectionné.s au préalable et priorité différente de "Toutes"
+      filterRulesByTypeDoc();
+      let tempRulesList = rulesFiltered.value.filter(rule => {
+        return rule['priority'].toString().toLocaleLowerCase() === priority.toString().toLocaleLowerCase();
+      });
+      rulesFiltered.value = new Array(0);
+      tempRulesList.forEach(tempRule => {
+        rulesFiltered.value.push(tempRule)
+      });
+  } else if (selectedTypeDoc.value.length !== 0 && priority.toString() === "Toutes") {  //  si un/des type.s de document a/ont été sélectionné.s au préalable et priorité "Toutes"
+    filterRulesByTypeDoc();
   }
+}
 
 </script>
 
