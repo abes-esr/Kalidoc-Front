@@ -1,16 +1,9 @@
 <template>
-  <div>
-    <span>Type d'analyse choisi : {{ typeAnalyse.label }}</span>
-  </div>
+  <span>Type d'analyse choisi : {{ analyseStore.getAnalyseSelected.label }}</span>
 </template>
 
 <script setup>
-  import { useAnalyseStore } from "@/stores/analyse";
-  import { ref } from 'vue';
+import { useAnalyseStore } from "@/stores/analyse";
 
-  const analyseStore = useAnalyseStore();
-  const typeAnalyse = ref(getTypeAnalyse())
-  function getTypeAnalyse() {
-    return analyseStore.getAnalyseSelected;
-  }
+const analyseStore = useAnalyseStore();
 </script>
