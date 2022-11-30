@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-card flat>
     <v-btn @click="emitOnClick" depressed color="#CF4A1A" class="button" :disabled="props.isDisabled">
       <v-icon color="white" class="ml-2">mdi-cog-refresh</v-icon>
     </v-btn>
-  </v-container>
+  </v-card>
 </template>
 
 <script setup>
@@ -13,7 +13,7 @@ const emit = defineEmits(['onClick']);
 function generateWinibwRequest() {
   let request = 'che';
   props.ppnList.forEach((ppn, index) => {
-    if (index == 0)
+    if (index === 0)
       request += ' ppn ' + ppn;
     else
       request += ' OU ppn ' + ppn;
@@ -25,7 +25,3 @@ function emitOnClick() {
   emit('onClick', generateWinibwRequest());
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -1,5 +1,4 @@
 //Stockage des différents résultats retournés du back-end
-
 import { defineStore } from 'pinia'
 
 export const useResultatStore = defineStore('resultat', {
