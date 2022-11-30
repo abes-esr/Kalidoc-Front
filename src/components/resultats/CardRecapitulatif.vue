@@ -50,19 +50,19 @@ const props = defineProps({
 const resultatStore = useResultatStore();
 
 function getNbPpnTotal(numeroLancement) {
-  return resultatStore.getNbPpnTotal[numeroLancement];
+  return resultatStore.getRecapitulatif[numeroLancement].nbPpnTotal;
 }
 
 function getNbPpnInconnus(numeroLancement) {
-  return resultatStore.getNbPpnInconnus[numeroLancement];
+  return resultatStore.getRecapitulatif[numeroLancement].nbPpnInconnus;
 }
 
 function getNbPpnErreurs(numeroLancement) {
-  return resultatStore.getNbPpnErreurs[numeroLancement];
+  return resultatStore.getRecapitulatif[numeroLancement].nbPpnErreurs;
 }
 
 function getNbPpnOk(numeroLancement) {
-  return resultatStore.getNbPpnOk[numeroLancement];
+  return resultatStore.getRecapitulatif[numeroLancement].nbPpnOk;
 }
 </script>
 <style scoped>

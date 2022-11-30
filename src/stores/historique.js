@@ -2,7 +2,7 @@
 
 import { defineStore } from 'pinia'
 
-export const useRequeteStore = defineStore('historique', {
+export const useHistoriqueStore = defineStore('historique', {
     /*
      * Date: null,
      * analyse:
@@ -35,14 +35,21 @@ export const useRequeteStore = defineStore('historique', {
         }
     },
     getters: {
-        getHistorique: (state) => state.ppnList,
+        getHistorique: (state) => state.requestHistoriqueList,
     },
     actions: {
-        setHistorique(requestListInArray) {
-            this.requestHistoriqueList = requestListInArray;
+        createNewHistorique(analyse, resultat) {
+            this.requestHistoriqueList.push({
+                date: new Date(),
+                analyse: analyse,
+                resultats: [resultat]
+            });
+            console.log(this.requestHistoriqueList);
         },
-        pushHistoriqueElement(requestInString) {
-            this.requestHistoriqueList.push(requestInString)
+        pushReplayedResultatToLastHistorique(resultat) {
+            console.log("pushReplayedResultatToLastHistorique");
+            console.log(state.requestHistoriqueList);
+            this.requestHistoriqueList[this.requestHistoriqueList.length].resultats.push(resultat);
         }
     }
 })

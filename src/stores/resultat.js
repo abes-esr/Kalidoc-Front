@@ -5,37 +5,25 @@ export const useResultatStore = defineStore('resultat', {
   state: () => {
     return {
       resultsList: [],
-      nbPpnTotal: [],
-      nbPpnInconnus: [],
-      nbPpnErreurs:[],
-      nbPpnOk:[],
+      recapitulatif: [],
     }
   },
   getters: {
     getResultsList: (state) => state.resultsList,
-    getNbPpnTotal: (state) => state.nbPpnTotal,
-    getNbPpnInconnus: (state) => state.nbPpnInconnus,
-    getNbPpnErreurs: (state) => state.nbPpnErreurs,
-    getNbPpnOk: (state) => state.nbPpnOk
+    getRecapitulatif: (state) => state.recapitulatif,
+    getLastRecapitulatif: (state) => state.recapitulatif[state.recapitulatif.length-1],
   },
   actions: {
     setResultsListArray(resultsListInArray) {
       this.resultsList = resultsListInArray;
     },
-    pushRequestListOneElement(resultsInString) {
-      this.resultsList.push(resultsInString)
+    pushRecapitulatif(nbPpnTotal, nbPpnInconnus, nbPpnErreurs, nbPpnOk) {
+      this.recapitulatif.push({
+        nbPpnTotal: nbPpnTotal,
+        nbPpnInconnus: nbPpnInconnus,
+        nbPpnErreurs: nbPpnErreurs,
+        nbPpnOk: nbPpnOk
+      })
     },
-    pushNbPpnTotal(ppnTotal) {
-      this.nbPpnTotal.push(ppnTotal);
-    },
-    pushNbPpnInconnus(ppnInconnus) {
-      this.nbPpnInconnus.push(ppnInconnus);
-    },
-    pushNbPpnErreurs(ppnErreurs) {
-      this.nbPpnErreurs.push(ppnErreurs);
-    },
-    pushNbPpnOk(ppnOk) {
-      this.nbPpnOk.push(ppnOk);
-    }
   }
 })

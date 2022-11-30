@@ -32,7 +32,7 @@
         flat
         class="float-right ma-0 pa-0"
         >
-          <bouton-lancement class="ma-0 pa-0 " @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
+          <bouton-lancement class="ma-0 pa-0"  :is-replay="true" @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
         </v-card>
       </v-col>
     </v-row>
@@ -102,7 +102,7 @@ function goToHome() {
 }
 
 function updateNbLancement() {
-  nbLancement.value = resultatStore.getNbPpnTotal.length;
+  nbLancement.value = resultatStore.getRecapitulatif.length;
 }
 </script>
 <style scoped>
