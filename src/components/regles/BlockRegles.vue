@@ -126,7 +126,7 @@ import {ref, onMounted} from "vue";
 import QualimarcService from "@/service/QualimarcService";
 
 const serviceApi = QualimarcService;
-const headers =[
+let headers = [
   { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID Règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
   { text: "Zone UNM 1", value: "zoneUnm1", class: "headerTableClass", width: 30},
   { text: "Zone UNM 2", value: "zoneUnm2", class: "headerTableClass", width: 30},
@@ -134,17 +134,17 @@ const headers =[
   { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ];
-let items = ref([]);
-let listSelectedRulesId = ref([]);
-let selectedTypeDoc = ref(new Array("Tous"));
-let listSelectedRulesTypeDoc = ref([]);
-let listSelectedRulesPriority = ref([]);
-let ruleMessage = ref(null);
-let isLoading = ref(true);
-let rulesFiltered = ref([]);
-let selectedCheckbox = ref(["Tous"]);
-let selectedPriority = ref("Toutes");
-let selectedId = ref("Tous");
+const items = ref([]);
+const listSelectedRulesId = ref([]);
+const selectedTypeDoc = ref(new Array("Tous"));
+const listSelectedRulesTypeDoc = ref([]);
+const listSelectedRulesPriority = ref([]);
+const ruleMessage = ref(null);
+const isLoading = ref(true);
+const rulesFiltered = ref([]);
+const selectedCheckbox = ref(["Tous"]);
+const selectedPriority = ref("Toutes");
+const selectedId = ref("Tous");
 
 onMounted(() => {
   feedItems();
@@ -161,7 +161,7 @@ function resetSelector() {
   selectedId.value = "Tous";
 }
 
-function colorIconFilterTypeDoc() {
+function colorIconFilterTypeDoc(item) {
   if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
     return 'white';
   } else return '#FFC1AB';
