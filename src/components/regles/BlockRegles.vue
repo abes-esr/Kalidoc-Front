@@ -161,7 +161,7 @@ function resetSelector() {
   selectedId.value = "Tous";
 }
 
-function colorIconFilterTypeDoc(item) {
+function colorIconFilterTypeDoc() {
   if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
     return 'white';
   } else return '#FFC1AB';
