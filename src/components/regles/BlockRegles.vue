@@ -65,10 +65,9 @@
           <span>{{ header.tooltip}}</span>
         </v-tooltip>
         <!--                Autres headers-->
-        <span style='color: white;' v-if="header.value === 'zoneUnm1' || header.value === 'zoneUnm2' || header.value === 'typeDoc' || header.value === 'message' || header.value === 'priority'">
+        <span style='color: white;' v-else>
             {{ header.text }}<br>
         </span>
-
         <!--                Champ de recherche pour la colonne "Règles de vérification / qualité"-->
         <v-menu offset-y v-if="header.value === 'message'">
           <template v-slot:activator="{ on, attrs }">
@@ -82,7 +81,6 @@
             ></v-text-field>
           </template>
         </v-menu>
-
         <!--                Icônes de tri pour les ID, les types de documents et les types de règles-->
         <v-menu offset-y v-if="header.value === 'id' || header.value === 'typeDoc' || header.value === 'priority'">
           <template v-slot:activator="{ on, attrs }">

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="borderAddPpnBottom">
+  <v-container>
     <v-card flat class="d-flex justify-center py-5" style="margin-top: -70px;">
       <v-icon class="mr-3" color="black">mdi-chevron-double-up</v-icon>
       <span style="font-weight: 700">OU</span>

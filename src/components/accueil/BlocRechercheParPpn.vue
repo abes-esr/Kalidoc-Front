@@ -1,10 +1,6 @@
 <template>
   <v-container>
-    <v-row class="ma-0 pa-0">
-      <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
-      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
-    </v-row>
-    <v-card flat class="pa-2 ma-0 borderAddPpn">
+    <v-card flat class="pa-2 ma-0">
       <div class="pl-0 pr-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois</div>
       <v-combobox filled append-icon="" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-1">
         <template v-slot:selection="{item}">

@@ -3,8 +3,14 @@
     <div class="ml-1 mb-2 fontPrimaryColor">Outil d'analyse des notices bibliographiques du Sudoc</div>
     <v-row>
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
-        <bloc-recherche-par-ppn class="mb-0 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
-        <bloc-recherche-par-fichier-ppn class="mb-2 pa-0"></bloc-recherche-par-fichier-ppn>
+        <v-row class="ma-0 pa-0">
+          <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
+          <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
+        </v-row>
+        <div class="borderBlocElements">
+          <bloc-recherche-par-ppn class="mb-0 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
+          <bloc-recherche-par-fichier-ppn class="mb-2 pa-0"></bloc-recherche-par-fichier-ppn>
+        </div>
       </v-col>
       <v-col class="ma-2 pa-2" style="min-height: 34em">
         <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>

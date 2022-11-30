@@ -3,71 +3,70 @@
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
-    <v-card flat tile class="pa-0 ma-0 borderBlocElements">
-      <v-data-table
-          v-model="modelDataTable"
-          :headers="headers"
-          :loading="loading"
-          loading-text="Chargement..."
-          :items="ppnFiltered"
-          :item-class="classItemMasked"
-          @click:row="sendCurrentPpnToParent"
-          @current-items="sendItemsToParent"
-          single-select
-          item-key="ppn"
-          :footer-props="{
-            itemsPerPageOptions: [5,10,20,30,-1]
-          }"
-          dense
-      >
-        <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
-            <v-menu offset-y v-if="header.value === 'typeDocument'">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                  <v-icon small color="white" :color="colorIconFilterTypeDoc()">
-                    mdi-filter
-                  </v-icon>
-                </v-btn>
-              </template>
-              <div style='background-color:white;color: black;' class="pl-4 pr-8">
-                <v-btn class="d-block" plain v-for="type in selectType" :key="type.id" @click="eventTypeChoice(type)">
-                  <v-checkbox v-model="selectedCheckbox" :label="type" :value="type"></v-checkbox>
-                </v-btn>
-                <div style="height: 30px"></div>
+    <v-data-table
+        class="borderBlocElements"
+        v-model="modelDataTable"
+        :headers="headers"
+        :loading="loading"
+        loading-text="Chargement..."
+        :items="ppnFiltered"
+        :item-class="classItemMasked"
+        @click:row="sendCurrentPpnToParent"
+        @current-items="sendItemsToParent"
+        single-select
+        item-key="ppn"
+        :footer-props="{
+          itemsPerPageOptions: [5,10,20,30,-1]
+        }"
+        dense
+    >
+      <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
+          <v-menu offset-y v-if="header.value === 'typeDocument'">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
+                <v-icon small color="white" :color="colorIconFilterTypeDoc()">
+                  mdi-filter
+                </v-icon>
+              </v-btn>
+            </template>
+            <div style='background-color:white;color: black;' class="pl-4 pr-8">
+              <v-btn class="d-block" plain v-for="type in selectType" :key="type.id" @click="eventTypeChoice(type)">
+                <v-checkbox v-model="selectedCheckbox" :label="type" :value="type"></v-checkbox>
+              </v-btn>
+              <div style="height: 30px"></div>
+            </div>
+          </v-menu>
+        <span style='color: white;'>
+          {{ header.text }}
+          <v-icon color="white" small >mdi-sort</v-icon></span>
+      </template>
+      <template v-slot:item.affiche="{ item }">
+        <v-simple-checkbox
+            v-model="item.affiche"
+            on-icon="mdi-eye"
+            off-icon="mdi-eye-off-outline"
+            color="#CF4A1A"
+            dense
+        ></v-simple-checkbox>
+      </template>
+      <template v-slot:body.append>
+        <tr>
+          <td colspan="100%">
+            <div class="d-flex justify-space-between">
+              <div class="d-flex align-center">
+                <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
+                <span>Afficher/masquer tout</span>
               </div>
-            </v-menu>
-          <span style='color: white;'>
-            {{ header.text }}
-            <v-icon color="white" small >mdi-sort</v-icon></span>
-        </template>
-        <template v-slot:item.affiche="{ item }">
-          <v-simple-checkbox
-              v-model="item.affiche"
-              on-icon="mdi-eye"
-              off-icon="mdi-eye-off-outline"
-              color="#CF4A1A"
-              dense
-          ></v-simple-checkbox>
-        </template>
-        <template v-slot:body.append>
-          <tr>
-            <td colspan="100%">
-              <v-card flat class="d-flex justify-space-between">
-                <div class="d-flex align-center">
-                    <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
-                    <span>Afficher/masquer tout</span>
-                  </div>
-                  <div class="d-flex align-center">
-                    <span  class="pr-1">Générer la requête pour WinIBW</span>
-                    <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
-                  </div>
-                </v-card>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
-    </v-card>
+              <div class="d-flex align-center">
+                <span  class="pr-1">Générer la requête pour WinIBW</span>
+                <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </template>
+    </v-data-table>
+    <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
   </v-container>
 </template>
 
