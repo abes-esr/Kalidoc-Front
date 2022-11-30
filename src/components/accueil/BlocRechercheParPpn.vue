@@ -1,10 +1,6 @@
 <template>
   <v-container>
-    <v-row class="ma-0 pa-0">
-      <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
-      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
-    </v-row>
-    <v-container class="pa-2 ma-0 borderAddPpn">
+    <v-card flat class="pa-2 ma-0">
       <div class="pl-0 pr-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois</div>
       <v-combobox filled append-icon="" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-1">
         <template v-slot:selection="{item}">
@@ -13,7 +9,7 @@
           </v-chip>
         </template>
       </v-combobox>
-      <v-container class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" depressed small tile @click="removeAllItems" style="border: 1px solid grey; color: grey">Vider la liste de ppn<v-icon color="grey">mdi-delete</v-icon></v-btn></v-container>
+      <v-card flat class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" depressed small tile @click="removeAllItems" style="border: 1px solid grey; color: grey">Vider la liste de ppn<v-icon color="grey">mdi-delete</v-icon></v-btn></v-card>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
         Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
         <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
@@ -28,7 +24,7 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </v-alert>
-    </v-container>
+    </v-card>
   </v-container>
 </template>
 

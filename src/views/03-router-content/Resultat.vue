@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
-    <v-container class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
+    <v-card flat class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
       <v-icon @click="goToHome()">mdi-home</v-icon>
       <v-icon size="small">mdi-chevron-right</v-icon>
-        <span @click="goToHome()" class="v-slider__thumb" style="color: grey; text-decoration: none">Interface de vérification</span>
+      <span @click="goToHome()" class="v-slider__thumb" style="color: grey; text-decoration: none">Interface de vérification</span>
       <v-icon size="small">mdi-chevron-right</v-icon>
       Résultats de l'analyse
-    </v-container>
+    </v-card>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="6" lg="5" xl="5">
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
@@ -16,13 +16,13 @@
         <div class="ma-0 pa-0" style="position: relative">
           <v-tooltip left>
             <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
-                <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" v-on="on" color="#0F75BC">
-                  <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv">
-                    TÉLÉCHARGER TOUS<br/>
-                    LES RESULTATS
-                  </download-csv>
-                  <v-icon color="white" class="ml-2">mdi-download</v-icon>
-                </v-btn>
+              <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" elevation="0" v-on="on" color="#0F75BC">
+                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv">
+                  TÉLÉCHARGER TOUS<br/>
+                  LES RESULTATS
+                </download-csv>
+                <v-icon color="white" class="ml-2">mdi-download</v-icon>
+              </v-btn>
             </template>
             <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
           </v-tooltip>

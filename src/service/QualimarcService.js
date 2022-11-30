@@ -53,7 +53,5 @@ export class QualimarcService {
     getRules() {
         return this.client.get("rules")
     }
-
-
 }
 export default new QualimarcService();
