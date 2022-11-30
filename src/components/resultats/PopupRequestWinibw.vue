@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="props.dialog">
     <template v-slot:default="dialog">
-      <v-card>
+      <v-card color="white">
         <v-toolbar
             color="#252C61"
             dark
