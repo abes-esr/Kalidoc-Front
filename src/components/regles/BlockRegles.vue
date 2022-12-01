@@ -21,7 +21,7 @@
           </v-tooltip>
         </v-row>
         <v-row class="ma-0 pa-0" justify="center">
-          <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">Type de document : {{ selectedTypeDoc.toString() }}<br>Priorité : {{ selectedPriority.toString() }}</span>
+          <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">Type de document : {{ selectedTypeDoc.toString() }}<br>Type de règle : {{ selectedPriority.toString() }}</span>
         </v-row>
       </v-col>
       <!--            BOUTON TELECHARGER LES REGLES-->
