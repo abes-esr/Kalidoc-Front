@@ -250,6 +250,7 @@ function sendCurrentPpnToParent(item, row) {
 }
 
 function sendItemsToParent(items) {
+  itemsTrieAndFiltered = items;
   emit("onChangeItems", items);
 }
 
