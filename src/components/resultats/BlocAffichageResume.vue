@@ -5,8 +5,8 @@
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
-    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
     <v-data-table
+        class="borderBlocElements"
         v-model="modelDataTable"
         :headers="headers"
         :loading="loading"
@@ -53,32 +53,22 @@
       </template>
       <template v-slot:body.append>
         <tr>
-          <td colspan="2">
-            <table>
-              <tr>
-                <td>
-                  <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
-                </td>
-                <td>Afficher/masquer tout</td>
-              </tr>
-            </table>
-          </td>
-          <td colspan="2" >
-            <v-container class="d-flex flex-row-reverse">
-              <table>
-                <tr>
-                  <td>Générer la requête pour WinIBW</td><td><bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw></td>
-                </tr>
-              </table>
-            </v-container>
+          <td colspan="100%">
+            <div class="d-flex justify-space-between">
+              <div class="d-flex align-center">
+                <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
+                <span>Afficher/masquer tout</span>
+              </div>
+              <div class="d-flex align-center">
+                <span  class="pr-1">Générer la requête pour WinIBW</span>
+                <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
+              </div>
+            </div>
           </td>
         </tr>
       </template>
     </v-data-table>
-
     <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
-
-    </v-container>
   </v-container>
 </template>
 
