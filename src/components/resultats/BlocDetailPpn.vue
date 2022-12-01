@@ -26,9 +26,8 @@
             {{ header.text.split('|')[0] }}
             <v-icon color="grey" small >mdi-sort</v-icon>
             <br>
-            <v-icon x-small color="#6d7085" class="pr-1">mdi-checkbox-blank-circle-outline</v-icon>
-            <span style="font-weight: 500; color: #6d7085">{{ header.text.split('|')[1] }}</span>
-          </span>
+            <v-icon x-small color="#6d7085"class="pr-1">mdi-checkbox-blank-circle-outline</v-icon>
+            <span style="font-weight: 500; color: #6d7085"> {{ header.text.split('|')[1] }}</span></span>
           <span style="color: grey; font-weight: 600" v-else>
               {{ header.text }}
             <v-icon color="grey" small >mdi-sort</v-icon>
@@ -128,33 +127,48 @@ onUpdated(() => {
   feedCover();
 })
 
-function feedCover() {
-  const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
-  let ocn;
-  let isbn;
-  let typeDocument;
-  if (detailCurrentPpn.length > 0) {
-    ocn = detailCurrentPpn[0].ocn;
-    isbn = detailCurrentPpn[0].isbn;
-    typeDocument = detailCurrentPpn[0].typeDocument;
+
+  function nextSelectedItem() {
+    if(page.value < itemsPpnParent.value.length){
+      page.value++;
+      sendCurrentPpnToParent(itemsPpnParent.value[page.value-1].ppn);
+    }
   }
-  if (ocn !== '' && ocn !== undefined && ocn !== null) {
-    service.getCoverByOcn(ocn).then((response) => {
-      coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
-      if (coverLink.value === '') {
-        getCoverByIsbn(isbn);
-      }
-    }).catch((error) => {
-      emitOnError(error);
-    });
-  } else {
-    getCoverByIsbn(isbn);
+
+  function previousSelectedItem() {
+    if(page.value > 1){
+      page.value--;
+      sendCurrentPpnToParent(itemsPpnParent.value[page.value-1].ppn);
+    }
   }
-  if (coverLink.value === '') {
-    //pas de réponse du ws GB, on affiche une image correspondant au type de document de la notice
-    getIconTypeDocument(typeDocument);
+
+  function feedCover() {
+    const detailCurrentPpn = resultatStore.getResultsList.filter(result => result.ppn === props.currentPpn);
+    let ocn;
+    let isbn;
+    let typeDocument;
+    if (detailCurrentPpn.length > 0) {
+      ocn = detailCurrentPpn[0].ocn;
+      isbn = detailCurrentPpn[0].isbn;
+      typeDocument = detailCurrentPpn[0].typeDocument;
+    }
+    if (ocn !== '' && ocn !== undefined && ocn !== null) {
+      service.getCoverByOcn(ocn).then((response) => {
+        coverLink.value = response.data.items[0].volumeInfo.imageLinks.thumbnail;
+        if (coverLink.value === '') {
+          getCoverByIsbn(isbn);
+        }
+      }).catch((error) => {
+        emitOnError(error);
+      });
+    } else {
+      getCoverByIsbn(isbn);
+    }
+    if (coverLink.value === '') {
+      //pas de réponse du ws GB, on affiche une image correspondant au type de document de la notice
+      getIconTypeDocument(typeDocument);
+    }
   }
-}
 
 function getCoverByIsbn(isbn) {
   //pas de retour avec OCN, on tente avec ISBN
