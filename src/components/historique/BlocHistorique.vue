@@ -2,9 +2,9 @@
   <v-container align-items="center">
 
     <v-row class="mb-2 px-4" justify="space-between">
-      <!--            TITRE-->
+      <!--      TITRE     -->
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
-      <!--            BOUTON EFFACER LES FILTRES-->
+      <!--      BOUTON ENREGISTRER LES ANALYSES      -->
       <v-btn class="mx-0" depressed @click="" color="blue" small>
         <span style="color: white">Enregistrer les analyses</span>
         <v-icon color="white" small>mdi-download</v-icon>
@@ -17,28 +17,38 @@
         </v-alert>
       </v-row>
 
+      <!--      TIMELINE      -->
       <v-timeline align-top dense clipped style="width: 100%">
 
+        <!--      TRAITEMENT PAR ANALYSE      -->
         <v-timeline-item v-for="analyse in analyseList.slice().reverse()" color="lightgrey">
+          <!--      AFFICHAGE DU NUMERO DE L'ANALYSE DANS LA PUCE     -->
           <template v-slot:icon>
             <span style="color: #cf491b; font-weight: 400; font-size: 1.2em">{{ analyseList.indexOf(analyse) +1 }}</span>
           </template>
+          <!--      EXPANSION PANEL      -->
           <v-expansion-panels popout multiple>
             <v-expansion-panel class="mb-4">
+              <!--      EXPANSION PANEL HEADER      -->
               <v-expansion-panel-header>
                 <v-row justify="space-around">
+                  <!--      AFFICHAGE DE LA DATE      -->
                   <span class="mt-1">Analyse du {{ analyse.date }}</span>
+                  <!--      AFFICHAGE DU BOUTON      -->
                   <v-btn @click="" depressed color="#CF4A1A" class="button" max-width="220" height="26">
                     Relancer l'analyse
                     <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
                   </v-btn>
                 </v-row>
               </v-expansion-panel-header>
+              <!--      EXPANSION PANEL CONTENT      -->
               <v-expansion-panel-content>
                 <v-divider></v-divider>
                 <v-row class="mt-2">
+                  <!--      TRAITEMENT PAR RESULTAT     -->
                   <v-col v-for="result in analyse.resultats.slice().reverse()">
                     <v-row class="d-flex align-center">
+                      <!--      AFFICHAGE DU NUMERO DU RESULTAT      -->
                       <v-col cols="1" style="color: lightgrey; font-weight: 800; font-size: 1.2em">{{ analyse.resultats.indexOf(result) +1 }}</v-col>
                       <v-col class="d-flex align-start flex-column ma-0 pa-0 pl-2" cols="5" style="border-left: 2px solid lightgrey">
                           <span>Nb. total de PPN analysés : </span>
