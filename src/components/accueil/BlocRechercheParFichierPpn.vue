@@ -12,13 +12,27 @@
 </template>
 
 <script setup>
+function parseFile(path) {
+  console.log(JSON.stringify(fichierLoaded))
+  let file = path.files[0].value;
+  fileReader.readAsText(file);
+  fileReader.onload = function() {
+    alert(fileReader.result);
+  };
+  fileReader.onerror = function() {
+    alert(fileReader.error);
+  }
+}
+
 import { ref } from 'vue';
 
+let fileReader = new FileReader();
 const fichierLoaded = ref([]);
 const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'application/vnd.ms-excel') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
 let isFichierPresent = false;
 
 function isAllowToSend() {
+  console.log(JSON.stringify(fichierLoaded))
   isFichierPresent = (fichierLoaded.value !== null) && (fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'application/vnd.ms-excel') || (fichierLoaded.value.type === 'text/plain');
 }
 </script>
