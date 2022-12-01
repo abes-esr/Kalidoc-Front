@@ -1,6 +1,5 @@
 <template>
   <v-container class="ma-0 pa-0">
-    <p>bloc recap</p>
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</span>
     </v-row>

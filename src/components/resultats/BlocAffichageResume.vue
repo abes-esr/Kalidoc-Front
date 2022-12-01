@@ -6,7 +6,6 @@
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
     <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
-
     <v-data-table
         v-model="modelDataTable"
         :headers="headers"
@@ -109,6 +108,7 @@ const dialog = ref(false);
 const selectType = ref([]);
 const selectedTypeDoc = ref(new Array("Tous"));
 const ppnFiltered = ref([]);
+let itemsTrieAndFiltered = [];
 const modelDataTable = ref([]);
 const selectedCheckbox = ref([]);
 
@@ -176,6 +176,7 @@ function feedItems(){
         nberreurs: el.detailerreurs.length
       })
   });
+  itemsTrieAndFiltered = items.value;
   loading.value = false;
 }
 

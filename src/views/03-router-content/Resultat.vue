@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid v-shortkey="['tab']" @shortkey="focusOnBlocAffichageResume()">
+  <v-container fluid>
     <v-container class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
       <v-icon @click="goToHome()">mdi-home</v-icon>
       <v-icon size="small">mdi-chevron-right</v-icon>
@@ -105,9 +105,7 @@ function updateNbLancement() {
   nbLancement.value = resultatStore.getNbPpnTotal.length;
 }
 
-function focusOnBlocAffichageResume() {
-   document.getElementById("catched1").focus();
-}
+
 </script>
 
 <style scoped>
