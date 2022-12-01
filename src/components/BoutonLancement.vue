@@ -41,12 +41,10 @@ function checkPpnWithTypeAnalyse() {
           response.data.nbPpnOk
         );
         if(props.isReplay) {
-          console.log("isReplay");
           historiqueStore.pushReplayedResultatToLastHistorique(
             resultatStore.getLastRecapitulatif
           );
         } else {
-          console.log("isNotReplay");
           historiqueStore.createNewHistorique(
               {
                 ppnValidsList: analyseStore.getPpnValidsList,
@@ -58,8 +56,6 @@ function checkPpnWithTypeAnalyse() {
               resultatStore.getLastRecapitulatif
           );
         }
-
-
         spinnerActive.value = false;
         emitOnFinished();
       })
