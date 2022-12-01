@@ -7,13 +7,14 @@
         Historique des analyses
       </span>
     </v-card>
-    HISTORIQUE
+    <BlocHistorique></BlocHistorique>
 <!--    emplacement du composant historique   -->
   </v-container>
 </template>
 
 <script setup>
 import router from "@/router";
+import BlocHistorique from "@/components/historique/BlocHistorique";
 
 function goToHome() {
   router.push('/');
