@@ -1,6 +1,5 @@
 <template>
    <v-footer absolute padless min-height="200" color="#e6e6e6" fluid>
-
 <!--     FOOTER GRIS-->
       <v-row class="footerTopRow" align="start" justify="start" no-gutters>
 <!--        DESCRIPTION NAVIGATEUR-->
@@ -78,8 +77,3 @@
 
    </v-footer>
 </template>
-
-<script>
-export default {
-}
-</script>
