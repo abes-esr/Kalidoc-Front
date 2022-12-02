@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-5">
+  <v-sheet class="pa-5" style="width: 18em">
     <v-row class="d-flex justify-space-between align-center">
       <slot></slot>
     </v-row>
