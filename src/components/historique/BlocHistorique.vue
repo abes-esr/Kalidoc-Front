@@ -55,18 +55,6 @@
                         <!--      AFFICHAGE DU NUMERO DU RESULTAT      -->
                         <v-col style="color: lightgrey; font-weight: 400; font-size: 1.2em; width: 40px; max-width: 40px">{{ historique.resultats.indexOf(result) +1 }}</v-col>
                         <card-recapitulatif :resultats="result" style="border-left: 2px solid lightgrey; "></card-recapitulatif>
-<!--                        <v-col class="d-flex align-start flex-column ma-0 pa-0 pl-2" style="border-left: 2px solid lightgrey; width: 220px; max-width: 220px">-->
-<!--                          <span>Nb. total de PPN analysés :</span>-->
-<!--                          <span>Nb. de PPN avec erreurs :</span>-->
-<!--                          <span>Nb. de PPN sans erreurs :</span>-->
-<!--                          <span>Nb. de ppn non trouvés :</span>-->
-<!--                        </v-col>-->
-<!--                        <v-col class="d-flex align-start flex-column ma-0 pa-0" style="width: 70px; max-width: 70px">-->
-<!--                          <v-btn class="mb-1" x-small color="blue">{{ result.ppnTotal.length }}</v-btn>-->
-<!--                          <v-btn class="mb-1" x-small color="blue">{{ result.ppnErreurs.length }}</v-btn>-->
-<!--                          <v-btn class="mb-1" x-small color="blue">{{ result.ppnOk.length }}</v-btn>-->
-<!--                          <v-btn class="mb-1" x-small color="blue">{{ result.ppnInconnus.length }}</v-btn>-->
-<!--                        </v-col>-->
                       </v-row>
                     </v-col>
                   </v-list-item>
