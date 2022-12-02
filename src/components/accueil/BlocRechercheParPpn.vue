@@ -1,15 +1,69 @@
 <template>
-  <v-container>
-    <v-card flat class="pa-2 ma-0">
-      <div class="pl-0 pr-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois</div>
-      <v-combobox filled append-icon="" @keydown.enter="checkValuesAndFeedPpnListTyped" :search-input.sync="lastValuesTypedOrPasted" :value="ppnListCombobox" @blur="checkValuesAndFeedPpnListTyped" multiple small-chips :label="comboboxPpnLabel" class="pa-1">
+  <v-sheet class="pa-2 borderBlocElements">
+    <div>
+      <div class="px-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">
+        Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois
+      </div>
+      <v-combobox
+          filled
+          append-icon=""
+          @keydown.enter="checkValuesAndFeedPpnListTyped"
+          @keydown.tab="checkValuesAndFeedPpnListTyped"
+          :search-input.sync="lastValuesTypedOrPasted"
+          :value="ppnListCombobox"
+          @blur="checkValuesAndFeedPpnListTyped"
+          multiple
+          small-chips
+          :label="comboboxPpnLabel"
+          class="pa-1"
+      >
         <template v-slot:selection="{item}">
           <v-chip close @click:close="removeItem(item)">
             <span class="pr-2">{{ item }}</span>
           </v-chip>
         </template>
       </v-combobox>
-      <v-card flat class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" depressed small tile @click="removeAllItems" style="border: 1px solid grey; color: grey">Vider la liste de ppn<v-icon color="grey">mdi-delete</v-icon></v-btn></v-card>
+      <v-sheet class="d-flex align-end flex-column pt-0 pr-1" style="margin-top: -34px;">
+        <v-btn
+            class="pr-1"
+            depressed
+            small
+            tile
+            @click="removeAllItems"
+            style="border: 1px solid grey; color: grey"
+        >
+          Vider la liste de ppn
+          <v-icon color="grey">mdi-delete</v-icon>
+        </v-btn>
+      </v-sheet>
+    </div>
+    <div class="py-5">
+      <v-sheet class="d-flex justify-center">
+        <v-icon class="mr-3" color="black">mdi-chevron-double-up</v-icon>
+        <span style="font-weight: 700">OU</span>
+        <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
+      </v-sheet>
+    </div>
+    <div>
+      <v-file-input
+          filled
+          class="ml-1"
+          label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN"
+          prepend-icon=""
+          append-outer-icon="mdi-file-download-outline"
+          show-size
+          type="file"
+          aria-label="Dépôt du fichier"
+          truncate-length=75
+          for="files"
+          accept=".csv,.txt"
+          :rules="rules"
+          v-model="fichierLoaded"
+          @change="isAllowToSend"
+          ref="fileInput">
+      </v-file-input>
+    </div>
+    <div>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
         Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
         <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
@@ -24,18 +78,24 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </v-alert>
-    </v-card>
-  </v-container>
+    </div>
+  </v-sheet>
 </template>
 
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
-import {ref} from 'vue';
+import { ref } from 'vue';
+
 //Store
 const analyseStore = useAnalyseStore();
 
 //Emit
-const emit = defineEmits(['isPpnListEmpty']);
+const emit = defineEmits(['isPpnListEmpty','backendError']);
+
+const fichierLoaded = ref(null);
+const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'application/vnd.ms-excel') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
+let isFichierPresent = false;
+let fileReader = new FileReader();
 
 const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
@@ -96,15 +156,23 @@ function checkPpnListIsEmptyInCombobox(){
   return ppnListCombobox.value.length === 0;
 }
 
+function isAllowToSend() {
+  fileReader.onloadend = function() {
+    console.log('fileReader.result : ', fileReader.result);
+    lastValuesTypedOrPasted.value = fileReader.result;
+    checkValuesAndFeedPpnListTyped();
+  };
+  fileReader.onerror = function() {
+    emit('backendError', fileReader.error);
+  }
+  fileReader.readAsText(fichierLoaded.value);
+  isFichierPresent = (fichierLoaded.value !== null) && (fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'application/vnd.ms-excel') || (fichierLoaded.value.type === 'text/plain');
+}
+
 /**
  * Evenement envoyant au parent avec l'annotation @isPpnListEmpty un booleen
  */
 function emitOnEvent(){
   emit('isPpnListEmpty', checkPpnListIsEmptyInCombobox());
 }
-
 </script>
-
-<style>
-
-</style>
