@@ -50,7 +50,7 @@
                 <v-divider></v-divider>
                   <v-list-item class="mt-2" style="overflow-x: scroll; overflow-y: hidden">
                     <!--      TRAITEMENT PAR RESULTAT     -->
-                    <v-col v-for="result in historique.resultats.slice().reverse()">
+                    <v-col v-for="result in historique.resultats.slice().reverse()" class="mr-10">
                       <v-row class="d-flex align-center" style="min-width: 330px">
                         <!--      AFFICHAGE DU NUMERO DU RESULTAT      -->
                         <v-col style="color: lightgrey; font-weight: 400; font-size: 1.2em; width: 40px; max-width: 40px">{{ historique.resultats.indexOf(result) +1 }}</v-col>
