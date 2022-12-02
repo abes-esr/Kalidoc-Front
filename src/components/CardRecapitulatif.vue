@@ -1,6 +1,8 @@
 <template>
   <v-sheet class="pa-5">
-    <slot></slot>
+    <v-row class="d-flex justify-space-between align-center">
+      <slot></slot>
+    </v-row>
     <v-row class="d-flex justify-space-between align-center">
       <span>Nb. total de PPN analysés :</span> <v-btn elevation="0" class="button" x-small color="#0F75BC">{{ resultats.PpnTotal.length }}</v-btn>
     </v-row>
