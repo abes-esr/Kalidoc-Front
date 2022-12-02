@@ -12,13 +12,14 @@
         <v-carousel-item
             v-for="i in getNumberSlides()"
             :key="i"
+
         >
-          <v-row>
-            <v-col>
-              <CardRecapitulatif :numero-lancement="i"/>
+          <v-row class="d-flex justify-space-around align-center pa-4">
+            <v-col class="d-flex justify-center">
+              <CardRecapitulatif :resultats="getRecapitulatifByIndex(i-1)"/>
             </v-col>
-            <v-col>
-              <CardRecapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :numero-lancement="i+1"/>
+            <v-col class="d-flex justify-center">
+              <CardRecapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :resultats="getRecapitulatifByIndex(i)"/>
             </v-col>
           </v-row>
         </v-carousel-item>
@@ -29,8 +30,9 @@
 
 <script setup>
 import BlocRappelTypeAnalyse from "@/components/resultats/BlocRappelTypeAnalyse";
-import CardRecapitulatif from "@/components/resultats/CardRecapitulatif";
+import CardRecapitulatif from "@/components/CardRecapitulatif";
 import {ref, watchEffect} from 'vue';
+import {useResultatStore} from "@/stores/resultat";
 
 const page = ref(0);
 const props = defineProps({
@@ -41,11 +43,17 @@ const props = defineProps({
   }
 });
 
+const resultatStore = useResultatStore();
+
 watchEffect(() => {
   if (props.nombreResultatAnalyse) {
     goToLastSlide();
   }
 })
+
+function getRecapitulatifByIndex(index) {
+  return resultatStore.getRecapitulatif[index];
+}
 
 function getNumberSlides() {
   return props.nombreResultatAnalyse <= 2 ? 1 : props.nombreResultatAnalyse - 1;

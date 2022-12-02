@@ -35,10 +35,10 @@ function checkPpnWithTypeAnalyse() {
     .then((response) => {
         resultatStore.setResultsListArray(response.data.resultRules);
         resultatStore.pushRecapitulatif(
-          response.data.nbPpnAnalyses,
-          response.data.nbPpnInconnus,
-          response.data.nbPpnErrones,
-          response.data.nbPpnOk
+          response.data.ppnAnalyses,
+          response.data.ppnInconnus,
+          response.data.ppnErrones,
+          response.data.ppnOk
         );
         if(props.isReplay) {
           historiqueStore.pushReplayedResultatToLastHistorique(
