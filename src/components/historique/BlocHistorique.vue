@@ -37,7 +37,7 @@
               <v-expansion-panel-header>
                 <v-row justify="space-around">
                   <!--      AFFICHAGE DE LA DATE      -->
-                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} - Type d'analyse : {{ getAnalyseType(historique.analyse.analyseSelected) }}</span>
+                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} <span style="font-style: italic; color: dimgrey">- Type d'analyse : {{ getAnalyseType(historique.analyse.analyseSelected) }}</span></span>
                   <!--      AFFICHAGE DU BOUTON      -->
                   <v-btn @click="" depressed color="#CF4A1A" class="button" max-width="220" height="26">
                     <span style="color: white">Relancer l'analyse</span>
