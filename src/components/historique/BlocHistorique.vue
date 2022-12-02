@@ -16,7 +16,7 @@
           L’historique n’est valable que pour la durée de la session.
         </v-alert>
         <v-alert v-else class="mt-4" border="left" colored-border dense type="warning" elevation="2" icon="mdi-alert">
-          L’historique est vide.<br>
+          <span style="display: block">L’historique est vide.</span>
           <span style="font-style: italic; font-weight: 300; font-size: 0.9em; color: grey">L’historique n’est valable que pour la durée de la session.</span>
         </v-alert>
       </v-row>
