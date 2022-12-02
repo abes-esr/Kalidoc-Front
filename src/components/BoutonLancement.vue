@@ -34,7 +34,7 @@ function checkPpnWithTypeAnalyse() {
         resultatStore.setResultsListArray(response.data.resultRules);
         resultatStore.pushNbPpnTotal(response.data.nbPpnAnalyses);
         resultatStore.pushNbPpnInconnus(response.data.nbPpnInconnus);
-        resultatStore.pushNbPpnErreurs(response.data.npPpnErrones);
+        resultatStore.pushNbPpnErreurs(response.data.nbPpnErrones);
         resultatStore.pushNbPpnOk(response.data.nbPpnOk);
         spinnerActive.value = false;
         emitOnFinished();

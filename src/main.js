@@ -7,8 +7,9 @@ import '@mdi/font/css/materialdesignicons.css'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import JsonCSV from 'vue-json-csv';
 
-
 Vue.use(PiniaVuePlugin)
+Vue.use(require('vue-shortkey'))
+
 const pinia = createPinia()
 
 Vue.config.productionTip = false
