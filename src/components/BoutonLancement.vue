@@ -1,10 +1,10 @@
 <template>
-  <v-container class="ma-0 pa-0">
+  <v-card flat class="ma-0 pa-0">
     <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button" :disabled="props.isDisabled" :loading="spinnerActive">
       <slot></slot>
       <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
     </v-btn>
-  </v-container>
+  </v-card>
 </template>
 
 <script setup>
@@ -34,7 +34,7 @@ function checkPpnWithTypeAnalyse() {
         resultatStore.setResultsListArray(response.data.resultRules);
         resultatStore.pushNbPpnTotal(response.data.nbPpnAnalyses);
         resultatStore.pushNbPpnInconnus(response.data.nbPpnInconnus);
-        resultatStore.pushNbPpnErreurs(response.data.npPpnErrones);
+        resultatStore.pushNbPpnErreurs(response.data.nbPpnErrones);
         resultatStore.pushNbPpnOk(response.data.nbPpnOk);
         spinnerActive.value = false;
         emitOnFinished();

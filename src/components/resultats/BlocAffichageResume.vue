@@ -1,12 +1,12 @@
 <template>
-
   <v-container class="ma-0 pa-0">
+    <span v-shortkey="{up: ['arrowup'], left: ['arrowleft']}" @shortkey="goToPreviousLine()"></span>
+    <span v-shortkey="{down: ['arrowdown'], right: ['arrowright']}" @shortkey="goToNextLine()"></span>
     <v-row class="ma-0 pa-0">
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
-    <v-container class="pa-0 ma-0 borderErrorDetailPerPpn">
-
     <v-data-table
+        class="borderBlocElements"
         v-model="modelDataTable"
         :headers="headers"
         :loading="loading"
@@ -53,34 +53,23 @@
       </template>
       <template v-slot:body.append>
         <tr>
-          <td colspan="2">
-            <table>
-              <tr>
-                <td>
-                  <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
-                </td>
-                <td>Afficher/masquer tout</td>
-              </tr>
-            </table>
-          </td>
-          <td colspan="2" >
-            <v-container class="d-flex flex-row-reverse">
-              <table>
-                <tr>
-                  <td>Générer la requête pour WinIBW</td><td><bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw></td>
-                </tr>
-              </table>
-            </v-container>
+          <td colspan="100%">
+            <div class="d-flex justify-space-between">
+              <div class="d-flex align-center">
+                <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
+                <span>Afficher/masquer tout</span>
+              </div>
+              <div class="d-flex align-center">
+                <span  class="pr-1">Générer la requête pour WinIBW</span>
+                <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
+              </div>
+            </div>
           </td>
         </tr>
       </template>
     </v-data-table>
-
     <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
-
-    </v-container>
   </v-container>
-
 </template>
 
 <script setup>
@@ -109,12 +98,14 @@ const dialog = ref(false);
 const selectType = ref([]);
 const selectedTypeDoc = ref(new Array("Tous"));
 const ppnFiltered = ref([]);
+let itemsTrieAndFiltered = [];
 const modelDataTable = ref([]);
 const selectedCheckbox = ref([]);
 
 onMounted(() => {
   feedItems();
   feedTypeList();
+  nextSelectedItem();
   ppnFiltered.value = items.value;
 })
 
@@ -126,6 +117,33 @@ watchEffect(() => {
     feedItems()
   }
 })
+
+function nextSelectedItem() {
+  let index = itemsTrieAndFiltered.findIndex(item => item.ppn === props.currentPpn);
+  if(index < itemsTrieAndFiltered.length - 1) {
+    emit('onChangePpn', itemsTrieAndFiltered[index + 1].ppn);
+  }
+}
+
+function previousSelectedItem() {
+  let index = itemsTrieAndFiltered.findIndex(item => item.ppn === props.currentPpn);
+  if(index > 0) {
+    emit('onChangePpn', itemsTrieAndFiltered[index - 1].ppn);
+  }
+}
+
+function focusOnFirstElement() {
+  nextSelectedItem()
+}
+
+function goToPreviousLine() {
+  previousSelectedItem()
+}
+
+function goToNextLine() {
+  nextSelectedItem()
+}
+
 
 function colorIconFilterTypeDoc() {
   if (selectedCheckbox.value[0] === "Tous" || selectedCheckbox.value === "Tous" || selectedCheckbox.value.length === 0) {
@@ -148,6 +166,7 @@ function feedItems(){
         nberreurs: el.detailerreurs.length
       })
   });
+  itemsTrieAndFiltered = items.value;
   loading.value = false;
 }
 
@@ -221,6 +240,7 @@ function sendCurrentPpnToParent(item, row) {
 }
 
 function sendItemsToParent(items) {
+  itemsTrieAndFiltered = items;
   emit("onChangeItems", items);
 }
 
@@ -228,7 +248,6 @@ function sendItemsToParent(items) {
  * Function qui permet de récupérer le selectedTypeDoc de document sélectionné
  * et de modifier la liste de selectedTypeDoc de document
  * @param type
- * @returns {Ref<UnwrapRef<[]>>}
  */
 function eventTypeChoice(type) {
   if (type === "Tous") {
@@ -255,7 +274,6 @@ function eventTypeChoice(type) {
  * Function qui permet de trier la liste de item à afficher dans la dataTable
  * en fonction du.des types de documents
  * sélectionnés
- * @returns {Ref<UnwrapRef<[]>>}
  */
 function filterPpnByType(){
     if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si le selectedTypeDoc choisi est tous
@@ -294,7 +312,6 @@ function toggleMask(value) {
   items.value.forEach(item => {
     item.affiche = value;
   })
-
 }
 
 </script>

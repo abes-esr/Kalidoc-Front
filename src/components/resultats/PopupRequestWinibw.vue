@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="props.dialog">
     <template v-slot:default="dialog">
-      <v-card>
+      <v-card color="white">
         <v-toolbar
             color="#252C61"
             dark
@@ -57,10 +57,4 @@ function emitOnClose() {
   messageDisplayed.value = false;
   emit('onClose', false);
 }
-
-
 </script>
-
-<style scoped>
-
-</style>
