@@ -6,6 +6,7 @@ import Regles from "@/views/03-router-content/Regles";
 import Historique from "@/views/03-router-content/Historique";
 
 Vue.use(VueRouter)
+Vue.use(require('vue-shortkey'))
 
 const routes = [
   {

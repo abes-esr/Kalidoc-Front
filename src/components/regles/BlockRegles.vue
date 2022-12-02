@@ -21,7 +21,7 @@
           </v-tooltip>
         </v-row>
         <v-row class="ma-0 pa-0" justify="center">
-          <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">Type de document : {{ selectedTypeDoc.toString() }}<br>Priorité : {{ selectedPriority.toString() }}</span>
+          <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: darkgrey; font-style: italic">Type de document : {{ selectedTypeDoc.toString() }}<span style="display: block" />Type de règle : {{ selectedPriority.toString() }}</span>
         </v-row>
       </v-col>
       <!--            BOUTON TELECHARGER LES REGLES-->
@@ -60,13 +60,13 @@
         <!--                Header Id avec Tooltip-->
         <v-tooltip bottom v-if="header.value === 'id'">
           <template v-slot:activator="{ on }">
-            <span v-on="on" style='color: white;'>{{ header.textBtn }}</span><br>
+            <span v-on="on" style='color: white; display: block'>{{ header.textBtn }}</span>
           </template>
           <span>{{ header.tooltip}}</span>
         </v-tooltip>
         <!--                Autres headers-->
-        <span style='color: white;' v-else>
-            {{ header.text }}<br>
+        <span style='color: white; display: block' v-else>
+            {{ header.text }}
         </span>
         <!--                Champ de recherche pour la colonne "Règles de vérification / qualité"-->
         <v-menu offset-y v-if="header.value === 'message'">

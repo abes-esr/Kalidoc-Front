@@ -38,8 +38,8 @@
     </v-row>
   </v-container>
 </template>
-<script setup>
 
+<script setup>
 import BlocRecapitulatif from "@/components/resultats/BlocRecapitulatif";
 import BlocAffichageResume from "@/components/resultats/BlocAffichageResume";
 import BoutonLancement from "@/components/BoutonLancement";
@@ -104,7 +104,10 @@ function goToHome() {
 function updateNbLancement() {
   nbLancement.value = resultatStore.getRecapitulatif.length;
 }
+
+
 </script>
+
 <style scoped>
 .v-slider__thumb{
   cursor:pointer;
