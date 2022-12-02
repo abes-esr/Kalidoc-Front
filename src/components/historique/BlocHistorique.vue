@@ -3,7 +3,7 @@
 
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
-      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
+      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Historique des analyses</span>
       <!--      BOUTON ENREGISTRER LES ANALYSES      -->
       <v-btn class="mx-0" depressed @click="" color="blue" small>
         <span style="color: white">Enregistrer l'historique</span>
