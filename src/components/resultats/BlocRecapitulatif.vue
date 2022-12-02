@@ -16,10 +16,10 @@
         >
           <v-row class="d-flex justify-space-around align-center pa-4">
             <v-col class="d-flex justify-center">
-              <CardRecapitulatif :resultats="getRecapitulatifByIndex(i-1)"/>
+              <card-recapitulatif :resultats="getRecapitulatifByIndex(i-1)">Analyse n°{{ i }}</card-recapitulatif>
             </v-col>
             <v-col class="d-flex justify-center">
-              <CardRecapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :resultats="getRecapitulatifByIndex(i)"/>
+              <card-recapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :resultats="getRecapitulatifByIndex(i)">Analyse n°{{ i + 1}}</card-recapitulatif>
             </v-col>
           </v-row>
         </v-carousel-item>
