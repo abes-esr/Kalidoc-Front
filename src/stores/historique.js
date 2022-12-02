@@ -15,16 +15,16 @@ export const useHistoriqueStore = defineStore('historique', {
 // resultats:
 //       [
 //          { // premier résultat
-//              nbPpnTotal: [],
-//              nbPpnInconnus: [],
-//              nbPpnErreurs:[],
-//              nbPpnOk:[],
+//              ppnTotal: [],
+//              ppnInconnus: [],
+//              ppnErreurs:[],
+//              ppnOk:[],
 //           },
 //         { // deuxieme resultat rejoué
-//             nbPpnTotal: [],
-//             nbPpnInconnus: [],
-//             nbPpnErreurs:[],
-//             nbPpnOk:[],
+//             ppnTotal: [],
+//             ppnInconnus: [],
+//             ppnErreurs:[],
+//             ppnOk:[],
 //          } //etc...
 //     ]
 

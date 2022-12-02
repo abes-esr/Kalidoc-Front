@@ -17,12 +17,12 @@ export const useResultatStore = defineStore('resultat', {
     setResultsListArray(resultsListInArray) {
       this.resultsList = resultsListInArray;
     },
-    pushRecapitulatif(nbPpnTotal, nbPpnInconnus, nbPpnErreurs, nbPpnOk) {
+    pushRecapitulatif(PpnTotal, PpnInconnus, PpnErreurs, PpnOk) {
       this.recapitulatif.push({
-        nbPpnTotal: nbPpnTotal,
-        nbPpnInconnus: nbPpnInconnus,
-        nbPpnErreurs: nbPpnErreurs,
-        nbPpnOk: nbPpnOk
+        PpnTotal: PpnTotal,
+        PpnInconnus: PpnInconnus,
+        PpnErreurs: PpnErreurs,
+        PpnOk: PpnOk
       })
     },
   }
