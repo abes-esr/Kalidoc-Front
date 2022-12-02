@@ -22,7 +22,7 @@
       </v-row>
 
       <!--      TIMELINE      -->
-      <v-timeline align-top dense clipped style="width: 100%">
+      <v-timeline v-if="historiqueList.length !== 0" align-top dense clipped style="width: 100%">
 
         <!--      TRAITEMENT PAR ANALYSE      -->
         <v-timeline-item v-for="historique in historiqueList.slice().reverse()" color="lightgrey">
@@ -37,7 +37,7 @@
               <v-expansion-panel-header>
                 <v-row justify="space-around">
                   <!--      AFFICHAGE DE LA DATE      -->
-                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }}</span>
+                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} - Type d'analyse : {{ getAnalyseType(historique.analyse.analyseSelected) }}</span>
                   <!--      AFFICHAGE DU BOUTON      -->
                   <v-btn @click="" depressed color="#CF4A1A" class="button" max-width="220" height="26">
                     <span style="color: white">Relancer l'analyse</span>
@@ -76,6 +76,15 @@ import {useHistoriqueStore} from "@/stores/historique";
 const historiqueStore = useHistoriqueStore();
 const historiqueList = ref(historiqueStore.getHistorique);
 
+function getAnalyseType(analyse) {
+  if (analyse === "QUICK") {
+    return "rapide";
+  } else if (analyse === "COMPLETE") {
+    return "experte";
+  } else if (analyse === "FOCUSED") {
+    return "ciblée";
+  }
+}
 </script>
 
 <style>
