@@ -9,13 +9,13 @@
         Table générale des règles
       </span>
     </v-card>
-    <block-regles></block-regles>
+    <bloc-regles></bloc-regles>
   </v-container>
 </template>
 
 <script setup>
 import router from "@/router";
-import BlockRegles from "@/components/regles/BlockRegles";
+import BlocRegles from "@/components/regles/BlocRegles";
 
 function goToHome() {
   router.push('/');
