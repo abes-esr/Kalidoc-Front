@@ -62,6 +62,7 @@
           @change="isAllowToSend"
           :clearable="false"
           :error-messages="errorMsg"
+          :success-messages="successMsg"
           ref="fileInput">
       </v-file-input>
     </div>
@@ -100,6 +101,7 @@ let isFichierPresent = false;
 let fileReader = new FileReader();
 
 const errorMsg = ref('');
+const successMsg = ref('');
 
 const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
@@ -121,7 +123,7 @@ function removeItem(item){
  * Suppression de l'ensemble des éléments de la combobox
  */
 function removeAllItems(){
-  errorMsg.value = '';
+  resetMessages();
   if(!!ppnListCombobox.value){
     ppnListCombobox.value = [];
     ppnInvalids.value = [];
@@ -163,10 +165,11 @@ function checkPpnListIsEmptyInCombobox(){
 }
 
 function isAllowToSend() {
-  errorMsg.value = '';
+  resetMessages();
   fileReader.onloadend = function() {
     lastValuesTypedOrPasted.value = fileReader.result;
     if(fileReader.result.split(/[^\da-zA-Z]/).filter(str_to_clean => str_to_clean.trim() !== '').length < 5000){
+      successMsg.value = "Fichier importé avec succès"
       checkValuesAndFeedPpnListTyped();
     } else {
       errorMsg.value = "Le fichier ne doit pas contenir plus de 5000 PPN";
@@ -186,5 +189,13 @@ function isAllowToSend() {
  */
 function emitOnEvent(){
   emit('isPpnListEmpty', checkPpnListIsEmptyInCombobox());
+}
+
+/**
+ * Fonction permettant de réinitialiser les messages de succès et d'erreur sur l'upload de fichier
+ */
+function resetMessages(){
+  successMsg.value = '';
+  errorMsg.value = '';
 }
 </script>
