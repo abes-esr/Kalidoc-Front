@@ -10,15 +10,17 @@
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
 import { useResultatStore } from "@/stores/resultat";
+import { useHistoriqueStore } from "@/stores/historique";
 import QualimarcService from "@/service/QualimarcService";
 import {ref} from "vue";
 
 // Store
 const analyseStore = useAnalyseStore();
 const resultatStore = useResultatStore();
+const historiqueStore = useHistoriqueStore();
 
 // Props & Emit
-const props = defineProps({isDisabled: Boolean});
+const props = defineProps({isDisabled: Boolean, isReplay: Boolean});
 const emit = defineEmits(['backendError', 'finished']);
 
 // Service
@@ -32,10 +34,28 @@ function checkPpnWithTypeAnalyse() {
   serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
     .then((response) => {
         resultatStore.setResultsListArray(response.data.resultRules);
-        resultatStore.pushNbPpnTotal(response.data.nbPpnAnalyses);
-        resultatStore.pushNbPpnInconnus(response.data.nbPpnInconnus);
-        resultatStore.pushNbPpnErreurs(response.data.nbPpnErrones);
-        resultatStore.pushNbPpnOk(response.data.nbPpnOk);
+        resultatStore.pushRecapitulatif(
+          response.data.ppnAnalyses,
+          response.data.ppnInconnus,
+          response.data.ppnErrones,
+          response.data.ppnOk
+        );
+        if(props.isReplay) {
+          historiqueStore.pushReplayedResultatToLastHistorique(
+            resultatStore.getLastRecapitulatif
+          );
+        } else {
+          historiqueStore.createNewHistorique(
+              {
+                ppnValidsList: analyseStore.getPpnValidsList,
+                ppnInvalidsList: analyseStore.getPpnInvalidsList,
+                analyseSelected : analyseStore.getAnalyseSelected.value,
+                familleDocumentSet : analyseStore.getFamilleDocumentSet,
+                ruleSet : analyseStore.getRuleSet,
+              },
+              resultatStore.getLastRecapitulatif
+          );
+        }
         spinnerActive.value = false;
         emitOnFinished();
       })
