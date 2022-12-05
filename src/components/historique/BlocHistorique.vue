@@ -1,13 +1,13 @@
 <template>
-  <v-container align-items="center">
+  <v-container align-items="center" style="min-width: 90%">
 
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Historique des analyses</span>
       <!--      BOUTON ENREGISTRER LES ANALYSES      -->
-      <v-btn class="mx-0" depressed @click="" color="blue" small>
+      <v-btn class="mx-0" depressed @click="" color="#0F75BC" small>
         <span style="color: white">Enregistrer l'historique</span>
-        <v-icon color="white" small>mdi-download</v-icon>
+        <v-icon small color="white" class="ml-2">mdi-download</v-icon>
       </v-btn>
     </v-row>
     <div class="ma-0 pa-0" style="border-top: 4px solid #252c61">
