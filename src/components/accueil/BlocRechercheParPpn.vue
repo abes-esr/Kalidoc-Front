@@ -61,6 +61,7 @@
           v-model="fichierLoaded"
           @change="isAllowToSend"
           :clearable="false"
+          :error-messages="errorMsg"
           ref="fileInput">
       </v-file-input>
     </div>
@@ -98,6 +99,8 @@ const rules = [(value) => !value || ((value.type === undefined) || (value.type =
 let isFichierPresent = false;
 let fileReader = new FileReader();
 
+const errorMsg = ref('');
+
 const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
 const ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
@@ -118,6 +121,7 @@ function removeItem(item){
  * Suppression de l'ensemble des éléments de la combobox
  */
 function removeAllItems(){
+  errorMsg.value = '';
   if(!!ppnListCombobox.value){
     ppnListCombobox.value = [];
     ppnInvalids.value = [];
@@ -159,15 +163,22 @@ function checkPpnListIsEmptyInCombobox(){
 }
 
 function isAllowToSend() {
+  errorMsg.value = '';
   fileReader.onloadend = function() {
     lastValuesTypedOrPasted.value = fileReader.result;
-    checkValuesAndFeedPpnListTyped();
+    if(fileReader.result.split(/[^\da-zA-Z]/).filter(str_to_clean => str_to_clean.trim() !== '').length < 5000){
+      checkValuesAndFeedPpnListTyped();
+    } else {
+      errorMsg.value = "Le fichier ne doit pas contenir plus de 5000 PPN";
+    }
   };
   fileReader.onerror = function() {
     emit('backendError', fileReader.error);
   }
-  fileReader.readAsText(fichierLoaded.value);
-  isFichierPresent = (fichierLoaded.value !== null) && (fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'application/vnd.ms-excel') || (fichierLoaded.value.type === 'text/plain');
+  isFichierPresent = (fichierLoaded.value !== null) && ((fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'text/plain'));
+  if(isFichierPresent) {
+    fileReader.readAsText(fichierLoaded.value);
+  }
 }
 
 /**
