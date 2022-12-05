@@ -49,8 +49,7 @@
           filled
           class="ml-1"
           label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN"
-          prepend-icon=""
-          append-outer-icon="mdi-file-download-outline"
+          prepend-icon="mdi-file-download-outline"
           show-size
           type="file"
           aria-label="Dépôt du fichier"
