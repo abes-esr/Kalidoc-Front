@@ -95,18 +95,18 @@ const analyseStore = useAnalyseStore();
 //Emit
 const emit = defineEmits(['isPpnListEmpty','backendError']);
 
-const fichierLoaded = ref(null);
-const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
-let isFichierPresent = false;
-let fileReader = new FileReader();
-
-const errorMsg = ref('');
-const successMsg = ref('');
-
+//Combobox
 const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
 const ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
 const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
+
+//Import de fichier
+const fichierLoaded = ref(null);
+const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
+const fileReader = new FileReader();
+const errorMsg = ref('');
+const successMsg = ref('');
 
 /**
  * Suppression d'un élément ppn déclenché au moment du clic sur la croix
@@ -178,8 +178,7 @@ function isAllowToSend() {
   fileReader.onerror = function() {
     emit('backendError', fileReader.error);
   }
-  isFichierPresent = (fichierLoaded.value !== null) && ((fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'text/plain'));
-  if(isFichierPresent) {
+  if((fichierLoaded.value !== null) && ((fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'text/plain'))) {
     fileReader.readAsText(fichierLoaded.value);
   }
 }
