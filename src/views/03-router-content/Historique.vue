@@ -4,24 +4,19 @@
       <v-icon @click="goToHome()">mdi-home</v-icon>
       <v-icon size="small">mdi-chevron-right</v-icon>
       <span class="v-slider__thumb" style="color: grey; text-decoration: none">
-        Interface des règles
-        <v-icon size="small">mdi-chevron-right</v-icon>
-        Table générale des règles
+        Historique des analyses
       </span>
     </v-card>
-    <bloc-regles></bloc-regles>
+    <BlocHistorique></BlocHistorique>
+<!--    emplacement du composant historique   -->
   </v-container>
 </template>
 
 <script setup>
 import router from "@/router";
-import BlocRegles from "@/components/regles/BlocRegles";
+import BlocHistorique from "@/components/historique/BlocHistorique";
 
 function goToHome() {
   router.push('/');
 }
 </script>
-
-<style>
-
-</style>

@@ -22,7 +22,7 @@ import BlocTypeAnalyse from "@/components/accueil/BlocTypeAnalyse";
 import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn";
 import BoutonLancement from "@/components/BoutonLancement";
 import MessageErreur from "@/components/MessageErreur";
-import {onMounted, ref, watchEffect} from 'vue';
+import {onMounted, ref} from 'vue';
 import router from "@/router";
 import {useResultatStore} from "@/stores/resultat";
 import {useAnalyseStore} from "@/stores/analyse";

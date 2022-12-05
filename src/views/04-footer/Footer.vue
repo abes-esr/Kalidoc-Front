@@ -15,15 +15,15 @@
             <span class="fontPrimaryColor" style="font-size: 1em; font-weight: 700; margin-left: 5px">Accès direct</span>
           </v-row>
          <v-container>
-           <span class="pa-0 ma-0" style="font-size: 0.8em;">
+           <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
              <a href="http://www.sudoc.abes.fr/" target="_blank" id="linkBlue">Sudoc</a>
-           </span><br>
-           <span class="pa-0 ma-0" style="font-size: 0.8em;">
+           </span>
+           <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
              <a href="https://documentation.abes.fr/sudoc/" target="_blank" id="linkBlue">Guide Méthodologique</a>
-           </span><br>
-           <span class="pa-0 ma-0" style="font-size: 0.8em;">
+           </span>
+           <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
              <a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" id="linkBlue">Guichet ABESstp</a>
            </span>
@@ -36,15 +36,15 @@
             <span style="color: #252C61; font-size: 1em; font-weight: 500; margin-left: 2px">Accès direct</span>
           </v-row>
           <v-container class="pa-0 pl-2">
-          <span class="pa-0 ma-0" style="font-size: 0.8em;">
+          <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
              <a href="http://www.sudoc.abes.fr/" target="_blank" id="linkBlue">Sudoc</a>
-          </span><br>
-           <span class="pa-0 ma-0" style="font-size: 0.8em;">
+          </span>
+           <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
              <a href="https://documentation.abes.fr/sudoc/" id="linkBlue">Guide Méthodologique</a>
-           </span><br>
-            <span class="pa-0 ma-0" style="font-size: 0.8em;">
+           </span>
+            <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
              <a href="https://stp.abes.fr/node/3?origine=sudocpro" id="linkBlue">Guichet ABESstp</a>
            </span>
