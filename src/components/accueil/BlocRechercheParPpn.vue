@@ -49,7 +49,8 @@
           filled
           class="ml-1"
           label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN"
-          prepend-icon="mdi-file-download-outline"
+          prepend-icon=""
+          append-icon="mdi-file-download-outline"
           show-size
           type="file"
           aria-label="Dépôt du fichier"
@@ -59,6 +60,7 @@
           :rules="rules"
           v-model="fichierLoaded"
           @change="isAllowToSend"
+          :clearable="false"
           ref="fileInput">
       </v-file-input>
     </div>
@@ -92,7 +94,7 @@ const analyseStore = useAnalyseStore();
 const emit = defineEmits(['isPpnListEmpty','backendError']);
 
 const fichierLoaded = ref(null);
-const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'application/vnd.ms-excel') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
+const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
 let isFichierPresent = false;
 let fileReader = new FileReader();
 
@@ -122,6 +124,7 @@ function removeAllItems(){
     analyseStore.setPpnInvalidsList(ppnInvalids.value); // Vide la liste des ppn invalides
     analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
     emitOnEvent();
+    fichierLoaded.value = null;
   }
 }
 
@@ -157,7 +160,6 @@ function checkPpnListIsEmptyInCombobox(){
 
 function isAllowToSend() {
   fileReader.onloadend = function() {
-    console.log('fileReader.result : ', fileReader.result);
     lastValuesTypedOrPasted.value = fileReader.result;
     checkValuesAndFeedPpnListTyped();
   };
