@@ -10,6 +10,20 @@
         <div class="borderBlocElements">
           <bloc-recherche-par-ppn class="mb-0 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
           <bloc-recherche-par-fichier-ppn class="mb-2 pa-0"></bloc-recherche-par-fichier-ppn>
+          <v-alert class="ml-2" v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
+            <span style="display: block">Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :</span>
+            <span style="color: darkgrey; font-size: small; display: block">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span>
+            <v-expansion-panels>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  PPN saisi(s) avec une syntaxe érronée (cliquer pour dérouler)
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-alert>
         </div>
       </v-col>
       <v-col class="ma-2 pa-2" style="min-height: 34em">
