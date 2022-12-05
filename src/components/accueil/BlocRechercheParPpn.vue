@@ -11,8 +11,8 @@
       </v-combobox>
       <v-card flat class="d-flex align-end flex-column pt-0 mb-14 pr-1" style="margin-top: -34px;"><v-btn class="pe-1" depressed small tile @click="removeAllItems" style="border: 1px solid grey; color: grey">Vider la liste de ppn<v-icon color="grey">mdi-delete</v-icon></v-btn></v-card>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
-        Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
-        <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
+        <span style="display: block">Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :</span>
+        <span style="color: darkgrey; font-size: small; display: block">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
