@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
     <div class="ml-1 mb-2 fontPrimaryColor">Outil d'analyse des notices bibliographiques du Sudoc</div>
+    <v-btn @click="changeTheme"></v-btn>
     <v-row>
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
         <v-row class="ma-0 pa-0">
@@ -26,6 +27,11 @@ import {onMounted, ref} from 'vue';
 import router from "@/router";
 import {useResultatStore} from "@/stores/resultat";
 import {useAnalyseStore} from "@/stores/analyse";
+
+import { getCurrentInstance} from "vue";
+
+const app = getCurrentInstance()
+// it should be here in this instance the vuetify object with its properties
 
 const isAnalyseSelected = ref(false);
 const isPpnListIsEmpty = ref(true);
@@ -61,5 +67,13 @@ function setBackendError(error) {
 
 function redirect() {
   router.push('/resultats');
+}
+
+function changeTheme() {
+  console.log(app.proxy.$vuetify.theme.light)
+  console.log(app.proxy.$vuetify.theme.dark)
+  app.proxy.$vuetify.theme.light = false;
+  app.proxy.$vuetify.theme.coral = true;
+    //app.proxy.$vuetify.theme.dark = !app.proxy.$vuetify.theme.dark;
 }
 </script>
