@@ -7,10 +7,7 @@
           <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
           <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
         </v-row>
-        <div class="borderBlocElements">
-          <bloc-recherche-par-ppn class="mb-0 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty"></bloc-recherche-par-ppn>
-          <bloc-recherche-par-fichier-ppn class="mb-2 pa-0"></bloc-recherche-par-fichier-ppn>
-        </div>
+        <bloc-recherche-par-ppn class="mb-0 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty" @backendError="setBackendError"></bloc-recherche-par-ppn>
       </v-col>
       <v-col class="ma-2 pa-2" style="min-height: 34em">
         <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>
@@ -20,11 +17,9 @@
     </v-row>
   </v-container>
 </template>
-
 <script setup>
 import BlocTypeAnalyse from "@/components/accueil/BlocTypeAnalyse";
 import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn";
-import BlocRechercheParFichierPpn from "@/components/accueil/BlocRechercheParFichierPpn";
 import BoutonLancement from "@/components/BoutonLancement";
 import MessageErreur from "@/components/MessageErreur";
 import {onMounted, ref} from 'vue';
