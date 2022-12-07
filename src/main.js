@@ -6,9 +6,11 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import JsonCSV from 'vue-json-csv';
+import * as Style from './style/style.js'
 
 Vue.use(PiniaVuePlugin)
 Vue.use(require('vue-shortkey'))
+Vue.use(Style)
 
 const pinia = createPinia()
 

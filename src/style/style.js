@@ -1,6 +1,5 @@
-export default {
-    boderBlocColor() {
-        console.log("boderBlocColor");
-        return app.proxy.$vuetify.theme.dark ? 'border-color: ' + app.proxy.$vuetify.theme.themes.dark.borderbloc + ';' : 'border-color: ' + app.proxy.$vuetify.theme.themes.light.borderbloc + ';';
-    }
+import vuetify from "@/plugins/vuetify";
+
+export function boderBlocColor() {
+    return vuetify.framework.theme.isDark ? 'border-color: ' + vuetify.userPreset.theme.themes.dark.borderbloc + ';' : 'border-color: ' + vuetify.userPreset.theme.themes.light.borderbloc + ';';
 }
