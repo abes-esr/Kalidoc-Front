@@ -75,6 +75,6 @@ function changeTheme() {
     app.proxy.$vuetify.theme.dark = !app.proxy.$vuetify.theme.dark;
 }
 function changeOneColor() {
-    app.proxy.$vuetify.theme.themes.dark.secondary = colors.lightGreen.darken3;
+    app.proxy.$vuetify.theme.themes.dark.customized = colors.lightBlue.lighten5;
 }
 </script>

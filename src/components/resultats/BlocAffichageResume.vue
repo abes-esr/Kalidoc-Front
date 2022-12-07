@@ -7,6 +7,7 @@
     </v-row>
     <v-data-table
         class="borderBlocElements"
+        color="borderbloc"
         v-model="modelDataTable"
         :headers="headers"
         :loading="loading"

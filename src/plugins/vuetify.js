@@ -18,6 +18,7 @@ export default new Vuetify({
           info: '#2196F3',
           success: '#4CAF50',
           warning: '#FFC107',
+          borderbloc: '#252c61',
         },
         dark: {
           primary: colors.red.darken1,
@@ -28,6 +29,7 @@ export default new Vuetify({
           success: '#b71c1c',
           warning: '#b71c1c',
           customized: colors.deepPurple.darken4,
+          borderbloc: '#FF5252',
         },
       },
     },
