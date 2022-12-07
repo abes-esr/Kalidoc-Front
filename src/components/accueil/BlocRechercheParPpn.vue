@@ -1,5 +1,6 @@
 <template>
-  <v-sheet class="pa-2 borderBlocElements">
+  <v-sheet class="pa-2 borderBlocElements" :style="boderBlocColor()">
+    <v-chip>{{ boderBlocColor() }}</v-chip>
     <div>
       <div class="px-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">
         Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois
@@ -88,6 +89,9 @@
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
 import { ref } from 'vue';
+import { getCurrentInstance } from "vue";
+
+const app = getCurrentInstance();
 
 //Store
 const analyseStore = useAnalyseStore();
@@ -198,3 +202,7 @@ function resetMessages(){
   errorMsg.value = '';
 }
 </script>
+
+<style>
+
+</style>
