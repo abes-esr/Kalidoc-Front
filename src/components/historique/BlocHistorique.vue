@@ -21,19 +21,15 @@
         </v-alert>
       </v-row>
 
-      <!--      TIMELINE      -->
       <v-timeline v-if="historiqueList.length !== 0" align-top dense clipped style="width: 100%">
-
         <!--      TRAITEMENT PAR ANALYSE      -->
-        <v-timeline-item v-for="historique in historiqueList.slice().reverse()" color="lightgrey">
+        <v-timeline-item v-for="historique in historiqueList.slice().reverse()" :key="historique.date" color="lightgrey">
           <!--      AFFICHAGE DU NUMERO DE L'ANALYSE DANS LA PUCE     -->
           <template v-slot:icon>
             <span style="color: #cf491b; font-weight: 400; font-size: 1.2em">{{ historiqueList.indexOf(historique) +1 }}</span>
           </template>
-          <!--      EXPANSION PANEL      -->
           <v-expansion-panels multiple>
             <v-expansion-panel class="mb-4">
-              <!--      EXPANSION PANEL HEADER      -->
               <v-expansion-panel-header>
                 <v-row justify="space-around">
                   <!--      AFFICHAGE DE LA DATE      -->
@@ -45,25 +41,23 @@
                   </v-btn>
                 </v-row>
               </v-expansion-panel-header>
-              <!--      EXPANSION PANEL CONTENT      -->
               <v-expansion-panel-content>
                 <v-divider></v-divider>
-                  <v-list-item class="mt-2" style="overflow-x: scroll; overflow-y: hidden">
-                    <!--      TRAITEMENT PAR RESULTAT     -->
-                    <v-col v-for="result in historique.resultats.slice().reverse()" class="mr-10">
-                      <v-row class="d-flex align-center" style="min-width: 330px">
-                        <!--      AFFICHAGE DU NUMERO DU RESULTAT      -->
-                        <v-col style="color: lightgrey; font-weight: 400; font-size: 1.2em; width: 40px; max-width: 40px">{{ historique.resultats.indexOf(result) +1 }}</v-col>
-                        <card-recapitulatif :resultats="result" style="border-left: 2px solid lightgrey; "></card-recapitulatif>
-                      </v-row>
-                    </v-col>
-                  </v-list-item>
+                <v-list-item class="mt-2" style="overflow-x: scroll; overflow-y: hidden">
+                  <!--      TRAITEMENT PAR RESULTAT     -->
+                  <v-col v-for="result in historique.resultats.slice().reverse()" :key="historique.resultats.indexOf(result)" class="mr-10">
+                    <v-row class="d-flex align-center" style="min-width: 330px">
+                      <!--      AFFICHAGE DU NUMERO DU RESULTAT      -->
+                      <v-col style="color: lightgrey; font-weight: 400; font-size: 1.2em; width: 40px; max-width: 40px">{{ historique.resultats.indexOf(result) +1 }}</v-col>
+                      <card-recapitulatif :resultats="result" style="border-left: 2px solid lightgrey; "></card-recapitulatif>
+                    </v-row>
+                  </v-col>
+                </v-list-item>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
         </v-timeline-item>
       </v-timeline>
-
     </div>
   </v-container>
 </template>
@@ -86,7 +80,3 @@ function getAnalyseType(analyse) {
   }
 }
 </script>
-
-<style>
-
-</style>
