@@ -23,7 +23,7 @@
 
       <v-timeline v-if="historiqueList.length !== 0" align-top dense clipped style="width: 100%">
         <!--      TRAITEMENT PAR ANALYSE      -->
-        <v-timeline-item v-for="historique in historiqueList.slice().reverse()" :key="historique.date" color="lightgrey">
+        <v-timeline-item v-for="historique in historiqueList.slice().reverse()" :key="historique.analyse.analyseSelected" color="lightgrey">
           <!--      AFFICHAGE DU NUMERO DE L'ANALYSE DANS LA PUCE     -->
           <template v-slot:icon>
             <span style="color: #cf491b; font-weight: 400; font-size: 1.2em">{{ historiqueList.indexOf(historique) +1 }}</span>
@@ -79,4 +79,5 @@ function getAnalyseType(analyse) {
     return "ciblée";
   }
 }
+
 </script>

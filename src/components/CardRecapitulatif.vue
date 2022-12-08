@@ -36,7 +36,7 @@
 const props = defineProps({
   // props
   'resultats': {
-    type: Object,
+    type: [],
     required: true
   }
 });
