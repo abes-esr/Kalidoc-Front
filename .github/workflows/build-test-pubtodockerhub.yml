@@ -45,3 +45,15 @@ jobs:
             docker build . --target front-image -t ${DOCKER_TAG}-front
             docker push ${DOCKER_TAG}-front
           done
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.16.0
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          browser: edge
+          build: npm build
+          start: npm run serve
+          wait-on: "http://localhost:8080"
