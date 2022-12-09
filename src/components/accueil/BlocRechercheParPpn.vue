@@ -18,7 +18,7 @@
           class="pa-1"
       >
         <template v-slot:selection="{item}">
-          <v-chip close @click:close="removeItem(item)">
+          <v-chip data-cy="del_all_ppn" close @click:close="removeItem(item)">
             <span class="pr-2">{{ item }}</span>
           </v-chip>
         </template>

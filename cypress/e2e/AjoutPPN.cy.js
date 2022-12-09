@@ -12,7 +12,8 @@ function testValeurs() {
     // Teste de la valeur du chip dans le v-alert
     cy.get('.v-expansion-panel-content__wrap > .v-chip > .v-chip__content').contains("45df753");
     // Teste le vidage de la liste
-    cy.get('.pe-1 > .v-btn__content').click();
+    // clique sur le chip avec data-cy=del_all_ppn
+    cy.get('[data-cy=del_all_ppn]').click({ multiple: true });
     cy.get('.v-select__selections').should('have.value', '');
 }
 
