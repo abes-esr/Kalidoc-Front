@@ -1,42 +1,29 @@
 //Stockage des différents résultats retournés du back-end
-
 import { defineStore } from 'pinia'
 
 export const useResultatStore = defineStore('resultat', {
   state: () => {
     return {
       resultsList: [],
-      nbPpnTotal: 0,
-      nbPpnInconnus: 0,
-      nbPpnErreurs:0,
-      nbPpnOk:0,
+      recapitulatif: [],
     }
   },
   getters: {
     getResultsList: (state) => state.resultsList,
-    getNbPpnTotal: (state) => state.nbPpnTotal,
-    getNbPpnInconnus: (state) => state.nbPpnInconnus,
-    getNbPpnErreurs: (state) => state.nbPpnErreurs,
-    getNbPpnOk: (state) => state.nbPpnOk
+    getRecapitulatif: (state) => state.recapitulatif,
+    getLastRecapitulatif: (state) => state.recapitulatif[state.recapitulatif.length-1],
   },
   actions: {
     setResultsListArray(resultsListInArray) {
       this.resultsList = resultsListInArray;
     },
-    pushRequestListOneElement(resultsInString) {
-      this.resultsList.push(resultsInString)
+    pushRecapitulatif(PpnTotal, PpnInconnus, PpnErreurs, PpnOk) {
+      this.recapitulatif.push({
+        PpnTotal: PpnTotal,
+        PpnInconnus: PpnInconnus,
+        PpnErreurs: PpnErreurs,
+        PpnOk: PpnOk
+      })
     },
-    setNbPpnTotal(ppnTotal) {
-      this.nbPpnTotal = ppnTotal;
-    },
-    setNbPpnInconnus(ppnInconnus) {
-      this.nbPpnInconnus = ppnInconnus;
-    },
-    setNbPpnErreurs(ppnErreurs) {
-      this.nbPpnErreurs = ppnErreurs;
-    },
-    setNbPpnOk(ppnOk) {
-      this.nbPpnOk = ppnOk;
-    }
   }
 })

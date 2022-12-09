@@ -1,29 +1,33 @@
 <template>
-  <v-container >
+  <v-container>
     <v-row class="ma-0 pa-0">
       <v-icon color="#252C61">mdi-numeric-2-box</v-icon>
       <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
     </v-row>
-    <v-container class="borderSelectAnalyseType">
+    <v-card flat class="borderSelectAnalyseType">
       <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
           <template v-slot:activator="{ on, attrs }">
             <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
           </template>
-          <span>{{analyse.bulle}}</span>
+          <span>
+            {{analyse.bulle}}
+            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'RAPIDE'" color="white">mdi-checkbox-blank-circle</v-icon>
+            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'EXPERTE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+          </span>
         </v-tooltip>
       </v-radio-group>
-      <v-container v-if="analyseSelected.value === 'FOCUSED'" >
+      <v-card flat v-if="analyseSelected.value === 'FOCUSED'" >
         <span  v-if="familleDocumentList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
-        <v-container class="d-flex flex-wrap pa-0 mb-2 pl-8">
+        <v-card flat class="d-flex flex-wrap pa-0 mb-2 pl-8">
           <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc" :label="familleDoc.libelle"></v-checkbox>
-        </v-container>
+        </v-card>
         <span v-if="ruleSetList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
-        <v-container class="d-flex flex-column pa-0 mb-2 pl-8">
+        <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
           <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" :label="ruleset.libelle" class="ma-1" style="max-height: 30px"></v-checkbox>
-        </v-container>
-      </v-container>
-    </v-container>
+        </v-card>
+      </v-card>
+    </v-card>
   </v-container>
 </template>
 
@@ -42,7 +46,7 @@
   const serviceApi = QualimarcService ;
 
   // Data
-  let analysesList = [
+  const analysesList = [
     {
       label: 'RAPIDE',
       value: 'QUICK',
@@ -59,13 +63,13 @@
       bulle: "Règles filtrées par type de document et/ou par jeux de règles préconçus"
     },
   ];
-  let familleDocumentList = ref([]);
-  let ruleSetList = ref([]);
+  const familleDocumentList = ref([]);
+  const ruleSetList = ref([]);
 
   // Selected Data
-  let analyseSelected = ref('');
-  let familleDocumentSetSelected = ref([]);
-  let ruleSetSelected = ref([]);
+  const analyseSelected = ref('');
+  const familleDocumentSetSelected = ref([]);
+  const ruleSetSelected = ref([]);
 
   onMounted(() => {
     feedFamilleDocumentList()
@@ -111,15 +115,6 @@
 
   function isSelected() {
     return ((analyseSelected.value.value !== '' && analyseSelected.value.value !== 'FOCUSED') || (analyseSelected.value.value === 'FOCUSED' && ((familleDocumentSetSelected.value.length > 0) || (ruleSetSelected.value.length > 0))));
-  }
-
-  /** anciene fonction regroupant les valeurs saisies.*/
-  function valuesSelected() {
-    return {
-      analyseType: analyseSelected.value,
-      documentType: familleDocumentSetSelected.value,
-      ruleSet: ruleSetSelected.value
-    }
   }
 
   function emitOnEvent(){

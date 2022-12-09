@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="props.dialog">
     <template v-slot:default="dialog">
-      <v-card>
+      <v-card color="white">
         <v-toolbar
             color="#252C61"
             dark
@@ -43,7 +43,7 @@ import { ref } from "vue";
 const props = defineProps({winibwRequest: String, dialog: Boolean});
 const emit = defineEmits(['onClose']);
 
-let messageDisplayed = ref(false);
+const messageDisplayed = ref(false);
 
 /** fonction permettant de copier la requête winIBW dans le presse-papier
  *
@@ -57,10 +57,4 @@ function emitOnClose() {
   messageDisplayed.value = false;
   emit('onClose', false);
 }
-
-
 </script>
-
-<style scoped>
-
-</style>

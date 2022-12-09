@@ -3,6 +3,11 @@
 /*     TITLE BAR     */
 /*-------------------*/
 
+.v-card {
+    background-color: transparent!important;
+    border-radius: 1px!important;
+}
+
 .titleBarLogo {
     height: 88px;
     position: relative;
@@ -59,6 +64,17 @@
     background-color: #cf491b;
 }
 
+#bgColorGrey table thead tr th {
+    background-color: #e6e6e6;
+}
+
+#bgColorIdColumnRulesTable table tr td:nth-child(1) {
+    color: #A3A3A3;
+    font-weight: 400;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
 #linkWhite {
     color: white;
     text-decoration: none;
@@ -68,40 +84,23 @@
     color: #252C61;
 }
 
-.borderAddPpn {
-    border-style: solid;
-    border-color: #252c61;
-    border-top-width:4px;
-    border-right-width:1px;
-    border-bottom-width:0;
-    border-left-width:1px;
-}
-
-.borderAddPpnBottom {
-    border-style: solid;
-    border-color: #252c61;
-    border-top-width:0;
-    border-right-width:1px;
-    border-bottom-width:1px;
-    border-left-width:1px;
-}
-
 .borderSelectAnalyseType {
-    border-style: solid;
-    border-color: #252c61;
-    border-top-width:4px;
-    border-right-width:0;
-    border-bottom-width:0;
-    border-left-width:0;
+    border-style: solid!important;
+    border-color: #252c61!important;
+    border-top-width:4px!important;
+    border-right-width:0!important;
+    border-bottom-width:0!important;
+    border-left-width:0!important;
 }
 
-.borderErrorDetailPerPpn {
-    border-style: solid;
-    border-color: #252c61;
-    border-top-width:4px;
-    border-right-width:1px;
-    border-bottom-width:1px;
-    border-left-width:1px;
+.borderBlocElements {
+    border-style: solid!important;
+    border-color: #252c61!important;
+    border-top-width:4px!important;
+    border-right-width:1px!important;
+    border-bottom-width:1px!important;
+    border-left-width:1px!important;
+    border-radius: 1px!important;
 }
 
 .borderPicturePpnErrorDetail {
@@ -113,13 +112,14 @@
     max-height: 75px
 }
 
-.dataTableHeaderDetailErrorPerPpn{
-    color: white;
-    background-color: #e6e6e6;
-}
-
 .detailErrorPpnSubtitle {
     font-size: 1em;
     padding-left: 76px;
+    min-height: 38px;
+}
+
+.rappelTypeAnalyse {
+    font-size: 1em;
+    padding-left: 20px;
     min-height: 38px;
 }

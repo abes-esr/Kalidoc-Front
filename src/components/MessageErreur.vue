@@ -6,6 +6,7 @@
 
 <script setup>
 
+//todo: retravailler le composant pour qu'il puisse afficher un message d'erreur générique
 const props = defineProps({backendErrorMessage: Object});
 
 </script>
