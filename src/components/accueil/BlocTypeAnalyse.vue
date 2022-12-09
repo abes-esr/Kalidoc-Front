@@ -8,7 +8,7 @@
       <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
           <template v-slot:activator="{ on, attrs }">
-            <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
+            <v-radio :data-cy="analyse.value" :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
           </template>
           <span>
             {{analyse.bulle}}
@@ -20,11 +20,11 @@
       <v-card flat v-if="analyseSelected.value === 'FOCUSED'" >
         <span  v-if="familleDocumentList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
         <v-card flat class="d-flex flex-wrap pa-0 mb-2 pl-8">
-          <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc" :label="familleDoc.libelle"></v-checkbox>
+          <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" :data-cy="familleDoc.id" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc" :label="familleDoc.libelle"></v-checkbox>
         </v-card>
         <span v-if="ruleSetList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
         <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
-          <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" :label="ruleset.libelle" class="ma-1" style="max-height: 30px"></v-checkbox>
+          <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" :data-cy="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" :label="ruleset.libelle" class="ma-1" style="max-height: 30px"></v-checkbox>
         </v-card>
       </v-card>
     </v-card>

@@ -1,16 +1,9 @@
-describe('First Test', () => {
-  it('Nothing to do', () => {
-    //Mock
-    cy.intercept(Cypress.env('urlApi') + "/getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
-    cy.intercept(Cypress.env('urlApi') + "/getRuleSets",[]);
-
-    cy.viewport(1000, 1000);
-
-    cy.visit(Cypress.env('url'));
-
+describe('Bouton disable', () => {
+  it('test if button should be disable or enable', () => {
     cy.contains("CIBL").click();
+    cy.get('[data-cy=FOCUSED]').should("have.attr", "aria-checked", "true");
     cy.contains("Audiovisuel").click();
-
+    cy.get('[data-cy=B]').should("be.checked")
     cy.get('.button').should('be.disabled');
 
     cy.get('.v-select__selections').click().type("123456789");

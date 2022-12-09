@@ -16,23 +16,6 @@ function testValeurs() {
     cy.get('.v-select__selections').should('have.value', '');
 }
 
-before(() => {
-    // Mock
-    cy.intercept(Cypress.env('urlApi') + "getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
-    cy.intercept(Cypress.env('urlApi') + "getRuleSets",[]);
-
-    // Réglage de la taille de la fenêtre
-    cy.viewport(1400, 1000);
-
-    // Affichage de la home page
-    cy.visit(Cypress.env('url'));
-})
-
-beforeEach(() => {
-    // Réglage de la taille de la fenêtre
-    cy.viewport(1400, 1000);
-})
-
 describe('Ajout d\' ppn et vidage de la liste', () => {
     it('Ajout de ppn un par un', () => {
 
