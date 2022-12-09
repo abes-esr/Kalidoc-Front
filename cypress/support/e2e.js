@@ -18,8 +18,8 @@ import './commands'
 
 before(() => {
     // Mock
-    cy.intercept("/getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
-    cy.intercept("/getRuleSets",[{"id":1,"libelle":"Les Zones 200"}]);
+    cy.intercept(Cypress.env('urlApi') + "/getFamillesDocuments",[{"id":"B","libelle":"Audiovisuel"}]);
+    cy.intercept(Cypress.env('urlApi') + "/getRuleSets",[{"id":1,"libelle":"Les Zones 200"}]);
 
     // Réglage de la taille de la fenêtre
     cy.viewport(1400, 1000);
