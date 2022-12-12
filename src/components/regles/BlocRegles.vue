@@ -105,7 +105,7 @@
                 </v-btn>
               </template>
               <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) ">
+                <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeChoice(ruleTypeDoc) ">
                   <v-checkbox v-model="selectedCheckbox" :label="ruleTypeDoc" :value="ruleTypeDoc"></v-checkbox>
                 </v-btn><div style="height: 30px"></div>
               </div>
@@ -264,28 +264,27 @@ function feedRulesPriorityList() {
 
 /**
  * Fonction qui permet d'afficher les typeDoc sélectionnés par l'utilisateur
- * @param element l'élément sélectionné
+ * @param type l'élément sélectionné
  * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
  */
-function eventTypeDocChoice(element) {
-  selectedId.value = "Tous";
-  if (element === "Tous") {
-    selectedTypeDoc.value = new Array(element);
+function eventTypeChoice(type) {
+  if (type === "Tous") {
+    selectedTypeDoc.value = new Array(type);
   } else {
     if (selectedTypeDoc.value.length > 0) {
       if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si un "Tous" est présent dans le selectedTypeDoc
         selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf("Tous"), 1);
       }
-      if (selectedTypeDoc.value.indexOf(element) === -1) {  //  Ajout un typeDoc s'il n'est pas déjà dans la liste selectedTypeDoc
-        selectedTypeDoc.value.push(element.toString());
-      } else if (selectedTypeDoc.value.indexOf(element) >= 0) { //  Supprime un typeDoc coché lorsque l'on clique de nouveau sur lui
-        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(element), 1);
+      if (selectedTypeDoc.value.indexOf(type) === -1) {  //  Ajout un typeDoc s'il n'est pas déjà dans la liste selectedTypeDoc
+        selectedTypeDoc.value.push(type);
+      } else if (selectedTypeDoc.value.indexOf(type) >= 0) { //  Supprime un typeDoc coché lorsque l'on clique de nouveau sur lui
+        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(type), 1);
         if (selectedTypeDoc.value.length === 0) { //  si le dernier typeDoc est déselectionné, on insère la valeur "Tous"
           selectedTypeDoc.value.push("Tous");
         }
       }
     } else {
-      selectedTypeDoc.value = new Array(element.toString());
+      selectedTypeDoc.value = new Array(type);
     }
   }
   selectedCheckbox.value = selectedTypeDoc.value;

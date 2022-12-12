@@ -232,7 +232,8 @@ function getIconTypeDocument(typeDocument) {
       iconTypeDocument.value.img="mdi-web";
       iconTypeDocument.value.color="blue";
       break;
-    case "Thèse":
+    case "Thèse de soutenance":
+    case "Thèse de reproduction":
       iconTypeDocument.value.img="mdi-school";
       iconTypeDocument.value.color="black";
       break;
