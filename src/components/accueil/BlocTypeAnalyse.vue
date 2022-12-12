@@ -4,7 +4,7 @@
       <v-icon color="#252C61">mdi-numeric-2-box</v-icon>
       <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
     </v-row>
-    <v-card flat class="borderSelectAnalyseType" :style="Style.boderBlocColor()">
+    <v-card flat class="borderSelectAnalyseType" :style="Style.borderBlocColor()">
       <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
           <template v-slot:activator="{ on, attrs }">
@@ -35,7 +35,7 @@
   import { useAnalyseStore } from "@/stores/analyse";
   import { onMounted, ref } from "vue";
   import QualimarcService from "@/service/QualimarcService";
-  import * as Style from "@/style/style";
+  import * as Style from "@/style/colors";
 
   // Store
   const analyseStore = useAnalyseStore();

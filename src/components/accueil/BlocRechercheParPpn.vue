@@ -1,6 +1,6 @@
 <template>
-  <v-sheet class="pa-2 borderBlocElements" :style="Style.boderBlocColor()">
-    <v-chip>{{ Style.boderBlocColor() }}</v-chip>
+  <v-sheet class="pa-2 borderBlocElements" :style="Style.borderBlocColor()">
+    <v-chip>{{ Style.borderBlocColor() }}</v-chip>
     <div>
       <div class="px-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">
         Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois
@@ -89,7 +89,7 @@
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
 import { ref } from 'vue';
-import * as Style from "@/style/style";
+import * as Style from "@/style/colors";
 
 //Store
 const analyseStore = useAnalyseStore();

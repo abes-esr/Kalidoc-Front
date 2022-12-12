@@ -65,7 +65,10 @@
 <!--     FOOTER NOIR-->
       <v-row class="footerBottomRow">
          <v-col cols="6" class="mr-auto">
-           <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span> — {{ new Date().getFullYear() }} </div>
+           <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span> — {{ new Date().getFullYear() }}
+             <v-icon small color="white" @click="changeTheme" style="margin: 2px 5px 5px 20px">mdi-theme-light-dark</v-icon>
+           </div>
+
          </v-col>
          <v-col cols="auto">
            <a href="" id="linkWhite">Données personnelles</a> |
@@ -77,3 +80,17 @@
 
    </v-footer>
 </template>
+
+<script setup>
+import { getCurrentInstance} from "vue";
+const app = getCurrentInstance()
+import * as Color from "@/style/colors";
+
+function changeTheme() {
+    app.proxy.$vuetify.theme.dark = !app.proxy.$vuetify.theme.dark;
+}
+
+function switchFromLightToMonoTheme() {
+    Color.switchFromLightToMonoTheme();
+}
+</script>
