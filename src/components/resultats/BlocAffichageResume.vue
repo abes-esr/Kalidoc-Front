@@ -261,6 +261,9 @@ function eventTypeChoice(type) {
         selectedTypeDoc.value.push(type);
       } else if (selectedTypeDoc.value.indexOf(type) >= 0) { //  Supprime un selectedTypeDoc coché lorsque l'on clique de nouveau sur lui
         selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(type), 1);
+        if (selectedTypeDoc.value.length === 0) { //  si le dernier typeDoc est déselectionné, on insère la valeur "Tous"
+          selectedTypeDoc.value.push("Tous");
+        }
       }
     } else {
       selectedTypeDoc.value = new Array(type);
