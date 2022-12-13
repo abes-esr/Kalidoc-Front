@@ -33,7 +33,13 @@
             <v-icon color="grey" small >mdi-sort</v-icon>
           </span>
         </template>
-
+        <!-- lien vers le guide méthodologique dans l'intitulé des zones -->
+        <template v-slot:item.zone1="{ item }">
+          <a target="_blank" :href="getLinkGuideMethodo(item.zone1)" id="linkBlue">{{ item.zone1 }}</a>
+        </template>
+        <template v-slot:item.zone2="{ item }">
+          <a target="_blank" :href="getLinkGuideMethodo(item.zone2)" id="linkBlue">{{ item.zone2 }}</a>
+        </template>
         <!--  Icone dans la colonne Règles  -->
         <template v-slot:item.priority="{ item }">
           <v-container class="ma-0 pa-0 d-flex justify-center">
@@ -261,6 +267,18 @@ function getPriority(priority){
   } else if (priority === "P2") {
     return "avancée"
   }
+}
+
+function getLinkGuideMethodo(zone) {
+  if (zone != undefined) {
+    let link = "https://documentation.abes.fr/sudoc/formats/unmb/zones/"
+    if (zone.indexOf("$") > 1)
+      link += zone.substring(0, 3);
+    else
+      link += zone;
+    return link + ".htm";
+  }
+  return "";
 }
 </script>
 
