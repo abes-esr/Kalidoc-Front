@@ -25,6 +25,7 @@
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
           <v-menu offset-y v-if="header.value === 'typeDocument'">
             <template v-slot:activator="{ on, attrs }">
+              <span v-on="on" style='color: white; display: block'>{{ header.text }}</span>
               <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
                 <v-icon small color="white" :color="colorIconFilterTypeDoc()">
                   mdi-filter
@@ -38,9 +39,10 @@
               <div style="height: 30px"></div>
             </div>
           </v-menu>
-        <span style='color: white;'>
+        <span style='color: white; display: block' v-else>
           {{ header.text }}
-          <v-icon color="white" small >mdi-sort</v-icon></span>
+        </span>
+          <v-icon color="white" small >mdi-sort</v-icon>
       </template>
       <template v-slot:item.affiche="{ item }">
         <v-simple-checkbox
@@ -86,10 +88,10 @@ const emit = defineEmits(['onChangePpn','onChangeItems']);
 const props = defineProps({currentPpn: String, nbLancement:Number});
 
 const headers = [
-  { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 130},
-  { text: "PPN", value: "ppn", class: "headerTableClass", width: 104},
-  { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 208},
-  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 130}
+  { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 80},
+  { text: "PPN", value: "ppn", class: "headerTableClass", width: 80},
+  { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 140},
+  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 80}
 ];
 const loading = ref(false);
 const items = ref([]);

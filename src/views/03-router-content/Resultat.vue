@@ -8,10 +8,13 @@
       Résultats de l'analyse
     </v-card>
     <v-row cols="12">
-      <v-col xs="12" sm="12" md="6" lg="5" xl="5">
+        <v-col xs="12" sm="12" md="5" lg="4" xl="3">
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
       </v-col>
-      <v-col xs="12" sm="12" md="6" lg="7" xl="7">
+      <v-col xs="12" sm="12" md="7" lg="8" xl="9" class="pl-6">
+        <v-timeline style="height: 50%; position:absolute; margin: 0 0 0 -4.15em"> <!--TODO v-if sur $mobile-->
+          <v-timeline-item small icon="mdi-arrow-left" color="grey" fill-dot @click.native.stop="theAction"></v-timeline-item>
+        </v-timeline>
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
         <div class="ma-0 pa-0" style="position: relative">
           <v-tooltip left>
@@ -105,6 +108,9 @@ function updateNbLancement() {
   nbLancement.value = resultatStore.getRecapitulatif.length;
 }
 
+function theAction() {
+  console.log("ok")
+}
 
 </script>
 
