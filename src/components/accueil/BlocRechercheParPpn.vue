@@ -2,7 +2,7 @@
   <v-sheet class="pa-2 borderBlocElements">
     <div>
       <div class="px-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">
-        Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois
+        Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de 5000 PPN en une seule fois
       </div>
       <v-combobox
           filled
@@ -87,10 +87,13 @@
 
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
-import { ref } from 'vue';
+import {onMounted, onUpdated, ref, watchEffect} from 'vue';
+import {useHistoriqueStore} from "@/stores/historique";
+import router from "@/router";
 
 //Store
 const analyseStore = useAnalyseStore();
+const historiqueStore = useHistoriqueStore();
 
 //Emit
 const emit = defineEmits(['isPpnListEmpty','backendError']);
@@ -98,7 +101,7 @@ const emit = defineEmits(['isPpnListEmpty','backendError']);
 //Combobox
 const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
-const ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
+const ppnListCombobox = ref((router.currentRoute.query.numeroAnalyse && historiqueStore.getHistorique.length !== 0) ? historiqueStore.getHistorique[router.currentRoute.query.numeroAnalyse].analyse.ppnValidsList : []); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
 const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
 
 //Import de fichier
@@ -107,6 +110,14 @@ const rules = [(value) => !value || ((value.type === undefined) || (value.type =
 const fileReader = new FileReader();
 const errorMsg = ref('');
 const successMsg = ref('');
+
+onUpdated(() => {
+  if (ppnListCombobox.value.length > 0 && lastValuesTypedOrPasted.value === '') {
+    analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
+    analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
+    emitOnEvent();
+  }
+});
 
 /**
  * Suppression d'un élément ppn déclenché au moment du clic sur la croix
@@ -124,7 +135,7 @@ function removeItem(item){
  */
 function removeAllItems(){
   resetMessages();
-  if(!!ppnListCombobox.value){
+  if(ppnListCombobox.value){
     ppnListCombobox.value = [];
     ppnInvalids.value = [];
     analyseStore.setPpnInvalidsList(ppnInvalids.value); // Vide la liste des ppn invalides
@@ -138,7 +149,8 @@ function removeAllItems(){
  * Contrôle des chaînes de caractères saisies dans la combobox à la sortie de la souris du champ et alimentation de ppnListTyped
  */
 function checkValuesAndFeedPpnListTyped(){
-  if(!!lastValuesTypedOrPasted.value){ //Si la valeur n'est pas nulle, ce qui se produit si l'utilisateur sort du cadre sans rien taper
+  console.log(ppnListCombobox.value);
+  if(lastValuesTypedOrPasted.value){ //Si la valeur n'est pas nulle, ce qui se produit si l'utilisateur sort du cadre sans rien taper
     let arrayWithValidsPpn = lastValuesTypedOrPasted.value.split(/[^\da-zA-Z]/).filter(ppn_to_check => ppn_to_check.match(/^(\d{8}(\d|X|x))$/));
     let arrayWithInvalidsPpn = lastValuesTypedOrPasted.value.split(/[^\da-zA-Z]/).filter(ppn_to_check => !ppn_to_check.match(/^(\d{8}(\d|X|x))$/)).filter(str_to_clean => str_to_clean.trim() !== '');
     let arrayWithValidsPpnWithUniqueValues = arrayWithValidsPpn.filter((v, i, a) => a.indexOf(v) === i); //Fonction anonyme de dédoublonnage sur la saisie en cours
@@ -149,9 +161,9 @@ function checkValuesAndFeedPpnListTyped(){
     //Ppn invalide
     arrayWithInvalidsPpnWithUniqueValues.forEach(currentValidPpn => ppnInvalids.value.push(currentValidPpn));
     ppnInvalids.value = ppnInvalids.value.filter( function( item, index, inputArray ) {return inputArray.indexOf(item) === index;}); //Supprime les ppn qui serait en doublon sur une saisie précédente
-    analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
-    analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
   }
+  analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
+  analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
   lastValuesTypedOrPasted.value = ''; //On vide la chaîne puisqu'on à alimenté les valeurs valides dans :value="ppnListCombobox"
   emitOnEvent();
 }
