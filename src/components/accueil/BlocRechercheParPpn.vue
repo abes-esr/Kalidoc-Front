@@ -87,10 +87,13 @@
 
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
-import { ref } from 'vue';
+import {onMounted, onUpdated, ref, watchEffect} from 'vue';
+import {useHistoriqueStore} from "@/stores/historique";
+import router from "@/router";
 
 //Store
 const analyseStore = useAnalyseStore();
+const historiqueStore = useHistoriqueStore();
 
 //Emit
 const emit = defineEmits(['isPpnListEmpty','backendError']);
@@ -98,7 +101,7 @@ const emit = defineEmits(['isPpnListEmpty','backendError']);
 //Combobox
 const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
-const ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
+const ppnListCombobox = ref((router.currentRoute.query.numeroAnalyse && historiqueStore.getHistorique.length !== 0) ? historiqueStore.getHistorique[router.currentRoute.query.numeroAnalyse].analyse.ppnValidsList : []); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
 const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
 
 //Import de fichier
@@ -107,6 +110,9 @@ const rules = [(value) => !value || ((value.type === undefined) || (value.type =
 const fileReader = new FileReader();
 const errorMsg = ref('');
 const successMsg = ref('');
+
+checkValuesAndFeedPpnListTyped();
+
 
 /**
  * Suppression d'un élément ppn déclenché au moment du clic sur la croix
@@ -138,7 +144,7 @@ function removeAllItems(){
  * Contrôle des chaînes de caractères saisies dans la combobox à la sortie de la souris du champ et alimentation de ppnListTyped
  */
 function checkValuesAndFeedPpnListTyped(){
-  if(!!lastValuesTypedOrPasted.value){ //Si la valeur n'est pas nulle, ce qui se produit si l'utilisateur sort du cadre sans rien taper
+  if(lastValuesTypedOrPasted.value){ //Si la valeur n'est pas nulle, ce qui se produit si l'utilisateur sort du cadre sans rien taper
     let arrayWithValidsPpn = lastValuesTypedOrPasted.value.split(/[^\da-zA-Z]/).filter(ppn_to_check => ppn_to_check.match(/^(\d{8}(\d|X|x))$/));
     let arrayWithInvalidsPpn = lastValuesTypedOrPasted.value.split(/[^\da-zA-Z]/).filter(ppn_to_check => !ppn_to_check.match(/^(\d{8}(\d|X|x))$/)).filter(str_to_clean => str_to_clean.trim() !== '');
     let arrayWithValidsPpnWithUniqueValues = arrayWithValidsPpn.filter((v, i, a) => a.indexOf(v) === i); //Fonction anonyme de dédoublonnage sur la saisie en cours
