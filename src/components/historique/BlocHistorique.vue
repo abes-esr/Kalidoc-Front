@@ -4,11 +4,19 @@
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Historique des analyses</span>
-      <!--      BOUTON ENREGISTRER LES ANALYSES      -->
-      <v-btn class="mx-0" depressed @click="" color="#0F75BC" small>
-        <span style="color: white">Enregistrer l'historique</span>
-        <v-icon small color="white" class="ml-2">mdi-download</v-icon>
-      </v-btn>
+      <!--      BOUTON TELECHARGER L'HISTORIQUE     -->
+      <v-tooltip left>
+        <template v-slot:activator="{on}">
+          <v-btn class="ma-0" elevation="0" :disabled="historiqueToExportFormat.length === 0" small v-on="on" color="#0F75BC">
+            <download-csv :delimiter="';'" :data="historiqueToExportFormat" name="qualimarc-export-historic.csv" style="color: white">
+              TÉLÉCHARGER L'HISTORIQUE
+            </download-csv>
+            <v-icon small color="white" class="ml-2">mdi-download</v-icon>
+          </v-btn>
+        </template>
+        <span>Télécharger l'historique dans un fichier "qualimarc-export-historic.csv"</span>
+      </v-tooltip>
+
     </v-row>
     <div class="ma-0 pa-0" style="border-top: 4px solid #252c61">
       <v-row class="mt-1" justify="space-around">
@@ -63,12 +71,17 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import CardRecapitulatif from "@/components/CardRecapitulatif";
 import {useHistoriqueStore} from "@/stores/historique";
 
 const historiqueStore = useHistoriqueStore();
 const historiqueList = ref(historiqueStore.getHistorique);
+const historiqueToExportFormat = ref([]);
+
+onMounted(() => {
+  convertHistoriqueToExportFormat();
+})
 
 function getAnalyseType(analyse) {
   if (analyse === "QUICK") {
@@ -77,6 +90,81 @@ function getAnalyseType(analyse) {
     return "experte";
   } else if (analyse === "FOCUSED") {
     return "ciblée";
+  }
+}
+
+function convertHistoriqueToExportFormat(){
+  if (historiqueList.value != null && historiqueList.value.length !== 0) {
+    //  Pour chaque analyse dans historiqueList
+    historiqueList.value.forEach(element => {
+
+      //  Récupère la liste des types de documents
+      let typesDocuments = "";
+      element.analyse.familleDocumentSet.forEach(element => {
+        typesDocuments += element.libelle.toString() + ", ";
+      })
+      //  Récupère la liste des jeux de règles
+      let jeuxRegles = "";
+      element.analyse.ruleSet.forEach(element => {
+        jeuxRegles += element.libelle.toString() + ", ";
+      })
+
+
+      //  Pour chaque résultat d'une analyse
+      element.resultats.forEach((result, index) => {
+
+        //  Récupère la liste de ppn analysés
+        let ppnAnalyses = "";
+        result.PpnTotal.forEach(ppn => {
+          ppnAnalyses += ppn.toString() + ", ";
+        })
+
+        //  Récupère la liste de ppn avec erreurs
+        let ppnAvecErreurs = "";
+        result.PpnErreurs.forEach(ppn => {
+          ppnAvecErreurs += ppn.toString() + ", ";
+        })
+
+        //  Récupère la liste de ppn sans erreurs
+        let ppnSansErreurs = "";
+        result.PpnOk.forEach(ppn => {
+          ppnSansErreurs += ppn.toString() + ", ";
+        })
+
+        //  Récupère la liste de ppn inconnus
+        let ppnInconnus = "";
+        result.PpnInconnus.forEach(ppn => {
+          ppnInconnus += ppn.toString() + ", ";
+        })
+
+        //  Récupère l'index et adapte le type de lancement
+        let typeLancement;
+        if (index === 0) {
+          typeLancement = "accueil";
+        } else {
+          typeLancement = "relance";
+        }
+
+        historiqueToExportFormat.value.push({
+          "Date" : element.date.toLocaleString(),
+          "Type de lancement": typeLancement,
+          "Numero de lancement": index +1,
+          "Type d'analyse": element.analyse.analyseSelected,
+          "Types de documents": typesDocuments,
+          "Jeux de regles": jeuxRegles,
+          "Nb ppn analyses": result.PpnTotal.length,
+          "Ppn analyses": ppnAnalyses,
+          "Nb ppn avec erreurs": result.PpnErreurs.length,
+          "Ppn avec erreurs": ppnAvecErreurs,
+          "Nb ppn sans erreurs": result.PpnOk.length,
+          'Ppn sans erreurs': ppnSansErreurs,
+          "Nb ppn inconnus": result.PpnInconnus.length,
+          "Ppn inconnus": ppnInconnus
+        });
+
+      })
+
+    })
   }
 }
 
