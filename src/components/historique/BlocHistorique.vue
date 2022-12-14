@@ -23,7 +23,7 @@
 
       <v-timeline v-if="historiqueList.length !== 0" align-top dense clipped style="width: 100%">
         <!--      TRAITEMENT PAR ANALYSE      -->
-        <v-timeline-item v-for="historique in historiqueList.slice().reverse()" :key="historique.analyse.analyseSelected" color="lightgrey">
+        <v-timeline-item v-for="historique in historiqueList.slice().reverse()" :key="historiqueList.indexOf(historique)" color="lightgrey">
           <!--      AFFICHAGE DU NUMERO DE L'ANALYSE DANS LA PUCE     -->
           <template v-slot:icon>
             <span style="color: #cf491b; font-weight: 400; font-size: 1.2em">{{ historiqueList.indexOf(historique) +1 }}</span>
@@ -35,7 +35,7 @@
                   <!--      AFFICHAGE DE LA DATE      -->
                   <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} <span style="font-style: italic; color: dimgrey">- Type d'analyse : {{ getAnalyseType(historique.analyse.analyseSelected) }}</span></span>
                   <!--      AFFICHAGE DU BOUTON      -->
-                  <v-btn @click="" depressed color="#CF4A1A" class="button" max-width="220" height="26">
+                  <v-btn @click="relanceAnalyse(historiqueList.indexOf(historique))" depressed color="#CF4A1A" class="button" max-width="220" height="26">
                     <span style="color: white">Relancer l'analyse</span>
                     <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
                   </v-btn>
@@ -66,6 +66,7 @@
 import {ref} from "vue";
 import CardRecapitulatif from "@/components/CardRecapitulatif";
 import {useHistoriqueStore} from "@/stores/historique";
+import router from "@/router";
 
 const historiqueStore = useHistoriqueStore();
 const historiqueList = ref(historiqueStore.getHistorique);
@@ -78,6 +79,10 @@ function getAnalyseType(analyse) {
   } else if (analyse === "FOCUSED") {
     return "ciblée";
   }
+}
+
+function relanceAnalyse(currentAnalyse) {
+  router.push("/?numeroAnalyse="+currentAnalyse);
 }
 
 </script>
