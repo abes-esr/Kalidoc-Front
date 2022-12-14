@@ -11,9 +11,9 @@
         <v-col xs="12" sm="12" md="5" lg="4" xl="3">
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
       </v-col>
-      <v-col xs="12" sm="12" md="7" lg="8" xl="9" class="pl-6">
+      <v-col xs="12" sm="12" md="7" :lg="focusOn[3]" :xl="focusOn[4]" class="pl-6">
         <v-timeline style="height: 70%; position:absolute; margin: 0 0 0 -4.15em" v-if="($vuetify.breakpoint.mdAndUp)">
-          <v-timeline-item small icon="mdi-arrow-left" color="grey" fill-dot @click.native.stop="theAction"></v-timeline-item>
+          <v-timeline-item small :icon="iconTimeline" color="grey" fill-dot @click.native.stop="theAction"></v-timeline-item>
         </v-timeline>
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
         <div class="ma-0 pa-0" style="position: relative">
@@ -57,6 +57,9 @@ const resultatStore = useResultatStore();
 const currentPpn = ref('');
 const currentItems = ref([]);
 const nbLancement = ref(0);
+
+const iconTimeline = ref('mdi-arrow-left');
+const focusOn = ref([12, 12, 5, 4, 3]);
 
 function sendPpnToBlocResultat(ppn) {
   currentPpn.value = ppn;
@@ -109,6 +112,14 @@ function updateNbLancement() {
 }
 
 function theAction() {
+  if(iconTimeline.value === 'mdi-arrow-left'){
+    focusOn.value = [12, 12, 2, 2, 2];
+    iconTimeline.value = 'mdi-arrow-right';
+  }else{
+    focusOn.value = [12, 12, 5, 4, 3];
+    iconTimeline.value = 'mdi-arrow-left';
+  }
+
   console.log("ok")
 }
 
