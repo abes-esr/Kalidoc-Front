@@ -53,5 +53,12 @@ export class QualimarcService {
     getRules() {
         return this.client.get("rules")
     }
+
+    /**
+     * Renvoie le status de la tache (0 à 100%)
+     */
+    getStatus() {
+        return this.client.get("getStatus")
+    }
 }
 export default new QualimarcService();

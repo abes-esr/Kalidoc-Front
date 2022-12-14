@@ -21,7 +21,7 @@ const historiqueStore = useHistoriqueStore();
 
 // Props & Emit
 const props = defineProps({isDisabled: Boolean, isReplay: Boolean});
-const emit = defineEmits(['backendError', 'finished']);
+const emit = defineEmits(['backendError', 'finished', 'started']);
 
 // Service
 const serviceApi = QualimarcService
@@ -31,6 +31,7 @@ const spinnerActive = ref(false);
 
 function checkPpnWithTypeAnalyse() {
   spinnerActive.value = true;
+  emit('started');
   serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
     .then((response) => {
         resultatStore.setResultsListArray(response.data.resultRules);
