@@ -12,7 +12,7 @@
         <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
       </v-col>
       <v-col xs="12" sm="12" md="7" lg="8" xl="9" class="pl-6">
-        <v-timeline style="height: 70%; position:absolute; margin: 0 0 0 -4.15em"> <!--TODO v-if sur $mobile-->
+        <v-timeline style="height: 70%; position:absolute; margin: 0 0 0 -4.15em" v-if="($vuetify.breakpoint.mdAndUp)">
           <v-timeline-item small icon="mdi-arrow-left" color="grey" fill-dot @click.native.stop="theAction"></v-timeline-item>
         </v-timeline>
         <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
