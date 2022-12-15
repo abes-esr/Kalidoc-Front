@@ -57,7 +57,7 @@ import BlocAffichageResume from "@/components/resultats/BlocAffichageResume";
 import BoutonLancement from "@/components/BoutonLancement";
 import BlocDetailPpn from "@/components/resultats/BlocDetailPpn";
 
-import {ref, watchEffect} from "vue";
+import {ref} from "vue";
 import { useResultatStore } from "@/stores/resultat";
 import router from "@/router";
 
@@ -70,13 +70,6 @@ const mobileBreakpoint = ref(200);
 
 const iconTimeline = ref('mdi-arrow-left');
 const focusOn = ref([4, 4]);
-
-// watchEffect(() => {
-//   if (this.$vuetify.breakpoint.name) {
-//     console.log("HERE")
-//     mobileBreakpoint.value = 200;
-//   }
-// })
 
 function sendPpnToBlocResultat(ppn) {
   currentPpn.value = ppn;

@@ -21,7 +21,7 @@
           itemsPerPageOptions: [5,10,20,30,-1]
         }"
         dense
-        :mobile-breakpoint="this.$props.mobileBreakpoint"
+        :mobile-breakpoint="resizeDataTable()"
         >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
           <v-menu offset-y v-if="header.value === 'typeDocument'">
@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from "vue"
+import { ref, onMounted, watchEffect, getCurrentInstance } from "vue"
 import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
@@ -319,6 +319,22 @@ function toggleMask(value) {
   items.value.forEach(item => {
     item.affiche = value;
   })
+}
+
+/**
+ * Fonction qui permet de récupérer la valeur du breakpoint de vuetify
+ * et adapte l'affichage de la dataTable (mobile ou pc)
+ * @returns {InferPropType<Number | NumberConstructor>|number}
+ */
+function resizeDataTable() {
+  const instance = getCurrentInstance();
+  const vuetify = instance.proxy.$vuetify;
+
+  if(vuetify.breakpoint.name === "md" || vuetify.breakpoint.name === "md" || vuetify.breakpoint.name === "xs") {
+    return 200;
+  } else {
+    return props.mobileBreakpoint;
+  }
 }
 
 </script>
