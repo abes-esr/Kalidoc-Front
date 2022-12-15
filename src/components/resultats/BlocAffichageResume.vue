@@ -21,7 +21,8 @@
           itemsPerPageOptions: [5,10,20,30,-1]
         }"
         dense
-    >
+        :mobile-breakpoint="this.$props.mobileBreakpoint"
+        >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
           <v-menu offset-y v-if="header.value === 'typeDocument'">
             <template v-slot:activator="{ on, attrs }">
@@ -85,8 +86,9 @@ const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
 
 const emit = defineEmits(['onChangePpn','onChangeItems']);
-const props = defineProps({currentPpn: String, nbLancement:Number});
+const props = defineProps({currentPpn: String, nbLancement:Number, mobileBreakpoint:Number});
 
+const size = '';
 const headers = [
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 80},
   { text: "PPN", value: "ppn", class: "headerTableClass", width: 80},

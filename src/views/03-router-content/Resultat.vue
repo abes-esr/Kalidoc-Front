@@ -8,35 +8,44 @@
       Résultats de l'analyse
     </v-card>
     <v-row cols="12">
-        <v-col xs="12" sm="12" md="5" lg="4" xl="3">
-        <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement"></BlocAffichageResume>
+      <v-col xs="12" sm="12" md="12" :lg="focusOn[0]" :xl="focusOn[1]" fluid fill-width>
+        <v-layout child-flex>
+          <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement" :mobileBreakpoint="mobileBreakpoint"></BlocAffichageResume>
+        </v-layout>
       </v-col>
-      <v-col xs="12" sm="12" md="7" :lg="focusOn[3]" :xl="focusOn[4]" class="pl-6">
-        <v-timeline style="height: 70%; position:absolute; margin: 0 0 0 -4.15em" v-if="($vuetify.breakpoint.mdAndUp)">
-          <v-timeline-item small :icon="iconTimeline" color="grey" fill-dot @click.native.stop="theAction"></v-timeline-item>
-        </v-timeline>
-        <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
-        <div class="ma-0 pa-0" style="position: relative">
-          <v-tooltip left>
-            <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
-              <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" elevation="0" v-on="on" color="#0F75BC">
-                <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv">
-                  TÉLÉCHARGER TOUS<br/>
-                  LES RESULTATS
-                </download-csv>
-                <v-icon color="white" class="ml-2">mdi-download</v-icon>
-              </v-btn>
-            </template>
-            <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
-          </v-tooltip>
+      <v-col xs="12" sm="12" md="12" lg="" xl="" class="pl-lg-6" fluid fill-width>
+        <div class="d-none d-lg-flex" style="height: 70%; width: 2px; position:absolute; margin: 0 0 0 -1.15em; background-color: #E6E6E6">
+          <v-btn fab x-small depressed color="#E6E6E6" style="position:absolute; margin: 0 0 0 -1.55em" @click="resizeBloc">
+            <v-icon>{{ iconTimeline }}</v-icon>
+          </v-btn>
         </div>
-        <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" :nombre-resultat-analyse="nbLancement"></bloc-recapitulatif>
-        <v-card
-        flat
-        class="float-right ma-0 pa-0"
-        >
-          <bouton-lancement class="ma-0 pa-0"  :is-replay="true" @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
-        </v-card>
+        <v-layout child-flex>
+          <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
+        </v-layout>
+          <div class="ma-0 pa-0" style="position: relative">
+            <v-tooltip left>
+              <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
+                <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" elevation="0" v-on="on" color="#0F75BC">
+                  <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv">
+                    <span style="display: block">TÉLÉCHARGER TOUS</span>
+                    LES RESULTATS
+                  </download-csv>
+                  <v-icon color="white" class="ml-2">mdi-download</v-icon>
+                </v-btn>
+              </template>
+              <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
+            </v-tooltip>
+          </div>
+        <v-layout child-flex>
+          <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" :nombre-resultat-analyse="nbLancement"></bloc-recapitulatif>
+        </v-layout>
+          <v-card
+          flat
+          class="float-right ma-0 pa-0"
+          >
+            <bouton-lancement class="ma-0 pa-0"  :is-replay="true" @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
+          </v-card>
+
       </v-col>
     </v-row>
   </v-container>
@@ -48,7 +57,7 @@ import BlocAffichageResume from "@/components/resultats/BlocAffichageResume";
 import BoutonLancement from "@/components/BoutonLancement";
 import BlocDetailPpn from "@/components/resultats/BlocDetailPpn";
 
-import {ref} from "vue";
+import {ref, watchEffect} from "vue";
 import { useResultatStore } from "@/stores/resultat";
 import router from "@/router";
 
@@ -57,9 +66,17 @@ const resultatStore = useResultatStore();
 const currentPpn = ref('');
 const currentItems = ref([]);
 const nbLancement = ref(0);
+const mobileBreakpoint = ref(200);
 
 const iconTimeline = ref('mdi-arrow-left');
-const focusOn = ref([12, 12, 5, 4, 3]);
+const focusOn = ref([4, 4]);
+
+// watchEffect(() => {
+//   if (this.$vuetify.breakpoint.name) {
+//     console.log("HERE")
+//     mobileBreakpoint.value = 200;
+//   }
+// })
 
 function sendPpnToBlocResultat(ppn) {
   currentPpn.value = ppn;
@@ -111,16 +128,16 @@ function updateNbLancement() {
   nbLancement.value = resultatStore.getRecapitulatif.length;
 }
 
-function theAction() {
+function resizeBloc() {
   if(iconTimeline.value === 'mdi-arrow-left'){
-    focusOn.value = [12, 12, 2, 2, 2];
+    focusOn.value = [3, 2];
+    mobileBreakpoint.value = 4000;
     iconTimeline.value = 'mdi-arrow-right';
   }else{
-    focusOn.value = [12, 12, 5, 4, 3];
+    focusOn.value = [4, 4];
+    mobileBreakpoint.value = 200;
     iconTimeline.value = 'mdi-arrow-left';
   }
-
-  console.log("ok")
 }
 
 </script>
