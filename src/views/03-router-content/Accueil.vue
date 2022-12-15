@@ -26,7 +26,7 @@ import {onMounted, ref} from 'vue';
 import router from "@/router";
 import {useResultatStore} from "@/stores/resultat";
 import {useAnalyseStore} from "@/stores/analyse";
-
+//test
 const isAnalyseSelected = ref(false);
 const isPpnListIsEmpty = ref(true);
 const backendErrorMessage = ref(null);
