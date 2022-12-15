@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-2 borderBlocElements">
+  <v-sheet class="pa-2 borderBlocElements" >
     <div>
       <div class="px-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">
         Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de 5000 PPN en une seule fois
@@ -44,11 +44,16 @@
         <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
       </v-sheet>
     </div>
-    <div>
+    <div v-cloak
+         @drop.prevent="dropFile"
+         @dragleave="dragLeave"
+         @dragover.prevent="dragOver"
+    >
       <v-file-input
           filled
           class="ml-1"
-          label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN"
+          :label="isDragging ? 'Importer votre fichier ici pour charger un fichier .csv ou .txt contenant des PPN' : 'Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN'"
+          :loading="isDragging"
           prepend-icon=""
           append-icon="mdi-file-download-outline"
           show-size
@@ -60,6 +65,7 @@
           :rules="rules"
           v-model="fichierLoaded"
           @change="isAllowToSend"
+          :style="isDragging ? 'transform: scale(1.02);' : ''"
           :clearable="false"
           :error-messages="errorMsg"
           :success-messages="successMsg"
@@ -98,6 +104,9 @@ const historiqueStore = useHistoriqueStore();
 //Emit
 const emit = defineEmits(['isPpnListEmpty','backendError']);
 
+//drag&drop
+const isDragging = ref(false);
+
 //Combobox
 const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
@@ -118,6 +127,23 @@ onUpdated(() => {
     emitOnEvent();
   }
 });
+
+function dropFile(dropObject){
+  let filesDragged=[];
+  let droppedFiles = dropObject.dataTransfer.files;
+  filesDragged.push(...droppedFiles);
+  fichierLoaded.value = filesDragged[0];
+  isAllowToSend();
+  isDragging.value = false;
+}
+
+function dragOver(){
+  isDragging.value = true;
+}
+
+function dragLeave(){
+  isDragging.value = false;
+}
 
 /**
  * Suppression d'un élément ppn déclenché au moment du clic sur la croix
