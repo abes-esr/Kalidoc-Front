@@ -57,8 +57,20 @@
       <template v-slot:body.append>
         <tr>
           <td colspan="100%">
-            <div class="d-flex justify-space-between">
-              <div class="d-flex align-center">
+            <!--      Affichage en mode mobile      -->
+            <div class="d-flex flex-column" v-if="(mobileBreakpoint === 4000 && breakPointName === 'xl') || (mobileBreakpoint === 4000 && breakPointName === 'lg') || breakPointName === 'xs'">
+              <div class="pl-3 d-flex align-center justify-start">
+                <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
+                <span >Afficher/masquer tout</span>
+              </div>
+              <div class="mb-4 d-flex align-center justify-start">
+                <bouton-winibw class="mr-2" :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
+                <span>Générer la requête pour WinIBW</span>
+              </div>
+            </div>
+            <!--      Affichage en mode pc      -->
+            <div class="d-flex justify-space-between" v-else>
+              <div class="d-flex align-center mr-4">
                 <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
                 <span>Afficher/masquer tout</span>
               </div>
@@ -93,7 +105,7 @@ const headers = [
   { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 80},
   { text: "PPN", value: "ppn", class: "headerTableClass", width: 80},
   { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 140},
-  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 80}
+  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 100}
 ];
 const loading = ref(false);
 const items = ref([]);
@@ -105,6 +117,7 @@ const ppnFiltered = ref([]);
 let itemsTrieAndFiltered = [];
 const modelDataTable = ref([]);
 const selectedCheckbox = ref([]);
+const breakPointName = ref(null);
 
 onMounted(() => {
   feedItems();
@@ -212,7 +225,6 @@ function displayPopup(request) {
  * Fonction permettant de savoir si le bouton de génération de la requête winibw est désactivé
  */
 function isWinibwButtonDisabled() {
-  // return filterPpnByType().length === 0;
   return ppnFiltered.value.length === 0;
 }
 
@@ -330,9 +342,11 @@ function resizeDataTable() {
   const instance = getCurrentInstance();
   const vuetify = instance.proxy.$vuetify;
 
-  if(vuetify.breakpoint.name === "md" || vuetify.breakpoint.name === "md" || vuetify.breakpoint.name === "xs") {
+  if(vuetify.breakpoint.name === "md" || vuetify.breakpoint.name === "sm" || vuetify.breakpoint.name === "xs") {
+    breakPointName.value = vuetify.breakpoint.name;
     return 200;
   } else {
+    breakPointName.value = vuetify.breakpoint.name;
     return props.mobileBreakpoint;
   }
 }
