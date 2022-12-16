@@ -26,7 +26,7 @@
 import {ref, watchEffect} from 'vue';
 import QualimarcService from "@/service/QualimarcService";
 
-const props = defineProps({loading: Boolean});
+const props = defineProps({isLoading: Boolean});
 const emit = defineEmits(['finished','stop']);
 
 const serviceApi = QualimarcService;
@@ -35,8 +35,8 @@ const loadin = ref(true);
 const count = ref('0%')
 
 watchEffect(() => {
-  console.log("props.loading", props.loading)
-  if (props.loading !== false) {
+  console.log("props.isLoading", props.isLoading)
+  if (props.isLoading) {
     runProgress();
   }
 })
@@ -51,7 +51,7 @@ function runProgress(){
     serviceApi.getStatus().then((response) => {
       count.value = response.data;
       console.log(count.value);
-      if(props.loading === false){
+      if(props.isLoading){
         clearInterval(interval);
       }
       if(count.value === '100%') {
