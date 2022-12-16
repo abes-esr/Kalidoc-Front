@@ -97,6 +97,16 @@ function exportHistorique(items){
   //  Pour chaque analyse dans historiqueList
   items.forEach(element => {
 
+    //  Converti le libelle du type d'analyse
+    let typeAnalyse = "";
+    if (element.analyse.analyseSelected === 'QUICK') {
+      typeAnalyse = 'RAPIDE'
+    } else if (element.analyse.analyseSelected === 'COMPLETE') {
+      typeAnalyse = 'EXPERTE'
+    } else if (element.analyse.analyseSelected === 'FOCUSED') {
+      typeAnalyse = 'CIBLEE'
+    }
+
     //  Récupère la liste des types de documents
     let typesDocuments = "";
     element.analyse.familleDocumentSet.forEach(element => {
@@ -107,7 +117,6 @@ function exportHistorique(items){
     element.analyse.ruleSet.forEach(element => {
       jeuxRegles += element.libelle.toString() + ", ";
     })
-
 
     //  Pour chaque résultat d'une analyse
     element.resultats.forEach((result, index) => {
@@ -148,7 +157,7 @@ function exportHistorique(items){
         "Date" : element.date.toLocaleString(),
         "Type de lancement": typeLancement,
         "Numero de lancement": index +1,
-        "Type d'analyse": element.analyse.analyseSelected,
+        "Type d'analyse": typeAnalyse,
         "Types de documents": typesDocuments,
         "Jeux de regles": jeuxRegles,
         "Nb ppn analyses": result.PpnTotal.length,
