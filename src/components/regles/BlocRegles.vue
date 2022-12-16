@@ -6,7 +6,7 @@
       <!--      TITRE     -->
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
       <!--      BOUTON TELECHARGER LES REGLES     -->
-      <v-tooltip right>
+      <v-tooltip left>
         <template v-slot:activator="{on}">
           <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
             <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
