@@ -1,6 +1,6 @@
 <template>
   <v-overlay
-    v-model="loading"
+    v-model="isLoading"
     class="d-flex flex-column"
   >
     <v-sheet min-width="50em" style="background-color: white">
@@ -31,36 +31,47 @@ const emit = defineEmits(['finished','stop']);
 
 const serviceApi = QualimarcService;
 
-const loadin = ref(true);
-const count = ref('0%')
+const count = ref('0%');
 
 watchEffect(() => {
-  console.log("props.isLoading", props.isLoading)
+  console.log("props.isLoading", props.isLoading) //todo sup
   if (props.isLoading) {
     runProgress();
   }
 })
 
-function stop(){
-  count.value = '0%';
-  emit('stop', false);
-}
-
 function runProgress(){
   const interval = setInterval(() => {
-    serviceApi.getStatus().then((response) => {
-      count.value = response.data;
-      console.log(count.value);
-      if(props.isLoading){
-        clearInterval(interval);
-      }
-      if(count.value === '100%') {
-        clearInterval(interval)
-        count.value = '0%';
-        emit('finished')
-      }
-    });
+    // cas de réussite
+    if(count.value === '100%' && !props.isLoading) {
+      clearInterval(interval)
+      finish()
+    }
+
+    // cas ou l'analyse est stoppée
+    if(!props.isLoading) {
+      clearInterval(interval)
+      stop();
+    }
+
+    //cas ou l'analyse n'est pas finie
+    if(count.value !== '100%') {
+      serviceApi.getStatus().then((response) => {
+        count.value = response.data; // set la valeur de la barre de progression
+        console.log(count.value);
+      });
+    }
   }, 500)
   return () => clearInterval(interval)
+}
+
+function stop(){
+  count.value = '0%';
+  emit('stop', true);
+}
+
+function finish(){
+  count.value = '0%';
+  emit('finished');
 }
 </script>

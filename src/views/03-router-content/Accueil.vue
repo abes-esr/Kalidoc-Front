@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <div class="ml-1 mb-2 fontPrimaryColor">Outil d'analyse des notices bibliographiques du Sudoc</div>
-    <progress-bar :loading="loading" @finished="redirect" @stop="setLoading"></progress-bar>
+    <progress-bar :isLoading="isProgressLoading" @finished="redirect" @stop="stopAnalyse"></progress-bar>
     <v-row>
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
         <v-row class="ma-0 pa-0">
@@ -13,7 +13,7 @@
       <v-col class="ma-2 pa-2" style="min-height: 34em">
         <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>
         <message-erreur class="mb-2 pa-4" :backendErrorMessage="backendErrorMessage"></message-erreur>
-        <bouton-lancement class="mb-2 pa-0" :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)" @backendError="setBackendError" @started="setLoading">Lancer l'analyse</bouton-lancement>
+        <bouton-lancement class="mb-2 pa-0" :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)" :isStopAnalyse="isStopAnalyse" @backendError="setBackendError" @finished="maskAndStopProgress" @started="displayAndStartProgress">Lancer l'analyse</bouton-lancement>
       </v-col>
     </v-row>
   </v-container>
@@ -32,7 +32,8 @@ import ProgressBar from "@/components/ProgressBar";
 const isAnalyseSelected = ref(false);
 const isPpnListIsEmpty = ref(true);
 const backendErrorMessage = ref(null);
-const loading = ref(false);
+const isProgressLoading = ref(false);
+const isStopAnalyse = ref(false);
 
 //Store
 const resultatStore = useResultatStore();
@@ -63,11 +64,20 @@ function setBackendError(error) {
   backendErrorMessage.value = error;
 }
 
-function setLoading(boolean) {
-  loading.value = boolean;
+function displayAndStartProgress() {
+  isProgressLoading.value = true;
 }
+
+function maskAndStopProgress() {
+  isProgressLoading.value = false;
+}
+
+function stopAnalyse(){
+  isProgressLoading.value = false;
+  isStopAnalyse.value = true;
+}
+
 function redirect() {
-  loading.value = false;
   router.push('/resultats');
 }
 </script>
