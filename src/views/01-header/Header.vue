@@ -45,11 +45,5 @@
 import { useRoute } from "vue-router/composables"
 import BlocStatuts from "@/components/accueil/BlocStatuts";
 
-export default {
-  components: {BlocStatuts}
-}
 const route = useRoute();
-
-
-
 </script>
