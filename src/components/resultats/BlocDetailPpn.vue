@@ -82,7 +82,7 @@ let desc = false;
 const headers = [
   {text: "Zone UNM1", value: "zone1", width: 133},
   {text: "Zone UNM2", value: "zone2", width: 133},
-  {text: "Message d'erreur", value: "message",  width: 351},
+  {text: "Message d'erreur", value: "message"},
   {text: "Règle essentielle|Règle avancée", value: "priority", width: 170}
 ];
 
