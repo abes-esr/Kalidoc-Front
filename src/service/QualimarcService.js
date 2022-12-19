@@ -1,9 +1,18 @@
 import axios from "axios";
 
+
 export class QualimarcService {
     client = axios.create({
         baseURL: process.env.VUE_APP_ROOT_API,
     });
+
+    controller = new AbortController();
+
+    cancel() {
+        // Cancel the request
+        this.controller.abort();
+        this.controller = new AbortController();
+    }
 
   /**
    * fonction permetant de faire passer les regles sur une liste de ppn selon le type d'analyse choisi
@@ -24,7 +33,8 @@ export class QualimarcService {
         if(famillesDocuments.length > 0){
             data.famillesDocuments = famillesDocuments
         }
-        return this.client.post('check',data)
+
+        return this.client.post('check',data, {signal: this.controller.signal})
     }
 
     /**
@@ -33,16 +43,16 @@ export class QualimarcService {
      * response.data : { id, libelle}
      */
     getFamillesDocuments(){
-      return this.client.get("getFamillesDocuments")
+      return this.client.get("getFamillesDocuments", {signal: this.controller.signal})
     }
 
     /**
      * Renvoie la liste des jeux de regles
      * @return {Promise<AxiosResponse<any>>}
-     * response.data : {id, libelle}
+     * response.data : {id, libelle, description, position}
      */
     getRuleSetList(){
-      return this.client.get("getRuleSets")
+      return this.client.get("getRuleSets", {signal: this.controller.signal})
     }
 
     /**
@@ -51,14 +61,15 @@ export class QualimarcService {
      * response.data : {id, zoneUnm1, zoneUnm2, typeDoc, message, priority}
      */
     getRules() {
-        return this.client.get("rules")
+        return this.client.get("rules", {signal: this.controller.signal})
     }
 
     /**
      * Renvoie le status de la tache (0 à 100%)
      */
     getStatus() {
-        return this.client.get("getStatus")
+        return this.client.get("getStatus", {signal: this.controller.signal})
     }
+
 }
 export default new QualimarcService();

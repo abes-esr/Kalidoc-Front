@@ -20,11 +20,11 @@ const resultatStore = useResultatStore();
 const historiqueStore = useHistoriqueStore();
 
 // Props & Emit
-const props = defineProps({isDisabled: Boolean, isReplay: Boolean, isStopAnalyse: Boolean});
+const props = defineProps({isDisabled: Boolean, isReplay: Boolean});
 const emit = defineEmits(['backendError', 'finished', 'started']);
 
 // Service
-const serviceApi = QualimarcService
+const serviceApi = QualimarcService;
 
 // Spinner
 const spinnerActive = ref(false);
@@ -57,13 +57,17 @@ function checkPpnWithTypeAnalyse() {
             resultatStore.getLastRecapitulatif
         );
       }
-      spinnerActive.value = false;
       emitOnFinished();
     })
     .catch((error) => {
-      spinnerActive.value = false;
-      emitOnError(error);
-    });
+      if(error.message === 'canceled') {
+        // Annulation de la requête
+        console.log('Canceled');
+      }else {
+        emitOnError(error);
+      }
+    })
+    .finally(() => spinnerActive.value = false);
 }
 
 function emitOnError(error){
