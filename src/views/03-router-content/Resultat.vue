@@ -15,8 +15,8 @@
       </v-col>
       <v-col xs="12" sm="12" md="12" lg="" xl="" class="pl-lg-6" fluid fill-width>
         <div class="d-none d-lg-flex" style="height: 70%; width: 2px; position:absolute; margin: 0 0 0 -1.15em; background-color: #E6E6E6">
-          <v-btn fab x-small depressed color="#E6E6E6" style="position:absolute; margin: 0 0 0 -1.55em" @click="resizeBloc">
-            <v-icon>{{ iconTimeline }}</v-icon>
+          <v-btn fab x-small depressed color="#b2b2b2" style="position:absolute; margin: 0 0 0 -1.55em" @click="resizeBloc">
+            <v-icon color="white" large>{{ iconTimeline }}</v-icon>
           </v-btn>
         </div>
         <v-layout child-flex>
@@ -68,7 +68,7 @@ const currentItems = ref([]);
 const nbLancement = ref(0);
 const mobileBreakpoint = ref(200);
 
-const iconTimeline = ref('mdi-arrow-left');
+const iconTimeline = ref('mdi-chevron-left');
 const focusOn = ref([4, 4]);
 
 function sendPpnToBlocResultat(ppn) {
@@ -122,14 +122,14 @@ function updateNbLancement() {
 }
 
 function resizeBloc() {
-  if(iconTimeline.value === 'mdi-arrow-left'){
+  if(iconTimeline.value === 'mdi-chevron-left'){
     focusOn.value = [3, 2];
     mobileBreakpoint.value = 4000;
-    iconTimeline.value = 'mdi-arrow-right';
+    iconTimeline.value = 'mdi-chevron-right';
   }else{
     focusOn.value = [4, 4];
     mobileBreakpoint.value = 200;
-    iconTimeline.value = 'mdi-arrow-left';
+    iconTimeline.value = 'mdi-chevron-left';
   }
 }
 
