@@ -1,9 +1,7 @@
 <template>
-  <v-card flat>
-    <v-btn @click="emitOnClick" depressed color="#CF4A1A" class="button" :disabled="props.isDisabled">
-      <v-icon color="white" class="ml-2">mdi-cog-refresh</v-icon>
+    <v-btn @click="emitOnClick" depressed color="#CF4A1A" class="button" small :disabled="props.isDisabled">
+      <v-icon color="white">mdi-cog-refresh</v-icon>
     </v-btn>
-  </v-card>
 </template>
 
 <script setup>
