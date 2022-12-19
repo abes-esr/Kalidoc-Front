@@ -18,7 +18,7 @@
           class="pa-1"
       >
         <template v-slot:selection="{item}">
-          <v-chip close @click:close="removeItem(item)">
+          <v-chip close @click="copyLabelItem(item)" @click:close="removeItem(item)">
             <span class="pr-2">{{ item }}</span>
           </v-chip>
         </template>
@@ -88,7 +88,18 @@
         </v-expansion-panels>
       </v-alert>
     </div>
+    <v-snackbar
+        v-model="snackbarCopyPpnNumberStatus"
+        timeout="2000"
+        color="#252C61"
+        text
+        rounded="pill"
+        elevation="5"
+    >
+      {{ snackbarCopyPpnNumberLabel }}
+    </v-snackbar>
   </v-sheet>
+
 </template>
 
 <script setup>
@@ -120,6 +131,10 @@ const fileReader = new FileReader();
 const errorMsg = ref('');
 const successMsg = ref('');
 
+//Snackbar
+const snackbarCopyPpnNumberStatus = ref(false);
+const snackbarCopyPpnNumberLabel = ref('');
+
 onUpdated(() => {
   if (ppnListCombobox.value.length > 0 && lastValuesTypedOrPasted.value === '') {
     analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
@@ -143,6 +158,17 @@ function dragOver(){
 
 function dragLeave(){
   isDragging.value = false;
+}
+
+/**
+ * Fonction qui permet l'affichage de la snackbar de copie du numéro de ppn
+ * @param item le numéro de ppn
+ */
+function copyLabelItem(item) {
+  navigator.clipboard.writeText(item)
+  snackbarCopyPpnNumberLabel.value = "Numéro de ppn '" + item + "' copié dans le presse papier";
+  snackbarCopyPpnNumberStatus.value = true;
+
 }
 
 /**
