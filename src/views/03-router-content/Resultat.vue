@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <progress-bar :isLoading="isProgressLoading" @finished="updateNbLancement" @cancel="stopAnalyse"></progress-bar>
     <v-card flat class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
       <v-icon @click="goToHome()">mdi-home</v-icon>
       <v-icon size="small">mdi-chevron-right</v-icon>
@@ -43,9 +44,15 @@
           flat
           class="float-right ma-0 pa-0"
           >
-            <bouton-lancement class="ma-0 pa-0"  :is-replay="true" @finished="updateNbLancement">Relancer l'analyse</bouton-lancement>
+            <bouton-lancement
+              class="ma-0 pa-0"
+              is-replay
+              @finished="maskAndStopProgress"
+              @started="displayAndStartProgress"
+          >
+            Relancer l'analyse
+          </bouton-lancement>
           </v-card>
-
       </v-col>
     </v-row>
   </v-container>
@@ -56,6 +63,7 @@ import BlocRecapitulatif from "@/components/resultats/BlocRecapitulatif";
 import BlocAffichageResume from "@/components/resultats/BlocAffichageResume";
 import BoutonLancement from "@/components/BoutonLancement";
 import BlocDetailPpn from "@/components/resultats/BlocDetailPpn";
+import ProgressBar from "@/components/ProgressBar";
 
 import {ref} from "vue";
 import { useResultatStore } from "@/stores/resultat";
@@ -67,9 +75,9 @@ const currentPpn = ref('');
 const currentItems = ref([]);
 const nbLancement = ref(0);
 const mobileBreakpoint = ref(200);
-
 const iconTimeline = ref('mdi-chevron-left');
 const focusOn = ref([4, 4]);
+const isProgressLoading = ref(false);
 
 function sendPpnToBlocResultat(ppn) {
   currentPpn.value = ppn;
@@ -119,6 +127,18 @@ function goToHome() {
 
 function updateNbLancement() {
   nbLancement.value = resultatStore.getRecapitulatif.length;
+}
+
+function displayAndStartProgress() {
+  isProgressLoading.value = true;
+}
+
+function maskAndStopProgress() {
+  isProgressLoading.value = false;
+}
+
+function stopAnalyse(){
+  isProgressLoading.value = false;
 }
 
 function resizeBloc() {
