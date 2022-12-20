@@ -1,15 +1,15 @@
 <template>
   <v-overlay
     v-model="isLoading"
-    class="d-flex flex-column justify-center"
   >
-    <v-sheet class="d-flex justify-center" style="background-color: #252C61">
+    <v-sheet style="background-color: #252C61" class="d-flex justify-center">
       <span class="text-h5">Analyse en cours</span>
     </v-sheet>
     <v-sheet
-        class="pa-5 justify-center"
+        class="pa-5"
         style="background-color: white"
         min-width="50em"
+
     >
       <v-progress-linear
           :value="count"
@@ -20,15 +20,17 @@
       >
         Progression de l'analyse : {{count}}
       </v-progress-linear>
-      <v-btn
-          @click="cancel()"
-          depressed
-          color="#CF4A1A"
-          class="button"
-      >
-        Annuler
-        <v-icon color="white">mdi-close-circle-outline</v-icon>
-      </v-btn>
+      <div  class="d-flex justify-center">
+        <v-btn
+            @click="cancel()"
+            depressed
+            color="#CF4A1A"
+            class="button"
+        >
+          Annuler
+          <v-icon color="white">mdi-close-circle-outline</v-icon>
+        </v-btn>
+      </div>
     </v-sheet>
   </v-overlay>
 </template>
