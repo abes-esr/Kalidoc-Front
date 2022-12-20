@@ -65,7 +65,7 @@ function setIsAnalyseSelected(isAnaslyseSelected) {
 
 /**
  *
- * @param isPpnListIsEmpty
+ * @param isPpnListIsEmptyFromBloc
  */
 function setIsPpnListIsEmpty(isPpnListIsEmptyFromBloc) {
   isPpnListIsEmpty.value = isPpnListIsEmptyFromBloc;

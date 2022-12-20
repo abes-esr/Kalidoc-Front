@@ -1,23 +1,34 @@
 <template>
   <v-overlay
     v-model="isLoading"
-    class="d-flex flex-column"
+    class="d-flex flex-column justify-center"
   >
-    <v-sheet min-width="50em" style="background-color: white">
-      <v-sheet class="d-flex justify-center" style="background-color: #252C61">
-        <span class="text-h5">Analyse en cours</span>
-      </v-sheet>
+    <v-sheet class="d-flex justify-center" style="background-color: #252C61">
+      <span class="text-h5">Analyse en cours</span>
+    </v-sheet>
+    <v-sheet
+        class="pa-5 justify-center"
+        style="background-color: white"
+        min-width="50em"
+    >
       <v-progress-linear
           :value="count"
           height="25"
-          color="primary"
+          color="#0F75BC"
           rounded
-
           class="my-9"
       >
         Progression de l'analyse : {{count}}
       </v-progress-linear>
-      <v-btn @click="cancel()">Annuler</v-btn>
+      <v-btn
+          @click="cancel()"
+          depressed
+          color="#CF4A1A"
+          class="button"
+      >
+        Annuler
+        <v-icon color="white">mdi-close-circle-outline</v-icon>
+      </v-btn>
     </v-sheet>
   </v-overlay>
 </template>
@@ -62,6 +73,7 @@ function runProgress(){
     // cas ou le back arrive à envoyer un pourcentage au dessus de 100% (c'est déjà arrivé)
     if(count.value.replace('%', '') > 100) {
       console.log('erreur'); //TODO: afficher un message d'erreur
+      clearInterval(interval);
     }
 
     //cas ou l'analyse n'est pas finie
@@ -84,3 +96,9 @@ function finish(){
   emit('finished');
 }
 </script>
+
+<style scoped>
+.button{
+  color: white
+}
+</style>
