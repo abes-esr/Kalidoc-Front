@@ -4,7 +4,7 @@
       <v-icon color="#252C61">mdi-numeric-2-box</v-icon>
       <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
     </v-row>
-    <v-card flat class="borderSelectAnalyseType">
+    <v-sheet flat class="borderSelectAnalyseType">
       <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
           <template v-slot:activator="{ on, attrs }">
@@ -27,7 +27,7 @@
           <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" :label="ruleset.libelle" class="ma-1" style="max-height: 30px"></v-checkbox>
         </v-card>
       </v-card>
-    </v-card>
+    </v-sheet>
   </v-container>
 </template>
 
