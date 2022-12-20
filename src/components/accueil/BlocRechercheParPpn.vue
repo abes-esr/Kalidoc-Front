@@ -19,7 +19,7 @@
       >
         <template v-slot:selection="{item}">
           <v-chip v-if="item === ppnCopied" color="#eafaed" @click="copyLabelItem(item)" @click:close="removeItem(item)">
-            <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">{{ item }}</span>
+            <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">PPN COPIER</span>
             <v-icon class="ma-0 pa-0" color="green darken-3" small>mdi-check</v-icon>
           </v-chip>
           <v-chip v-else close @click="copyLabelItem(item)" @click:close="removeItem(item)">
