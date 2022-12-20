@@ -27,7 +27,7 @@
           <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" class="ma-1" style="max-height: 30px">
             <template v-slot:label>
               <div>
-                <v-tooltip right>
+                <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <span v-on="on">{{ ruleset.libelle }}</span>
                   </template>
