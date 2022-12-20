@@ -18,8 +18,12 @@
           class="pa-1"
       >
         <template v-slot:selection="{item}">
-          <v-chip close @click:close="removeItem(item)">
-            <span class="pr-2">{{ item }}</span>
+          <v-chip v-if="item === ppnCopied" color="#eafaed" @click="copyLabelItem(item)" @click:close="removeItem(item)">
+            <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">PPN COPIER</span>
+            <v-icon class="ma-0 pa-0" color="green darken-3" small>mdi-check</v-icon>
+          </v-chip>
+          <v-chip v-else close @click="copyLabelItem(item)" @click:close="removeItem(item)">
+            <span class="pr-2">{{ item === ppnCopied ? 'PPN COPIE' : item }}</span>
           </v-chip>
         </template>
       </v-combobox>
@@ -73,27 +77,45 @@
       </v-file-input>
     </div>
     <div>
-      <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
+      <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="2">
         Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
         <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              PPN saisi(s) avec une syntaxe érronée (cliquer pour dérouler)
+                <span class="pt-2">PPN saisi(s) avec une syntaxe érronée (cliquer pour dérouler)</span>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
+        <div class="mt-4 d-flex flex-row-reverse">
+          <v-btn depressed color="#0F75BC" class="button" max-width="380" height="26" @click="copyPnnWrongSyntax()">
+            <span style="color: white">COPIER LES PPN AVEC SYNTAXE ERRONEE</span>
+            <v-icon color="white" class="ml-2">mdi-download</v-icon>
+          </v-btn>
+        </div>
       </v-alert>
     </div>
+    <v-snackbar
+        v-model="snackbarCopyPpnNumberStatus"
+        timeout="2000"
+        color="#43a047"
+        text
+        rounded="pill"
+        elevation="5"
+    >
+      <v-icon class="ma-0 pa-0 mr-4" color="green darken-3">mdi-check</v-icon>
+      <span class="green--text text--darken-3" style="font-weight: 500">{{ snackbarMessage }}</span>
+    </v-snackbar>
   </v-sheet>
+
 </template>
 
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
-import {onMounted, onUpdated, ref, watchEffect} from 'vue';
+import {onUpdated, ref} from 'vue';
 import {useHistoriqueStore} from "@/stores/historique";
 import router from "@/router";
 
@@ -120,6 +142,11 @@ const fileReader = new FileReader();
 const errorMsg = ref('');
 const successMsg = ref('');
 
+//Copie de ppn ou liste de ppn
+const snackbarCopyPpnNumberStatus = ref(false);
+const snackbarMessage = ref('');
+const ppnCopied = ref('');
+
 onUpdated(() => {
   if (ppnListCombobox.value.length > 0 && lastValuesTypedOrPasted.value === '') {
     analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
@@ -143,6 +170,27 @@ function dragOver(){
 
 function dragLeave(){
   isDragging.value = false;
+}
+
+/**
+ * Fonction qui permet le changement de l'affichage du chip du ppn copié
+ * @param item le numéro de ppn
+ */
+function copyLabelItem(item) {
+  ppnCopied.value = item;
+  navigator.clipboard.writeText(item)
+  setTimeout(() => {
+    ppnCopied.value = '';
+  }, 1000);
+}
+
+/**
+ * Fonction qui permet l'affichage de la snackbar en cas de copie de la liste des ppn à la syntaxe erronée
+ */
+function copyPnnWrongSyntax() {
+  navigator.clipboard.writeText(ppnInvalids.value)
+  snackbarMessage.value = "Les ppn avec syntaxe erronée ont été copié dans le presse papier";
+  snackbarCopyPpnNumberStatus.value = true;
 }
 
 /**

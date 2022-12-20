@@ -1,5 +1,5 @@
 <template>
-  <v-alert v-if="backendErrorMessage !== null" border="left" colored-border type="error" elevation="0">
+  <v-alert v-if="backendErrorMessage !== null" border="left" colored-border type="error" elevation="2">
     {{ backendErrorMessage.response.data.debugMessage }} (erreur {{backendErrorMessage.response.status}})
   </v-alert>
 </template>
