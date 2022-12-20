@@ -26,14 +26,12 @@
         <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
           <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" class="ma-1" style="max-height: 30px">
             <template v-slot:label>
-              <div>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <span v-on="on">{{ ruleset.libelle }}</span>
-                  </template>
-                  {{ ruleset.description }}
-                </v-tooltip>
-              </div>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span v-on="on">{{ ruleset.libelle }}</span>
+                </template>
+                {{ ruleset.description }}
+              </v-tooltip>
             </template>
           </v-checkbox>
         </v-card>
