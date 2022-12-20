@@ -24,7 +24,16 @@
         </v-card>
         <span v-if="ruleSetList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
         <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
-          <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" :label="ruleset.libelle" class="ma-1" style="max-height: 30px"></v-checkbox>
+          <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" class="ma-1" style="max-height: 30px">
+            <template v-slot:label>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span v-on="on">{{ ruleset.libelle }}</span>
+                </template>
+                {{ ruleset.description }}
+              </v-tooltip>
+            </template>
+          </v-checkbox>
         </v-card>
       </v-card>
     </v-sheet>
