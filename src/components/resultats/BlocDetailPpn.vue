@@ -55,10 +55,7 @@
           @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
       ></v-pagination>
     </v-card>
-    <v-card flat v-else class="pa-0  borderBlocElements">
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91;"></div>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor"><b>Cliquer sur un ppn de la liste du bloc de gauche pour afficher les détails des erreurs</b></div>
-    </v-card>
+    <bloc-aucune-donnee v-else>Cliquer sur un ppn de la liste du bloc de gauche pour afficher les détails des erreurs</bloc-aucune-donnee>
   </v-container>
 </template>
 
@@ -66,6 +63,7 @@
 import {ref, onUpdated, watchEffect } from "vue";
 import { useResultatStore } from "@/stores/resultat";
 import CoverService from "@/service/CoverService";
+import BlocAucuneDonnee from "@/components/BlocAucuneDonnee";
 
 const props = defineProps({currentPpn: String,currentItems: Array});
 const emit = defineEmits(['backendError','onChangePpn']);

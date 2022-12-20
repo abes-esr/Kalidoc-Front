@@ -6,6 +6,7 @@
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
     <v-data-table
+        v-if="items.length > 0"
         class="borderBlocElements"
         v-model="modelDataTable"
         :headers="headers"
@@ -83,6 +84,7 @@
         </tr>
       </template>
     </v-data-table>
+    <bloc-aucune-donnee v-else>Les PPN en entrée ne comportent aucune erreur ou n’ont pas été trouvés dans le Sudoc. Reportez-vous au bloc “Récapitulatif” pour plus de détails.</bloc-aucune-donnee>
     <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
   </v-container>
 </template>
@@ -93,6 +95,7 @@ import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
 import QualimarcService from "@/service/QualimarcService";
+import BlocAucuneDonnee from "@/components/BlocAucuneDonnee";
 
 const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
