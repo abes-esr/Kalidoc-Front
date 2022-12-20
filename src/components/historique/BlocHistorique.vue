@@ -51,12 +51,8 @@
                 <v-divider></v-divider>
                 <v-list-item class="mt-2" style="overflow-x: scroll; overflow-y: hidden">
                   <!--      TRAITEMENT PAR RESULTAT     -->
-                  <v-col v-for="result in historique.resultats.slice().reverse()" :key="historique.resultats.indexOf(result)" class="mr-10">
-                    <v-row class="d-flex align-center" style="min-width: 330px">
-                      <!--      AFFICHAGE DU NUMERO DU RESULTAT      -->
-                      <v-col style="color: lightgrey; font-weight: 400; font-size: 1.2em; width: 40px; max-width: 40px">{{ historique.resultats.indexOf(result) +1 }}</v-col>
-                      <card-recapitulatif :resultats="result" style="border-left: 2px solid lightgrey; "></card-recapitulatif>
-                    </v-row>
+                  <v-col v-for="result in historique.resultats.slice()" :key="historique.resultats.indexOf(result)" class="mr-10">
+                    <card-recapitulatif :resultats="result">{{ historique.resultats.indexOf(result) +1 }}</card-recapitulatif>
                   </v-col>
                 </v-list-item>
               </v-expansion-panel-content>
