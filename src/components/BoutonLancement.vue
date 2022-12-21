@@ -32,7 +32,7 @@ const spinnerActive = ref(false);
 function checkPpnWithTypeAnalyse() {
   spinnerActive.value = true;
   emit('started');
-  serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
+  serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.id, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
     .then((response) => {
       resultatStore.setResultsListArray(response.data.resultRules);
       resultatStore.pushRecapitulatif(

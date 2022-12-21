@@ -5,7 +5,7 @@
       <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
     </v-row>
     <v-sheet class="borderSelectAnalyseType">
-      <v-radio-group v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
+      <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.id">
           <template v-slot:activator="{ on, attrs }">
             <v-radio :label=" analyse.nbRules ? analyse.libelle + ' (' + analyse.nbRules + ' règles)':  analyse.libelle" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
