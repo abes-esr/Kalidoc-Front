@@ -36,9 +36,52 @@ export class QualimarcService {
 
         return this.client.post('check',data, {signal: this.controller.signal})
     }
+    /**
+     * Renvoie la liste des analyses
+     * @return {Promise<AxiosResponse<any>>}
+     * response.data : {
+     *     "quickAnalyse": {
+     *         "id": "QUICK",
+     *         "libelle"
+     *         "description"
+     *         "nbRules"
+     *     },
+     *     "completeAnalyse": {
+     *         "id": "COMPLETE",
+     *         "libelle"
+     *         "description"
+     *         "nbRules"
+     *     },
+     *     "focusAnalyse": {
+     *         "id": "FOCUS"
+     *         "libelle"
+     *         "description"
+     *         "nbRules"
+     *         "famillesDocument": [
+     *             {
+     *                 "id"
+     *                 "libelle"
+     *                 "nbRules"
+     *             }
+     *         ],
+     *         "ruleSets": [
+     *             {
+     *                 "id": 1,
+     *                 "libelle"
+     *                 "description"
+     *                 "position"
+     *                 "nbRules"
+     *             }
+     *         ]
+     *     }
+     * }
+     */
+    getAnalyses() {
+        return this.client.get("getAnalyses", {signal: this.controller.signal})
+    }
 
     /**
-     * Renvoie la liste des familles de docuemnts
+     * Renvoie la liste des familles de documents
      * @return {Promise<AxiosResponse<any>>}
      * response.data : { id, libelle}
      */

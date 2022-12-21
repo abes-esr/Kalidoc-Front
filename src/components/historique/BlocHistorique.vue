@@ -78,7 +78,7 @@ function getAnalyseType(analyse) {
     return "rapide";
   } else if (analyse === "COMPLETE") {
     return "experte";
-  } else if (analyse === "FOCUSED") {
+  } else if (analyse === "FOCUS") {
     return "ciblée";
   }
 }
@@ -99,7 +99,7 @@ function exportHistorique(items){
       typeAnalyse = 'RAPIDE'
     } else if (element.analyse.analyseSelected === 'COMPLETE') {
       typeAnalyse = 'EXPERTE'
-    } else if (element.analyse.analyseSelected === 'FOCUSED') {
+    } else if (element.analyse.analyseSelected === 'FOCUS') {
       typeAnalyse = 'CIBLEE'
     }
 
