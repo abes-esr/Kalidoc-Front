@@ -18,7 +18,7 @@
         </v-tooltip>
       </v-radio-group>
       <v-sheet v-if="analyseSelected.id === 'FOCUS'" >
-        <span  v-if="familleDocumentList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
+        <span  v-if="familleDocumentList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par règles associées à un ou plusieurs types de documents</span>
         <v-sheet class="d-flex align-content-start flex-wrap pa-0 mb-2 pl-8">
           <v-checkbox
               v-for="familleDoc in familleDocumentList"
@@ -31,7 +31,7 @@
               :label=" familleDoc.libelle + ' (' + familleDoc.nbRules + ' règles)'"
           ></v-checkbox>
         </v-sheet>
-        <span v-if="ruleSetList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
+        <span v-if="ruleSetList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeux de règles thématiques</span>
         <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
           <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" class="ma-1" style="max-height: 30px">
             <template v-slot:label>
