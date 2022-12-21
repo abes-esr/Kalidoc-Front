@@ -6,36 +6,36 @@
     </v-row>
     <v-sheet flat class="borderSelectAnalyseType">
       <v-radio-group style="width: 120px" v-model="analyseSelected" @change="updateAnalyseSelectedInStore">
-        <v-tooltip right v-for="analyse in analysesList" :key="analyse.value">
+        <v-tooltip right v-for="analyse in analysesList" :key="analyse.id">
           <template v-slot:activator="{ on, attrs }">
-            <v-radio :label="analyse.label" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
+            <v-radio :label="analyse.libelle" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
           </template>
           <span>
-            {{analyse.bulle}}
-            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'RAPIDE'" color="white">mdi-checkbox-blank-circle</v-icon>
-            <v-icon v-model="analyse.label" x-small v-if="analyse.label === 'EXPERTE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+            {{analyse.nbRules ? analyse.nbRules + ' ' + analyse.description : analyse.description}}
+            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'QUICK'" color="white">mdi-checkbox-blank-circle</v-icon>
+            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'COMPLETE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
           </span>
         </v-tooltip>
       </v-radio-group>
-      <v-card flat v-if="analyseSelected.value === 'FOCUSED'" >
+      <v-sheet v-if="analyseSelected.id === 'FOCUS'" >
         <span  v-if="familleDocumentList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par type(s) de documents</span>
-        <v-card flat class="d-flex flex-wrap pa-0 mb-2 pl-8">
-          <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc" :label="familleDoc.libelle"></v-checkbox>
-        </v-card>
+        <v-sheet class="d-flex flex-wrap pa-0 mb-2 pl-8">
+          <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" v-model="familleDocumentSetSelected" class="ma-1" style="max-height: 30px" @change="updateFamilleDocumentSetInStore" :value="familleDoc" :label="'(' + familleDoc.nbRules + ') ' + familleDoc.libelle"></v-checkbox>
+        </v-sheet>
         <span v-if="ruleSetList.length > 0" class="pa-0 ma-0" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeu(x) de règles préconçu(s) </span>
         <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
           <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" class="ma-1" style="max-height: 30px">
             <template v-slot:label>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span v-on="on">{{ ruleset.libelle }}</span>
+                  <span v-on="on">{{ '(' + ruleset.nbRules + ') ' + ruleset.libelle }}</span>
                 </template>
                 {{ ruleset.description }}
               </v-tooltip>
             </template>
           </v-checkbox>
         </v-card>
-      </v-card>
+      </v-sheet>
     </v-sheet>
   </v-container>
 </template>
@@ -55,23 +55,24 @@
   const serviceApi = QualimarcService ;
 
   // Data
-  const analysesList = [
-    {
-      label: 'RAPIDE',
-      value: 'QUICK',
-      bulle: "Règles essentielles"
-    },
-    {
-      label: 'EXPERTE',
-      value: 'COMPLETE',
-      bulle: "Règles essentielles & règles avancées"
-    },
-    {
-      label: 'CIBLÉE',
-      value: 'FOCUSED',
-      bulle: "Règles filtrées par type de document et/ou par jeux de règles préconçus"
-    },
-  ];
+  // const analysesList = [
+  //   {
+  //     label: 'RAPIDE',
+  //     value: 'QUICK',
+  //     bulle: "Règles essentielles"
+  //   },
+  //   {
+  //     label: 'EXPERTE',
+  //     value: 'COMPLETE',
+  //     bulle: "Règles essentielles & règles avancées"
+  //   },
+  //   {
+  //     label: 'CIBLÉE',
+  //     value: 'FOCUS',
+  //     bulle: "Règles filtrées par type de document et/ou par jeux de règles préconçus"
+  //   },
+  // ];
+  const analysesList = ref([]);
   const familleDocumentList = ref([]);
   const ruleSetList = ref([]);
 
@@ -81,9 +82,19 @@
   const ruleSetSelected = ref([]);
 
   onMounted(() => {
-    feedFamilleDocumentList()
-    feedRuleSetList();
+    feedAnalyseList()
   })
+
+  function feedAnalyseList(){
+    serviceApi.getAnalyses().then((response) => {
+      console.log(response.data)
+      analysesList.value = response.data.analyses;
+      familleDocumentList.value = analysesList.value.find(analyse => analyse.id === 'FOCUS').famillesDocument;
+      ruleSetList.value = analysesList.value.find(analyse => analyse.id === 'FOCUS').ruleSets;
+    }).catch((error) => {
+      emit('backendError', error)
+    })
+  }
 
   function feedFamilleDocumentList(){
       serviceApi.getFamillesDocuments()
@@ -123,7 +134,7 @@
   }
 
   function isSelected() {
-    return ((analyseSelected.value.value !== '' && analyseSelected.value.value !== 'FOCUSED') || (analyseSelected.value.value === 'FOCUSED' && ((familleDocumentSetSelected.value.length > 0) || (ruleSetSelected.value.length > 0))));
+    return ((analyseSelected.value.id !== '' && analyseSelected.value.id !== 'FOCUS') || (analyseSelected.value.id === 'FOCUS' && ((familleDocumentSetSelected.value.length > 0) || (ruleSetSelected.value.length > 0))));
   }
 
   function emitOnEvent(){
