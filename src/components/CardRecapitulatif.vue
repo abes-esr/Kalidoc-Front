@@ -20,7 +20,7 @@
         </v-btn>
       </v-row>
       <v-row class="d-flex justify-space-between align-center">
-        <span>Nb. de PPN sans erreurs :</span>
+        <span>Nb. de PPN sans erreur :</span>
         <v-btn :disabled="resultats.PpnOk.length === 0" elevation="0" class="button" x-small color="#0F75BC">
           <download-csv :delimiter="';'" :data="itemsToExport(resultats.PpnOk)" name="ppn_sans_erreur.csv">
             {{ resultats.PpnOk.length }}
@@ -28,7 +28,7 @@
         </v-btn>
       </v-row>
       <v-row class="d-flex justify-space-between align-center">
-        <span>Nb. de ppn non trouvés :</span>
+        <span>Nb. de PPN non trouvés :</span>
         <v-btn :disabled="resultats.PpnInconnus.length === 0" elevation="0" class="button" x-small color="#0F75BC">
           <download-csv :delimiter="';'" :data="itemsToExport(resultats.PpnInconnus)" name="ppn_inconnus.csv">
             {{ resultats.PpnInconnus.length }}

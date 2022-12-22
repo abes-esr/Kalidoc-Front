@@ -19,7 +19,7 @@
       >
         <template v-slot:selection="{item}">
           <v-chip v-if="item === ppnCopied" color="#eafaed" @click="copyLabelItem(item)" @click:close="removeItem(item)">
-            <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">PPN COPIER</span>
+            <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">PPN COPI&Eacute;</span>
             <v-icon class="ma-0 pa-0" color="green darken-3" small>mdi-check</v-icon>
           </v-chip>
           <v-chip v-else close @click="copyLabelItem(item)" @click:close="removeItem(item)">
@@ -56,7 +56,7 @@
       <v-file-input
           filled
           class="ml-1"
-          :label="isDragging ? 'Importer votre fichier ici pour charger un fichier .csv ou .txt contenant des PPN' : 'Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN'"
+          :label="isDragging ? 'Importer votre fichier ici pour charger un fichier .csv ou .txt contenant des PPN' : 'Cliquer ici pour sélectionner un fichier de PPN au format .csv ou .txt (ou le glisser-déposer)'"
           :loading="isDragging"
           prepend-icon=""
           append-icon="mdi-file-download-outline"
@@ -79,11 +79,11 @@
     <div>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="2">
         Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
-        <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
+        <span style="color: darkgrey; font-size: small">Rappel : syntaxe d'un PPN = 9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X</span><br>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
-                <span class="pt-2">PPN saisi(s) avec une syntaxe érronée (cliquer pour dérouler)</span>
+                <span class="pt-2">Voir les PPN avec une syntaxe erronée</span>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
@@ -130,7 +130,7 @@ const emit = defineEmits(['isPpnListEmpty','backendError']);
 const isDragging = ref(false);
 
 //Combobox
-const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
+const comboboxPpnLabel = ref('Saisir ou coller des PPN, puis cliquer hors du cadre (ou appuyer sur Entrée)'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
 const ppnListCombobox = ref((router.currentRoute.query.numeroAnalyse && historiqueStore.getHistorique.length !== 0) ? historiqueStore.getHistorique[router.currentRoute.query.numeroAnalyse].analyse.ppnValidsList : []); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
 const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur

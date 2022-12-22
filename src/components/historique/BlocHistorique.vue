@@ -7,7 +7,7 @@
       <v-tooltip left>
         <template v-slot:activator="{on}">
           <v-btn class="ma-0" elevation="0" :disabled="historiqueList.length === 0" small v-on="on" color="#0F75BC">
-            <download-csv :delimiter="';'" :data="exportHistorique(historiqueList)" name="qualimarc-export-historic.csv" style="color: white">
+            <download-csv :delimiter="';'" :data="exportHistorique(historiqueList)" name="qualimarc-export-historique.csv" style="color: white">
               TÉLÉCHARGER L'HISTORIQUE
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>

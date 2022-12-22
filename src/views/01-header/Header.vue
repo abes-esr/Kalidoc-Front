@@ -19,14 +19,14 @@
        <v-col :cols=" ($vuetify.breakpoint.mdAndUp) ? '2' : '3'">
          <v-row :class="($vuetify.breakpoint.mdAndUp) ? null : 'ma-0 pa-0'" :justify="($vuetify.breakpoint.mdAndUp) ? 'center' : null" :no-gutters="$vuetify.breakpoint.mdAndUp">
            <v-col class="ml-2 mr-0 pr-0">
-             <a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" title="Assistance">
+             <a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" title="Poser une question sur Abesstp">
                <v-btn fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" :depressed="$vuetify.breakpoint.mdAndUp" color="white">
                  <v-img src="@/assets/chatBubbles.svg" :max-height="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" :max-width="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'"></v-img>
                </v-btn>
              </a>
            </v-col>
            <v-col class="ma-0 px-2">
-             <a href="https://documentation.abes.fr/sudoc/" target="_blank" title="Assistance">
+             <a href="https://documentation.abes.fr/sudoc/" target="_blank" title="Consulter le manuel utilisateur QualiMarc">
                <v-btn fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" :depressed="$vuetify.breakpoint.mdAndUp" color="white">
                  <v-img src="@/assets/questionMark.svg" :max-height="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" :max-width="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'"></v-img>
                </v-btn>
