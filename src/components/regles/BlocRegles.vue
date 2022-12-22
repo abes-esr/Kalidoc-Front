@@ -9,8 +9,8 @@
       <v-tooltip left>
         <template v-slot:activator="{on}">
           <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
-            <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
-              TÉLÉCHARGER TOUTES LES REGLES
+            <download-csv :delimiter="';'" :data="items" name="qualimarc-export-regles.csv" style="color: white">
+              TÉLÉCHARGER TOUTES LES R&Egrave;GLES
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>
           </v-btn>
@@ -81,7 +81,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                     v-model="ruleMessage"
-                    label="rechercher par mot clef"
+                    label="rechercher par mot-clé"
                     class="ma-0 pa-0"
                     dense
                     solo
@@ -135,11 +135,11 @@ import QualimarcService from "@/service/QualimarcService";
 
 const serviceApi = QualimarcService;
 let headers = [
-  { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID Règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
+  { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
   { text: "Zone UNM 1", value: "zoneUnm1", class: "headerTableClass", width: 30},
   { text: "Zone UNM 2", value: "zoneUnm2", class: "headerTableClass", width: 30},
   { text: "Type de document concerné par la règle", value: "typeDoc", class: "headerTableClass", width: 160},
-  { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
+  { text: "Règle de vérification", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ];
 const items = ref([]);

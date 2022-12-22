@@ -7,7 +7,7 @@
       <v-tooltip left>
         <template v-slot:activator="{on}">
           <v-btn class="ma-0" elevation="0" :disabled="historiqueList.length === 0" small v-on="on" color="#0F75BC">
-            <download-csv :delimiter="';'" :data="exportHistorique(historiqueList)" name="qualimarc-export-historic.csv" style="color: white">
+            <download-csv :delimiter="';'" :data="exportHistorique(historiqueList)" name="qualimarc-export-historique.csv" style="color: white">
               TÉLÉCHARGER L'HISTORIQUE
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>
@@ -51,12 +51,8 @@
                 <v-divider></v-divider>
                 <v-list-item class="mt-2" style="overflow-x: scroll; overflow-y: hidden">
                   <!--      TRAITEMENT PAR RESULTAT     -->
-                  <v-col v-for="result in historique.resultats.slice().reverse()" :key="historique.resultats.indexOf(result)" class="mr-10">
-                    <v-row class="d-flex align-center" style="min-width: 330px">
-                      <!--      AFFICHAGE DU NUMERO DU RESULTAT      -->
-                      <v-col style="color: lightgrey; font-weight: 400; font-size: 1.2em; width: 40px; max-width: 40px">{{ historique.resultats.indexOf(result) +1 }}</v-col>
-                      <card-recapitulatif :resultats="result" style="border-left: 2px solid lightgrey; "></card-recapitulatif>
-                    </v-row>
+                  <v-col v-for="result in historique.resultats.slice()" :key="historique.resultats.indexOf(result)" class="mr-10">
+                    <card-recapitulatif :resultats="result">{{ historique.resultats.indexOf(result) +1 }}</card-recapitulatif>
                   </v-col>
                 </v-list-item>
               </v-expansion-panel-content>
@@ -82,7 +78,7 @@ function getAnalyseType(analyse) {
     return "rapide";
   } else if (analyse === "COMPLETE") {
     return "experte";
-  } else if (analyse === "FOCUSED") {
+  } else if (analyse === "FOCUS") {
     return "ciblée";
   }
 }
@@ -103,7 +99,7 @@ function exportHistorique(items){
       typeAnalyse = 'RAPIDE'
     } else if (element.analyse.analyseSelected === 'COMPLETE') {
       typeAnalyse = 'EXPERTE'
-    } else if (element.analyse.analyseSelected === 'FOCUSED') {
+    } else if (element.analyse.analyseSelected === 'FOCUS') {
       typeAnalyse = 'CIBLEE'
     }
 

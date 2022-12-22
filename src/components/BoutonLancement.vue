@@ -21,48 +21,53 @@ const historiqueStore = useHistoriqueStore();
 
 // Props & Emit
 const props = defineProps({isDisabled: Boolean, isReplay: Boolean});
-const emit = defineEmits(['backendError', 'finished']);
+const emit = defineEmits(['backendError', 'finished', 'started']);
 
 // Service
-const serviceApi = QualimarcService
+const serviceApi = QualimarcService;
 
 // Spinner
 const spinnerActive = ref(false);
 
 function checkPpnWithTypeAnalyse() {
   spinnerActive.value = true;
-  serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.value, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
+  emit('started');
+  serviceApi.checkPpnWithTypeAnalyse(analyseStore.getPpnValidsList, analyseStore.getAnalyseSelected.id, analyseStore.getFamilleDocumentSet, analyseStore.getRuleSet)
     .then((response) => {
-        resultatStore.setResultsListArray(response.data.resultRules);
-        resultatStore.pushRecapitulatif(
-          response.data.ppnAnalyses,
-          response.data.ppnInconnus,
-          response.data.ppnErrones,
-          response.data.ppnOk
+      resultatStore.setResultsListArray(response.data.resultRules);
+      resultatStore.pushRecapitulatif(
+        response.data.ppnAnalyses,
+        response.data.ppnInconnus,
+        response.data.ppnErrones,
+        response.data.ppnOk
+      );
+      if(props.isReplay) {
+        historiqueStore.pushReplayedResultatToLastHistorique(
+          resultatStore.getLastRecapitulatif
         );
-        if(props.isReplay) {
-          historiqueStore.pushReplayedResultatToLastHistorique(
+      } else {
+        historiqueStore.createNewHistorique(
+            {
+              ppnValidsList: analyseStore.getPpnValidsList,
+              ppnInvalidsList: analyseStore.getPpnInvalidsList,
+              analyseSelected : analyseStore.getAnalyseSelected.value,
+              familleDocumentSet : analyseStore.getFamilleDocumentSet,
+              ruleSet : analyseStore.getRuleSet,
+            },
             resultatStore.getLastRecapitulatif
-          );
-        } else {
-          historiqueStore.createNewHistorique(
-              {
-                ppnValidsList: analyseStore.getPpnValidsList,
-                ppnInvalidsList: analyseStore.getPpnInvalidsList,
-                analyseSelected : analyseStore.getAnalyseSelected.value,
-                familleDocumentSet : analyseStore.getFamilleDocumentSet,
-                ruleSet : analyseStore.getRuleSet,
-              },
-              resultatStore.getLastRecapitulatif
-          );
-        }
-        spinnerActive.value = false;
-        emitOnFinished();
-      })
+        );
+      }
+      emitOnFinished();
+    })
     .catch((error) => {
-      spinnerActive.value = false;
-      emitOnError(error);
-    });
+      if(error.message === 'canceled') {
+        // Annulation de la requête
+        console.log('Canceled');
+      }else {
+        emitOnError(error);
+      }
+    })
+    .finally(() => spinnerActive.value = false);
 }
 
 function emitOnError(error){
@@ -70,7 +75,7 @@ function emitOnError(error){
 }
 
 function emitOnFinished(){
-  emit('finished', true);
+  emit('finished');
 }
 
 </script>
