@@ -6,7 +6,7 @@
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
         <v-row class="ma-0 pa-0">
           <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
-          <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Ajouter des PPN</span>
+          <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Soumettre des PPN</span>
         </v-row>
         <bloc-recherche-par-ppn
             class="mb-0 pa-0"
