@@ -93,7 +93,7 @@
         <div class="mt-4 d-flex flex-row-reverse">
           <v-btn depressed color="#0F75BC" class="button" max-width="380" height="26" @click="copyPnnWrongSyntax()">
             <span style="color: white">COPIER LES PPN AVEC SYNTAXE ERRONEE</span>
-            <v-icon color="white" class="ml-2">mdi-download</v-icon>
+            <v-icon small color="white" class="ml-2">mdi-content-copy</v-icon>
           </v-btn>
         </div>
       </v-alert>
