@@ -5,7 +5,7 @@
         <v-icon large :max-height="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" :max-width="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'">mdi-gauge</v-icon>
       </v-btn>
       <v-card v-if="hover" elevation="12" style="position: absolute; margin-left: -360px; margin-top: 20px; z-index: 10; border-radius: 5px!important;" width="400">
-        <v-card-title class="justify-center pt-1" style="background-color: #252C61; color: white">STATUS</v-card-title>
+        <v-card-title class="justify-center pt-1" style="background-color: #252C61; color: white">STATUTS</v-card-title>
         <v-card-text style="background-color: white;color: black">
           <v-row class="d-flex justify-space-between pa-2">
             <span> Base Xml </span>
