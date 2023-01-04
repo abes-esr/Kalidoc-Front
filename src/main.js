@@ -6,9 +6,27 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import JsonCSV from 'vue-json-csv';
+import VueMatomo from 'vue-matomo';
 
 Vue.use(PiniaVuePlugin)
 Vue.use(require('vue-shortkey'))
+Vue.use(VueMatomo, {
+  host: "https://piwik.abes.fr/",
+  siteId: 35,
+  trackerFileName: 'matomo',
+  router: router,
+  enableLinkTracking: true,
+  requireConsent: false,
+  trackInitialView: true,
+  disableCookies: false,
+  enableHeartBeatTimer: false,
+  heartBeatTimerInterval: 15,
+  debug: true,
+  userId: undefined,
+  cookieDomain: undefined,
+  domains: undefined,
+  preInitActions: []
+});
 
 const pinia = createPinia()
 
