@@ -126,7 +126,6 @@ onMounted(() => {
   feedItems();
   feedTypeList();
   nextSelectedItem();
-  ppnFiltered.value = items.value;
 })
 
 watchEffect(() => {
@@ -187,6 +186,7 @@ function feedItems(){
       })
   });
   itemsTrieAndFiltered = items.value;
+  ppnFiltered.value = items.value;
   loading.value = false;
 }
 
