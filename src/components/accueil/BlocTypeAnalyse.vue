@@ -8,7 +8,7 @@
       <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.id">
           <template v-slot:activator="{ on, attrs }">
-            <v-radio :label=" analyse.nbRules ? analyse.libelle + ' (' + analyse.nbRules + ' règles)':  analyse.libelle" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
+            <v-radio :label=" analyse.libelle " :value="analyse" v-bind="attrs" v-on="on"></v-radio>
           </template>
           <span>
             {{ analyse.description }}
@@ -28,7 +28,7 @@
               style="max-height: 30px"
               @change="updateFamilleDocumentSetInStore"
               :value="familleDoc"
-              :label=" familleDoc.libelle + ' (' + familleDoc.nbRules + ' règles)'"
+              :label=" familleDoc.libelle "
           ></v-checkbox>
         </v-sheet>
         <span v-if="ruleSetList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeux de règles thématiques</span>
@@ -37,7 +37,7 @@
             <template v-slot:label>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span v-on="on">{{ ruleset.libelle + ' (' + ruleset.nbRules + ' règles) ' }}</span>
+                  <span v-on="on">{{ ruleset.libelle }}</span>
                 </template>
                 {{ ruleset.description }}
               </v-tooltip>
