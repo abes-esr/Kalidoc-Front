@@ -26,7 +26,7 @@
              </a>
            </v-col>
            <v-col class="ma-0 px-2">
-             <a href="https://documentation.abes.fr/sudoc/" target="_blank" title="Consulter le manuel utilisateur QualiMarc">
+             <a href="https://documentation.abes.fr/aidequalimarc/index.html" target="_blank" title="Consulter le manuel utilisateur QualiMarc">
                <v-btn fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" :depressed="$vuetify.breakpoint.mdAndUp" color="white">
                  <v-img src="@/assets/questionMark.svg" :max-height="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" :max-width="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'"></v-img>
                </v-btn>
