@@ -65,7 +65,7 @@ import BoutonLancement from "@/components/BoutonLancement";
 import BlocDetailPpn from "@/components/resultats/BlocDetailPpn";
 import ProgressBar from "@/components/ProgressBar";
 
-import { ref, onBeforeMount } from "vue";
+import { ref, onMounted } from "vue";
 import { useResultatStore } from "@/stores/resultat";
 import router from "@/router";
 
@@ -79,8 +79,8 @@ const iconTimeline = ref('mdi-chevron-left');
 const focusOn = ref([4, 4]);
 const isProgressLoading = ref(false);
 
-onBeforeMount(() => {
-  if(resultatStore.getResultsList.length === 0) {
+onMounted(() => {
+  if(resultatStore.getRecapitulatif.length === 0) {
     router.push({name: 'Redirection accueil'});
   }
 });
