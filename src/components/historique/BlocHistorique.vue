@@ -39,7 +39,7 @@
               <v-expansion-panel-header>
                 <v-row justify="space-around">
                   <!--      AFFICHAGE DE LA DATE      -->
-                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} <span style="font-style: italic; color: dimgrey">- Type d'analyse : {{ getAnalyseType(historique.analyse.analyseSelected) }}</span></span>
+                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} <span style="font-style: italic; color: dimgrey">- Type d'analyse : {{ historique.analyse.analyseSelected.libelle }}</span></span>
                   <!--      AFFICHAGE DU BOUTON      -->
                   <v-btn @click="relanceAnalyse(historiqueList.indexOf(historique))" depressed color="#CF4A1A" class="button" max-width="220" height="26">
                     <span style="color: white">Relancer l'analyse</span>
@@ -72,16 +72,6 @@ import router from "@/router";
 
 const historiqueStore = useHistoriqueStore();
 const historiqueList = ref(historiqueStore.getHistorique);
-
-function getAnalyseType(analyse) {
-  if (analyse === "QUICK") {
-    return "rapide";
-  } else if (analyse === "COMPLETE") {
-    return "experte";
-  } else if (analyse === "FOCUS") {
-    return "ciblée";
-  }
-}
 
 
 function relanceAnalyse(currentAnalyse) {

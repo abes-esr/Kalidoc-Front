@@ -50,7 +50,7 @@ function checkPpnWithTypeAnalyse() {
             {
               ppnValidsList: analyseStore.getPpnValidsList,
               ppnInvalidsList: analyseStore.getPpnInvalidsList,
-              analyseSelected : analyseStore.getAnalyseSelected.value,
+              analyseSelected : analyseStore.getAnalyseSelected,
               familleDocumentSet : analyseStore.getFamilleDocumentSet,
               ruleSet : analyseStore.getRuleSet,
             },
