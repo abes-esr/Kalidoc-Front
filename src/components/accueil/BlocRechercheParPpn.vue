@@ -1,8 +1,8 @@
 <template>
-  <v-sheet class="pa-2 borderBlocElements">
+  <v-sheet class="pa-2 borderBlocElements" >
     <div>
       <div class="px-0 mb-5 text-justify fontPrimaryColor" style="font-size: small">
-        Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de xxxxxxx PPN en une seule fois
+        Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de 5000 PPN en une seule fois
       </div>
       <v-combobox
           filled
@@ -18,8 +18,12 @@
           class="pa-1"
       >
         <template v-slot:selection="{item}">
-          <v-chip data-cy="del_all_ppn" close @click:close="removeItem(item)">
-            <span class="pr-2">{{ item }}</span>
+          <v-chip v-if="item === ppnCopied" color="#eafaed" @click="copyLabelItem(item)" @click:close="removeItem(item)">
+            <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">PPN COPI&Eacute;</span>
+            <v-icon class="ma-0 pa-0" color="green darken-3" small>mdi-check</v-icon>
+          </v-chip>
+          <v-chip v-else close data-cy="del_all_ppn" @click="copyLabelItem(item)" @click:close="removeItem(item)">
+            <span class="pr-2">{{ item === ppnCopied ? 'PPN COPIE' : item }}</span>
           </v-chip>
         </template>
       </v-combobox>
@@ -44,11 +48,16 @@
         <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
       </v-sheet>
     </div>
-    <div>
+    <div v-cloak
+         @drop.prevent="dropFile"
+         @dragleave="dragLeave"
+         @dragover.prevent="dragOver"
+    >
       <v-file-input
           filled
           class="ml-1"
-          label="Cliquez ici pour charger un fichier .csv ou .txt contenant des PPN"
+          :label="isDragging ? 'Importer votre fichier ici pour charger un fichier .csv ou .txt contenant des PPN' : 'Cliquer ici pour sélectionner un fichier de PPN au format .csv ou .txt (ou le glisser-déposer)'"
+          :loading="isDragging"
           prepend-icon=""
           append-icon="mdi-file-download-outline"
           show-size
@@ -60,6 +69,7 @@
           :rules="rules"
           v-model="fichierLoaded"
           @change="isAllowToSend"
+          :style="isDragging ? 'transform: scale(1.02);' : ''"
           :clearable="false"
           :error-messages="errorMsg"
           :success-messages="successMsg"
@@ -67,38 +77,61 @@
       </v-file-input>
     </div>
     <div>
-      <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="0">
+      <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="2">
         Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
-        <span style="color: darkgrey; font-size: small">Syntaxe d'un PPN : (9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X)</span><br>
+        <span style="color: darkgrey; font-size: small">Rappel : syntaxe d'un PPN = 9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X</span><br>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              PPN saisi(s) avec une syntaxe érronée (cliquer pour dérouler)
+              <span class="pt-2">Voir les PPN avec une syntaxe erronée</span>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
+        <div class="mt-4 d-flex flex-row-reverse">
+          <v-btn small tile depressed color="#0F75BC" class="button" max-width="380" height="26" @click="copyPnnWrongSyntax()">
+            <span style="color: white">COPIER LES PPN AVEC SYNTAXE ERRONEE</span>
+            <v-icon small color="white" class="ml-2">mdi-content-copy</v-icon>
+          </v-btn>
+        </div>
       </v-alert>
     </div>
+    <v-snackbar
+        v-model="snackbarCopyPpnNumberStatus"
+        timeout="2000"
+        color="#43a047"
+        text
+        rounded="pill"
+        elevation="5"
+    >
+      <v-icon class="ma-0 pa-0 mr-4" color="green darken-3">mdi-check</v-icon>
+      <span class="green--text text--darken-3" style="font-weight: 500">{{ snackbarMessage }}</span>
+    </v-snackbar>
   </v-sheet>
 </template>
 
 <script setup>
 import { useAnalyseStore } from "@/stores/analyse";
-import { ref } from 'vue';
+import {onUpdated, ref} from 'vue';
+import {useHistoriqueStore} from "@/stores/historique";
+import router from "@/router";
 
 //Store
 const analyseStore = useAnalyseStore();
+const historiqueStore = useHistoriqueStore();
 
 //Emit
 const emit = defineEmits(['isPpnListEmpty','backendError']);
 
+//drag&drop
+const isDragging = ref(false);
+
 //Combobox
-const comboboxPpnLabel = ref('Entrez des PPN ou collez une liste de PPN puis cliquez à l\'extérieur du cadre avec votre souris ou appuyez sur ENTREE'); //Message indicatif de la combobox
+const comboboxPpnLabel = ref('Saisir ou coller des PPN, puis cliquer hors du cadre (ou appuyer sur Entrée)'); //Message indicatif de la combobox
 const lastValuesTypedOrPasted = ref(''); //Dernière Chaîne de caractères saisie dans la combobox, servant à alimenter ensuite ppnListTyped
-const ppnListCombobox = ref([]); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
+const ppnListCombobox = ref((router.currentRoute.query.numeroAnalyse && historiqueStore.getHistorique.length !== 0) ? historiqueStore.getHistorique[router.currentRoute.query.numeroAnalyse].analyse.ppnValidsList : []); //Tableau de ppn alimenté par les chaînes de caractères mises dans la combobox
 const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateur
 
 //Import de fichier
@@ -107,6 +140,57 @@ const rules = [(value) => !value || ((value.type === undefined) || (value.type =
 const fileReader = new FileReader();
 const errorMsg = ref('');
 const successMsg = ref('');
+
+//Copie de ppn ou liste de ppn
+const snackbarCopyPpnNumberStatus = ref(false);
+const snackbarMessage = ref('');
+const ppnCopied = ref('');
+
+onUpdated(() => {
+  if (ppnListCombobox.value.length > 0 && lastValuesTypedOrPasted.value === '') {
+    analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
+    analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
+    emitOnEvent();
+  }
+});
+
+function dropFile(dropObject){
+  let filesDragged=[];
+  let droppedFiles = dropObject.dataTransfer.files;
+  filesDragged.push(...droppedFiles);
+  fichierLoaded.value = filesDragged[0];
+  isAllowToSend();
+  isDragging.value = false;
+}
+
+function dragOver(){
+  isDragging.value = true;
+}
+
+function dragLeave(){
+  isDragging.value = false;
+}
+
+/**
+ * Fonction qui permet le changement de l'affichage du chip du ppn copié
+ * @param item le numéro de ppn
+ */
+function copyLabelItem(item) {
+  ppnCopied.value = item;
+  navigator.clipboard.writeText(item)
+  setTimeout(() => {
+    ppnCopied.value = '';
+  }, 1000);
+}
+
+/**
+ * Fonction qui permet l'affichage de la snackbar en cas de copie de la liste des ppn à la syntaxe erronée
+ */
+function copyPnnWrongSyntax() {
+  navigator.clipboard.writeText(ppnInvalids.value)
+  snackbarMessage.value = "Les ppn avec syntaxe erronée ont été copié dans le presse papier";
+  snackbarCopyPpnNumberStatus.value = true;
+}
 
 /**
  * Suppression d'un élément ppn déclenché au moment du clic sur la croix
@@ -124,7 +208,7 @@ function removeItem(item){
  */
 function removeAllItems(){
   resetMessages();
-  if(!!ppnListCombobox.value){
+  if(ppnListCombobox.value){
     ppnListCombobox.value = [];
     ppnInvalids.value = [];
     analyseStore.setPpnInvalidsList(ppnInvalids.value); // Vide la liste des ppn invalides
@@ -138,7 +222,7 @@ function removeAllItems(){
  * Contrôle des chaînes de caractères saisies dans la combobox à la sortie de la souris du champ et alimentation de ppnListTyped
  */
 function checkValuesAndFeedPpnListTyped(){
-  if(!!lastValuesTypedOrPasted.value){ //Si la valeur n'est pas nulle, ce qui se produit si l'utilisateur sort du cadre sans rien taper
+  if(lastValuesTypedOrPasted.value){ //Si la valeur n'est pas nulle, ce qui se produit si l'utilisateur sort du cadre sans rien taper
     let arrayWithValidsPpn = lastValuesTypedOrPasted.value.split(/[^\da-zA-Z]/).filter(ppn_to_check => ppn_to_check.match(/^(\d{8}(\d|X|x))$/));
     let arrayWithInvalidsPpn = lastValuesTypedOrPasted.value.split(/[^\da-zA-Z]/).filter(ppn_to_check => !ppn_to_check.match(/^(\d{8}(\d|X|x))$/)).filter(str_to_clean => str_to_clean.trim() !== '');
     let arrayWithValidsPpnWithUniqueValues = arrayWithValidsPpn.filter((v, i, a) => a.indexOf(v) === i); //Fonction anonyme de dédoublonnage sur la saisie en cours
@@ -149,9 +233,9 @@ function checkValuesAndFeedPpnListTyped(){
     //Ppn invalide
     arrayWithInvalidsPpnWithUniqueValues.forEach(currentValidPpn => ppnInvalids.value.push(currentValidPpn));
     ppnInvalids.value = ppnInvalids.value.filter( function( item, index, inputArray ) {return inputArray.indexOf(item) === index;}); //Supprime les ppn qui serait en doublon sur une saisie précédente
-    analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
-    analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
   }
+  analyseStore.setPpnValidsList(ppnListCombobox.value); //Alimentation du store avec les ppn valides
+  analyseStore.setPpnInvalidsList(ppnInvalids.value); //Alimentation du store avec les ppn invalides
   lastValuesTypedOrPasted.value = ''; //On vide la chaîne puisqu'on à alimenté les valeurs valides dans :value="ppnListCombobox"
   emitOnEvent();
 }

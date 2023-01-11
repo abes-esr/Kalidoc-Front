@@ -1,5 +1,5 @@
 <template>
-  <span>Type d'analyse choisi : {{ analyseStore.getAnalyseSelected.label }}</span>
+  <span>Type d'analyse choisi : {{ analyseStore.getAnalyseSelected.libelle}}</span>
 </template>
 
 <script setup>

@@ -14,12 +14,12 @@
             :key="i"
 
         >
-          <v-row class="d-flex justify-space-around align-center pa-4">
+          <v-row class="d-flex justify-space-around align-center pa-4 ml-10">
             <v-col class="d-flex justify-center">
-              <card-recapitulatif :resultats="getRecapitulatifByIndex(i-1)">Analyse n°{{ i }}</card-recapitulatif>
+              <card-recapitulatif :resultats="getRecapitulatifByIndex(i-1)"> {{ i }} </card-recapitulatif>
             </v-col>
             <v-col class="d-flex justify-center">
-              <card-recapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :resultats="getRecapitulatifByIndex(i)">Analyse n°{{ i + 1}}</card-recapitulatif>
+              <card-recapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :resultats="getRecapitulatifByIndex(i)"> {{ i + 1}} </card-recapitulatif>
             </v-col>
           </v-row>
         </v-carousel-item>

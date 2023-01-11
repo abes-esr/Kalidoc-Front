@@ -33,7 +33,13 @@
             <v-icon color="grey" small >mdi-sort</v-icon>
           </span>
         </template>
-
+        <!-- lien vers le guide méthodologique dans l'intitulé des zones -->
+        <template v-slot:item.zone1="{ item }">
+          <a target="_blank" :href="getLinkGuideMethodo(item.zone1)" id="linkBlue">{{ item.zone1 }}</a>
+        </template>
+        <template v-slot:item.zone2="{ item }">
+          <a target="_blank" :href="getLinkGuideMethodo(item.zone2)" id="linkBlue">{{ item.zone2 }}</a>
+        </template>
         <!--  Icone dans la colonne Règles  -->
         <template v-slot:item.priority="{ item }">
           <v-container class="ma-0 pa-0 d-flex justify-center">
@@ -49,10 +55,7 @@
           @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
       ></v-pagination>
     </v-card>
-    <v-card flat v-else class="pa-0  borderBlocElements">
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91;"></div>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor"><b>Cliquer sur un ppn de la liste du bloc de gauche pour afficher les détails des erreurs</b></div>
-    </v-card>
+    <bloc-aucune-donnee v-else>Cliquer sur un ppn de la liste du bloc de gauche pour afficher les détails des erreurs</bloc-aucune-donnee>
   </v-container>
 </template>
 
@@ -60,6 +63,7 @@
 import {ref, onUpdated, watchEffect } from "vue";
 import { useResultatStore } from "@/stores/resultat";
 import CoverService from "@/service/CoverService";
+import BlocAucuneDonnee from "@/components/BlocAucuneDonnee";
 
 const props = defineProps({currentPpn: String,currentItems: Array});
 const emit = defineEmits(['backendError','onChangePpn']);
@@ -76,7 +80,7 @@ let desc = false;
 const headers = [
   {text: "Zone UNM1", value: "zone1", width: 133},
   {text: "Zone UNM2", value: "zone2", width: 133},
-  {text: "Message d'erreur", value: "message",  width: 351},
+  {text: "Message d'erreur", value: "message"},
   {text: "Règle essentielle|Règle avancée", value: "priority", width: 170}
 ];
 
@@ -232,7 +236,8 @@ function getIconTypeDocument(typeDocument) {
       iconTypeDocument.value.img="mdi-web";
       iconTypeDocument.value.color="blue";
       break;
-    case "Thèse":
+    case "Thèse de soutenance":
+    case "Thèse de reproduction":
       iconTypeDocument.value.img="mdi-school";
       iconTypeDocument.value.color="black";
       break;
@@ -260,6 +265,18 @@ function getPriority(priority){
   } else if (priority === "P2") {
     return "avancée"
   }
+}
+
+function getLinkGuideMethodo(zone) {
+  if (zone != undefined) {
+    let link = "https://documentation.abes.fr/sudoc/formats/unmb/zones/"
+    if (zone.indexOf("$") > 1)
+      link += zone.substring(0, 3);
+    else
+      link += zone;
+    return link + ".htm";
+  }
+  return "";
 }
 </script>
 

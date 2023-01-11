@@ -6,11 +6,11 @@
       <!--      TITRE     -->
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</span>
       <!--      BOUTON TELECHARGER LES REGLES     -->
-      <v-tooltip right>
+      <v-tooltip left>
         <template v-slot:activator="{on}">
           <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
-            <download-csv :delimiter="';'" :data="items" name="qualimarc-export-rules.csv" style="color: white">
-              TÉLÉCHARGER TOUTES LES REGLES
+            <download-csv :delimiter="';'" :data="items" name="qualimarc-export-regles.csv" style="color: white">
+              TÉLÉCHARGER TOUTES LES R&Egrave;GLES
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>
           </v-btn>
@@ -81,7 +81,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                     v-model="ruleMessage"
-                    label="rechercher par mot clef"
+                    label="rechercher par mot-clé"
                     class="ma-0 pa-0"
                     dense
                     solo
@@ -105,7 +105,7 @@
                 </v-btn>
               </template>
               <div style='background-color:white;color: black;' class="pl-4 pr-8" v-if="header.value === 'typeDoc'">
-                <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeDocChoice(ruleTypeDoc) ">
+                <v-btn class="d-block" plain v-for="ruleTypeDoc in listSelectedRulesTypeDoc" :key="ruleTypeDoc.value" @click="eventTypeChoice(ruleTypeDoc) ">
                   <v-checkbox v-model="selectedCheckbox" :label="ruleTypeDoc" :value="ruleTypeDoc"></v-checkbox>
                 </v-btn><div style="height: 30px"></div>
               </div>
@@ -135,11 +135,11 @@ import QualimarcService from "@/service/QualimarcService";
 
 const serviceApi = QualimarcService;
 let headers = [
-  { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID Règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
+  { text: "", value: "id", class: "headerTableClass", width: 20, textBtn: "ID règle", tooltip: "Les identifiants des règles sont générés automatiquement et sont donnés à titre informatif"},
   { text: "Zone UNM 1", value: "zoneUnm1", class: "headerTableClass", width: 30},
   { text: "Zone UNM 2", value: "zoneUnm2", class: "headerTableClass", width: 30},
   { text: "Type de document concerné par la règle", value: "typeDoc", class: "headerTableClass", width: 160},
-  { text: "Règle de vérification / qualité", value: "message", class: "headerTableClass", width: 200, sortable : false},
+  { text: "Règle de vérification", value: "message", class: "headerTableClass", width: 200, sortable : false},
   { text: "Type de règle", value: "priority", class: "headerTableClass", width: 50}
 ];
 const items = ref([]);
@@ -264,28 +264,27 @@ function feedRulesPriorityList() {
 
 /**
  * Fonction qui permet d'afficher les typeDoc sélectionnés par l'utilisateur
- * @param element l'élément sélectionné
+ * @param type l'élément sélectionné
  * @returns {*[] | []} appelle la fonction d'affichage des Id sélectionnés par l'utilisateur
  */
-function eventTypeDocChoice(element) {
-  selectedId.value = "Tous";
-  if (element === "Tous") {
-    selectedTypeDoc.value = new Array(element);
+function eventTypeChoice(type) {
+  if (type === "Tous") {
+    selectedTypeDoc.value = new Array(type);
   } else {
     if (selectedTypeDoc.value.length > 0) {
       if (selectedTypeDoc.value.indexOf("Tous") >= 0) { //  Si un "Tous" est présent dans le selectedTypeDoc
         selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf("Tous"), 1);
       }
-      if (selectedTypeDoc.value.indexOf(element) === -1) {  //  Ajout un typeDoc s'il n'est pas déjà dans la liste selectedTypeDoc
-        selectedTypeDoc.value.push(element.toString());
-      } else if (selectedTypeDoc.value.indexOf(element) >= 0) { //  Supprime un typeDoc coché lorsque l'on clique de nouveau sur lui
-        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(element), 1);
+      if (selectedTypeDoc.value.indexOf(type) === -1) {  //  Ajout un typeDoc s'il n'est pas déjà dans la liste selectedTypeDoc
+        selectedTypeDoc.value.push(type);
+      } else if (selectedTypeDoc.value.indexOf(type) >= 0) { //  Supprime un typeDoc coché lorsque l'on clique de nouveau sur lui
+        selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(type), 1);
         if (selectedTypeDoc.value.length === 0) { //  si le dernier typeDoc est déselectionné, on insère la valeur "Tous"
           selectedTypeDoc.value.push("Tous");
         }
       }
     } else {
-      selectedTypeDoc.value = new Array(element.toString());
+      selectedTypeDoc.value = new Array(type);
     }
   }
   selectedCheckbox.value = selectedTypeDoc.value;

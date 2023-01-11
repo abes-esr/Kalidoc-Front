@@ -6,6 +6,7 @@
       <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
     </v-row>
     <v-data-table
+        v-if="items.length > 0"
         class="borderBlocElements"
         v-model="modelDataTable"
         :headers="headers"
@@ -21,10 +22,12 @@
           itemsPerPageOptions: [5,10,20,30,-1]
         }"
         dense
-    >
+        :mobile-breakpoint="resizeDataTable()"
+        >
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
           <v-menu offset-y v-if="header.value === 'typeDocument'">
             <template v-slot:activator="{ on, attrs }">
+              <span v-on="on" style='color: white; display: block'>{{ header.text }}</span>
               <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
                 <v-icon small color="white" :color="colorIconFilterTypeDoc()">
                   mdi-filter
@@ -38,9 +41,10 @@
               <div style="height: 30px"></div>
             </div>
           </v-menu>
-        <span style='color: white;'>
+        <span style='color: white; display: block' v-else>
           {{ header.text }}
-          <v-icon color="white" small >mdi-sort</v-icon></span>
+        </span>
+          <v-icon color="white" small >mdi-sort</v-icon>
       </template>
       <template v-slot:item.affiche="{ item }">
         <v-simple-checkbox
@@ -54,8 +58,20 @@
       <template v-slot:body.append>
         <tr>
           <td colspan="100%">
-            <div class="d-flex justify-space-between">
-              <div class="d-flex align-center">
+            <!--      Affichage en mode mobile      -->
+            <div class="d-flex flex-column" v-if="(mobileBreakpoint === 4000 && breakPointName === 'xl') || (mobileBreakpoint === 4000 && breakPointName === 'lg') || breakPointName === 'xs'">
+              <div class="pl-3 d-flex align-center justify-start">
+                <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
+                <span >Afficher/masquer tout</span>
+              </div>
+              <div class="mb-4 d-flex align-center justify-start">
+                <bouton-winibw class="mr-2" :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
+                <span>Générer la requête pour WinIBW</span>
+              </div>
+            </div>
+            <!--      Affichage en mode pc      -->
+            <div class="d-flex justify-space-between" v-else>
+              <div class="d-flex align-center mr-4">
                 <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
                 <span>Afficher/masquer tout</span>
               </div>
@@ -68,28 +84,31 @@
         </tr>
       </template>
     </v-data-table>
+    <bloc-aucune-donnee v-else>Les PPN en entrée ne comportent aucune erreur ou n’ont pas été trouvés dans le Sudoc. Reportez-vous au bloc “Récapitulatif” pour plus de détails.</bloc-aucune-donnee>
     <PopupRequestWinibw :winibwRequest="winibwRequest" :dialog="dialog" @onClose="setDialog"></PopupRequestWinibw>
   </v-container>
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from "vue"
+import { ref, onMounted, watchEffect, getCurrentInstance } from "vue"
 import { useResultatStore } from "@/stores/resultat";
 import BoutonWinibw from "@/components/BoutonWinibw";
 import PopupRequestWinibw from "@/components/resultats/PopupRequestWinibw";
 import QualimarcService from "@/service/QualimarcService";
+import BlocAucuneDonnee from "@/components/BlocAucuneDonnee";
 
 const resultatStore = useResultatStore();
 const serviceApi = QualimarcService;
 
 const emit = defineEmits(['onChangePpn','onChangeItems']);
-const props = defineProps({currentPpn: String, nbLancement:Number});
+const props = defineProps({currentPpn: String, nbLancement:Number, mobileBreakpoint:Number});
 
+const size = '';
 const headers = [
-  { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 130},
-  { text: "PPN", value: "ppn", class: "headerTableClass", width: 104},
-  { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 208},
-  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 130}
+  { text: "Aff/Masq.", value: "affiche", class: "headerTableClass", width: 80},
+  { text: "PPN", value: "ppn", class: "headerTableClass", width: 80},
+  { text: "Type de document", value: "typeDocument", class: "headerTableClass", width: 140},
+  { text: "Nb. erreurs", value: "nberreurs", class: "headerTableClass", width: 100}
 ];
 const loading = ref(false);
 const items = ref([]);
@@ -101,12 +120,12 @@ const ppnFiltered = ref([]);
 let itemsTrieAndFiltered = [];
 const modelDataTable = ref([]);
 const selectedCheckbox = ref([]);
+const breakPointName = ref(null);
 
 onMounted(() => {
   feedItems();
   feedTypeList();
   nextSelectedItem();
-  ppnFiltered.value = items.value;
 })
 
 watchEffect(() => {
@@ -167,6 +186,7 @@ function feedItems(){
       })
   });
   itemsTrieAndFiltered = items.value;
+  ppnFiltered.value = items.value;
   loading.value = false;
 }
 
@@ -208,7 +228,6 @@ function displayPopup(request) {
  * Fonction permettant de savoir si le bouton de génération de la requête winibw est désactivé
  */
 function isWinibwButtonDisabled() {
-  // return filterPpnByType().length === 0;
   return ppnFiltered.value.length === 0;
 }
 
@@ -261,6 +280,9 @@ function eventTypeChoice(type) {
         selectedTypeDoc.value.push(type);
       } else if (selectedTypeDoc.value.indexOf(type) >= 0) { //  Supprime un selectedTypeDoc coché lorsque l'on clique de nouveau sur lui
         selectedTypeDoc.value.splice(selectedTypeDoc.value.indexOf(type), 1);
+        if (selectedTypeDoc.value.length === 0) { //  si le dernier typeDoc est déselectionné, on insère la valeur "Tous"
+          selectedTypeDoc.value.push("Tous");
+        }
       }
     } else {
       selectedTypeDoc.value = new Array(type);
@@ -312,6 +334,24 @@ function toggleMask(value) {
   items.value.forEach(item => {
     item.affiche = value;
   })
+}
+
+/**
+ * Fonction qui permet de récupérer la valeur du breakpoint de vuetify
+ * et adapte l'affichage de la dataTable (mobile ou pc)
+ * @returns {InferPropType<Number | NumberConstructor>|number}
+ */
+function resizeDataTable() {
+  const instance = getCurrentInstance();
+  const vuetify = instance.proxy.$vuetify;
+
+  if(vuetify.breakpoint.name === "md" || vuetify.breakpoint.name === "sm" || vuetify.breakpoint.name === "xs") {
+    breakPointName.value = vuetify.breakpoint.name;
+    return 200;
+  } else {
+    breakPointName.value = vuetify.breakpoint.name;
+    return props.mobileBreakpoint;
+  }
 }
 
 </script>

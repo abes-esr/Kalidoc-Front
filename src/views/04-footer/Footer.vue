@@ -5,7 +5,7 @@
 <!--        DESCRIPTION NAVIGATEUR-->
         <v-col cols="6" id="footerDescription" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
           <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span></div>
-          <div style="font-size: 0.8em; text-align: justify"><span style="font-weight: 700">Quali<span style="font-weight: 400">Marc</span></span> est un outil qui diagnostique la qualité des notices bibliographiques, à la volée ou par lot, explique les enrichissements à apporter, permet de consulter les règles élaborées pour ce diagnostic et d’en créer de nouvelles, propres à ses besoins ou à un chantier de vérification précis.
+          <div style="font-size: 0.8em; text-align: justify"><span style="font-weight: 700">Quali<span style="font-weight: 400">Marc</span></span> est un outil qui diagnostique la qualité des notices bibliographiques du Sudoc : il repère, de manière globale ou ciblée, les absences et/ou incohérences et explique les corrections et/ou enrichissements à apporter.
           </div>
         </v-col>
 <!--        ACCES DIRECT NAVIGATEUR-->
