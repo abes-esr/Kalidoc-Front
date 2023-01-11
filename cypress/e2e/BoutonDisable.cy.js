@@ -2,7 +2,7 @@ describe('Bouton disable', () => {
   it('test if button should be disable or enable', () => {
 
     cy.contains('CIBL').click();
-    cy.get('[data-cy=FOCUSED]').should("have.attr", "aria-checked", "true");
+    cy.get('[data-cy=FOCUS]').should("have.attr", "aria-checked", "true");
     cy.get('[data-cy=btn_lance_analyse]').should('be.disabled');
 
     cy.contains("Audiovisuel").click();

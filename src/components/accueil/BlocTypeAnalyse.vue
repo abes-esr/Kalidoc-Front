@@ -8,7 +8,7 @@
       <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.id">
           <template v-slot:activator="{ on, attrs }">
-            <v-radio :data-cy="analyse.value" :label="analyse.libelle" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
+            <v-radio :data-cy="analyse.id" :label="analyse.libelle" :value="analyse" v-bind="attrs" v-on="on"></v-radio>
           </template>
           <span>
             {{ analyse.description }}
@@ -19,7 +19,7 @@
       </v-radio-group>
       <v-sheet v-if="analyseSelected.id === 'FOCUS'" >
         <span  v-if="familleDocumentList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par règles associées à un ou plusieurs types de documents</span>
-        <v-sheet class="d-flex align-content-startflex-wrap pa-0 mb-2 pl-8">
+        <v-sheet class="d-flex align-content-start flex-wrap pa-0 mb-2 pl-8">
           <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" :data-cy="familleDoc.id" v-model="familleDocumentSetSelected"
               class="ma-1"
               style="max-height: 30px"
