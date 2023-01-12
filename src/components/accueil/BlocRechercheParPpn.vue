@@ -22,7 +22,7 @@
             <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">PPN COPI&Eacute;</span>
             <v-icon class="ma-0 pa-0" color="green darken-3" small>mdi-check</v-icon>
           </v-chip>
-          <v-chip v-else close data-cy="del_all_ppn" @click="copyLabelItem(item)" @click:close="removeItem(item)">
+          <v-chip v-else close @click="copyLabelItem(item)" @click:close="removeItem(item)">
             <span class="pr-2">{{ item === ppnCopied ? 'PPN COPIE' : item }}</span>
           </v-chip>
         </template>
@@ -33,6 +33,7 @@
             depressed
             small
             tile
+            data-cy="del_all_ppn"
             @click="removeAllItems"
             style="border: 1px solid grey; color: grey"
         >
