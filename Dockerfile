@@ -27,6 +27,12 @@ COPY ./public/                      /build/public/
 RUN npm run build
 
 
+FROM cypress/included:9.4.1 as cypress-image
+WORKDIR /build
+COPY --from=build-image /build/ /build/
+COPY --from=build-image /root/.cache/ /root/.cache/
+COPY ./cypress/                         /build/cypress/
+RUN npx cypress run 
 
 
 ###
