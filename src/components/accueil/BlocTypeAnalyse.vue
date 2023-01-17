@@ -1,14 +1,10 @@
 <template>
   <v-container>
-    <v-row class="ma-0 pa-0">
-      <v-icon color="#252C61">mdi-numeric-2-box</v-icon>
-      <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
-    </v-row>
     <v-sheet class="borderSelectAnalyseType">
       <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
         <v-tooltip right v-for="analyse in analysesList" :key="analyse.id">
           <template v-slot:activator="{ on, attrs }">
-            <v-radio :label=" analyse.libelle " :value="analyse" v-bind="attrs" v-on="on"></v-radio>
+            <v-radio :label="analyse.libelle" :value="analyse" v-bind="attrs" v-on="on" name="Test"></v-radio>
           </template>
           <span>
             {{ analyse.description }}

@@ -5,8 +5,10 @@
     <v-row>
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
         <v-row class="ma-0 pa-0">
-          <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
-          <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Soumettre des PPN</span>
+          <div aria-label="Premièrement, soumettre des PPN" role="img">
+            <v-icon color="#252C61" style="vertical-align: sub">mdi-numeric-1-box</v-icon>
+            <span style="font-size: 1.26em; color : #252C61; font-weight: bold">Soumettre des PPN</span>
+          </div>
         </v-row>
         <bloc-recherche-par-ppn
             class="mb-0 pa-0"
@@ -15,6 +17,12 @@
         />
       </v-col>
       <v-col class="ma-2 pa-2" style="min-height: 34em">
+        <v-row class="ma-0 pa-0">
+          <div aria-label="Deuxièmement, sélectionner un type d'analyse" role="img">
+            <v-icon color="#252C61" style="vertical-align: sub">mdi-numeric-2-box</v-icon>
+            <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Sélectionner un type d'analyse</span>
+          </div>
+        </v-row>
         <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>
         <message-erreur class="mb-2 pa-4" :backendErrorMessage="backendErrorMessage"></message-erreur>
         <bouton-lancement

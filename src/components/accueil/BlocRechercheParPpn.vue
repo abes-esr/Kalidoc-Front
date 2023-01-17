@@ -18,12 +18,14 @@
           class="pa-1"
       >
         <template v-slot:selection="{item}">
-          <v-chip v-if="item === ppnCopied" color="#eafaed" @click="copyLabelItem(item)" @click:close="removeItem(item)">
-            <span class="green--text text--darken-3"  style="font-weight: 500; min-width: 83px">PPN COPI&Eacute;</span>
+          <v-chip v-if="item === ppnCopied" color="#eafaed" @click="copyLabelItem(item)" @click:close="removeItem(item)" aria-label="PPN copié" role="img">
+            <span class="green--text text--darken-3" style="font-weight: 500; min-width: 83px">PPN COPI&Eacute;</span>
             <v-icon class="ma-0 pa-0" color="green darken-3" small>mdi-check</v-icon>
           </v-chip>
           <v-chip v-else close @click="copyLabelItem(item)" @click:close="removeItem(item)">
-            <span class="pr-2">{{ item === ppnCopied ? 'PPN COPIE' : item }}</span>
+            <div :aria-label="'PPN numéro : ' + (item) + '. Cliquez pour copier ce numéro de PPN'" role="img">
+              <span class="pr-2">{{ item === ppnCopied ? 'PPN COPIE' : item }}</span>
+            </div>
           </v-chip>
         </template>
       </v-combobox>
@@ -43,9 +45,13 @@
     </div>
     <div class="py-5">
       <v-sheet class="d-flex justify-center">
-        <v-icon class="mr-3" color="black">mdi-chevron-double-up</v-icon>
+        <div aria-label="Utiliser le champ de saisi ci-dessus pour saisir ou coller des PPN, puis cliquer hors du cadre (ou appuyer sur Entrée)" role="img">
+          <v-icon class="mr-3" color="black">mdi-chevron-double-up</v-icon>
+        </div>
         <span style="font-weight: 700">OU</span>
-        <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
+        <div aria-label="Utiliser le champ de saisi ci-dessous pour glisser-déposer un fichier .csv ou .txt contenant des PPN. Vous pouvez également cliquer dans le champ de saisi ci-dessous pour ouvrir une boite de dialogue de recherche de fichier." role="img">
+          <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
+        </div>
       </v-sheet>
     </div>
     <div v-cloak
@@ -83,10 +89,14 @@
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
-                <span class="pt-2">Voir les PPN avec une syntaxe erronée</span>
+                <span class="pt-2" aria-label="Cliquer pour voir les PPN avec une syntaxe erronée" role="img">Voir les PPN avec une syntaxe erronée</span>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">{{ item }}</v-chip>
+                <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">
+                  <div :aria-label="'PPN numéro : ' + (item)" role="img">
+                    {{ item }}
+                  </div>
+                </v-chip>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -189,7 +199,7 @@ function copyLabelItem(item) {
  */
 function copyPnnWrongSyntax() {
   navigator.clipboard.writeText(ppnInvalids.value)
-  snackbarMessage.value = "Les ppn avec syntaxe erronée ont été copié dans le presse papier";
+  snackbarMessage.value = "Les PPN avec syntaxe erronée ont été copié dans le presse papier";
   snackbarCopyPpnNumberStatus.value = true;
 }
 

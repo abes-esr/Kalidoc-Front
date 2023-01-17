@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0">
-    <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</span>
+    <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau des détails des erreurs par PPN sélectionné" role="img">Détail des erreurs par PPN</span>
     <v-card flat v-if="itemsPpnParent.length > 0 && itemsPpnParent[page-1]" class="pa-0 ma-0 borderBlocElements">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
@@ -26,7 +26,7 @@
             {{ header.text.split('|')[0] }}
             <v-icon color="grey" small >mdi-sort</v-icon>
             <br>
-            <v-icon x-small color="#6d7085"class="pr-1">mdi-checkbox-blank-circle-outline</v-icon>
+            <v-icon x-small color="#6d7085" class="pr-1">mdi-checkbox-blank-circle-outline</v-icon>
             <span style="font-weight: 500; color: #6d7085"> {{ header.text.split('|')[1] }}</span></span>
           <span style="color: grey; font-weight: 600" v-else>
               {{ header.text }}
@@ -43,8 +43,10 @@
         <!--  Icone dans la colonne Règles  -->
         <template v-slot:item.priority="{ item }">
           <v-container class="ma-0 pa-0 d-flex justify-center">
-            <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
-            <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+            <div :aria-label="'Règle ' + (item.priority)" role="img">
+              <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
+              <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+            </div>
           </v-container>
         </template>
       </v-data-table>

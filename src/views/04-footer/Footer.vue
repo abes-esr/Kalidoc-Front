@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
    <v-footer absolute padless min-height="200" color="#e6e6e6" fluid>
 <!--     FOOTER GRIS-->
       <v-row class="footerTopRow" align="start" justify="start" no-gutters>
@@ -11,7 +11,7 @@
 <!--        ACCES DIRECT NAVIGATEUR-->
         <v-col cols="auto" id="footerAbesLinks" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
           <v-row class="ma-0 pa-0">
-            <v-icon color="#252C61">mdi-open-in-new</v-icon>
+            <span aria-label="Accès direct" role="img"><v-icon color="#252C61">mdi-open-in-new</v-icon></span>
             <span class="fontPrimaryColor" style="font-size: 1em; font-weight: 700; margin-left: 5px">Accès direct</span>
           </v-row>
          <v-container>
@@ -32,7 +32,7 @@
 <!--        ACCES DIRECT MOBILE && TABLETTE-->
         <v-col cols="auto" class="pl-4 pt-2" id="footerAbesLinks" v-if="!$vuetify.breakpoint.md && !$vuetify.breakpoint.lg && !$vuetify.breakpoint.xl">
           <v-row class="ma-0">
-            <v-icon color="#252C61">mdi-open-in-new</v-icon>
+            <span aria-label="Accès direct" role="img"><v-icon color="#252C61">mdi-open-in-new</v-icon></span>
             <span style="color: #252C61; font-size: 1em; font-weight: 500; margin-left: 2px">Accès direct</span>
           </v-row>
           <v-container class="pa-0 pl-2">
@@ -69,7 +69,7 @@
          </v-col>
          <v-col cols="auto">
            <a href="" id="linkWhite">Données personnelles</a> |
-           <a href="https://abes.fr/pages-cgu/conditions-generales-utilisation-sites-abes.html" target="_blank" id="linkWhite">C.G.U.</a> |
+           <a href="https://abes.fr/pages-cgu/conditions-generales-utilisation-sites-abes.html" target="_blank" id="linkWhite"><span aria-label="CGU" role="img">C.G.U.</span></a> |
            <a href="https://abes.fr/mentions-legales/" target="_blank" id="linkWhite">Mentions légales</a> |
            <a href="https://abes.fr/accessibilite/" target="_blank" id="linkWhite">Accessibilité</a>
          </v-col>

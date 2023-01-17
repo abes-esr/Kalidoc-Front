@@ -1,6 +1,6 @@
 <template>
   <v-container class="ma-0 pa-0">
-    <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</span>
+    <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableaux récapitulatifs des analyses" role="img">Récapitulatif</span>
     <v-card flat class="pa-0 ma-0 borderBlocElements">
       <div class="mb-2 pt-1 rappelTypeAnalyse" style="background-color: #676C91; color: white"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></div>
       <v-carousel
