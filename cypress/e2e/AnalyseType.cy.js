@@ -1,6 +1,6 @@
 describe('Sélection du type d\'analyse', () => {
     it('Analyse RAPIDE', () => {
-        cy.get('.v-input--radio-group__input > :nth-child(1)').click();
+        cy.get('[data-cy="QUICK"]').click({force:true});
 
         cy.get('div.v-item--active')
             .find('input')
@@ -8,7 +8,7 @@ describe('Sélection du type d\'analyse', () => {
     })
 
     it('Analyse EXPERTE', () => {
-        cy.get('.v-input--radio-group__input > :nth-child(4)').click();
+        cy.get('[data-cy="COMPLETE"]').click({force:true});
 
         cy.get('div.v-item--active')
             .find('input')
@@ -16,7 +16,7 @@ describe('Sélection du type d\'analyse', () => {
     })
 
     it('Analyse CIBLEE', () => {
-        cy.get('.v-input--radio-group__input > :nth-child(6)').click();
+        cy.get('[data-cy="FOCUS"]').click({force:true});
 
         cy.get('div.v-item--active')
             .find('input')
