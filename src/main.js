@@ -10,23 +10,27 @@ import VueMatomo from 'vue-matomo';
 
 Vue.use(PiniaVuePlugin)
 Vue.use(require('vue-shortkey'))
-Vue.use(VueMatomo, {
-  host: "https://piwik.abes.fr/",
-  siteId: 35,
-  trackerFileName: 'matomo',
-  router: router,
-  enableLinkTracking: true,
-  requireConsent: false,
-  trackInitialView: true,
-  disableCookies: false,
-  enableHeartBeatTimer: false,
-  heartBeatTimerInterval: 15,
-  debug: true,
-  userId: undefined,
-  cookieDomain: undefined,
-  domains: undefined,
-  preInitActions: []
-});
+
+// utilisation de piwik/matomo uniquement en production
+if(process.env.VUE_APP_ROOT_API.includes('qualimarc.sudoc')){
+  Vue.use(VueMatomo, {
+    host: "https://piwik.abes.fr/",
+    siteId: 35,
+    trackerFileName: 'matomo',
+    router: router,
+    enableLinkTracking: true,
+    requireConsent: false,
+    trackInitialView: true,
+    disableCookies: false,
+    enableHeartBeatTimer: false,
+    heartBeatTimerInterval: 15,
+    debug: true,
+    userId: undefined,
+    cookieDomain: undefined,
+    domains: undefined,
+    preInitActions: []
+  });
+}
 
 const pinia = createPinia()
 

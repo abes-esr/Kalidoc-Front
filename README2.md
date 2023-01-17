@@ -1,4 +1,4 @@
-# qualimarc-working
+# Qualimarc
 
 ## Project setup
 ```
