@@ -1,13 +1,13 @@
 ###
 # Phase de compilation de l'appli vuejs
-FROM node:16.14.0 as build-image
+FROM cypress/included:9.4.1 as build-image
 WORKDIR /build/
 # Mise en cache docker pour le téléchargement
 # des dépendances npm (répertoire node_modules/)
 COPY ./package*.json /build/
 # si on a un node_modules/ local on peut décommenter la ligne suivante pour
 # éviter que npm retélécharge toutes les dépendances
-#COPY ./node_modules/ /build/node_modules/
+COPY ./node_modules/ /build/node_modules/
 RUN npm install
 
 # Compilation du TS en JS compilé
@@ -24,19 +24,17 @@ COPY ./*.js                         /build/
 COPY ./*.json                       /build/
 COPY ./src/                         /build/src/
 COPY ./public/                      /build/public/
+
 RUN npm run build
+RUN npm run serve &
 
-
-FROM cypress/included:9.4.1 as cypress-image
-WORKDIR /build
-COPY --from=build-image /build/ /build/
-COPY --from=build-image /root/.cache/ /root/.cache/
 COPY ./cypress/                         /build/cypress/
-RUN npx cypress run 
+RUN npx cypress verify
+RUN npx cypress run
 
 
-###
-# Serveur web (nginx) pour exec l'appli vuejs
+####
+## Serveur web (nginx) pour exec l'appli vuejs
 FROM nginx:1.20.2 as front-image
 COPY --from=build-image /build/dist/ /usr/share/nginx/html.orig/
 COPY ./docker/nginx-default.conf /etc/nginx/conf.d/default.conf
