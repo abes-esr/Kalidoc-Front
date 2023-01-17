@@ -7,7 +7,7 @@ WORKDIR /build/
 COPY ./package*.json /build/
 # si on a un node_modules/ local on peut décommenter la ligne suivante pour
 # éviter que npm retélécharge toutes les dépendances
-COPY ./node_modules/ /build/node_modules/
+#COPY ./node_modules/ /build/node_modules/
 RUN npm install
 
 # Compilation du TS en JS compilé
@@ -24,13 +24,17 @@ COPY ./*.js                         /build/
 COPY ./*.json                       /build/
 COPY ./src/                         /build/src/
 COPY ./public/                      /build/public/
-
 RUN npm run build
-RUN npm run serve &
 
+# lance les tests cypress dans un RUN unique
+# pour lancer en tache de fond le serveur web avec npm
+# puis exécuter les tests cyrpress et stopper le processu
+# de build docker si jamais un test ne passe pas 
 COPY ./cypress/                         /build/cypress/
-RUN npx cypress verify
-RUN npx cypress run
+RUN (npm run serve &) && \
+    npx cypress verify && \
+    npx cypress run
+
 
 
 ####
