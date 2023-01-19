@@ -24,28 +24,29 @@
           <span style='color: #252C61; font-weight: 500' v-if="header.value === 'priority'">
             <v-icon x-small color="#252C61">mdi-checkbox-blank-circle</v-icon>
             {{ header.text.split('|')[0] }}
-            <v-icon color="grey" small >mdi-sort</v-icon>
-            <br>
-            <v-icon x-small color="#6d7085" class="pr-1">mdi-checkbox-blank-circle-outline</v-icon>
-            <span style="font-weight: 500; color: #6d7085"> {{ header.text.split('|')[1] }}</span></span>
-          <span style="color: grey; font-weight: 600" v-else>
+            <v-icon color="#4D4D4D" small >mdi-sort</v-icon>
+            <span style="display: block"></span>
+            <v-icon x-small color="#4D4D4D" class="pr-1">mdi-checkbox-blank-circle-outline</v-icon>
+            <span style="font-weight: 500; color: #4D4D4D"> {{ header.text.split('|')[1] }}</span>
+          </span>
+          <span style="color: #4D4D4D; font-weight: 600" v-else>
               {{ header.text }}
-            <v-icon color="grey" small >mdi-sort</v-icon>
+            <v-icon color="#4D4D4D" small >mdi-sort</v-icon>
           </span>
         </template>
         <!-- lien vers le guide méthodologique dans l'intitulé des zones -->
         <template v-slot:item.zone1="{ item }">
-          <a target="_blank" :href="getLinkGuideMethodo(item.zone1)" id="linkBlue">{{ item.zone1 }}</a>
+          <a target="_blank" :href="getLinkGuideMethodo(item.zone1)" class="linkBlue">{{ item.zone1 }}</a>
         </template>
         <template v-slot:item.zone2="{ item }">
-          <a target="_blank" :href="getLinkGuideMethodo(item.zone2)" id="linkBlue">{{ item.zone2 }}</a>
+          <a target="_blank" :href="getLinkGuideMethodo(item.zone2)" class="linkBlue">{{ item.zone2 }}</a>
         </template>
         <!--  Icone dans la colonne Règles  -->
         <template v-slot:item.priority="{ item }">
           <v-container class="ma-0 pa-0 d-flex justify-center">
             <div :aria-label="'Règle ' + (item.priority)" role="img">
               <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
-              <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#6d7085">mdi-checkbox-blank-circle-outline</v-icon>
+              <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#4D4D4D">mdi-checkbox-blank-circle-outline</v-icon>
             </div>
           </v-container>
         </template>
@@ -291,6 +292,6 @@ function getLinkGuideMethodo(zone) {
 
 .avancee{
   font-weight: 400;
-  color: #6d7085;
+  color: #4D4D4D;
 }
 </style>

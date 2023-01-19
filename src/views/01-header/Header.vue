@@ -3,7 +3,7 @@
      <v-row :class="($vuetify.breakpoint.mdAndUp) ? 'pr-4 pb-4 pl-12 bgColorPrimary' : 'pa-2 bgColorPrimary'" justify="center" :align="($vuetify.breakpoint.mdAndUp) ? 'baseline' : null" no-gutters>
        <v-col cols="2">
          <v-row class="ma-0 pa-0 pl-2" justify="center">
-           <a @click="$router.push({path: '/'})" >
+           <a @click="$router.push({path: '/'})">
              <img v-if="($vuetify.breakpoint.mdAndUp)" src="@/assets/QMLogo.svg" class="titleBarLogo" alt="logo Qualimarc"/>
              <img v-else src="@/assets/QMLogoIconBlue.svg" style="height: 60px; margin-bottom: -9px; margin-top: -2px" alt="logo Qualimarc" />
            </a>

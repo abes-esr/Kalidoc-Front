@@ -2,16 +2,18 @@
   <v-container>
     <v-sheet class="borderSelectAnalyseType">
       <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
-        <v-tooltip right v-for="analyse in analysesList" :key="analyse.id">
-          <template v-slot:activator="{ on, attrs }">
-            <v-radio :label="analyse.libelle" :value="analyse" v-bind="attrs" v-on="on" name="Test"></v-radio>
+        <v-radio v-for="analyse in analysesList" :key="analyse.id" :value="analyse" v-bind="attrs" v-on="on">
+          <template v-slot:label>
+            <v-tooltip right>
+              <template v-slot:activator="{ on, attrs }">
+                <span style="color: #595959">{{ analyse.libelle }}</span>
+              </template>
+              {{ analyse.description }}
+              <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'QUICK'" color="white">mdi-checkbox-blank-circle</v-icon>
+              <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'COMPLETE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+            </v-tooltip>
           </template>
-          <span>
-            {{ analyse.description }}
-            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'QUICK'" color="white">mdi-checkbox-blank-circle</v-icon>
-            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'COMPLETE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
-          </span>
-        </v-tooltip>
+        </v-radio>
       </v-radio-group>
       <v-sheet v-if="analyseSelected.id === 'FOCUS'" >
         <span  v-if="familleDocumentList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par règles associées à un ou plusieurs types de documents</span>
@@ -24,8 +26,11 @@
               style="max-height: 30px"
               @change="updateFamilleDocumentSetInStore"
               :value="familleDoc"
-              :label=" familleDoc.libelle "
-          ></v-checkbox>
+          >
+            <template v-slot:label>
+              <span style="color: #595959">{{ familleDoc.libelle }}</span>
+            </template>
+          </v-checkbox>
         </v-sheet>
         <span v-if="ruleSetList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeux de règles thématiques</span>
         <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
@@ -33,7 +38,7 @@
             <template v-slot:label>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span v-on="on">{{ ruleset.libelle }}</span>
+                  <span v-on="on" style="color: #595959">{{ ruleset.libelle }}</span>
                 </template>
                 {{ ruleset.description }}
               </v-tooltip>

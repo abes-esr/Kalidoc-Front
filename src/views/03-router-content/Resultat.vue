@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
     <progress-bar :isLoading="isProgressLoading" @finished="updateNbLancement" @cancel="stopAnalyse"></progress-bar>
-    <v-card flat class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
-      <v-icon @click="goToHome()" aria-label="Retourner à l'interface de vérification" role="img" style="vertical-align: bottom">mdi-home</v-icon>
-      <v-icon size="small">mdi-chevron-right</v-icon>
-      <span @click="goToHome()" class="v-slider__thumb" style="color: grey; text-decoration: none" aria-label="Retourner à l'interface de vérification" role="img">Interface de vérification</span>
-      <v-icon size="small">mdi-chevron-right</v-icon>
-      <span aria-label="Vous êtes sur la page des résultats de l'analyse" role="img">
+    <v-card flat class="ma-0 pa-0 mb-2" style="color: #595959; font-size: 0.9em">
+      <v-icon @click="goToHome()" color="#595959" aria-label="Retourner à l'interface de vérification" role="img" style="vertical-align: bottom">mdi-home</v-icon>
+      <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
+      <span @click="goToHome()" class="v-slider__thumb" style="color: #595959; text-decoration: none" aria-label="Retourner à l'interface de vérification" role="img">Interface de vérification</span>
+      <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
+      <span style="color: #595959" aria-label="Vous êtes sur la page des résultats de l'analyse" role="img">
         Résultats de l'analyse
       </span>
     </v-card>

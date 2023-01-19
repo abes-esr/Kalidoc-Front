@@ -24,8 +24,8 @@
           L’historique n’est valable que pour la durée de la session.
         </v-alert>
         <v-alert v-else class="mt-4" border="left" colored-border dense type="warning" elevation="2" icon="mdi-alert">
-          <span style="display: block">L’historique est vide.</span>
-          <span style="font-style: italic; font-weight: 300; font-size: 0.9em; color: grey">L’historique n’est valable que pour la durée de la session.</span>
+          <span style="display: block; color: #595959">L’historique est vide.</span>
+          <span style="font-style: italic; font-weight: 300; font-size: 0.9em; color: #595959">L’historique n’est valable que pour la durée de la session.</span>
         </v-alert>
       </v-row>
 
@@ -41,7 +41,7 @@
               <v-expansion-panel-header>
                 <v-row justify="space-around">
                   <!--      AFFICHAGE DE LA DATE      -->
-                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} <span style="font-style: italic; color: dimgrey">- Type d'analyse : {{ historique.analyse.analyseSelected.libelle }}</span></span>
+                  <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} <span style="font-style: italic; color: #595959">- Type d'analyse : {{ historique.analyse.analyseSelected.libelle }}</span></span>
                   <!--      AFFICHAGE DU BOUTON      -->
                   <v-btn @click="relanceAnalyse(historiqueList.indexOf(historique))" depressed color="#CF4A1A" class="button" max-width="220" height="26">
                     <span style="color: white">Relancer l'analyse</span>
@@ -54,7 +54,7 @@
                 <v-list-item class="mt-2" style="overflow-x: scroll; overflow-y: hidden">
                   <!--      TRAITEMENT PAR RESULTAT     -->
                   <v-col v-for="result in historique.resultats.slice()" :key="historique.resultats.indexOf(result)" class="mr-10">
-                    <card-recapitulatif :resultats="result">{{ historique.resultats.indexOf(result) +1 }}</card-recapitulatif>
+                    <card-recapitulatif :resultats="result"><span style="color: #595959">{{ historique.resultats.indexOf(result) +1 }}</span></card-recapitulatif>
                   </v-col>
                 </v-list-item>
               </v-expansion-panel-content>

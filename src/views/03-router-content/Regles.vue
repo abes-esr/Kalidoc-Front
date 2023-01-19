@@ -1,10 +1,10 @@
 <template>
   <v-container fluid>
-    <v-card flat class="ma-0 pa-0 mb-2" style="color: grey; font-size: 0.9em">
-      <v-icon @click="goToHome()" aria-label="Retourner à l'interface de vérification" role="img" style="vertical-align: bottom">mdi-home</v-icon>
-      <v-icon size="small">mdi-chevron-right</v-icon>
-      <span @click="goToHome()" class="v-slider__thumb" style="color: grey; text-decoration: none" aria-label="Retourner à l'interface de vérification" role="img">Interface de vérification</span>
-      <v-icon size="small">mdi-chevron-right</v-icon>
+    <v-card flat class="ma-0 pa-0 mb-2" style="color: #595959; font-size: 0.9em">
+      <v-icon @click="goToHome()" aria-label="Retourner à l'interface de vérification" role="img" color="#595959" style="vertical-align: bottom">mdi-home</v-icon>
+      <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
+      <span @click="goToHome()" class="v-slider__thumb" style="color: #595959; text-decoration: none" aria-label="Retourner à l'interface de vérification" role="img">Interface de vérification</span>
+      <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
       <span aria-label="Vous êtes sur la page de visualisation des règles" role="img">
         Table générale des règles
       </span>

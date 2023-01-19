@@ -1,12 +1,11 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
    <v-footer absolute padless min-height="200" color="#e6e6e6" fluid>
 <!--     FOOTER GRIS-->
       <v-row class="footerTopRow" align="start" justify="start" no-gutters>
 <!--        DESCRIPTION NAVIGATEUR-->
         <v-col cols="6" id="footerDescription" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
           <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span></div>
-          <div style="font-size: 0.8em; text-align: justify"><span style="font-weight: 700">Quali<span style="font-weight: 400">Marc</span></span> est un outil qui diagnostique la qualité des notices bibliographiques du Sudoc : il repère, de manière globale ou ciblée, les absences et/ou incohérences et explique les corrections et/ou enrichissements à apporter.
-          </div>
+          <div style="font-size: 0.8em; text-align: justify"><span style="font-weight: 700">Quali<span style="font-weight: 400">Marc</span></span> est un outil qui diagnostique la qualité des notices bibliographiques du Sudoc : il repère, de manière globale ou ciblée, les absences et/ou incohérences et explique les corrections et/ou enrichissements à apporter.</div>
         </v-col>
 <!--        ACCES DIRECT NAVIGATEUR-->
         <v-col cols="auto" id="footerAbesLinks" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
@@ -17,15 +16,15 @@
          <v-container>
            <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="http://www.sudoc.abes.fr/" target="_blank" id="linkBlue">Sudoc</a>
+             <a href="http://www.sudoc.abes.fr/" target="_blank" class="linkBlue">Sudoc</a>
            </span>
            <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://documentation.abes.fr/sudoc/" target="_blank" id="linkBlue">Guide Méthodologique</a>
+             <a href="https://documentation.abes.fr/sudoc/" target="_blank" class="linkBlue">Guide Méthodologique</a>
            </span>
            <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" id="linkBlue">Guichet ABESstp</a>
+             <a href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" class="linkBlue">Guichet ABESstp</a>
            </span>
          </v-container>
         </v-col>
@@ -38,15 +37,15 @@
           <v-container class="pa-0 pl-2">
           <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="http://www.sudoc.abes.fr/" target="_blank" id="linkBlue">Sudoc</a>
+             <a href="http://www.sudoc.abes.fr/" target="_blank" class="linkBlue">Sudoc</a>
           </span>
            <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://documentation.abes.fr/sudoc/" id="linkBlue">Guide Méthodologique</a>
+             <a href="https://documentation.abes.fr/sudoc/" class="linkBlue">Guide Méthodologique</a>
            </span>
             <span class="pa-0 ma-0" style="font-size: 0.8em; display: block">
              <v-icon color="#cf491b" small>mdi-chevron-right</v-icon>
-             <a href="https://stp.abes.fr/node/3?origine=sudocpro" id="linkBlue">Guichet ABESstp</a>
+             <a href="https://stp.abes.fr/node/3?origine=sudocpro" class="linkBlue">Guichet ABESstp</a>
            </span>
           </v-container>
         </v-col>
@@ -68,10 +67,10 @@
            <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span> — {{ new Date().getFullYear() }} </div>
          </v-col>
          <v-col cols="auto">
-           <a href="" id="linkWhite">Données personnelles</a> |
-           <a href="https://abes.fr/pages-cgu/conditions-generales-utilisation-sites-abes.html" target="_blank" id="linkWhite"><span aria-label="CGU" role="img">C.G.U.</span></a> |
-           <a href="https://abes.fr/mentions-legales/" target="_blank" id="linkWhite">Mentions légales</a> |
-           <a href="https://abes.fr/accessibilite/" target="_blank" id="linkWhite">Accessibilité</a>
+           <a @click="$router.push({path: '/donneesPersonnelles'})" class="linkWhite">Données personnelles</a> |
+           <a href="https://abes.fr/pages-cgu/conditions-generales-utilisation-sites-abes.html" target="_blank" class="linkWhite"><span aria-label="CGU" role="img">C.G.U.</span></a> |
+           <a href="https://abes.fr/mentions-legales/" target="_blank" class="linkWhite">Mentions légales</a> |
+           <a href="https://abes.fr/accessibilite/" target="_blank" class="linkWhite">Accessibilité</a>
          </v-col>
       </v-row>
 

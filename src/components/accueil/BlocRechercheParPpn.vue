@@ -38,8 +38,8 @@
             @click="removeAllItems"
             style="border: 1px solid grey; color: grey"
         >
-          Vider la liste de ppn
-          <v-icon color="grey">mdi-delete</v-icon>
+          <span style="color: #4D4D4D">Vider la liste de ppn</span>
+          <v-icon color="#4D4D4D">mdi-delete</v-icon>
         </v-btn>
       </v-sheet>
     </div>
@@ -85,7 +85,7 @@
     <div>
       <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="2">
         Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
-        <span style="color: darkgrey; font-size: small">Rappel : syntaxe d'un PPN = 9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X</span><br>
+        <span style="color: #595959; font-size: small">Rappel : syntaxe d'un PPN = 9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X</span><br>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
