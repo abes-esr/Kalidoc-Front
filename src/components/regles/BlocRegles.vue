@@ -4,7 +4,7 @@
     <!--      BLOC TITRE     -->
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
-      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau de toutes les règles disponibles dans l'application Qualimarc" role="img">Table générale des règles</span>
+      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau de toutes les règles disponibles dans l'application Qualimarc" role="img">Table générale des règles</h1>
       <!--      BOUTON TELECHARGER LES REGLES     -->
       <v-tooltip left>
         <template v-slot:activator="{on}">

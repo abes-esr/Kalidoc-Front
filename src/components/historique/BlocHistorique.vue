@@ -2,7 +2,7 @@
   <v-container align-items="center" style="min-width: 90%">
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
-      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau récapitulatif des analyses lancées pendant votre session" role="img">Historique des analyses</span>
+      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau récapitulatif des analyses lancées pendant votre session" role="img">Historique des analyses</h1>
       <!--      BOUTON TELECHARGER L'HISTORIQUE     -->
       <v-tooltip left>
         <template v-slot:activator="{on}">

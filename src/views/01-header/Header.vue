@@ -1,4 +1,5 @@
 <template>
+  <header>
    <v-container absolute padless class="pa-0" fluid>
      <v-row :class="($vuetify.breakpoint.mdAndUp) ? 'pr-4 pb-4 pl-12 bgColorPrimary' : 'pa-2 bgColorPrimary'" justify="center" :align="($vuetify.breakpoint.mdAndUp) ? 'baseline' : null" no-gutters>
        <v-col cols="2">
@@ -39,7 +40,7 @@
        </v-col>
       </v-row>
    </v-container>
-
+  </header>
 </template>
 
 <script setup>

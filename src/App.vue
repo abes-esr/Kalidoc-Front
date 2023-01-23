@@ -2,7 +2,9 @@
   <v-app>
     <v-main>
       <Header></Header>
-      <router-view />
+      <main>
+        <router-view />
+      </main>
       <div style='padding-bottom: 220px'></div>
       <Footer></Footer>
     </v-main>

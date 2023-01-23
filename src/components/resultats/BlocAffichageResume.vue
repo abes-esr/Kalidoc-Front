@@ -3,7 +3,7 @@
     <span v-shortkey="{up: ['arrowup'], left: ['arrowleft']}" @shortkey="goToPreviousLine()"></span>
     <span v-shortkey="{down: ['arrowdown'], right: ['arrowright']}" @shortkey="goToNextLine()"></span>
     <v-row class="ma-0 pa-0">
-      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau de la liste des PPN avec erreurs" role="img">Liste des PPN avec erreurs</span>
+      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau de la liste des PPN avec erreurs" role="img">Liste des PPN avec erreurs</h1>
     </v-row>
     <v-data-table
         v-if="items.length > 0"
