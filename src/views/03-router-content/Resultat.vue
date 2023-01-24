@@ -12,8 +12,9 @@
     </v-card>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="12" :lg="focusOn[0]" :xl="focusOn[1]" fluid fill-width>
+        <!--      Le v-layout est nécessaire pour un bon affichage du tableau sur écran large      -->
         <v-layout child-flex>
-          <BlocAffichageResume @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement" :mobileBreakpoint="mobileBreakpoint"></BlocAffichageResume>
+          <BlocAffichageResume child-flex @onChangePpn="sendPpnToBlocResultat" @onChangeItems="sendItemsToBlocResultat" :currentPpn="currentPpn" :nbLancement="nbLancement" :mobileBreakpoint="mobileBreakpoint"></BlocAffichageResume>
         </v-layout>
       </v-col>
       <v-col xs="12" sm="12" md="12" lg="" xl="" class="pl-lg-6" fluid fill-width>
@@ -22,6 +23,7 @@
             <v-icon color="white" large>{{ iconTimeline }}</v-icon>
           </v-btn>
         </div>
+        <!--      Le v-layout est nécessaire pour un bon affichage du tableau sur écran large      -->
         <v-layout child-flex>
           <bloc-detail-ppn class="ma-0 pa-0 mb-2" @onChangePpn="sendPpnToBlocResultat" :currentPpn="currentPpn" :currentItems="currentItems" ></bloc-detail-ppn>
         </v-layout>
@@ -42,6 +44,7 @@
               <span>Télécharger le détail des erreurs trouvées dans tous les ppn de l’analyse en cours</span>
             </v-tooltip>
           </div>
+        <!--      Le v-layout est nécessaire pour un bon affichage du tableau sur écran large      -->
         <v-layout child-flex>
           <bloc-recapitulatif class="ma-0 pa-0 mt-16 mb-4" style="min-height: 13em" :nombre-resultat-analyse="nbLancement"></bloc-recapitulatif>
         </v-layout>

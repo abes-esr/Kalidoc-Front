@@ -6,7 +6,9 @@
           <template v-slot:label>
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
-                <span style="color: #595959">{{ analyse.libelle }}</span>
+                <div :aria-label="'Analyse ' + (analyse.libelle + ' , ' + analyse.description)" role="img">
+                  <span style="color: #595959">{{ analyse.libelle }}</span>
+                </div>
               </template>
               {{ analyse.description }}
               <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'QUICK'" color="white">mdi-checkbox-blank-circle</v-icon>
