@@ -1,6 +1,6 @@
 {
-  "name": "qualimarc-working",
-  "version": "0.0.7",
+  "name": "Qualimarc",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

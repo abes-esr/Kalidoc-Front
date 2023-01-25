@@ -1,6 +1,6 @@
 <template>
   <v-alert v-if="backendErrorMessage !== null" border="left" colored-border type="error" elevation="2">
-    {{ backendErrorMessage.response.data.debugMessage }} (erreur {{backendErrorMessage.response.status}})
+    {{ backendErrorMessage.response.data.message }} (erreur :{{backendErrorMessage.response.status}})
   </v-alert>
 </template>
 
