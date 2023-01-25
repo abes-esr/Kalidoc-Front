@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-2 borderBlocElements" >
+  <section class="pa-2 borderBlocElements" >
     <span class="px-0 mb-2 fontPrimaryColor" style="font-size: small; display: block">
       Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de 5000 PPN en une seule fois
     </span>
@@ -64,7 +64,7 @@
           append-icon="mdi-file-download-outline"
           show-size
           type="file"
-          aria-label="Dépôt du fichier"
+          aria-label="Cliquer ici pour sélectionner un fichier de PPN au format .csv ou .txt (ou le glisser-déposer)"
           truncate-length=75
           for="files"
           accept=".csv,.txt"
@@ -114,7 +114,7 @@
       <v-icon class="ma-0 pa-0 mr-4" color="green darken-3">mdi-check</v-icon>
       <span class="green--text text--darken-3" style="font-weight: 500">{{ snackbarMessage }}</span>
     </v-snackbar>
-  </v-sheet>
+  </section>
 
 </template>
 

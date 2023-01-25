@@ -1,13 +1,10 @@
 <template>
   <v-app>
-    <v-main>
-      <Header></Header>
-      <main>
-        <router-view />
-      </main>
-      <div style='padding-bottom: 220px'></div>
-      <Footer></Footer>
-    </v-main>
+    <Header></Header>
+    <main style='padding-bottom: 220px'>
+      <router-view />
+    </main>
+    <Footer></Footer>
   </v-app>
 </template>
 
