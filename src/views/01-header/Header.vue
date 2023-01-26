@@ -17,13 +17,13 @@
        </v-col>
        <v-col :cols="($vuetify.breakpoint.mdAndUp) ? '2' : '3'">
          <v-row :class="($vuetify.breakpoint.mdAndUp) ? 'justify-center' : 'ma-0 pa-0 justify-end'" :no-gutters="$vuetify.breakpoint.mdAndUp" aria-label="Navigation externe" aria-controls="navExterne">
-           <v-btn :style="($vuetify.breakpoint.mdAndUp) ? 'margin-right: 10px' : 'margin-right: 3px'" fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" :depressed="$vuetify.breakpoint.mdAndUp" color="white" href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" >
+           <v-btn :style="($vuetify.breakpoint.mdAndUp) ? 'margin-right: 10px' : 'margin-right: 3px'" fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" :depressed="$vuetify.breakpoint.mdAndUp" color="white" href="https://stp.abes.fr/node/3?origine=sudocpro" target="_blank" aria-pressed="false" tabindex="4">
              <v-img src="@/assets/chatBubbles.svg" :max-height="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" :max-width="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" alt="Poser une question sur Abes STP"></v-img>
            </v-btn>
            <v-btn :style="($vuetify.breakpoint.mdAndUp) ? 'margin-right: 10px' : 'margin-right: 3px'" fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" :depressed="$vuetify.breakpoint.mdAndUp" color="white" href="https://documentation.abes.fr/aidequalimarc/index.html" target="_blank" aria-pressed="false" tabindex="5">
              <v-img src="@/assets/questionMark.svg" :max-height="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" :max-width="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" alt="Consulter le manuel utilisateur QualiMarc"></v-img>
            </v-btn>
-           <bloc-statuts aria-pressed="false" tabindex="6"></bloc-statuts>
+           <bloc-statuts></bloc-statuts>
          </v-row>
        </v-col>
       </v-row>

@@ -1,7 +1,7 @@
 <template>
   <v-hover v-slot="{ hover }" close-delay="300">
     <div>
-      <v-btn @mouseenter="displayStatus" fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" depressed color="white" aria-label="Status de l'application Qualimarc">
+      <v-btn @mouseenter="displayStatus" fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" depressed color="white" aria-label="Status de l'application Qualimarc" aria-pressed="false" tabindex="6">
         <!--      Balise div servant à créer les aria-label et role pour l'accessibilité de l'application     -->
         <div aria-label="Status de l'application Qualimarc" role="img">
           <v-icon :style="($vuetify.breakpoint.mdAndUp) ? 'font-size: 40px' : 'font-size: 32px'">mdi-gauge</v-icon>
