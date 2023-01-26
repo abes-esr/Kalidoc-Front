@@ -2,15 +2,13 @@
   <v-container align-items="center" style="min-width: 90%">
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
-      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau récapitulatif des analyses lancées pendant votre session" role="img">Historique des analyses</h1>
+      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold">Historique des analyses</h1>
       <!--      BOUTON TELECHARGER L'HISTORIQUE     -->
       <v-tooltip left>
         <template v-slot:activator="{on}">
           <v-btn class="ma-0" elevation="0" :disabled="historiqueList.length === 0" small v-on="on" color="#0F75BC">
             <download-csv :delimiter="';'" :data="exportHistorique(historiqueList)" name="qualimarc-export-historique.csv" style="color: white">
-              <span aria-label="Télécharger l'historique dans un fichier nommé 'qualimarc-export-historique.csv" role="img">
-                TÉLÉCHARGER L'HISTORIQUE
-              </span>
+              TÉLÉCHARGER L'HISTORIQUE
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>
           </v-btn>

@@ -4,7 +4,7 @@
       <v-btn @mouseenter="displayStatus" fab :x-small="!$vuetify.breakpoint.mdAndUp" :small="$vuetify.breakpoint.mdAndUp" depressed color="white" aria-label="Status de l'application Qualimarc">
         <!--      Balise div servant à créer les aria-label et role pour l'accessibilité de l'application     -->
         <div aria-label="Status de l'application Qualimarc" role="img">
-          <v-icon large :max-height="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'" :max-width="($vuetify.breakpoint.mdAndUp) ? '34px' : '24px'">mdi-gauge</v-icon>
+          <v-icon :style="($vuetify.breakpoint.mdAndUp) ? 'font-size: 40px' : 'font-size: 32px'">mdi-gauge</v-icon>
         </div>
       </v-btn>
       <v-card v-if="hover" elevation="12" style="position: absolute; margin-left: -360px; margin-top: 20px; z-index: 10; border-radius: 5px!important;" width="400">

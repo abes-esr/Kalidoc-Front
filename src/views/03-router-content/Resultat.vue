@@ -1,15 +1,13 @@
 <template>
   <v-container fluid>
     <progress-bar :isLoading="isProgressLoading" @finished="updateNbLancement" @cancel="stopAnalyse"></progress-bar>
-    <v-card flat class="ma-0 pa-0 mb-2" style="color: #595959; font-size: 0.9em">
+    <nav class="ma-0 pa-0 mb-2" style="color: #595959; font-size: 0.9em">
       <v-icon @click="goToHome()" color="#595959" aria-label="Retourner à l'interface de vérification" role="img" style="vertical-align: bottom">mdi-home</v-icon>
       <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
-      <span @click="goToHome()" class="v-slider__thumb" style="color: #595959; text-decoration: none" aria-label="Retourner à l'interface de vérification" role="img">Interface de vérification</span>
+      <span @click="goToHome()" class="v-slider__thumb" style="color: #595959; text-decoration: none"> Interface de vérification</span>
       <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
-      <span style="color: #595959" aria-label="Vous êtes sur la page des résultats de l'analyse" role="img">
-        Résultats de l'analyse
-      </span>
-    </v-card>
+      Résultats de l'analyse
+    </nav>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="12" :lg="focusOn[0]" :xl="focusOn[1]" fluid fill-width>
         <!--      Le v-layout est nécessaire pour un bon affichage du tableau sur écran large      -->
@@ -18,9 +16,9 @@
         </v-layout>
       </v-col>
       <v-col xs="12" sm="12" md="12" lg="" xl="" class="pl-lg-6" fluid fill-width>
-        <div class="d-none d-lg-flex" style="height: 70%; width: 2px; position:absolute; margin: 0 0 0 -1.15em; background-color: #E6E6E6" aria-label="Réduire ou agrandir la largeur du tableau 'Liste des PPN avec erreurs" role="img">
+        <div class="d-none d-lg-flex" style="height: 70%; width: 2px; position:absolute; margin: 0 0 0 -1.15em; background-color: #E6E6E6">
           <v-btn fab x-small depressed color="#b2b2b2" style="position:absolute; margin: 0 0 0 -1.55em" @click="resizeBloc">
-            <v-icon color="white" large>{{ iconTimeline }}</v-icon>
+            <v-icon @click="" color="white" large aria-label="Réduire ou agrandir la largeur du tableau 'Liste des PPN avec erreurs" role="img">{{ iconTimeline }}</v-icon>
           </v-btn>
         </div>
         <!--      Le v-layout est nécessaire pour un bon affichage du tableau sur écran large      -->

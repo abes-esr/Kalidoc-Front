@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0">
-    <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau des détails des erreurs par PPN sélectionné" role="img">Détail des erreurs par PPN</h1>
+    <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Détail des erreurs par PPN</h1>
     <v-card flat v-if="itemsPpnParent.length > 0 && itemsPpnParent[page-1]" class="pa-0 ma-0 borderBlocElements">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
@@ -43,12 +43,10 @@
         </template>
         <!--  Icone dans la colonne Règles  -->
         <template v-slot:item.priority="{ item }">
-          <v-container class="ma-0 pa-0 d-flex justify-center">
-            <div :aria-label="'Règle ' + (item.priority)" role="img">
-              <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
-              <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#4D4D4D">mdi-checkbox-blank-circle-outline</v-icon>
-            </div>
-          </v-container>
+          <div class="ma-0 pa-0 d-flex justify-center" :aria-label="'Règle ' + (item.priority)" role="img">
+            <v-icon v-model="item.priority" small v-if="item.priority === 'essentielle'" color="#252C61">mdi-checkbox-blank-circle</v-icon>
+            <v-icon v-model="item.priority" small v-if="item.priority === 'avancée'" color="#4D4D4D">mdi-checkbox-blank-circle-outline</v-icon>
+          </div>
         </template>
       </v-data-table>
       <v-pagination

@@ -1,18 +1,15 @@
 <template>
   <v-container align-items="center" style="min-width: 90%">
-
     <!--      BLOC TITRE     -->
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
-      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau de toutes les règles disponibles dans l'application Qualimarc" role="img">Table générale des règles</h1>
+      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Table générale des règles</h1>
       <!--      BOUTON TELECHARGER LES REGLES     -->
       <v-tooltip left>
         <template v-slot:activator="{on}">
           <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
             <download-csv :delimiter="';'" :data="items" name="qualimarc-export-regles.csv" style="color: white">
-              <span aria-label="Télécharger toutes les règles dans un fichier nommé 'qualimarc-export-regles.csv'" role="img">
-                TÉLÉCHARGER TOUTES LES R&Egrave;GLES
-              </span>
+              TÉLÉCHARGER TOUTES LES R&Egrave;GLES
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>
           </v-btn>

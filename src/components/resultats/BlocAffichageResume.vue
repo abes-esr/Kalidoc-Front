@@ -3,7 +3,7 @@
     <span v-shortkey="{up: ['arrowup'], left: ['arrowleft']}" @shortkey="goToPreviousLine()"></span>
     <span v-shortkey="{down: ['arrowdown'], right: ['arrowright']}" @shortkey="goToNextLine()"></span>
     <v-row class="ma-0 pa-0">
-      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;" aria-label="Tableau de la liste des PPN avec erreurs" role="img">Liste des PPN avec erreurs</h1>
+      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</h1>
     </v-row>
     <v-data-table
         v-if="items.length > 0"
@@ -43,13 +43,13 @@
               <div style="height: 30px"></div>
             </div>
           </v-menu>
-        <span v-if="header.text === 'Nb. erreurs'" style='color: white; display: block' v-else aria-label="Trier par nombre d'erreurs" role="img">
+        <span v-if="header.text === 'Nb. erreurs'" style='color: white; display: block' aria-label="Trier par nombre d'erreurs" role="img">
           {{ header.text }}
         </span>
-        <span v-if="header.text === 'Aff/Masq.'" style='color: white; display: block' v-else aria-label="Trier par PPN affiché ou masqué" role="img">
+        <span v-if="header.text === 'Aff/Masq.'" style='color: white; display: block' aria-label="Trier par PPN affiché ou masqué" role="img">
           {{ header.text }}
         </span>
-        <span v-if="header.text === 'PPN' " style='color: white; display: block' v-else aria-label="Trier par PPN" role="img">
+        <span v-if="header.text === 'PPN' " style='color: white; display: block' aria-label="Trier par PPN" role="img">
           {{ header.text }}
         </span>
           <v-icon color="white" small >mdi-sort</v-icon>
