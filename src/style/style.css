@@ -63,24 +63,26 @@
     background-color: #cf491b;
 }
 
+/* Header de la DataTable du composant BlockDetailPpn.vue */
 #bgColorGrey table thead tr th {
     background-color: #e6e6e6;
 }
 
+/* Colonne des ID sur la page Interface des règles */
 #bgColorIdColumnRulesTable table tr td:nth-child(1) {
-    color: #A3A3A3;
+    color: #595959;
     font-weight: 400;
     font-size: 0.8em;
     font-style: italic;
 }
 
-#linkWhite {
-    color: white;
-    text-decoration: none;
+.linkBlue {
+    color: #252C61!important;
 }
 
-#linkBlue {
-    color: #252C61;
+.linkWhite {
+    color: white!important;
+    text-decoration: none!important;
 }
 
 .borderSelectAnalyseType {

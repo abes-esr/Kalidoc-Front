@@ -1,20 +1,20 @@
 <template>
   <v-container fluid>
-    <div class="ml-1 mb-2 fontPrimaryColor">Outil d'analyse des notices bibliographiques du Sudoc</div>
+    <h1 class="ml-1 mb-2 fontPrimaryColor" style="font-size: 1em; font-weight: 400">Outil d'analyse des notices bibliographiques du Sudoc</h1>
     <progress-bar :isLoading="isProgressLoading" @finished="redirect" @cancel="stopAnalyse" @error="setBackendError"></progress-bar>
     <v-row>
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
-        <v-row class="ma-0 pa-0">
-          <v-icon color="#252C61">mdi-numeric-1-box</v-icon>
-          <span style="font-size: 1.26em; color : #252C61; font-weight: bold;">Soumettre des PPN</span>
-        </v-row>
-        <bloc-recherche-par-ppn
-            class="mb-0 pa-0"
-            @isPpnListEmpty="setIsPpnListIsEmpty"
-            @backendError="setBackendError"
-        />
+        <h2 style="font-size: 1.26em; color : #252C61; font-weight: bold">
+          <v-icon color="#252C61" style="margin-top: -4px">mdi-numeric-1-box</v-icon>
+          Soumettre des PPN
+        </h2>
+        <bloc-recherche-par-ppn class="mb-0 pa-0" @isPpnListEmpty="setIsPpnListIsEmpty" @backendError="setBackendError"/>
       </v-col>
       <v-col class="ma-2 pa-2" style="min-height: 34em">
+        <h2 style="font-size: 1.26em; color : #252C61; font-weight: bold;">
+          <v-icon color="#252C61" style="margin-top: -4px">mdi-numeric-2-box</v-icon>
+          Sélectionner un type d'analyse
+        </h2>
         <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>
         <message-erreur class="mb-2 pa-4" :backendErrorMessage="backendErrorMessage"></message-erreur>
         <bouton-lancement
