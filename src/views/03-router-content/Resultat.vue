@@ -1,13 +1,13 @@
 <template>
   <v-container fluid>
     <progress-bar :isLoading="isProgressLoading" @finished="updateNbLancement" @cancel="stopAnalyse"></progress-bar>
-    <nav class="ma-0 pa-0 mb-2" style="color: #595959; font-size: 0.9em">
-      <v-icon @click="goToHome()" color="#595959" aria-label="Retourner à l'interface de vérification" role="img" style="vertical-align: bottom">mdi-home</v-icon>
+    <div class="ma-0 pa-0 mb-2" style="color: #595959; font-size: 0.9em">
+      <v-icon @click="goToHome()" color="#595959" aria-label="Retourner à l'interface de vérification" style="vertical-align: bottom">mdi-home</v-icon>
       <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
       <span @click="goToHome()" class="v-slider__thumb" style="color: #595959; text-decoration: none"> Interface de vérification</span>
       <v-icon size="small" color="#595959">mdi-chevron-right</v-icon>
       Résultats de l'analyse
-    </nav>
+    </div>
     <v-row cols="12">
       <v-col xs="12" sm="12" md="12" :lg="focusOn[0]" :xl="focusOn[1]" fluid fill-width>
         <!--      Le v-layout est nécessaire pour un bon affichage du tableau sur écran large      -->
@@ -18,7 +18,7 @@
       <v-col xs="12" sm="12" md="12" lg="" xl="" class="pl-lg-6" fluid fill-width>
         <div class="d-none d-lg-flex" style="height: 70%; width: 2px; position:absolute; margin: 0 0 0 -1.15em; background-color: #E6E6E6">
           <v-btn fab x-small depressed color="#b2b2b2" style="position:absolute; margin: 0 0 0 -1.55em" @click="resizeBloc">
-            <v-icon @click="" color="white" large aria-label="Réduire ou agrandir la largeur du tableau 'Liste des PPN avec erreurs" role="img">{{ iconTimeline }}</v-icon>
+            <v-icon @click="" color="white" large>{{ iconTimeline }}</v-icon>
           </v-btn>
         </div>
         <!--      Le v-layout est nécessaire pour un bon affichage du tableau sur écran large      -->
@@ -30,7 +30,7 @@
               <template v-slot:activator="{on}" class="ma-0 pa-0 col-auto">
                 <v-btn :disabled="itemsToExport().length === 0" style="position: absolute; top: 4px; right: -10px; margin-right: 12px;" class="button" elevation="0" v-on="on" color="#0F75BC">
                   <download-csv :delimiter="';'" :data="itemsToExport()" name="qualimarc-export.csv">
-                    <span aria-label="Télécharger le détail des erreurs trouvées dans tous les PPN de l'analyse en cours" role="img">
+                    <span>
                       TÉLÉCHARGER TOUS
                       <span style="display: block"></span>
                       LES RESULTATS

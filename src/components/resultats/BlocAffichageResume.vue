@@ -27,9 +27,9 @@
       <template v-for="header in headers" v-slot:[`header.${header.value}`]="{ headers }">
           <v-menu offset-y v-if="header.value === 'typeDocument'">
             <template v-slot:activator="{ on, attrs }">
-              <span v-on="on" style='color: white; display: block' :aria-label="'Trier par' + (header.text)" role="img">{{ header.text }}</span>
+              <span v-on="on" style='color: white; display: block'>{{ header.text }}</span>
               <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                <span aria-label="Filtrer par type de document" role="img">
+                <span>
                   <v-icon small color="white" :color="colorIconFilterTypeDoc()">
                     mdi-filter
                   </v-icon>
@@ -43,13 +43,7 @@
               <div style="height: 30px"></div>
             </div>
           </v-menu>
-        <span v-if="header.text === 'Nb. erreurs'" style='color: white; display: block' aria-label="Trier par nombre d'erreurs" role="img">
-          {{ header.text }}
-        </span>
-        <span v-if="header.text === 'Aff/Masq.'" style='color: white; display: block' aria-label="Trier par PPN affiché ou masqué" role="img">
-          {{ header.text }}
-        </span>
-        <span v-if="header.text === 'PPN' " style='color: white; display: block' aria-label="Trier par PPN" role="img">
+        <span v-if="header.text === 'Aff/Masq.' || header.text === 'Nb. erreurs' || header.text === 'PPN'" style='color: white; display: block'>
           {{ header.text }}
         </span>
           <v-icon color="white" small >mdi-sort</v-icon>
@@ -70,9 +64,9 @@
             <div class="d-flex flex-column" v-if="(mobileBreakpoint === 4000 && breakPointName === 'xl') || (mobileBreakpoint === 4000 && breakPointName === 'lg') || breakPointName === 'xs'">
               <div class="pl-3 d-flex align-center justify-start">
                 <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
-                <span aria-label="Afficher tout, ou masquer tout" role="img">Afficher/masquer tout</span>
+                <span>Afficher/masquer tout</span>
               </div>
-              <div class="mb-4 d-flex align-center justify-start" aria-label="Générer la requête pour WinIBW" role="img">
+              <div class="mb-4 d-flex align-center justify-start">
                 <bouton-winibw class="mr-2" :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
                 <span>Générer la requête pour WinIBW</span>
               </div>
@@ -81,11 +75,11 @@
             <div class="d-flex justify-space-between" v-else>
               <div class="d-flex align-center mr-4">
                 <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
-                <span aria-label="Afficher tout, ou masquer tout" role="img">Afficher/masquer tout</span>
+                <span>Afficher/masquer tout</span>
               </div>
               <div class="d-flex align-center">
                 <span class="pr-1">Générer la requête pour WinIBW</span>
-                <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"  aria-label="Générer la requête pour WinIBW" role="img"></bouton-winibw>
+                <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
               </div>
             </div>
           </td>
