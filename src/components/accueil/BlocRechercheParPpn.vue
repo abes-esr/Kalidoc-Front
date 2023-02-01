@@ -82,15 +82,13 @@
       Les PPN listés ci-dessous présentent une syntaxe non conforme et ne seront pas analysés :<br>
       <span style="color: #595959; font-size: small">Rappel : syntaxe d'un PPN = 9 caractères, composés de 9 chiffres ou de 8 chiffres + la lettre X</span><br>
       <v-expansion-panels>
-        <v-expansion-panel>
+        <v-expansion-panel role="button">
           <v-expansion-panel-header>
-              <span class="pt-2" aria-label="Cliquer pour voir les PPN avec une syntaxe erronée" role="img">Voir les PPN avec une syntaxe erronée</span>
+              <span class="pt-2">Voir les PPN avec une syntaxe erronée</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
               <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">
-                <div :aria-label="'PPN numéro : ' + (item)" role="img">
-                  {{ item }}
-                </div>
+                {{ item }}
               </v-chip>
           </v-expansion-panel-content>
         </v-expansion-panel>

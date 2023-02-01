@@ -35,7 +35,7 @@
             <span style="color: #cf491b; font-weight: 400; font-size: 1.2em">{{ historiqueList.indexOf(historique) +1 }}</span>
           </template>
           <v-expansion-panels multiple>
-            <v-expansion-panel class="mb-4">
+            <v-expansion-panel class="mb-4" role="button">
               <v-expansion-panel-header>
                 <v-row justify="space-around">
                   <!--      AFFICHAGE DE LA DATE      -->

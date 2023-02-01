@@ -27,7 +27,7 @@
         <v-tooltip left>
           <template v-slot:activator="{on}">
             <v-btn class="ma-0" small outlined color="#cf491b" @click="resetSelector()" v-on="on">
-              <span aria-label="Effacer tous les filtres actifs" role="img">Effacer tous les filtres</span>
+              <span>Effacer tous les filtres</span>
               <v-icon class="ml-2" small color="#cf491b">
                 mdi-filter-remove
               </v-icon>
@@ -39,10 +39,10 @@
       <!--      AFFICHAGE DES FILTRES SELECTIONNES      -->
       <v-row class="ma-0 pa-0 mb-2" justify="center">
         <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: #252C61; font-style: italic">
-          <span :aria-label="'Type de document sélectionné : ' + (selectedTypeDoc.toString())" role="img">Type de document :</span>
+          <span>Type de document :</span>
           <span style="color: dimgrey">{{ selectedTypeDoc.toString() }}</span>
            --
-          <span :aria-label="'Type de règle sélectionné : ' + (selectedPriority.toString())" role="img">Type de règle :</span>
+          <span>Type de règle :</span>
           <span style="color: dimgrey">{{ selectedPriority.toString() }}</span>
         </span>
       </v-row>
@@ -68,12 +68,12 @@
             <!--      HEADER ID     -->
             <v-tooltip bottom v-if="header.value === 'id'">
               <template v-slot:activator="{ on }">
-                <span v-on="on" style='color: white; display: block' aria-label="Trier par ID de règle" role="img">{{ header.textBtn }}</span>
+                <span v-on="on" style='color: white; display: block'>{{ header.textBtn }}</span>
               </template>
               <span>{{ header.tooltip}}</span>
             </v-tooltip>
             <!--      AUTRES HEADER      -->
-            <span style='color: white; display: block' v-else :aria-label="'Trier par : ' + (header.text)" role="img">
+            <span style='color: white; display: block' v-else>
                 {{ header.text }}
             </span>
             <!--      CHAMP DE RECHERCHE COLONNE "Règles de vérification / qualité"     -->
@@ -92,18 +92,18 @@
             <!--      ICONES DE TRI POUR LES ID, TYPE DOCUMENTS ET TYPE REGLES      -->
             <v-menu offset-y v-if="header.value === 'id' || header.value === 'typeDoc' || header.value === 'priority'">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                  <span aria-label="Filtrer par type de document concerné par la règle" role="img">
-                    <v-icon v-if="header.value === 'typeDoc'" small :color="colorIconFilterTypeDoc()" >
+                <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;" :aria-label="header.value">
+                  <span>
+                    <v-icon v-if="header.value === 'typeDoc'" small :color="colorIconFilterTypeDoc()">
                       mdi-filter
                     </v-icon>
                   </span>
-                  <span aria-label="Filtrer par ID de règle" role="img">
+                  <span>
                     <v-icon v-if="header.value === 'id'" small :color="colorIconFilterId()">
                       mdi-filter
                     </v-icon>
                   </span>
-                  <span aria-label="Filtrer par type de règle" role="img">
+                  <span>
                     <v-icon v-if="header.value === 'priority'" small :color="colorIconFilterPriority()">
                       mdi-filter
                     </v-icon>
