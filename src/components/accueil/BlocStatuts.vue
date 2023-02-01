@@ -18,14 +18,14 @@
             </div>
           </v-row>
           <v-row class="d-flex justify-space-between pa-2">
-            <span>Base Qualimarc</span>
+            <span>Application Qualimarc</span>
             <!--      Balise div servant à créer les aria-label et role pour l'accessibilité de l'application     -->
             <div :aria-label="(applicationStatus.statutBaseQualimarc)" role="img">
               <v-icon  :color="(applicationStatus.statutBaseQualimarc === 'OK') ? 'green' : 'red'">{{ (applicationStatus.statutBaseQualimarc === "OK")  ? 'mdi-checkbox-marked-circle-outline' : 'mdi-close-circle-outline'}}</v-icon>
             </div>
           </v-row>
           <v-row class="d-flex justify-space-between pa-2">
-            <span>Dernière synchro CBS<->Base XML</span>
+            <span>Dernière synchro Sudoc<->Base XML</span>
             <span>{{applicationStatus.dateDerniereSynchronisation}}</span>
           </v-row>
         </v-card-text>
