@@ -67,7 +67,6 @@
           aria-label="Cliquer ici pour sélectionner un fichier de PPN au format .csv ou .txt (ou le glisser-déposer)"
           truncate-length=75
           for="files"
-          accept=".csv,.txt"
           :rules="rules"
           v-model="fichierLoaded"
           @change="isAllowToSend"
@@ -140,7 +139,7 @@ const ppnInvalids = ref([]); //Tableau des ppn invalides saisis par l'utilisateu
 
 //Import de fichier
 const fichierLoaded = ref(null);
-const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'text/plain')) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
+const rules = [(value) => !value || ((value.type === undefined) || (value.type === 'text/csv') || (value.type === 'text/plain') || (value.type === 'application/vnd.ms-excel' && value.name.includes('.csv'))) || 'Le fichier chargé n\'est pas dans un format autorisé (.txt ou .csv)'];
 const fileReader = new FileReader();
 const errorMsg = ref('');
 const successMsg = ref('');
@@ -253,6 +252,7 @@ function checkPpnListIsEmptyInCombobox(){
 }
 
 function isAllowToSend() {
+
   resetMessages();
   fileReader.onloadend = function() {
     lastValuesTypedOrPasted.value = fileReader.result;
@@ -266,7 +266,7 @@ function isAllowToSend() {
   fileReader.onerror = function() {
     emit('backendError', fileReader.error);
   }
-  if((fichierLoaded.value !== null) && ((fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'text/plain'))) {
+  if((fichierLoaded.value !== null) && ((fichierLoaded.value.type === 'text/csv') || (fichierLoaded.value.type === 'text/plain') || (fichierLoaded.value.type === 'application/vnd.ms-excel' && fichierLoaded.value.name.includes('.csv')))) {
     fileReader.readAsText(fichierLoaded.value);
   }
 }
