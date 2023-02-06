@@ -5,6 +5,7 @@
     </span>
     <v-combobox
         filled
+        data-cy="COMBOBOX_AJOUT_PPN"
         append-icon=""
         @keydown.enter="checkValuesAndFeedPpnListTyped"
         @keydown.tab="checkValuesAndFeedPpnListTyped"
