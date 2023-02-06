@@ -1,6 +1,6 @@
 <template>
   <v-container class="ma-0 pa-0">
-    <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</span>
+    <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</h1>
     <v-card flat class="pa-0 ma-0 borderBlocElements">
       <div class="mb-2 pt-1 rappelTypeAnalyse" style="background-color: #676C91; color: white"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></div>
       <v-carousel
@@ -16,10 +16,10 @@
         >
           <v-row class="d-flex justify-space-around align-center pa-4 ml-10">
             <v-col class="d-flex justify-center">
-              <card-recapitulatif :resultats="getRecapitulatifByIndex(i-1)"> {{ i }} </card-recapitulatif>
+              <card-recapitulatif :resultats="getRecapitulatifByIndex(i-1)"><span style="color: #595959"> {{ i }} </span></card-recapitulatif>
             </v-col>
             <v-col class="d-flex justify-center">
-              <card-recapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :resultats="getRecapitulatifByIndex(i)"> {{ i + 1}} </card-recapitulatif>
+              <card-recapitulatif v-if="isSecondCardHasToBeDisplayed(i)" :resultats="getRecapitulatifByIndex(i)"><span style="color: #595959"> {{ i + 1}} </span></card-recapitulatif>
             </v-col>
           </v-row>
         </v-carousel-item>

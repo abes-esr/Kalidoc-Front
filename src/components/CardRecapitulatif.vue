@@ -7,7 +7,9 @@
         <span>Nb. total de PPN analysés :</span>
         <v-btn :disabled="resultatsToDisplay.PpnTotal.length === 0" elevation="0" class="button" x-small color="#0F75BC">
           <download-csv :delimiter="';'" :data="itemsToExport(resultatsToDisplay.PpnTotal)" name="ppn_analyses.csv">
-            {{ resultatsToDisplay.PpnTotal.length }}
+            <span>
+              {{ resultatsToDisplay.PpnTotal.length }}
+            </span>
           </download-csv>
         </v-btn>
       </v-row>
@@ -15,7 +17,9 @@
         <span>Nb. de PPN avec erreurs :</span>
         <v-btn :disabled="resultatsToDisplay.PpnErreurs.length === 0" elevation="0" class="button" x-small color="#0F75BC">
           <download-csv :delimiter="';'" :data="itemsToExport(resultatsToDisplay.PpnErreurs)" name="ppn_avec_erreurs.csv">
-            {{ resultatsToDisplay.PpnErreurs.length }}
+            <span>
+              {{ resultatsToDisplay.PpnErreurs.length }}
+            </span>
           </download-csv>
         </v-btn>
       </v-row>
@@ -23,7 +27,9 @@
         <span>Nb. de PPN sans erreur :</span>
         <v-btn :disabled="resultatsToDisplay.PpnOk.length === 0" elevation="0" class="button" x-small color="#0F75BC">
           <download-csv :delimiter="';'" :data="itemsToExport(resultatsToDisplay.PpnOk)" name="ppn_sans_erreur.csv">
-            {{ resultatsToDisplay.PpnOk.length }}
+            <span>
+              {{ resultatsToDisplay.PpnOk.length }}
+            </span>
           </download-csv>
         </v-btn>
       </v-row>
@@ -31,7 +37,9 @@
         <span>Nb. de PPN non trouvés :</span>
         <v-btn :disabled="resultatsToDisplay.PpnInconnus.length === 0" elevation="0" class="button" x-small color="#0F75BC">
           <download-csv :delimiter="';'" :data="itemsToExport(resultatsToDisplay.PpnInconnus)" name="ppn_inconnus.csv">
-            {{ resultatsToDisplay.PpnInconnus.length }}
+            <span>
+              {{ resultatsToDisplay.PpnInconnus.length }}
+            </span>
           </download-csv>
         </v-btn>
       </v-row>

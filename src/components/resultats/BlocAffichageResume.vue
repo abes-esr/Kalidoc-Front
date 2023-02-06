@@ -3,7 +3,7 @@
     <span v-shortkey="{up: ['arrowup'], left: ['arrowleft']}" @shortkey="goToPreviousLine()"></span>
     <span v-shortkey="{down: ['arrowdown'], right: ['arrowright']}" @shortkey="goToNextLine()"></span>
     <v-row class="ma-0 pa-0">
-      <span class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</span>
+      <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Liste des PPN avec erreurs</h1>
     </v-row>
     <v-data-table
         v-if="items.length > 0"
@@ -29,9 +29,11 @@
             <template v-slot:activator="{ on, attrs }">
               <span v-on="on" style='color: white; display: block'>{{ header.text }}</span>
               <v-btn text class="bouton-simple" x-small v-bind="attrs" v-on="on" style="text-decoration: none;">
-                <v-icon small color="white" :color="colorIconFilterTypeDoc()">
-                  mdi-filter
-                </v-icon>
+                <span>
+                  <v-icon small color="white" :color="colorIconFilterTypeDoc()">
+                    mdi-filter
+                  </v-icon>
+                </span>
               </v-btn>
             </template>
             <div style='background-color:white;color: black;' class="pl-4 pr-8">
@@ -41,7 +43,7 @@
               <div style="height: 30px"></div>
             </div>
           </v-menu>
-        <span style='color: white; display: block' v-else>
+        <span v-if="header.text === 'Aff/Masq.' || header.text === 'Nb. erreurs' || header.text === 'PPN'" style='color: white; display: block'>
           {{ header.text }}
         </span>
           <v-icon color="white" small >mdi-sort</v-icon>
@@ -62,7 +64,7 @@
             <div class="d-flex flex-column" v-if="(mobileBreakpoint === 4000 && breakPointName === 'xl') || (mobileBreakpoint === 4000 && breakPointName === 'lg') || breakPointName === 'xs'">
               <div class="pl-3 d-flex align-center justify-start">
                 <v-checkbox color="#CF4A1A" input-value="1" on-icon="mdi-eye" off-icon="mdi-eye-off-outline" @change="toggleMask"/>
-                <span >Afficher/masquer tout</span>
+                <span>Afficher/masquer tout</span>
               </div>
               <div class="mb-4 d-flex align-center justify-start">
                 <bouton-winibw class="mr-2" :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
@@ -76,7 +78,7 @@
                 <span>Afficher/masquer tout</span>
               </div>
               <div class="d-flex align-center">
-                <span  class="pr-1">Générer la requête pour WinIBW</span>
+                <span class="pr-1">Générer la requête pour WinIBW</span>
                 <bouton-winibw :isDisabled="isWinibwButtonDisabled()" :ppnList="getPpnList()" @onClick="displayPopup"></bouton-winibw>
               </div>
             </div>
