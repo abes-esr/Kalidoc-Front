@@ -31,7 +31,7 @@ RUN echo "VUE_APP_ROOT_API=" > /build/.env
 # de build docker si jamais un test ne passe pas
 COPY ./cypress/                         /build/cypress/
 RUN (npm run serve &) && \
-    sleep 5s && \
+    sleep 30s && \
     npx cypress verify && \
     npx cypress run
 
