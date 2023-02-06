@@ -1,6 +1,6 @@
 ###
 # Phase de compilation de l'appli vuejs
-FROM node:16.14.0 as build-image
+FROM cypress/included:12.3.0 as build-image
 WORKDIR /build/
 # Mise en cache docker pour le téléchargement
 # des dépendances npm (répertoire node_modules/)
@@ -15,22 +15,33 @@ RUN npm install
 # (cf le fichier docker/vuejs_env_placeholder) pour pouvoir créer des conteneurs
 # en dev, test, prod ou en local en passant les valeurs de ce .env
 # via des variables d'environement Docker
-# Par exemple, cela permet d'injecter l'URL où se trouvent les API (back) différente
 # si on est en dev, test ou prod ou local.
-COPY ./docker/vuejs_env_placeholder /build/.env
+# Par exemple, cela permet d'injecter l'URL où se trouvent les API (back) différente
+
 #COPY ./.browserslistrc              /build/.browserslistrc
 #COPY ./.eslintrc.js                 /build/.eslintrc.js
 COPY ./*.js                         /build/
 COPY ./*.json                       /build/
 COPY ./src/                         /build/src/
 COPY ./public/                      /build/public/
+RUN echo "VUE_APP_ROOT_API=" > /build/.env
+# lance les tests cypress dans un RUN unique
+# pour lancer en tache de fond le serveur web avec npm
+# puis exécuter les tests cyrpress et stopper le processu
+# de build docker si jamais un test ne passe pas
+COPY ./cypress/                         /build/cypress/
+RUN (npm run serve &) && \
+    sleep 30s && \
+    npx cypress verify && \
+    npx cypress run
+
+COPY ./docker/vuejs_env_placeholder /build/.env
+
 RUN npm run build
 
 
-
-
-###
-# Serveur web (nginx) pour exec l'appli vuejs
+####
+## Serveur web (nginx) pour exec l'appli vuejs
 FROM nginx:1.20.2 as front-image
 COPY --from=build-image /build/dist/ /usr/share/nginx/html.orig/
 COPY ./docker/nginx-default.conf /etc/nginx/conf.d/default.conf

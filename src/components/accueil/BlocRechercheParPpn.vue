@@ -5,6 +5,7 @@
     </span>
     <v-combobox
         filled
+        data-cy="COMBOBOX_AJOUT_PPN"
         append-icon=""
         @keydown.enter="checkValuesAndFeedPpnListTyped"
         @keydown.tab="checkValuesAndFeedPpnListTyped"
@@ -34,10 +35,11 @@
           depressed
           small
           tile
-          @click="removeAllItems"
-          style="border: 1px solid grey; color: grey"
-      >
-        <span style="color: #4D4D4D">Vider la liste de ppn</span>
+          data-cy="del_all_ppn"
+            @click="removeAllItems"
+            style="border: 1px solid grey; color: grey"
+        >
+          <span style="color: #4D4D4D">Vider la liste de ppn</span>
         <v-icon color="#4D4D4D">mdi-delete</v-icon>
       </v-btn>
     </v-sheet>
@@ -99,7 +101,6 @@
         </v-btn>
       </div>
     </v-alert>
-
     <v-snackbar
         v-model="snackbarCopyPpnNumberStatus"
         timeout="2000"
@@ -112,7 +113,6 @@
       <span class="green--text text--darken-3" style="font-weight: 500">{{ snackbarMessage }}</span>
     </v-snackbar>
   </section>
-
 </template>
 
 <script setup>
@@ -252,7 +252,6 @@ function checkPpnListIsEmptyInCombobox(){
 }
 
 function isAllowToSend() {
-
   resetMessages();
   fileReader.onloadend = function() {
     lastValuesTypedOrPasted.value = fileReader.result;
