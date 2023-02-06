@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="ma-0 pa-0">
-    <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#CF4A1A" class="button" :disabled="props.isDisabled" :loading="spinnerActive">
+    <v-btn @click="checkPpnWithTypeAnalyse" depressed color="#B30900" class="button" :disabled="props.isDisabled" :loading="spinnerActive">
       <slot></slot>
       <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
     </v-btn>

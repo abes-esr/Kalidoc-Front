@@ -3,15 +3,15 @@
     <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
       <v-radio v-for="analyse in analysesList" :key="analyse.id" :value="analyse" v-bind="attrs" v-on="on">
         <template v-slot:label>
-          <v-tooltip right>
+          <v-tooltip right color="#54576D" dark>
             <template v-slot:activator="{ on, attrs }">
               <div :aria-label="'Analyse ' + (analyse.libelle + ' , ' + analyse.description)" role="img">
-                <span style="color: #595959">{{ analyse.libelle }}</span>
+                <span style="color: #595959" v-on="on">{{ analyse.libelle }}</span>
               </div>
             </template>
-            {{ analyse.description }}
+            <span style="color: white">{{ analyse.description }}</span>
             <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'QUICK'" color="white">mdi-checkbox-blank-circle</v-icon>
-            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'COMPLETE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'EXPERTE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
           </v-tooltip>
         </template>
       </v-radio>
