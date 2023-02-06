@@ -9,9 +9,15 @@
                 <span style="color: #595959" v-on="on">{{ analyse.libelle }}</span>
               </div>
             </template>
-            <span style="color: white">{{ analyse.description }}</span>
-            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'QUICK'" color="white">mdi-checkbox-blank-circle</v-icon>
-            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'EXPERTE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+            <span style="color: white">{{ analyse.description }}
+              <span v-model="analyse.libelle" v-if="analyse.id === 'EXPERTE'">
+                 (règles essentielles
+                <v-icon x-small color="white">mdi-checkbox-blank-circle</v-icon>
+                 et avancées
+                <v-icon x-small color="white">mdi-checkbox-blank-circle-outline</v-icon>
+                )
+              </span>
+            </span>
           </v-tooltip>
         </template>
       </v-radio>
@@ -36,7 +42,7 @@
             <template v-slot:label>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span v-on="on"style="color: #595959">{{ ruleset.libelle }}</span>
+                  <span v-on="on" style="color: #595959">{{ ruleset.libelle }}</span>
               </template>
               {{ ruleset.description }}
             </v-tooltip>
