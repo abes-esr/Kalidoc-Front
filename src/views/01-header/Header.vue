@@ -10,7 +10,7 @@
        </v-col>
        <v-col :cols="($vuetify.breakpoint.mdAndUp) ? '8' : '7'" :class="($vuetify.breakpoint.mdAndUp) ? 'pl-8' : null">
          <v-row class="ma-0 pa-0" justify="center" role="toolbar">
-           <v-btn text tile color="white" value="interfaceVerification" :class="{titleBarButtonSelected: (route.path === '/') || (route.path === '/resultats') }" to="/" aria-label="Redirige vers la page Interface de vérification de Qualimarc ">{{ ($vuetify.breakpoint.mdAndUp) ? 'Interface de vérification' : 'Vérification' }}</v-btn>
+           <v-btn text tile color="white" value="interfaceVerification" :class="{titleBarButtonSelected: (route.path === '/') || (route.path === '/resultats') }" to="/" aria-label="Redirige vers la page Interface d'analyse de Qualimarc ">{{ ($vuetify.breakpoint.mdAndUp) ? 'Interface d\'analyse' : 'Analyse' }}</v-btn>
            <v-btn text tile color="white" value="interfaceRegles" :class="{titleBarButtonSelected: route.path === '/regles' }" to="/regles" aria-label="Redirige vers la page Interface des règles de Qualimarc"> {{($vuetify.breakpoint.mdAndUp) ? 'Interface des règles' : 'Règles' }}</v-btn>
            <v-btn text tile color="white" value="historique" :class="{titleBarButtonSelected: route.path === '/historiques' }" to="/historiques" aria-label="Redirige vers la page Historique de Qualimarc">Historique</v-btn>
          </v-row>
