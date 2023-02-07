@@ -10,7 +10,12 @@
               </div>
             </template>
             <span style="color: white">{{ analyse.description }}
-              <span v-model="analyse.libelle" v-if="analyse.id === 'EXPERTE'">
+              <span v-model="analyse.libelle" v-if="analyse.id === 'QUICK'">
+                 (règles essentielles
+                <v-icon x-small color="white">mdi-checkbox-blank-circle</v-icon>
+                )
+              </span>
+              <span v-model="analyse.libelle" v-if="analyse.id === 'COMPLETE'">
                  (règles essentielles
                 <v-icon x-small color="white">mdi-checkbox-blank-circle</v-icon>
                  et avancées
