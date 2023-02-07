@@ -6,9 +6,9 @@
       <!--      BOUTON TELECHARGER L'HISTORIQUE     -->
       <v-tooltip left>
         <template v-slot:activator="{on}">
-          <v-btn class="ma-0" elevation="0" :disabled="historiqueList.length === 0" small v-on="on" color="#0F75BC">
-            <download-csv :delimiter="';'" :data="exportHistorique(historiqueList)" name="qualimarc-export-historique.csv" style="color: white">
-              TÉLÉCHARGER L'HISTORIQUE
+          <v-btn class="ma-0" elevation="0" :disabled="historiqueList.length === 0" small v-on="on" color="#0c5c92">
+            <download-csv :delimiter="';'" :data="exportHistorique(historiqueList)" name="qualimarc-export-historique.csv" >
+              <span style="color: white">TÉLÉCHARGER L'HISTORIQUE</span>
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>
           </v-btn>
@@ -32,7 +32,7 @@
         <v-timeline-item v-for="historique in historiqueList.slice().reverse()" :key="historiqueList.indexOf(historique)" color="lightgrey">
           <!--      AFFICHAGE DU NUMERO DE L'ANALYSE DANS LA PUCE     -->
           <template v-slot:icon>
-            <span style="color: #cf491b; font-weight: 400; font-size: 1.2em">{{ historiqueList.indexOf(historique) +1 }}</span>
+            <span style="color: #B30900; font-weight: 400; font-size: 1.2em">{{ historiqueList.indexOf(historique) +1 }}</span>
           </template>
           <v-expansion-panels multiple>
             <v-expansion-panel class="mb-4" role="button">
@@ -41,7 +41,7 @@
                   <!--      AFFICHAGE DE LA DATE      -->
                   <span class="mt-1">Analyse du {{ historique.date.toLocaleString() }} <span style="font-style: italic; color: #595959">- Type d'analyse : {{ historique.analyse.analyseSelected.libelle }}</span></span>
                   <!--      AFFICHAGE DU BOUTON      -->
-                  <v-btn @click="relanceAnalyse(historiqueList.indexOf(historique))" depressed color="#CF4A1A" class="button" max-width="220" height="26">
+                  <v-btn @click="relanceAnalyse(historiqueList.indexOf(historique))" depressed color="#B30900" class="button" max-width="220" height="26">
                     <span style="color: white">Relancer l'analyse</span>
                     <v-icon color="white" class="ml-2">mdi-arrow-right-thin-circle-outline</v-icon>
                   </v-btn>

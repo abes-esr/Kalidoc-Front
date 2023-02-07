@@ -1,5 +1,5 @@
 {
-  "name": "Qualimarc",
+  "name": "qualimarc",
   "version": "1.0.2",
   "private": true,
   "scripts": {
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "cypress": "^10.11.0",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.5.1",

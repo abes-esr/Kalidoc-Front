@@ -4,7 +4,7 @@
     <v-card flat v-if="itemsPpnParent.length > 0 && itemsPpnParent[page-1]" class="pa-0 ma-0 borderBlocElements">
       <img v-if="coverLink !== ''" :src="coverLink" alt="Première de couverture non trouvée" class="borderPicturePpnErrorDetail">
       <v-sheet v-else rounded style="position:absolute;" class="borderPicturePpnErrorDetail pa-2 rounded-circle" :color="iconTypeDocument.color"><v-icon color="white">{{ iconTypeDocument.img }}</v-icon></v-sheet>
-      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #676C91; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
+      <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle" style="background-color: #535775; color: white">{{ itemsPpnParent[page-1].titre }} / {{ itemsPpnParent[page-1].auteur }}</div>
       <div class="mb-2 pt-1 text-justify detailErrorPpnSubtitle fontPrimaryColor" style="font-size: 0.92em">PPN {{ itemsPpnParent[page-1].ppn }}</div>
       <v-data-table id="bgColorGrey"
                     fixed-header
@@ -52,6 +52,7 @@
       <v-pagination
           v-model="page"
           :length="itemsPpnParent.length"
+          color="#0c5c92"
           :total-visible="12"
           @input="sendCurrentPpnToParent(itemsPpnParent[page-1].ppn)"
       ></v-pagination>

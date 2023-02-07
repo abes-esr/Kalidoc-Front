@@ -1,28 +1,31 @@
 <template>
   <section class="borderSelectAnalyseType">
     <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
-      <v-radio v-for="analyse in analysesList" :key="analyse.id" :value="analyse" v-bind="attrs" v-on="on">
+      <v-radio :data-cy="analyse.id" v-for="analyse in analysesList" :key="analyse.id" :value="analyse" v-bind="attrs" v-on="on">
         <template v-slot:label>
-          <v-tooltip right>
+          <v-tooltip right color="#54576D" dark>
             <template v-slot:activator="{ on, attrs }">
               <div :aria-label="'Analyse ' + (analyse.libelle + ' , ' + analyse.description)" role="img">
-                <span style="color: #595959">{{ analyse.libelle }}</span>
+                <span style="color: #595959" v-on="on">{{ analyse.libelle }}</span>
               </div>
             </template>
-            {{ analyse.description }}
-            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'QUICK'" color="white">mdi-checkbox-blank-circle</v-icon>
-            <v-icon v-model="analyse.libelle" x-small v-if="analyse.id === 'COMPLETE'" color="white">mdi-checkbox-blank-circle-outline</v-icon>
+            <span style="color: white">{{ analyse.description }}
+              <span v-model="analyse.libelle" v-if="analyse.id === 'EXPERTE'">
+                 (règles essentielles
+                <v-icon x-small color="white">mdi-checkbox-blank-circle</v-icon>
+                 et avancées
+                <v-icon x-small color="white">mdi-checkbox-blank-circle-outline</v-icon>
+                )
+              </span>
+            </span>
           </v-tooltip>
         </template>
       </v-radio>
-    </v-radio-group>
-    <v-sheet v-if="analyseSelected.id === 'FOCUS'" >
-      <span  v-if="familleDocumentList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par règles associées à un ou plusieurs types de documents</span>
-      <v-sheet class="d-flex align-content-start flex-wrap pa-0 mb-2 pl-8">
-        <v-checkbox
-            v-for="familleDoc in familleDocumentList"
-            :key="familleDoc.id"
-            v-model="familleDocumentSetSelected"
+      </v-radio-group>
+      <v-sheet v-if="analyseSelected.id === 'FOCUS'" >
+        <span  v-if="familleDocumentList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par règles associées à un ou plusieurs types de documents</span>
+        <v-sheet class="d-flex align-content-start flex-wrap pa-0 mb-2 pl-8">
+          <v-checkbox v-for="familleDoc in familleDocumentList" :key="familleDoc.id" :data-cy="familleDoc.id" v-model="familleDocumentSetSelected"
             class="ma-1"
             style="max-height: 30px"
             @change="updateFamilleDocumentSetInStore"
@@ -35,11 +38,11 @@
       </v-sheet>
       <span v-if="ruleSetList.length > 0" class="ml-2" style="font-size: 0.9em; color : #252C61; font-weight: bold;"><v-icon color="#252C61" small>mdi-chevron-right</v-icon>Par jeux de règles thématiques</span>
       <v-card flat class="d-flex flex-column pa-0 mb-2 pl-8">
-        <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" class="ma-1" style="max-height: 30px">
-          <template v-slot:label>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <span v-on="on" style="color: #595959">{{ ruleset.libelle }}</span>
+        <v-checkbox v-for="ruleset in ruleSetList" :key="ruleset.id" :data-cy="ruleset.id" v-model="ruleSetSelected" :value="ruleset" @change="updateRuleSetInStore" class="ma-1" style="max-height: 30px">
+            <template v-slot:label>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span v-on="on" style="color: #595959">{{ ruleset.libelle }}</span>
               </template>
               {{ ruleset.description }}
             </v-tooltip>

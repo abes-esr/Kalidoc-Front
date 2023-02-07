@@ -86,5 +86,4 @@ td, th {
   text-align: left;
   padding: 8px;
 }
-
 </style>
