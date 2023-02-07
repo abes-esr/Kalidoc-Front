@@ -7,7 +7,7 @@
             <span @click="$router.push({path: '/'})" class="v-slider__thumb">Accueil</span>
           </li>
           <li>
-            <span @click="$router.push({path: '/'})" class="v-slider__thumb">Interface de vérification</span>
+            <span @click="$router.push({path: '/'})" class="v-slider__thumb">Interface d'analyse</span>
           </li>
           <li>
             <div aria-current="page">Table générale des règles</div>
