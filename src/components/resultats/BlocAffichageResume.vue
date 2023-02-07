@@ -8,6 +8,7 @@
     <v-data-table
         v-if="items.length > 0"
         class="borderBlocElements"
+        id="bgColorResults"
         v-model="modelDataTable"
         :headers="headers"
         :loading="loading"

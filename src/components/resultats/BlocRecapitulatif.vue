@@ -2,7 +2,7 @@
   <v-container class="ma-0 pa-0">
     <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold;">Récapitulatif</h1>
     <v-card flat class="pa-0 ma-0 borderBlocElements">
-      <div class="mb-2 pt-1 rappelTypeAnalyse" style="background-color: #676C91; color: white"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></div>
+      <div class="mb-2 pt-1 rappelTypeAnalyse" style="background-color: #535775; color: white"><bloc-rappel-type-analyse></bloc-rappel-type-analyse></div>
       <v-carousel
           v-model="page"
           hide-delimiters

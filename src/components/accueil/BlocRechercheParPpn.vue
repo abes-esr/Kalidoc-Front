@@ -88,14 +88,14 @@
               <span class="pt-2">Voir les PPN avec une syntaxe erronée</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-              <v-chip color="red" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">
+              <v-chip color="#B30900" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">
                 {{ item }}
               </v-chip>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
       <div class="mt-4 d-flex flex-row-reverse">
-        <v-btn small tile depressed color="#0F75BC" class="button" max-width="380" height="26" @click="copyPnnWrongSyntax()">
+        <v-btn small tile depressed color="#0c5c92" class="button" max-width="380" height="26" @click="copyPnnWrongSyntax()">
           <span style="color: white">COPIER LES PPN AVEC SYNTAXE ERRONEE</span>
           <v-icon small color="white" class="ml-2">mdi-content-copy</v-icon>
         </v-btn>

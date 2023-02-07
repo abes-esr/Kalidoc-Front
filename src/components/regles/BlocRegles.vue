@@ -7,9 +7,9 @@
       <!--      BOUTON TELECHARGER LES REGLES     -->
       <v-tooltip left>
         <template v-slot:activator="{on}">
-          <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0F75BC">
+          <v-btn class="ma-0" elevation="0" :disabled="items.length === 0" small v-on="on" color="#0c5c92">
             <download-csv :delimiter="';'" :data="items" name="qualimarc-export-regles.csv" style="color: white">
-              TÉLÉCHARGER TOUTES LES R&Egrave;GLES
+              <span style="color: white">TÉLÉCHARGER TOUTES LES R&Egrave;GLES</span>
             </download-csv>
             <v-icon small color="white" class="ml-2">mdi-download</v-icon>
           </v-btn>
@@ -26,9 +26,9 @@
         <!--            BOUTON EFFACER LES FILTRES-->
         <v-tooltip left>
           <template v-slot:activator="{on}">
-            <v-btn class="ma-0" small outlined color="#cf491b" @click="resetSelector()" v-on="on">
+            <v-btn class="ma-0" small outlined color="#b30900" @click="resetSelector()" v-on="on">
               <span>Effacer tous les filtres</span>
-              <v-icon class="ml-2" small color="#cf491b">
+              <v-icon class="ml-2" small color="#b30900">
                 mdi-filter-remove
               </v-icon>
             </v-btn>
@@ -40,10 +40,10 @@
       <v-row class="ma-0 pa-0 mb-2" justify="center">
         <span class="ma-0 pa-0 mr-2" style="font-size: 0.8em; color: #252C61; font-style: italic">
           <span>Type de document :</span>
-          <span style="color: dimgrey">{{ selectedTypeDoc.toString() }}</span>
+          <span style="color: #595959">{{ selectedTypeDoc.toString() }}</span>
            --
           <span>Type de règle :</span>
-          <span style="color: dimgrey">{{ selectedPriority.toString() }}</span>
+          <span style="color: #595959">{{ selectedPriority.toString() }}</span>
         </span>
       </v-row>
 
@@ -72,20 +72,25 @@
               </template>
               <span>{{ header.tooltip}}</span>
             </v-tooltip>
+            <!--      HEADER REGLE DE VERIFICATION      -->
+            <span v-if="header.value === 'message'" style='margin-top: 28px; color: white; display: block'>
+                {{ header.text }}
+            </span>
             <!--      AUTRES HEADER      -->
-            <span style='color: white; display: block' v-else>
+            <span v-if="header.value !== 'message' && header.value !== 'id'" style='color: white; display: block'>
                 {{ header.text }}
             </span>
             <!--      CHAMP DE RECHERCHE COLONNE "Règles de vérification / qualité"     -->
-            <v-menu offset-y v-if="header.value === 'message'">
+            <v-menu class="ma-0 pa-0" offset-y v-if="header.value === 'message'">
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                     v-model="ruleMessage"
                     label="rechercher par mot-clé"
-                    class="ma-0 pa-0"
+                    class="ma-0 pa-0 tetxFieldRegles"
+                    height="26px"
                     dense
                     solo
-                    style="max-height: 40px; color: lightgrey; font-weight: 400; font-style: italic; font-size: 1.2em"
+                    style="color: #595959; font-weight: 400; font-style: italic; font-size: 1.2em"
                 ></v-text-field>
               </template>
             </v-menu>

@@ -23,7 +23,7 @@
           <v-btn
               @click="cancel()"
               depressed
-              color="#CF4A1A"
+              color="#B30900"
               class="button"
           >
             Annuler
