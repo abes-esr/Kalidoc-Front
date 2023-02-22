@@ -1,5 +1,5 @@
 <template>
-  <v-container align-items="center" style="min-width: 90%">
+  <v-container>
     <v-row class="mb-2 px-4" justify="space-between">
       <!--      TITRE     -->
       <h1 class="fontPrimaryColor" style="font-size: 1.26em; font-weight: bold">Historique des analyses</h1>

@@ -10,19 +10,20 @@
             <span @click="$router.push({path: '/'})" class="v-slider__thumb">Interface d'analyse</span>
           </li>
           <li>
-            <div aria-current="page">Table générale des règles</div>
+            <div aria-current="page">Historique des analyses</div>
           </li>
         </ul>
       </nav>
     </div>
-    <bloc-regles></bloc-regles>
+    <BlocHistorique></BlocHistorique>
   </v-container>
 </template>
 
 <script setup>
-import BlocRegles from "@/components/regles/BlocRegles";
+import router from "@/router";
+import BlocHistorique from "@/components/historique/BlocHistorique.vue";
+
+function goToHome() {
+  router.push('/');
+}
 </script>
-
-<style>
-
-</style>

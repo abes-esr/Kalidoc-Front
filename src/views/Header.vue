@@ -43,7 +43,7 @@
 
 <script setup>
 import { useRoute } from "vue-router/composables"
-import BlocStatuts from "@/components/accueil/BlocStatuts";
+import BlocStatuts from "@/components/accueil/BlocStatuts.vue";
 
 const route = useRoute();
 </script>
