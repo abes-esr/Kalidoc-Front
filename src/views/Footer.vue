@@ -80,12 +80,20 @@
         </v-col>
 <!--        LOGOS NAVIGATEUR-->
         <v-col cols="auto" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
-          <span><a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank"><img src="@/assets/MESRLogo.svg" height="108px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/></a></span>
+          <span>
+            <a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank">
+              <img class="mr-2"  src="@/assets/logo-mesr.svg" height="108px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/>
+            </a>
+          </span>
           <span style='padding-right: 1em'><a href="https://abes.fr/" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes" target="_blank"><img src="@/assets/abesLogo130.svg" height="100px" alt="logo Abes"/></a></span>
         </v-col>
 <!--        LOGOS MOBILE && TABLETTE-->
         <v-col cols="auto" align-self="end" v-if="!$vuetify.breakpoint.md && !$vuetify.breakpoint.lg && !$vuetify.breakpoint.xl">
-          <span><a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank"><img src="@/assets/MESRLogo.svg" height="74px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/></a></span>
+          <span>
+            <a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank">
+              <img src="@/assets/logo-mesr.svg" height="74px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/>
+            </a>
+          </span>
           <span style='padding-right: 1em'><a href="https://abes.fr/" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes" target="_blank"><img src="@/assets/abesLogo130.svg" height="70px" alt="logo Abes"/></a></span>
         </v-col>
       </v-row>
