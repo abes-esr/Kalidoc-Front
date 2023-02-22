@@ -35,12 +35,6 @@ const routes = [
     component: Historique,
   },
   {
-    path: '/donneesPersonnelles',
-    name: 'page des données personnelles',
-    meta : { title : 'donnees'},
-    component: DonneesPersonnelles,
-  },
-  {
     path: '*',
     name: 'Redirection accueil',
     component: Accueil,
