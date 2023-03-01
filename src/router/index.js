@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Resultat from '@/views/03-router-content/Resultat';
-import Accueil from "@/views/03-router-content/Accueil";
-import Regles from "@/views/03-router-content/Regles";
-import Historique from "@/views/03-router-content/Historique";
-import DonneesPersonnelles from "@/views/03-router-content/DonneesPersonnelles";
+import Resultat from '@/views/Resultat.vue';
+import Accueil from "@/views/Accueil.vue";
+import Regles from "@/views/Regles.vue";
+import Historique from "@/views/Historique.vue";
+import DonneesPersonnelles from "@/views/DonneesPersonnelles.vue";
 
 Vue.use(VueRouter)
 Vue.use(require('vue-shortkey'))
@@ -33,12 +33,6 @@ const routes = [
     name: 'page des historiques',
     meta : { title : 'historiques'},
     component: Historique,
-  },
-  {
-    path: '/donneesPersonnelles',
-    name: 'page des données personnelles',
-    meta : { title : 'donnees'},
-    component: DonneesPersonnelles,
   },
   {
     path: '*',

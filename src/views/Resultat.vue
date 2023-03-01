@@ -73,11 +73,11 @@
 </template>
 
 <script setup>
-import BlocRecapitulatif from "@/components/resultats/BlocRecapitulatif";
-import BlocAffichageResume from "@/components/resultats/BlocAffichageResume";
-import BoutonLancement from "@/components/BoutonLancement";
-import BlocDetailPpn from "@/components/resultats/BlocDetailPpn";
-import ProgressBar from "@/components/ProgressBar";
+import BlocRecapitulatif from "@/components/resultats/BlocRecapitulatif.vue";
+import BlocAffichageResume from "@/components/resultats/BlocAffichageResume.vue";
+import BoutonLancement from "@/components/BoutonLancement.vue";
+import BlocDetailPpn from "@/components/resultats/BlocDetailPpn.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
 
 import { ref, onMounted } from "vue";
 import { useResultatStore } from "@/stores/resultat";

@@ -5,7 +5,7 @@
 <!--        DESCRIPTION NAVIGATEUR-->
         <v-col cols="6" id="footerDescription" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
           <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span></div>
-          <div style="font-size: 0.8em; text-align: justify"><span style="font-weight: 700">Quali<span style="font-weight: 400">Marc</span></span> est un outil qui diagnostique la qualité des notices bibliographiques du Sudoc : il repère, de manière globale ou ciblée, les absences et/ou incohérences et explique les corrections et/ou enrichissements à apporter.</div>
+          <div style="font-size: 0.8em; text-align: justify"><span style="font-weight: 700">Quali<span style="font-weight: 400">Marc</span></span> est un outil qui analyse la qualité des notices bibliographiques du Sudoc : il repère, de manière globale ou ciblée, les absences et/ou incohérences et explique les corrections et/ou enrichissements à apporter.</div>
         </v-col>
 <!--        ACCES DIRECT NAVIGATEUR-->
         <v-col cols="auto" id="footerAbesLinks" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
@@ -80,12 +80,20 @@
         </v-col>
 <!--        LOGOS NAVIGATEUR-->
         <v-col cols="auto" v-if="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">
-          <span><a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank"><img src="@/assets/MESRLogo.svg" height="108px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/></a></span>
+          <span>
+            <a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank">
+              <img class="mr-2"  src="@/assets/logo-mesr.svg" height="108px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/>
+            </a>
+          </span>
           <span style='padding-right: 1em'><a href="https://abes.fr/" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes" target="_blank"><img src="@/assets/abesLogo130.svg" height="100px" alt="logo Abes"/></a></span>
         </v-col>
 <!--        LOGOS MOBILE && TABLETTE-->
         <v-col cols="auto" align-self="end" v-if="!$vuetify.breakpoint.md && !$vuetify.breakpoint.lg && !$vuetify.breakpoint.xl">
-          <span><a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank"><img src="@/assets/MESRLogo.svg" height="74px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/></a></span>
+          <span>
+            <a href="https://www.enseignementsup-recherche.gouv.fr/fr" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet du Ministère de l'Enseignement Supérieur et de la Recherche" target="_blank">
+              <img src="@/assets/logo-mesr.svg" height="74px" alt="logo Ministère de l'Enseignement supérieur et de la recherche"/>
+            </a>
+          </span>
           <span style='padding-right: 1em'><a href="https://abes.fr/" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes" target="_blank"><img src="@/assets/abesLogo130.svg" height="70px" alt="logo Abes"/></a></span>
         </v-col>
       </v-row>
@@ -96,7 +104,7 @@
            <div style="font-size: 1em; font-weight: 700">Quali<span style="font-weight: 400">Marc</span> — {{ new Date().getFullYear() }} </div>
          </v-col>
          <v-col cols="auto">
-           <a @click="$router.push({path: '/donneesPersonnelles'})" aria-label="Redirige vers la page Traitement des données personnelles de Qualimarc" class="linkWhite">Données personnelles</a>
+           <a href="https://abes.fr/pages-donnees-personnelles/qualimarc.sudoc.html" aria-label="Redirige vers la page Traitement des données personnelles de Qualimarc" class="linkWhite">Données personnelles</a>
            |
            <v-tooltip top color="#54576D" dark>
              <template v-slot:activator="{ on }">
@@ -107,14 +115,14 @@
            |
            <v-tooltip top color="#54576D" dark>
              <template v-slot:activator="{ on }">
-               <a v-on="on" href="https://abes.fr/mentions-legales/" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes sur les mentions légales" target="_blank" class="linkWhite">Mentions légales</a>
+               <a v-on="on" href="https://abes.fr/pages-donnees-personnelles/qualimarc.sudoc.html" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes sur les mentions légales" target="_blank" class="linkWhite">Mentions légales</a>
              </template>
              <span style="color: white">Ouvre dans un nouvel onglet la page internet de l'Abes sur les mentions légales</span>
            </v-tooltip>
            |
            <v-tooltip top color="#54576D" dark>
              <template v-slot:activator="{ on }">
-               <a v-on="on" href="https://abes.fr/accessibilite/" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes sur l'accessibilité" target="_blank" class="linkWhite">Accessibilité</a>
+               <a v-on="on" href="https://abes.fr/pages-accessibilite/qualimarc.sudoc.html" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes sur l'accessibilité" target="_blank" class="linkWhite">Accessibilité</a>
              </template>
              <span style="color: white">Ouvre dans un nouvel onglet la page internet de l'Abes sur l'accessibilité'</span>
            </v-tooltip>

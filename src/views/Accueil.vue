@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid>
+  <v-container fluid >
     <h1 class="ml-1 mb-2 fontPrimaryColor" style="font-size: 1em; font-weight: 400">Outil d'analyse des notices bibliographiques du Sudoc</h1>
     <progress-bar :isLoading="isProgressLoading" @finished="redirect" @cancel="stopAnalyse" @error="setBackendError"></progress-bar>
-    <v-row>
+    <v-row class="mb-2 pa-2" justify="space-between">
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
         <h2 style="font-size: 1.26em; color : #252C61; font-weight: bold">
           <v-icon color="#252C61" style="margin-top: -4px">mdi-numeric-1-box</v-icon>
@@ -31,15 +31,15 @@
   </v-container>
 </template>
 <script setup>
-import BlocTypeAnalyse from "@/components/accueil/BlocTypeAnalyse";
-import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn";
-import BoutonLancement from "@/components/BoutonLancement";
-import MessageErreur from "@/components/MessageErreur";
+import BlocTypeAnalyse from "@/components/accueil/BlocTypeAnalyse.vue";
+import BlocRechercheParPpn from "@/components/accueil/BlocRechercheParPpn.vue";
+import BoutonLancement from "@/components/BoutonLancement.vue";
+import MessageErreur from "@/components/MessageErreur.vue";
 import {onMounted, ref, watchEffect} from 'vue';
 import router from "@/router";
 import {useResultatStore} from "@/stores/resultat";
 import {useAnalyseStore} from "@/stores/analyse";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/ProgressBar.vue";
 
 const isAnalyseSelected = ref(false);
 const isPpnListIsEmpty = ref(true);
