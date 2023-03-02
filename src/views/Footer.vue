@@ -115,7 +115,7 @@
            |
            <v-tooltip top color="#54576D" dark>
              <template v-slot:activator="{ on }">
-               <a v-on="on" href="https://abes.fr/pages-donnees-personnelles/qualimarc.sudoc.html" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes sur les mentions légales" target="_blank" class="linkWhite">Mentions légales</a>
+               <a v-on="on" href="https://abes.fr/pages-mentions-legales/qualimarc.sudoc.html" aria-label="Ouvre, dans un nouvel onglet du navigateur, la page internet de l'Abes sur les mentions légales" target="_blank" class="linkWhite">Mentions légales</a>
              </template>
              <span style="color: white">Ouvre dans un nouvel onglet la page internet de l'Abes sur les mentions légales</span>
            </v-tooltip>
