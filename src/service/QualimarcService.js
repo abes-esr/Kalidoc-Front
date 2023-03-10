@@ -2,6 +2,8 @@ import axios from "axios";
 
 
 export class QualimarcService {
+
+    randomId = Math.floor(Math.random() * 1000000);
     client = axios.create({
         baseURL: process.env.VUE_APP_ROOT_API,
     });
@@ -24,6 +26,7 @@ export class QualimarcService {
    */
     checkPpnWithTypeAnalyse(ppnList, typeAnalyse, famillesDocuments, ruleSet) {
         let data = {
+            id: this.randomId,
             ppnList: ppnList,
             typeAnalyse: typeAnalyse,
         }
@@ -33,7 +36,6 @@ export class QualimarcService {
         if(famillesDocuments.length > 0){
             data.famillesDocuments = famillesDocuments
         }
-
         return this.client.post('check',data, {signal: this.controller.signal})
     }
     /**
@@ -111,7 +113,7 @@ export class QualimarcService {
      * Renvoie le status de la tache (0 à 100%)
      */
     getStatus() {
-        return this.client.get("getStatus", {signal: this.controller.signal})
+        return this.client.get("getStatus/"+this.randomId, {signal: this.controller.signal})
     }
 
 }
