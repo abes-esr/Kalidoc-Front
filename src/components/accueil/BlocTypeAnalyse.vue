@@ -1,7 +1,7 @@
 <template>
   <section class="borderSelectAnalyseType">
     <v-radio-group v-model="analyseSelected" class="d-inline-flex" @change="updateAnalyseSelectedInStore">
-      <v-radio :data-cy="analyse.id" v-for="analyse in analysesList" :key="analyse.id" :value="analyse" v-bind="attrs" v-on="on">
+      <v-radio :data-cy="analyse.id" v-for="analyse in analysesList" :key="analyse.id" :value="analyse">
         <template v-slot:label>
           <v-tooltip right color="#54576D" dark>
             <template v-slot:activator="{ on, attrs }">
