@@ -1,7 +1,7 @@
 <template>
   <v-container fluid >
     <h1 class="ml-1 mb-2 fontPrimaryColor" style="font-size: 1em; font-weight: 400">Outil d'analyse des notices bibliographiques du Sudoc</h1>
-    <progress-bar :isLoading="isProgressLoading" @finished="redirect" @cancel="stopAnalyse" @error="setBackendError"></progress-bar>
+    <progress-bar :isLoading="isProgressLoading" @finished="redirect" @cancel="stopAnalyse" @error="setMessageErreur"></progress-bar>
     <v-row class="mb-2 pa-2" justify="space-between">
       <v-col class="ma-2 pa-2" style="min-height: 34em;">
         <h2 style="font-size: 1.26em; color : #252C61; font-weight: bold">
@@ -16,7 +16,7 @@
           Sélectionner un type d'analyse
         </h2>
         <bloc-type-analyse class="mb-2 pa-0" @isSelected="setIsAnalyseSelected" @backendError="setBackendError"></bloc-type-analyse>
-        <message-erreur class="mb-2 pa-4" :backendErrorMessage="backendErrorMessage"></message-erreur>
+        <message-erreur class="mb-2 pa-4" :backendErrorMessage="backendErrorMessage" :message="messageErreur"></message-erreur>
         <bouton-lancement
             class="mb-2 pa-0"
             :isDisabled="(isPpnListIsEmpty || !isAnalyseSelected)"
@@ -45,7 +45,7 @@ const isAnalyseSelected = ref(false);
 const isPpnListIsEmpty = ref(true);
 const backendErrorMessage = ref(null);
 const isProgressLoading = ref(false);
-
+const messageErreur = ref(null);
 //Store
 const resultatStore = useResultatStore();
 const analyseStore = useAnalyseStore();
@@ -79,6 +79,10 @@ function setIsPpnListIsEmpty(isPpnListIsEmptyFromBloc) {
 
 function setBackendError(error) {
   backendErrorMessage.value = error;
+}
+
+function setMessageErreur(message) {
+  messageErreur.value = message;
 }
 
 function displayAndStartProgress() {

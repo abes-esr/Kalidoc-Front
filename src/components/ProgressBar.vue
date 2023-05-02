@@ -60,6 +60,7 @@ watchEffect(() => {
 function runProgress(){
   count.value = '0%';
   isCanceled.value = false;
+  let countInInt
   const interval = setInterval(() => {
     // cas de réussite
     if((count.value === '100%') && !props.isLoading ) {
@@ -73,9 +74,14 @@ function runProgress(){
     }
 
     // cas ou le back arrive à envoyer un pourcentage au dessus de 100% (c'est déjà arrivé)
-    if(count.value.replace('%', '') > 100) {
-      console.log('erreur'); //TODO: afficher un message d'erreur
+    countInInt = count.value;
+    countInInt = countInInt.replace('%', '');
+    console.log(countInInt);
+    if(countInInt > 100) {
+      console.log('erreur ' + count.value); //TODO: afficher un message d'erreur
+      error();
       clearInterval(interval);
+      cancel();
     }
 
     //cas ou l'analyse n'est pas finie
@@ -96,6 +102,10 @@ function cancel(){
 
 function finish(){
   emit('finished');
+}
+
+function error() {
+  emit('error', "Une erreur est survenu lors de l'analyse, veillez ressayer ultérieurement")
 }
 </script>
 
