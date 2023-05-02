@@ -6,6 +6,12 @@
       <v-sheet style="background-color: #252C61" class="d-flex justify-center">
         <span class="text-h5" style="color: white">Analyse en cours</span>
       </v-sheet>
+      <v-sheet v-if="analysisInitialized === true" class="d-flex justify-center">
+        <span style="padding: 24px">L'analyse va débuter, veuillez patienter quelques instants.</span>
+      </v-sheet>
+      <v-sheet v-if="analysisCompleted === true" class="d-flex justify-center">
+        <span style="padding: 24px">L'analyse est terminée, veuillez patienter quelques instants.</span>
+      </v-sheet>
       <v-sheet
           class="pa-5"
           style="background-color: white"
@@ -46,6 +52,8 @@ const serviceApi = QualimarcService;
 
 const count = ref('0%');
 const isCanceled = ref(false);
+const analysisInitialized = ref(false);
+const analysisCompleted = ref(false);
 
 watchEffect(() => {
   if (props.isLoading) {
@@ -63,8 +71,15 @@ function runProgress(){
   const interval = setInterval(() => {
     // cas de réussite
     if((count.value === '100%') && !props.isLoading ) {
+      analysisCompleted.value = true;
       clearInterval(interval);
       finish();
+    }
+
+    if(count.value === '0%') {
+      analysisInitialized.value = true;
+    } else {
+      analysisInitialized.value = false;
     }
 
     // cas ou l'analyse est stoppée
@@ -74,7 +89,7 @@ function runProgress(){
 
     // cas ou le back arrive à envoyer un pourcentage au dessus de 100% (c'est déjà arrivé)
     if(count.value.replace('%', '') > 100) {
-      console.log('erreur'); //TODO: afficher un message d'erreur
+      emit('error', 'Un erreur inattendue est survenue sur le serveur. Merci de relancer votre analyse.')
       clearInterval(interval);
     }
 
@@ -95,6 +110,7 @@ function cancel(){
 }
 
 function finish(){
+  analysisCompleted.value = false;
   emit('finished');
 }
 </script>
