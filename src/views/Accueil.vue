@@ -79,6 +79,7 @@ function setIsPpnListIsEmpty(isPpnListIsEmptyFromBloc) {
 
 function setBackendError(error) {
   backendErrorMessage.value = error;
+  stopAnalyse();
 }
 
 function setMessageErreur(message) {
@@ -91,6 +92,7 @@ function displayAndStartProgress() {
 
 function maskAndStopProgress() {
   isProgressLoading.value = false;
+  backendErrorMessage.value = "";
 }
 
 function stopAnalyse(){
