@@ -44,7 +44,6 @@ const applicationStatus = ref({});
 
 function displayStatus() {
   service.getStatusApplication().then((response) => {
-    console.log("response", response);
     applicationStatus.value = response.data;
   }).catch((error) => {
     emitOnError(error);

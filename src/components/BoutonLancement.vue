@@ -62,7 +62,6 @@ function checkPpnWithTypeAnalyse() {
     .catch((error) => {
       if(error.message === 'canceled') {
         // Annulation de la requête
-        console.log('Canceled');
       }else {
         emitOnError(error);
       }
