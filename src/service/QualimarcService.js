@@ -2,19 +2,23 @@ import axios from "axios";
 
 
 export class QualimarcService {
+
+
     client = axios.create({
         baseURL: process.env.VUE_APP_ROOT_API,
     });
 
     controller = new AbortController();
-
+    randomId = this.client.get("getGeneratedId").then((response) => {
+        this.randomId = response.data;
+    });
     cancel() {
         // Cancel the request
         this.controller.abort();
         this.controller = new AbortController();
     }
 
-  /**
+        /**
    * fonction permetant de faire passer les regles sur une liste de ppn selon le type d'analyse choisi
    * @param ppnList la liste de ppn ex: ["123456789","987654321"]
    * @param typeAnalyse le type d'analyse choisi ex: "QUICK"
@@ -24,6 +28,7 @@ export class QualimarcService {
    */
     checkPpnWithTypeAnalyse(ppnList, typeAnalyse, famillesDocuments, ruleSet) {
         let data = {
+            id: this.randomId,
             ppnList: ppnList,
             typeAnalyse: typeAnalyse,
         }
@@ -33,9 +38,10 @@ export class QualimarcService {
         if(famillesDocuments.length > 0){
             data.famillesDocuments = famillesDocuments
         }
-
         return this.client.post('check',data, {signal: this.controller.signal})
     }
+
+
     /**
      * Renvoie la liste des analyses
      * @return {Promise<AxiosResponse<any>>}
@@ -111,7 +117,7 @@ export class QualimarcService {
      * Renvoie le status de la tache (0 à 100%)
      */
     getStatus() {
-        return this.client.get("getStatus", {signal: this.controller.signal})
+        return this.client.get("getStatus/"+this.randomId, {signal: this.controller.signal})
     }
 
 }

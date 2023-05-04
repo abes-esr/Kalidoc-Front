@@ -1,12 +1,18 @@
 <template>
-  <v-alert v-if="backendErrorMessage !== null" border="left" colored-border type="error" elevation="2">
-    {{ backendErrorMessage.response.data.message }} (erreur :{{backendErrorMessage.response.status}})
+  <v-alert v-if="backendErrorMessage !== null || messageError !== null" border="left" colored-border type="error" elevation="2">
+      <div v-if="backendErrorMessage">
+        {{ (backendErrorMessage.response.data.message ? backendErrorMessage.response.data.message : '' ) +'(' + backendErrorMessage.response.statusText + ' : ' + backendErrorMessage.response.status + ')' }}
+      </div>
+      <div v-if="messageError">
+        {{ messageError }}
+      </div>
   </v-alert>
 </template>
 
 <script setup>
 
-//todo: retravailler le composant pour qu'il puisse afficher un message d'erreur générique
-const props = defineProps({backendErrorMessage: Object});
+const props = defineProps({
+  backendErrorMessage: { type: Object}, messageError: { type: String}
+});
 
 </script>
