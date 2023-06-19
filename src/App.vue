@@ -3,6 +3,7 @@
     <Header></Header>
     <main style='padding-bottom: 220px'>
       <router-view />
+      <CookieBanner />
     </main>
     <Footer></Footer>
   </v-app>
@@ -11,6 +12,7 @@
 <script setup>
 import Header from "@/views/Header.vue";
 import Footer from "@/views/Footer.vue";
+import CookieBanner from "@/components/CookieBanner";
 </script>
 
 <style>
