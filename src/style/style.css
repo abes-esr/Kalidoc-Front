@@ -210,3 +210,45 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+/***
+ * Surcharge du fichier tarteaucitron.css
+ */
+
+.tarteaucitron-modal-open{
+    font-family: sans-serif;
+    letter-spacing: 0.2em;
+    word-spacing: 0.2em;
+    line-height: 1.6;
+}
+
+#tarteaucitron #tarteaucitronServices_mandatory .tarteaucitronH3 {
+    color: black!important;
+}
+
+#tarteaucitron a {
+    color: black!important;
+}
+
+#tarteaucitronAlertSmall #tarteaucitronCookiesListContainer #tarteaucitronCookiesList .tarteaucitronHidden,
+#tarteaucitron #tarteaucitronServices .tarteaucitronHidden {
+    background: #33333311!important;
+}
+
+#tarteaucitron #tarteaucitronInfo,
+#tarteaucitron #tarteaucitronServices .tarteaucitronDetails {
+    color: #ffddb9!important;
+}
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronDetails {
+    color: #fff!important;
+    font-weight: 300;
+    font-size: 0.8em;
+    letter-spacing: 0.2em;
+    word-spacing: 0.1em;
+    line-height: 1.3;
+}
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronName .tarteaucitronListCookies {
+    color: black!important;
+}
