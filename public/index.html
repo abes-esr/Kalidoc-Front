@@ -7,7 +7,9 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
 
   <!-- Matomo - outil d'analyse de trafic   -->
-  <script type="text/javascript">
+  <!--
+      <script type="text/javascript">
+      // Supprimer la vérification sur le localhost pour passer en production !!!
       if(window.location.href.includes('qualimarc.sudoc') || window.location.href.includes('localhost')){
           var _paq = window._paq = window._paq || [];
           _paq.push(['trackPageView']);
@@ -21,6 +23,7 @@
           })();
       }
   </script>
+  -->
   <!--  Matomo fin  -->
 
   <!--    Tarteaucitron - gestionnaire de cookies -->
@@ -63,7 +66,6 @@
   </script>
   <script>tarteaucitron.user.matomoHost = 'https://piwik.abes.fr/';tarteaucitron.user.matomoCustomJSPath = 'JS_PATH';</script>
     <!--    Tarteaucitron fin   -->
-
 
   </head>
   <body>
