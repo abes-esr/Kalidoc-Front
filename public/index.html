@@ -8,8 +8,8 @@
 
   <!-- Matomo - outil d'analyse de trafic   -->
       <script type="text/javascript">
-      // Supprimer la vérification sur le localhost pour passer en production !!!
-      if(window.location.href.includes('qualimarc.sudoc') || window.location.href.includes('localhost')){
+      // Ajouter  || window.location.href.includes('localhost') dans le if suivant pour activer le contrôle des cookies en localhost
+      if(window.location.href.includes('qualimarc.sudoc')){
           var _paq = window._paq = window._paq || [];
           _paq.push(['trackPageView']);
           _paq.push(['enableLinkTracking']);
