@@ -19,18 +19,20 @@ export class QualimarcService {
     }
 
         /**
-   * fonction permetant de faire passer les regles sur une liste de ppn selon le type d'analyse choisi
-   * @param ppnList la liste de ppn ex: ["123456789","987654321"]
-   * @param typeAnalyse le type d'analyse choisi ex: "QUICK"
-   * @param famillesDocuments la/les familles de doc choisi
-   * @param ruleSet les jeux de regles choisi
-   * @returns {Promise<AxiosResponse<any>>}
-   */
-    checkPpnWithTypeAnalyse(ppnList, typeAnalyse, famillesDocuments, ruleSet) {
+         * fonction permetant de faire passer les regles sur une liste de ppn selon le type d'analyse choisi
+         * @param ppnList la liste de ppn ex: ["123456789","987654321"]
+         * @param typeAnalyse le type d'analyse choisi ex: "QUICK"
+         * @param famillesDocuments la/les familles de doc choisi
+         * @param ruleSet les jeux de regles choisi
+         * @param isReplay boolean permetant de distingé si l' analyse est rejoué ou pas
+         * @returns {Promise<AxiosResponse<any>>}
+         */
+    checkPpnWithTypeAnalyse(ppnList, typeAnalyse, famillesDocuments, ruleSet, isReplay) {
         let data = {
             id: this.randomId,
             ppnList: ppnList,
             typeAnalyse: typeAnalyse,
+            isReplay: isReplay,
         }
         if(ruleSet.length > 0){
             data.ruleSet = ruleSet
