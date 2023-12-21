@@ -18,6 +18,10 @@
     border-color: #cf491b;
 }
 
+/*-------------------*/
+/*     BREADCRUMB    */
+/*-------------------*/
+
 .filAriane {
     padding: 0 .5rem;
     color: #595959;
@@ -48,6 +52,10 @@
     text-decoration: underline;
 }
 
+/*-------------------*/
+/*       FOOTER      */
+/*-------------------*/
+
 #footerDescription {
     color: black; text-align: start; padding-left: 2em; padding-right: 2em; width: 100%;
 }
@@ -77,6 +85,10 @@
     padding-right: 2em
 }
 
+/*-------------------*/
+/*    FONT & TEXT    */
+/*-------------------*/
+
 .fontPrimaryColor {
     color: #252C61;
 }
@@ -92,6 +104,22 @@
 .fontSecondaryColor {
     color: #B30900;
 }
+
+.detailErrorPpnSubtitle {
+    font-size: 1em;
+    padding-left: 76px;
+    min-height: 38px;
+}
+
+.rappelTypeAnalyse {
+    font-size: 1em;
+    padding-left: 20px;
+    min-height: 38px;
+}
+
+/*-------------------*/
+/*     BACKGROUND    */
+/*-------------------*/
 
 .bgColorPrimary {
     background-color: #252C61;
@@ -126,6 +154,10 @@
     font-style: italic;
 }
 
+/*-------------------*/
+/*        LINK       */
+/*-------------------*/
+
 .linkBlue {
     color: #252C61!important;
 }
@@ -134,6 +166,10 @@
     color: white!important;
     text-decoration: none!important;
 }
+
+/*-------------------*/
+/*      BORDER       */
+/*-------------------*/
 
 .borderSelectAnalyseType {
     border-style: solid!important;
@@ -163,17 +199,17 @@
     max-height: 75px
 }
 
-.detailErrorPpnSubtitle {
-    font-size: 1em;
-    padding-left: 76px;
-    min-height: 38px;
+/*-------------------*/
+/*      BUTTON       */
+/*-------------------*/
+
+.emptyPpnListButton {
+    margin-top: -34px;
 }
 
-.rappelTypeAnalyse {
-    font-size: 1em;
-    padding-left: 20px;
-    min-height: 38px;
-}
+/*-------------------*/
+/*      TOOLTIP      */
+/*-------------------*/
 
 .tooltip {
     position: relative;

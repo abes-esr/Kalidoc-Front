@@ -1,7 +1,13 @@
 <template>
   <section class="pa-2 borderBlocElements" >
-    <span class="px-0 mb-2 fontPrimaryColor" style="font-size: small; display: block">
+    <section>
+    <span class="px-0 mb-2 fontPrimaryColor" style="font-size: small; display: block;">
       Pour optimiser l'analyse, il est recommandé de ne pas soumettre plus de 5000 PPN en une seule fois
+    </span>
+    </section>
+<!--    Champ de saisi-->
+    <span style="padding-left: 4px; font-size: 0.9em">
+      Saisir ou coller des PPN, puis cliquer hors du cadre (ou appuyer sur Entrée)
     </span>
     <v-combobox
         filled
@@ -14,8 +20,9 @@
         @blur="checkValuesAndFeedPpnListTyped"
         multiple
         small-chips
-        :label="comboboxPpnLabel"
         class="pa-1"
+        style="padding-bottom: 0"
+        aria-label="Saisir ou coller des PPN, puis cliquer hors du cadre (ou appuyer sur Entrée)"
     >
       <template v-slot:selection="{item}">
         <v-chip v-if="item === ppnCopied" color="#eafaed" @click="copyLabelItem(item)" @click:close="removeItem(item)" aria-label="PPN copié" role="img">
@@ -29,7 +36,8 @@
         </v-chip>
       </template>
     </v-combobox>
-    <v-sheet class="d-flex align-end flex-column pt-0 pr-1" style="margin-top: -34px;">
+<!--    Bouton Vider la liste de ppn-->
+    <v-sheet class="d-flex align-end flex-column pt-0 pr-1 emptyPpnListButton">
       <v-btn
           class="pr-1"
           depressed
@@ -43,6 +51,7 @@
         <v-icon color="#4D4D4D">mdi-delete</v-icon>
       </v-btn>
     </v-sheet>
+<!--    Chevron-->
     <v-sheet class="py-5 d-flex justify-center">
       <div aria-label="Utiliser le champ de saisi ci-dessus pour saisir ou coller des PPN, puis cliquer hors du cadre (ou appuyer sur Entrée)" role="img">
         <v-icon class="mr-3" color="black">mdi-chevron-double-up</v-icon>
@@ -52,6 +61,8 @@
         <v-icon class="ml-3" color="black">mdi-chevron-double-down</v-icon>
       </div>
     </v-sheet>
+<!--    Zone drag and drop fichier-->
+    <span style="padding-left: 4px; font-size: 0.9em">Cliquer ci-dessous pour sélectionner un fichier, ou glisser-déposer votre fichier directement ci-dessous.</span>
     <div v-cloak
          @drop.prevent="dropFile"
          @dragleave="dragLeave"
@@ -60,13 +71,12 @@
       <v-file-input
           filled
           class="ml-1"
-          :label="isDragging ? 'Importer votre fichier ici pour charger un fichier .csv ou .txt contenant des PPN' : 'Cliquer ici pour sélectionner un fichier de PPN au format .csv ou .txt (ou le glisser-déposer)'"
           :loading="isDragging"
           prepend-icon=""
           append-icon="mdi-file-download-outline"
           show-size
           type="file"
-          aria-label="Cliquer ici pour sélectionner un fichier de PPN au format .csv ou .txt (ou le glisser-déposer)"
+          aria-label="Cliquer ici pour sélectionner un fichier de PPN au format .csv ou .txt (ou glisser-déposer le fichier)"
           truncate-length=75
           for="files"
           :rules="rules"
@@ -76,7 +86,8 @@
           :clearable="false"
           :error-messages="errorMsg"
           :success-messages="successMsg"
-          ref="fileInput">
+          ref="fileInput"
+      >
       </v-file-input>
     </div>
     <v-alert v-if="analyseStore.getPpnInvalidsList.length !== 0" border="left" colored-border type="error" elevation="2">
@@ -88,8 +99,8 @@
               <span class="pt-2">Voir les PPN avec une syntaxe erronée</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-              <v-chip color="#B30900" outlined v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">
-                {{ item }}
+              <v-chip color="#B30900" style="padding-left: 10px; padding-right: 10px; margin-right: 4px" v-for="(item, index) in analyseStore.getPpnInvalidsList" :key="index">
+                <span style="color: white">{{ item }}</span>
               </v-chip>
           </v-expansion-panel-content>
         </v-expansion-panel>
