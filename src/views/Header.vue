@@ -33,7 +33,7 @@
              </template>
              <span style="color: white">Ouvre le manuel utilisateur dans un nouvel onglet</span>
            </v-tooltip>
-           <bloc-statuts></bloc-statuts>
+           <bloc-statuts/>
          </v-row>
        </v-col>
       </v-row>
